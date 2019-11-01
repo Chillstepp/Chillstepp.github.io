@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ACM- 树状数组我们约定：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。 同时，最下面一行的数字所构成的数组为数组$a$. 例如：C[2]管理的是 a[1],a[2]. C[4]管理的是a[1],a[2],a[3],a[4]. C[6]管理的是a[5],a[6]. C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8]. 操作函数1.lowbit(">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACM-树状数组基础">
+<meta property="og:url" content="https://chillstepp.github.io/2019/11/01/ACM-树状数组基础/index.html">
+<meta property="og:site_name" content="Chillstep">
+<meta property="og:description" content="ACM- 树状数组我们约定：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。 同时，最下面一行的数字所构成的数组为数组$a$. 例如：C[2]管理的是 a[1],a[2]. C[4]管理的是a[1],a[2],a[3],a[4]. C[6]管理的是a[5],a[6]. C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8]. 操作函数1.lowbit(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://oi-wiki.org/ds/images/bit1.png">
+<meta property="og:image" content="file:///C:/Users/49815/AppData/Roaming/Tencent/Users/498152246/TIM/WinTemp/RichOle/%7DQ%608Y]2W@0%7BBN4@2U04U%7DG6.png">
+<meta property="og:updated_time" content="2019-11-01T13:33:29.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACM-树状数组基础">
+<meta name="twitter:description" content="ACM- 树状数组我们约定：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。 同时，最下面一行的数字所构成的数组为数组$a$. 例如：C[2]管理的是 a[1],a[2]. C[4]管理的是a[1],a[2],a[3],a[4]. C[6]管理的是a[5],a[6]. C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8]. 操作函数1.lowbit(">
+<meta name="twitter:image" content="https://oi-wiki.org/ds/images/bit1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chillstepp.github.io/2019/11/01/ACM-树状数组基础/">
+
+
+
+
+
+  <title>ACM-树状数组基础 | Chillstep</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chillstep</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">计算机科学和数学爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chillstepp.github.io/2019/11/01/ACM-树状数组基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chillstep">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chillstep">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ACM-树状数组基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T21:32:41+08:00">
+                2019-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ACM-树状数组"><a href="#ACM-树状数组" class="headerlink" title="ACM- 树状数组"></a>ACM- 树状数组</h1><h2 id><a href="#" class="headerlink" title></a><img src="https://oi-wiki.org/ds/images/bit1.png" alt="img"></h2><p><strong>我们约定</strong>：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。</p>
+<p>同时，最下面一行的数字所构成的数组为数组$a$.</p>
+<p><strong>例如</strong>：C[2]管理的是 a[1],a[2].</p>
+<p>C[4]管理的是a[1],a[2],a[3],a[4].</p>
+<p>C[6]管理的是a[5],a[6].</p>
+<p>C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].</p>
+<h2 id="操作函数"><a href="#操作函数" class="headerlink" title="操作函数"></a>操作函数</h2><h3 id="1-lowbit"><a href="#1-lowbit" class="headerlink" title="1.lowbit()"></a>1.lowbit()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//算出x二进制的从右往左出现第一个1以及这个1之后的那些0组成数的二进制对应的十进制的数</span></span><br><span class="line">  <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>意义：它可以求出数组c[x]管理几个数组a中的数。</p>
+<p>不难发现，每一个C[i]一定管理的数组a的下表的上限就是a[i]，那么往后找几个数呢，才是C[i]真正的管理范围呢？ </p>
+<p>此时lowbit()函数就派上了用场，我们知道一个数组C[i]所管理的右端点，而且通过lowbit（i）我们就可以知道C[i]管理了几个数，因此我们就可以知道这个数组C[i]</p>
+<p>还是举上图的例子，比如所管理的范围了。</p>
+<h3 id="2-add（x-k）单点修改a-x-a-x-k"><a href="#2-add（x-k）单点修改a-x-a-x-k" class="headerlink" title="2.add（x,k）单点修改a[x]=a[x]+k"></a>2.add（x,k）单点修改a[x]=a[x]+k</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (x &lt;= n) &#123;  <span class="comment">//不能越界</span></span><br><span class="line">    c[x] = c[x] + k;</span><br><span class="line">    x = x + lowbit(x);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>怎么理解这个函数呢？</p>
+<p>单点修改后我们就要维护数组C的值了，具体维护哪些数组C呢，又怎么找到这些数组C呢？</p>
+<p>比如 a[4]要加上一个数k，C[4]肯定管理着a[4]，C[4]之前的C[i] (i=1.2.3)肯定管理不到a[4]，那么我们只需要往后找。</p>
+<p>我们发现C[4+lowbit[4]]也是。</p>
+<p>因此我们推广后可以猜到：</p>
+<p>c[x] = c[x] + k;<br>x = x + lowbit(x);  便可以将所有C更新。</p>
+<p>同时不要忘记加上边界条件下x&lt;=n  ，这样就完成了单点修改。</p>
+<h3 id="3-区间求和-amp-amp-区间加"><a href="#3-区间求和-amp-amp-区间加" class="headerlink" title="3.区间求和&amp;&amp;区间加"></a>3.区间求和&amp;&amp;区间加</h3><p>首先要介绍差分数组：</p>
+<p>比如 a[1] a[2] a[3] a[4] a[5] a[6] a[7] a[8]</p>
+<p>​        b[1] b[2] b[3] b[4] b[5] b[6] b[7] b[8]</p>
+<p>其中b[i]=a[i]-a[i-1].</p>
+<p>可是造出这样的一个数组有什么用呢，我们假如进行区间加的话若对每个数字都操作，这样的复杂度显然是很差的。</p>
+<p>我们考虑一下，当我们对数组a区间加上k的时候，所对应的数组b有什么变化呢？</p>
+<p>显而易见，数组b大部分还是没变得，只有区间开头和结尾后一个会变。我们举一个例子就显而易见了，比如我们对a[3-6]同时加上k, b[4-6]都没有变，而b[3]=a[3]-a[2]，b[7]=a[7]-a[6],所以这两个都变了，我们只需要维护两个点就行了。</p>
+<p><img src="file:///C:\Users\49815\AppData\Roaming\Tencent\Users\498152246\TIM\WinTemp\RichOle\}Q`8Y]2W@0{BN4@2U04U}G6.png" alt="img"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> t1[MAXN], t2[MAXN], n;</span><br><span class="line"><span class="comment">//t1为维护得第一个数组 t2为维护的第二个数组</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> x &amp; (-x); &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> v)</span> </span>&#123;          <span class="comment">//维护更新上述的两个数组t1,t2</span></span><br><span class="line">  <span class="keyword">int</span> v1 = k * v;</span><br><span class="line">  <span class="keyword">while</span> (k &lt;= n) &#123;</span><br><span class="line">    t1[k] += v, t2[k] += v1;</span><br><span class="line">    k += lowbit(k);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getsum</span><span class="params">(<span class="keyword">int</span> *t, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (k) &#123;</span><br><span class="line">    ret += t[k];       <span class="comment">//t[1]+t[2]...+t[k]</span></span><br><span class="line">    k -= lowbit(k);    <span class="comment">//</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add1</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  add(l, v), add(r + <span class="number">1</span>, -v);       <span class="comment">//将区间加差分为两个前缀加</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">getsum1</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (r + <span class="number">1l</span>l) * getsum(t1, r) - <span class="number">1l</span>l * l * getsum(t1, l - <span class="number">1</span>) -</span><br><span class="line">      (getsum(t2, r) - getsum(t2, l - <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-树状数组的O-n-建树，O（logn）查询第K大-小"><a href="#4-树状数组的O-n-建树，O（logn）查询第K大-小" class="headerlink" title="4.树状数组的O(n)建树，O（logn）查询第K大/小"></a>4.树状数组的O(n)建树，O（logn）查询第K大/小</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// O(n)建树</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    t[i] += a[i];</span><br><span class="line">    <span class="keyword">int</span> j = i + lowbit(i);</span><br><span class="line">    <span class="keyword">if</span> (j &lt;= n) t[j] += t[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;  <span class="comment">//权值树状数组查询第k小</span></span><br><span class="line">  <span class="keyword">int</span> cnt = <span class="number">0</span>, ret = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = log2(n); ~i; --i) &#123;</span><br><span class="line">    ret += <span class="number">1</span> &lt;&lt; i;</span><br><span class="line">    <span class="keyword">if</span> (ret &gt;= n || cnt + t[ret] &gt;= k)</span><br><span class="line">      ret -= <span class="number">1</span> &lt;&lt; i;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      cnt += t[ret];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时间戳优化add() sum()</span></span><br><span class="line"><span class="keyword">int</span> tag[MAXN], t[MAXN], Tag;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reset</span><span class="params">()</span> </span>&#123; ++Tag; &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (k &lt;= n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tag[k] != Tag) t[k] = <span class="number">0</span>;</span><br><span class="line">    t[k] += v, tag[k] = Tag;</span><br><span class="line">    k += lowbit(k);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getsum</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (k) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tag[k] == Tag) ret += t[k];</span><br><span class="line">    k -= lowbit(k);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/16/2019牛客暑假多校训练（第一场）题解/" rel="next" title="2019牛客暑假多校训练（第一场）题解">
+                <i class="fa fa-chevron-left"></i> 2019牛客暑假多校训练（第一场）题解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chillstep</p>
+              <p class="site-description motion-element" itemprop="description">一位在追梦路上的大二学生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ACM-树状数组"><span class="nav-number">1.</span> <span class="nav-text">ACM- 树状数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作函数"><span class="nav-number">1.2.</span> <span class="nav-text">操作函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-lowbit"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.lowbit()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-add（x-k）单点修改a-x-a-x-k"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.add（x,k）单点修改a[x]=a[x]+k</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-区间求和-amp-amp-区间加"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.区间求和&amp;&amp;区间加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-树状数组的O-n-建树，O（logn）查询第K大-小"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.树状数组的O(n)建树，O（logn）查询第K大/小</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chillstep</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":240,"height":480},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
