@@ -4,6 +4,38 @@
   
   
   <entry>
+    <title>深入理解样本方差为何除以n-1</title>
+    <link href="undefined2019/12/21/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%A0%B7%E6%9C%AC%E6%96%B9%E5%B7%AE%E4%B8%BA%E4%BD%95%E9%99%A4%E4%BB%A5n-1/"/>
+    <url>2019/12/21/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%A0%B7%E6%9C%AC%E6%96%B9%E5%B7%AE%E4%B8%BA%E4%BD%95%E9%99%A4%E4%BB%A5n-1/</url>
+    
+    <content type="html"><![CDATA[<p> 设样本均值为<img src="https://img-blog.csdn.net/20170905224756057" srcset="undefined" alt="img">，样本方差为<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">，总体均值为<img src="https://img-blog.csdn.net/20170905224938345" srcset="undefined" alt="img">，总体方差为<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">，那么样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">有如下公式：</p><p><img src="https://img-blog.csdn.net/20170905232955708" srcset="undefined" alt="img"></p><p>很多人可能都会有疑问，为什么要除以n-1，而不是n，但是翻阅资料，发现很多都是交代到，如果除以n，对样本方差的估计不是无偏估计，比总体方差要小，要想是无偏估计就要调小分母，所以除以n-1，那么问题来了，为什么不是除以n-2、n-3等等。所以在这里彻底总结一下，首先交代一下无偏估计。</p><p>无偏估计</p><p>以例子来说明，假如你想知道一所大学里学生的平均身高是多少，一个大学好几万人，全部统计有点不现实，但是你可以先随机挑选100个人，统计他们的身高，然后计算出他们的平均值，记为。如果你只是把作为整体的身高平均值，误差肯定很大，因为你再随机挑选出100个人，身高平均值很可能就跟刚才计算的不同，为了使得统计结果更加精确，你需要多抽取几次，然后分别计算出他们的平均值，分别记为：然后在把这些平均值，再做平均，记为：，这样的结果肯定比只计算一次更加精确，随着重复抽取的次数增多，这个期望值会越来越接近总体均值，如果满足，这就是一个无偏估计，其中统计的样本均值也是一个随机变量，就是的一个取值。无偏估计的意义是：在多次重复下，它们的平均数接近所估计的参数真值。</p><p>介绍无偏估计的意义就是，我们计算的样本方差，希望它是总体方差的一个无偏估计，那么假如我们的样本方差是如下形式：</p><p><img src="https://img-blog.csdn.net/20170905233050202" srcset="undefined" alt="img"></p><p>那么，我们根据无偏估计的定义可得：</p><p><img src="https://img-blog.csdn.net/20170905233442186" srcset="undefined" alt="img"></p><p><img src="https://img-blog.csdn.net/20170905233618683" srcset="undefined" alt="img"></p><p>由上式可以看出如果除以n，那么样本方差比总体方差的值偏小，那么该怎么修正，使得样本方差式总体方差的无偏估计呢？我们接着上式继续化简：</p><p><img src="https://img-blog.csdn.net/20170905235049219" srcset="undefined" alt="img"></p><p>到这里得到如下式子，看到了什么？该怎修正似乎有点眉目。</p><p><img src="https://img-blog.csdn.net/20170905235354241" srcset="undefined" alt="img"></p><p>如果让我们假设的样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">乘以<img src="https://img-blog.csdn.net/20170905235608092" srcset="undefined" alt="img">，即修正成如下形式，是不是可以得到样本方差是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的无偏估计呢？</p><p><img src="https://img-blog.csdn.net/20170906000129602" srcset="undefined" alt="img"></p><p>则：</p><p><img src="https://img-blog.csdn.net/20170906000513463" srcset="undefined" alt="img"></p><p><img src="https://img-blog.csdn.net/20170906000522458" srcset="undefined" alt="img"></p><p>​    因此修正之后的样本方差的期望是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的一个无偏估计，这就是为什么分母为何要除以n-1。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>数学</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="undefined2019/12/16/%E7%90%86%E8%A7%A3%E6%A0%B7%E6%9C%AC%E6%96%B9%E5%B7%AE%E4%B8%BA%E4%BD%95%E9%99%A4%E4%BB%A5n-1/"/>
+    <url>2019/12/16/%E7%90%86%E8%A7%A3%E6%A0%B7%E6%9C%AC%E6%96%B9%E5%B7%AE%E4%B8%BA%E4%BD%95%E9%99%A4%E4%BB%A5n-1/</url>
+    
+    <content type="html"><![CDATA[<p> 设样本均值为<img src="https://img-blog.csdn.net/20170905224756057" srcset="undefined" alt="img">，样本方差为<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">，总体均值为<img src="https://img-blog.csdn.net/20170905224938345" srcset="undefined" alt="img">，总体方差为<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">，那么样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">有如下公式：</p><p><img src="https://img-blog.csdn.net/20170905232955708" srcset="undefined" alt="img"></p><p>很多人可能都会有疑问，为什么要除以n-1，而不是n，但是翻阅资料，发现很多都是交代到，如果除以n，对样本方差的估计不是无偏估计，比总体方差要小，要想是无偏估计就要调小分母，所以除以n-1，那么问题来了，为什么不是除以n-2、n-3等等。所以在这里彻底总结一下，首先交代一下无偏估计。</p><p>无偏估计</p><p>以例子来说明，假如你想知道一所大学里学生的平均身高是多少，一个大学好几万人，全部统计有点不现实，但是你可以先随机挑选100个人，统计他们的身高，然后计算出他们的平均值，记为。如果你只是把作为整体的身高平均值，误差肯定很大，因为你再随机挑选出100个人，身高平均值很可能就跟刚才计算的不同，为了使得统计结果更加精确，你需要多抽取几次，然后分别计算出他们的平均值，分别记为：然后在把这些平均值，再做平均，记为：，这样的结果肯定比只计算一次更加精确，随着重复抽取的次数增多，这个期望值会越来越接近总体均值，如果满足，这就是一个无偏估计，其中统计的样本均值也是一个随机变量，就是的一个取值。无偏估计的意义是：在多次重复下，它们的平均数接近所估计的参数真值。</p><p>介绍无偏估计的意义就是，我们计算的样本方差，希望它是总体方差的一个无偏估计，那么假如我们的样本方差是如下形式：</p><p><img src="https://img-blog.csdn.net/20170905233050202" srcset="undefined" alt="img"></p><p>那么，我们根据无偏估计的定义可得：</p><p><img src="https://img-blog.csdn.net/20170905233442186" srcset="undefined" alt="img"></p><p><img src="https://img-blog.csdn.net/20170905233618683" srcset="undefined" alt="img"></p><p>由上式可以看出如果除以n，那么样本方差比总体方差的值偏小，那么该怎么修正，使得样本方差式总体方差的无偏估计呢？我们接着上式继续化简：</p><p><img src="https://img-blog.csdn.net/20170905235049219" srcset="undefined" alt="img"></p><p>到这里得到如下式子，看到了什么？该怎修正似乎有点眉目。</p><p><img src="https://img-blog.csdn.net/20170905235354241" srcset="undefined" alt="img"></p><p>如果让我们假设的样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">乘以<img src="https://img-blog.csdn.net/20170905235608092" srcset="undefined" alt="img">，即修正成如下形式，是不是可以得到样本方差是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的无偏估计呢？</p><p><img src="https://img-blog.csdn.net/20170906000129602" srcset="undefined" alt="img"></p><p>则：</p><p><img src="https://img-blog.csdn.net/20170906000513463" srcset="undefined" alt="img"></p><p><img src="https://img-blog.csdn.net/20170906000522458" srcset="undefined" alt="img"></p><p>​    因此修正之后的样本方差的期望是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的一个无偏估计，这就是为什么分母为何要除以n-1。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>一阶线性电路的时域分析-《电路与模拟电子技术》第三章</title>
     <link href="undefined2019/11/03/%E4%B8%80%E9%98%B6%E7%BA%BF%E6%80%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90-%E3%80%8A%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AB%A0/"/>
     <url>2019/11/03/%E4%B8%80%E9%98%B6%E7%BA%BF%E6%80%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90-%E3%80%8A%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AB%A0/</url>

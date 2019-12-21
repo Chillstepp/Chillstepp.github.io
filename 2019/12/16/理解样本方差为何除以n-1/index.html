@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>标签 ~ Chillstep</title>
+  <title>Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,7 +95,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/headpicture.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -105,6 +105,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 十二月 16日 2019, 8:17 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    685 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -116,22 +151,97 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center tagcloud">
-  <a href="/tags/专业课/" style="font-size: 30px; color: #337ab7">专业课</a> <a href="/tags/数学/" style="font-size: 15px; color: #bbe">数学</a> <a href="/tags/数据结构/" style="font-size: 15px; color: #bbe">数据结构</a>
-</div>
-              </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p> 设样本均值为<img src="https://img-blog.csdn.net/20170905224756057" srcset="undefined" alt="img">，样本方差为<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">，总体均值为<img src="https://img-blog.csdn.net/20170905224938345" srcset="undefined" alt="img">，总体方差为<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">，那么样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">有如下公式：</p>
+<p><img src="https://img-blog.csdn.net/20170905232955708" srcset="undefined" alt="img"></p>
+<p>很多人可能都会有疑问，为什么要除以n-1，而不是n，但是翻阅资料，发现很多都是交代到，如果除以n，对样本方差的估计不是无偏估计，比总体方差要小，要想是无偏估计就要调小分母，所以除以n-1，那么问题来了，为什么不是除以n-2、n-3等等。所以在这里彻底总结一下，首先交代一下无偏估计。</p>
+<p>无偏估计</p>
+<p>以例子来说明，假如你想知道一所大学里学生的平均身高是多少，一个大学好几万人，全部统计有点不现实，但是你可以先随机挑选100个人，统计他们的身高，然后计算出他们的平均值，记为。如果你只是把作为整体的身高平均值，误差肯定很大，因为你再随机挑选出100个人，身高平均值很可能就跟刚才计算的不同，为了使得统计结果更加精确，你需要多抽取几次，然后分别计算出他们的平均值，分别记为：然后在把这些平均值，再做平均，记为：，这样的结果肯定比只计算一次更加精确，随着重复抽取的次数增多，这个期望值会越来越接近总体均值，如果满足，这就是一个无偏估计，其中统计的样本均值也是一个随机变量，就是的一个取值。无偏估计的意义是：在多次重复下，它们的平均数接近所估计的参数真值。</p>
+<p>介绍无偏估计的意义就是，我们计算的样本方差，希望它是总体方差的一个无偏估计，那么假如我们的样本方差是如下形式：</p>
+<p><img src="https://img-blog.csdn.net/20170905233050202" srcset="undefined" alt="img"></p>
+<p>那么，我们根据无偏估计的定义可得：</p>
+<p><img src="https://img-blog.csdn.net/20170905233442186" srcset="undefined" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20170905233618683" srcset="undefined" alt="img"></p>
+<p>由上式可以看出如果除以n，那么样本方差比总体方差的值偏小，那么该怎么修正，使得样本方差式总体方差的无偏估计呢？我们接着上式继续化简：</p>
+<p><img src="https://img-blog.csdn.net/20170905235049219" srcset="undefined" alt="img"></p>
+<p>到这里得到如下式子，看到了什么？该怎修正似乎有点眉目。</p>
+<p><img src="https://img-blog.csdn.net/20170905235354241" srcset="undefined" alt="img"></p>
+<p>如果让我们假设的样本方差<img src="https://img-blog.csdn.net/20170905224920690" srcset="undefined" alt="img">乘以<img src="https://img-blog.csdn.net/20170905235608092" srcset="undefined" alt="img">，即修正成如下形式，是不是可以得到样本方差是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的无偏估计呢？</p>
+<p><img src="https://img-blog.csdn.net/20170906000129602" srcset="undefined" alt="img"></p>
+<p>则：</p>
+<p><img src="https://img-blog.csdn.net/20170906000513463" srcset="undefined" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20170906000522458" srcset="undefined" alt="img"></p>
+<p>​    因此修正之后的样本方差的期望是总体方差<img src="https://img-blog.csdn.net/20170905224951267" srcset="undefined" alt="img">的一个无偏估计，这就是为什么分母为何要除以n-1。</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2019/12/16/理解样本方差为何除以n-1/';
+        this.page.identifier = '/2019/12/16/理解样本方差为何除以n-1/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -206,6 +316,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -246,7 +361,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
