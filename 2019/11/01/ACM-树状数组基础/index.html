@@ -197,7 +197,6 @@
 <p>可是造出这样的一个数组有什么用呢，我们假如进行区间加的话若对每个数字都操作，这样的复杂度显然是很差的。</p>
 <p>我们考虑一下，当我们对数组a区间加上k的时候，所对应的数组b有什么变化呢？</p>
 <p>显而易见，数组b大部分还是没变得，只有区间开头和结尾后一个会变。我们举一个例子就显而易见了，比如我们对a[3-6]同时加上k, b[4-6]都没有变，而b[3]=a[3]-a[2]，b[7]=a[7]-a[6],所以这两个都变了，我们只需要维护两个点就行了。</p>
-<p><img src="file:///C:\Users\49815\AppData\Roaming\Tencent\Users\498152246\TIM\WinTemp\RichOle\}Q`8Y]2W@0{BN4@2U04U}G6.png" srcset="undefined" alt="img"></p>
 <pre><code class="lang-c++">int t1[MAXN], t2[MAXN], n;
 //t1为维护得第一个数组 t2为维护的第二个数组
 inline int lowbit(int x) { return x &amp; (-x); }
@@ -544,5 +543,20 @@ int getsum(int k) {
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
