@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>页面走丢啦~ ~ Chillstep</title>
+  <title>POJ-1077 Eight(康托展开+BFS) ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,7 +95,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/headpicture.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -105,6 +105,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 一月 19日 2020, 8:25 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    746 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -118,13 +153,202 @@
     
       
 
-<script>
-  function redirect() {
-    location.href = "/";
-  }
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="POJ-1077-康托展开-BFS"><a href="#POJ-1077-康托展开-BFS" class="headerlink" title="POJ-1077 康托展开+BFS"></a>POJ-1077 康托展开+BFS</h1><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><h3 id="康托展开："><a href="#康托展开：" class="headerlink" title="康托展开："></a>康托展开：</h3><p><a href="https://blog.csdn.net/qq_38701476/article/details/81003290" target="_blank" rel="noopener">https://blog.csdn.net/qq_38701476/article/details/81003290</a></p>
+<p>code（注释详解）：</p>
+<pre><code class="lang-c++">#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;set&gt;
+#include&lt;stack&gt;
+#include&lt;cmath&gt;
+#include&lt;cstring&gt;
+#include&lt;string&gt;
+#include&lt;algorithm&gt;
+#include&lt;queue&gt;
+#include&lt;cstdlib&gt;
+#include&lt;iostream&gt;
+#include&lt;map&gt;
+using namespace std;
+int fac[15]={1,1,2,6,24,120,720,5040,40320,362880};
+string path;
+int dir[4][2]={{-1,0},{1,0},{0,-1},{0,1}};//u,d,l,r
+char index[5]=&quot;udlr&quot;;
+int aim=46234;//{1234567890}的cantor展开
+bool visit[900005];
+struct node{
+    int loc;//x的位置
+    int s[10];//3*3的元素构成的棋盘
+    string path;//路径
+    int hashval;//当前状态对应的hash值
+}chess;
 
-  //setTimeout(redirect, 3000)
-</script>
+int cantor(int s[])//康托展开
+{
+    int sum=0;
+    for(int i=0;i&lt;9;i++)
+    {
+        int cnt=0;
+        for(int j=i+1;j&lt;9;j++)
+        {
+            if(s[i]&gt;s[j])
+                cnt++;
+        }
+        sum+=cnt*fac[8-i];
+    }
+    return sum+1;
+}
+
+bool bfs()
+{
+    queue&lt;node&gt;q;
+    node cur;//当前棋盘局势
+    node next;//下一棋盘局势
+    q.push(chess);
+    visit[chess.hashval]=true;//将初始局面先标记为使用过
+    while(!q.empty())
+    {
+        cur=q.front();//将node队列头的棋盘局势作为cur
+        q.pop();//用过后pop掉这个节点
+        if(cur.hashval==aim)//如果当前节点的hashval=aim目标局面的hash值
+        {
+            path=cur.path;//把记录的路径赋给path
+            return true;//返回true，退出bfs函数
+        }
+        int x=cur.loc/3;//当前x的位置的纵坐标
+        int y=cur.loc%3;//当前x的位置的横坐标
+        for(int i=0;i&lt;4;i++)//遍历四个方向
+        {
+            int tempX=x+dir[i][0];//x下一次移动到的位置的横纵坐标
+            int tempY=y+dir[i][1];
+
+            if(tempX&lt;0||tempY&lt;0||tempX&gt;2||tempY&gt;2)
+                continue;
+            next=cur;//先把当前节点赋给next，这是为了在cur局面上移动才是next，所以要先赋给next
+            next.loc=3*tempX+tempY;//x下一次移动道德位置的横纵坐标
+            //下面将实现x位置与和它相邻位置的转换
+            //1.先把将要是x位置中的数放到以前是x的位置
+            next.s[cur.loc]=next.s[next.loc];
+            //2.即将是x的位置转换为x，赋值为0
+            next.s[next.loc]=0;
+
+            next.hashval=cantor(next.s);//将新的顺序康托展开作为hashval
+
+            if(next.hashval==aim)
+            {
+                next.path=cur.path+index[i];//记录这次操作index[i]，并加入路径
+                path=next.path;
+                return true;
+            }
+            if(visit[next.hashval])
+                continue;
+            next.path=cur.path+index[i];
+            visit[next.hashval]=true;
+            q.push(next);
+        }
+    }
+    return false;
+}
+int main()
+{
+    char ch[10];
+    memset(visit,false,sizeof visit);//初始化棋盘全部未访问过
+    for(int i=0;i&lt;9;i++)
+    {
+        scanf(&quot;%s&quot;,ch);
+        if(ch[0]==&#39;x&#39;)//如果当前位置为x
+        {
+            chess.s[i]=0;//记录这个元素的值为0并记录位置
+            chess.loc=i;//记录x在几号位置
+        }
+        else
+        {
+            chess.s[i]=ch[0]-&#39;0&#39;;//记录非x的元素的值所在位置
+        }
+    }
+    chess.hashval=cantor(chess.s);//将起始状态进行康托展开作为棋盘初始的hashval值
+    bool flag=bfs();//对初始局面进行bfs
+    if(flag)
+        cout&lt;&lt;path&lt;&lt;endl;
+    else
+        cout&lt;&lt;&quot;unsolvable&quot;&lt;&lt;endl;
+    return 0;
+}
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM">ACM</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/01/19/POJ-1077-Eight-康托展开-BFS/';
+        this.page.identifier = '/2020/01/19/POJ-1077-Eight-康托展开-BFS/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -199,6 +423,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -239,7 +468,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Page not found&nbsp;",
+        "POJ-1077 Eight(康托展开+BFS)&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
