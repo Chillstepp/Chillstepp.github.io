@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>归档 ~ Chillstep</title>
+  <title>Codeforces ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,7 +95,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/headpicture.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -105,6 +105,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 一月 23日 2020, 10:43 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    477 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -116,41 +151,137 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 6 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/01/23/Codeforces #606 B-Two Fairs(DFS遍历图，链式前向星，思维)/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Codeforces</span>
-      <span style="float: right;">01-23</span>
-    </a>
-  
-    
-    <a href="/2020/01/19/POJ-1077-Eight-康托展开-BFS/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">POJ-1077 Eight(康托展开+BFS)</span>
-      <span style="float: right;">01-19</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="Codeforces-606-B-Two-Fairs"><a href="#Codeforces-606-B-Two-Fairs" class="headerlink" title="Codeforces #606 B-Two Fairs"></a>Codeforces #606 B-Two Fairs</h1><h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p><a href="https://codeforces.com/contest/1276/problem/b" target="_blank" rel="noopener">https://codeforces.com/contest/1276/problem/b</a></p>
+<p>给出一个连通图（图中每个点都和任意其他点相通），现在给出n个点，m条边，和两个点a，b。求有多少点对一定要经过a，b点。</p>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>通过a点出发进行dfs，设置b点为禁止点（不能访问）,由于这个图是连通图，任意2点都是可达的，那么从a点出发发不通过a的能到达的点代表必须经过b才能到达。<br>那么我们统计：</p>
+<p>a点出发不经过b不能到的点（必须经过b才能到的点） * 从b出发不经过a不能到的点（必须经过a才能到的点） = ans</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code class="lang-c++">#include &lt;cstdio&gt;
+typedef long long ll;
+const int N = 2e5 + 5, M = 5e5 + 5;
+//ans[0]保存a不通过b不能到的点 ans[1]保存b不通过a不能到的点 
+int head[N], len, cnt, t, n, m, a, b, u, v, ans[2];
+bool vis[N]; //看某个点是否访问过  
+struct edge{
+    int v, next; 
+} e[M * 2];
+void add(int u, int v) {
+    e[len].v = v;
+    e[len].next = head[u];
+    head[u] = len++;
+} 
+void dfs(int u, int ban) {
+    cnt++; 
+    vis[u] = true;
+    for (int j = head[u]; j; j = e[j].next) {
+        v = e[j].v;
+        if (v == ban) continue; //不能通过ban点
+        if (!vis[v]) dfs(v, ban); 
+    }
+}
+int main() {
+    scanf(&quot;%d&quot;, &amp;t);
+    while (t--) {
+        len = 1;         
+        scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;a, &amp;b);
+        for (int i = 1; i &lt;= n; i++) head[i] = 0;
+        for (int i = 1; i &lt;= m; i++) {
+            scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+            add(u, v);
+            add(v, u);
+        }
+        //统计a不能到达那些点（不通过b）
+        for (int i = 1; i &lt;= n; i++) vis[i] = false;
+        cnt = 0; //a 能到的点 (不通过b) 
+        dfs(a, b);  
+        ans[0] = n - cnt - 1; //多减1包括a点 
+         //统计b不能到达那些点 （不通过a）
+        for (int i = 1; i &lt;= n; i++) vis[i] = false;
+        cnt = 0;
+        dfs(b, a); 
+        ans[1] = n - cnt - 1;  
+        printf(&quot;%lld\n&quot;, (ll)ans[0] * ans[1]); 
+    } 
+    return 0;
+}
+</code></pre>
 
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/01/23/Codeforces #606 B-Two Fairs(DFS遍历图，链式前向星，思维)/';
+        this.page.identifier = '/2020/01/23/Codeforces #606 B-Two Fairs(DFS遍历图，链式前向星，思维)/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -225,6 +356,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -265,7 +401,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "Codeforces&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
