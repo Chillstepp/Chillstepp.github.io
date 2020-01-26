@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>标签 ~ Chillstep</title>
+  <title>Codeforces 449B Jzzhu and Cities（SPFA优化） ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -95,7 +95,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/headpicture.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -105,6 +105,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 一月 26日 2020, 3:58 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    307 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      1 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -116,22 +151,157 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center tagcloud">
-  <a href="/tags/ACM-图论/" style="font-size: 30px; color: #337ab7">ACM-图论</a> <a href="/tags/ACM-搜索/" style="font-size: 15px; color: #bbe">ACM-搜索</a> <a href="/tags/ACM-数据结构/" style="font-size: 15px; color: #bbe">ACM-数据结构</a> <a href="/tags/ACM-构造/" style="font-size: 15px; color: #bbe">ACM-构造</a> <a href="/tags/ACM-牛客多校/" style="font-size: 15px; color: #bbe">ACM-牛客多校</a> <a href="/tags/闲言碎语/" style="font-size: 15px; color: #bbe">闲言碎语</a>
-</div>
-              </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="Codeforces-449B-Jzzhu-and-Cities（SPFA优化）"><a href="#Codeforces-449B-Jzzhu-and-Cities（SPFA优化）" class="headerlink" title="Codeforces 449B Jzzhu and Cities（SPFA优化）"></a>Codeforces 449B Jzzhu and Cities（SPFA优化）</h1><h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p><img src="https://s2.ax1x.com/2020/01/26/1mst1S.png" srcset="undefined" alt="1mst1S.png"></p>
+<p><img src="https://s2.ax1x.com/2020/01/26/1msYp8.png" srcset="undefined" alt="1msYp8.png"></p>
+<h2 id="前置知识："><a href="#前置知识：" class="headerlink" title="前置知识："></a>前置知识：</h2><h3 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h3><p>讲解：<a href="https://blog.csdn.net/qq_35644234/article/details/61614581" target="_blank" rel="noopener">https://blog.csdn.net/qq_35644234/article/details/61614581</a></p>
+<h2 id="code："><a href="#code：" class="headerlink" title="code："></a>code：</h2><p>建图方法很细节（mark一手</p>
+<p>题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。</p>
+<pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int INF=0x3f3f3f3f3f3f3f;
+const int Maxn = 1e5+10;
+
+int cnt;
+vector &lt;pair&lt;int,int &gt; &gt; E[Maxn];
+int n,m,k;
+bool vis[Maxn];
+long long dis[Maxn];
+bool book[Maxn];
+queue &lt;int&gt; q;
+
+int main()
+{
+    int u,v,w;
+    memset(vis,0,sizeof(vis));
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=1; i&lt;=n; i++)
+        dis[i]=INF;
+    for(int i=1; i&lt;=m; i++)
+    {
+        scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
+        E[u].push_back(make_pair(v,w));
+        E[v].push_back(make_pair(u,w));
+    }
+    q.push(1);
+    dis[1]=0;
+    vis[1]=1;
+    for(int i=1; i&lt;=k; i++)
+    {
+        scanf(&quot;%d%d&quot;,&amp;v,&amp;w);
+        if(w&lt;dis[v])
+        {
+            dis[v]=w;
+            vis[v]=1;
+            book[v]=1;
+            q.push(v);
+        }
+    }
+    while(!q.empty())
+    {
+        int u=q.front();
+        q.pop();
+        vis[u]=0;
+        for(int i=0; i&lt;E[u].size(); i++)
+        {
+            int v=E[u][i].first;
+            int w=E[u][i].second;
+            if(dis[v]&gt;=dis[u]+w)
+            {
+                dis[v]=dis[u]+w;
+                book[v]=0;
+                if(!vis[v])
+                {
+                    vis[v]=1;
+                    q.push(v);
+                }
+            }
+        }
+    }
+    int ans = 0;
+    for(int i=1; i&lt;=n; i++)
+        if(book[i]==1) ans++;
+    printf(&quot;%d&quot;,k-ans);
+    return 0;
+}
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/01/26/Codeforces-449B-Jzzhu-and-Cities（SPFA优化）/';
+        this.page.identifier = '/2020/01/26/Codeforces-449B-Jzzhu-and-Cities（SPFA优化）/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -206,6 +376,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -246,7 +421,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "Codeforces 449B Jzzhu and Cities（SPFA优化）&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
