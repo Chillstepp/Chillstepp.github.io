@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>Codeforces#606,B-Two_Fairs(DFS遍历图，链式前向星，思维) ~ Chillstep</title>
+  <title>Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解 ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -110,7 +110,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期四, 一月 23日 2020, 10:43 晚上
+                  星期一, 一月 27日 2020, 6:31 晚上
                 </p>
               
 
@@ -119,7 +119,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    477 字
+                    933 字
                   </span>&nbsp;
                 
 
@@ -127,7 +127,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -160,56 +160,168 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="Codeforces-606-B-Two-Fairs"><a href="#Codeforces-606-B-Two-Fairs" class="headerlink" title="Codeforces #606 B-Two Fairs"></a>Codeforces #606 B-Two Fairs</h1><h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p><a href="https://codeforces.com/contest/1276/problem/b" target="_blank" rel="noopener">https://codeforces.com/contest/1276/problem/b</a></p>
-<p>给出一个连通图（图中每个点都和任意其他点相通），现在给出n个点，m条边，和两个点a，b。求有多少点对一定要经过a，b点。</p>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>通过a点出发进行dfs，设置b点为禁止点（不能访问）,由于这个图是连通图，任意2点都是可达的，那么从a点出发发不通过a的能到达的点代表必须经过b才能到达。<br>那么我们统计：</p>
-<p>a点出发不经过b不能到的点（必须经过b才能到的点） * 从b出发不经过a不能到的点（必须经过a才能到的点） = ans</p>
-<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code class="lang-c++">#include &lt;cstdio&gt;
+            <h1 id="Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><a href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解" class="headerlink" title="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解"></a>Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</h1><p><strong>比赛链接：<a href="https://codeforces.com/contest/1295" target="_blank" rel="noopener">https://codeforces.com/contest/1295</a></strong></p>
+<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" srcset="undefined" alt="11GzEq.png"></p>
+<h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。</p>
+<h3 id="Code："><a href="#Code：" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
 typedef long long ll;
-const int N = 2e5 + 5, M = 5e5 + 5;
-//ans[0]保存a不通过b不能到的点 ans[1]保存b不通过a不能到的点 
-int head[N], len, cnt, t, n, m, a, b, u, v, ans[2];
-bool vis[N]; //看某个点是否访问过  
-struct edge{
-    int v, next; 
-} e[M * 2];
-void add(int u, int v) {
-    e[len].v = v;
-    e[len].next = head[u];
-    head[u] = len++;
-} 
-void dfs(int u, int ban) {
-    cnt++; 
-    vis[u] = true;
-    for (int j = head[u]; j; j = e[j].next) {
-        v = e[j].v;
-        if (v == ban) continue; //不能通过ban点
-        if (!vis[v]) dfs(v, ban); 
-    }
-}
-int main() {
-    scanf(&quot;%d&quot;, &amp;t);
-    while (t--) {
-        len = 1;         
-        scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;a, &amp;b);
-        for (int i = 1; i &lt;= n; i++) head[i] = 0;
-        for (int i = 1; i &lt;= m; i++) {
-            scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
-            add(u, v);
-            add(v, u);
+int ans[100000+7];
+int main()
+{
+    int T;
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--)
+    {
+        int n;
+        scanf(&quot;%d&quot;,&amp;n);
+        if(n==3) {printf(&quot;7\n&quot;);continue;}
+        int dig=n/2;
+        int lef=n%2;
+        for(int i=1;i&lt;=dig;i++)
+        {
+            ans[i]=1;
         }
-        //统计a不能到达那些点（不通过b）
-        for (int i = 1; i &lt;= n; i++) vis[i] = false;
-        cnt = 0; //a 能到的点 (不通过b) 
-        dfs(a, b);  
-        ans[0] = n - cnt - 1; //多减1包括a点 
-         //统计b不能到达那些点 （不通过a）
-        for (int i = 1; i &lt;= n; i++) vis[i] = false;
-        cnt = 0;
-        dfs(b, a); 
-        ans[1] = n - cnt - 1;  
-        printf(&quot;%lld\n&quot;, (ll)ans[0] * ans[1]); 
-    } 
+        if(lef==1) ans[1]=7;
+        for(int i=1;i&lt;=dig;i++) printf(&quot;%d&quot;,ans[i]);
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" srcset="undefined" alt="11JP8U.png"></p>
+<h3 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h3><p>对于每一个前缀，我们用ans[i]记录前i个字符的$cnt0-cnt1$的值，同时$k=整个串的cnt0-cnt1=ans[last]$。</p>
+<p>那么比如，$ans[z]=h$，若前面有n个串的$cnt0-cnt1$=$x-h$，那么$x-h+ans[z]=x$,即可以找出一个值为x的串。</p>
+<p>即寻找$n*k=x-h=x-ans[z]$符合这个式子的z和n的对数。</p>
+<p>注意：空串也算答案！</p>
+<h3 id="Code：-1"><a href="#Code：-1" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+int ans[100000+7];
+char s[100000+5];
+int main()
+{
+    int T;
+    cin&gt;&gt;T;
+    while(T--)
+    {
+        int n,x,cnt0=0,cnt1=0;
+        scanf(&quot;%d%d&quot;,&amp;n,&amp;x);
+        scanf(&quot;%s&quot;,s);
+        for(int i=0;i&lt;n;i++)
+        {
+            if(s[i]-&#39;0&#39;==0) cnt0++;
+            else cnt1++;
+            ans[i]=cnt0-cnt1;
+        }
+        int k=cnt0-cnt1,flag=1,fin=0;
+        if(k==0)
+        {
+            for(int i=0;i&lt;n;i++)
+            {
+                if(ans[i]==x) {flag=0;break;}
+            }
+        }
+        if(flag==0)
+        {
+            printf(&quot;-1\n&quot;);
+            continue;
+        }
+        if(flag&amp;&amp;k==0) {printf(&quot;0\n&quot;);continue;}
+        for(int i=0;i&lt;n;i++)
+        {
+            if((x-ans[i])%k==0&amp;&amp;(x-ans[i])/k&gt;=0) fin++;
+        }
+        if(x==0) fin++;
+        printf(&quot;%d\n&quot;,fin);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" srcset="undefined" alt="11JeV1.png"></p>
+<h3 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h3><p> $pos[x][y]$代表第y个字母x的位置 这个位置有单调性是单增的，我们对t串的每一个字符在s串中进行查询，比如查询字母a,通过二分$dig[a-‘0’][ t  ]$对t二分出第一个大于当前s串指针的位置，如果二分不出来就把指针移到s串开头，从头开始二分，同时ans++。</p>
+<h3 id="Code：-2"><a href="#Code：-2" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+char t[100000+5];
+char s[100000+5];
+int pos[27][100000+5];
+int main()
+{
+    int T;
+    cin&gt;&gt;T;
+    while(T--)
+    {
+        scanf(&quot;%s&quot;,s);
+        scanf(&quot;%s&quot;,t);
+        int ed[27];
+        memset(ed,-1,sizeof ed);
+        int lens=strlen(s);
+        for(int i=0;i&lt;lens;i++)
+        {
+            int tep=s[i]-&#39;a&#39;;
+            ed[tep]++;
+            pos[tep][ed[tep]]=i;
+        }
+        int lent=strlen(t),ans=1,now=-1,flag=1;
+        for(int i=0;i&lt;lent;i++)
+        {
+            int tep=t[i]-&#39;a&#39;;
+            int l=0,r=ed[tep];
+            if(r==-1) {printf(&quot;-1\n&quot;);flag=0;break;}
+            while(l&lt;r)
+            {
+                int mid=(l+r)&gt;&gt;1;
+                if(pos[tep][mid]&gt;now) r=mid;
+                else l=mid+1;
+            }
+            if(l==ed[tep]&amp;&amp;pos[tep][l]&lt;=now)
+            {
+                now=-1;
+                ans++;
+                i--;
+                continue;
+            }
+            else now=pos[tep][l];
+        }
+        if(flag) printf(&quot;%d\n&quot;,ans);
+
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" srcset="undefined" alt="11JM8O.png"></p>
+<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" srcset="undefined" alt="11ay4I.png"></p>
+<h3 id="Code：-3"><a href="#Code：-3" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+ll phi(ll n)
+{
+    ll result = n; // Initialize result as n
+    for (ll p = 2; p * p &lt;= n; ++p) {
+        if (n % p == 0) {
+
+            while (n % p == 0)
+                n /= p;
+            result -= result / p;
+        }
+    }
+    if (n &gt; 1)
+        result -= result / n;
+    return result;
+}
+int main()
+{
+    ll t; cin &gt;&gt; t;
+    while(t--) {
+        ll a, m;
+        cin &gt;&gt; a &gt;&gt; m;
+
+        ll g = __gcd(a, m);
+
+        m /= g;
+        cout &lt;&lt; phi(m) &lt;&lt; endl;
+    }
     return 0;
 }
 </code></pre>
@@ -224,7 +336,7 @@ int main() {
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>
+                  <a class="hover-with-bg" href="/tags/ACM-Codeforces">ACM-Codeforces</a>
                 
               </span>
             
@@ -261,8 +373,8 @@ int main() {
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-        this.page.url = 'https://chillstepp.github.io/2020/01/23/Codeforces#606-B-Two-Fairs(DFS遍历图，链式前向星，思维)/';
-        this.page.identifier = '/2020/01/23/Codeforces#606-B-Two-Fairs(DFS遍历图，链式前向星，思维)/';
+        this.page.url = 'https://chillstepp.github.io/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
+        this.page.identifier = '/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
       };
       var oldLoad = window.onload;
       window.onload = function () {
@@ -401,7 +513,7 @@ int main() {
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Codeforces#606,B-Two_Fairs(DFS遍历图，链式前向星，思维)&nbsp;",
+        "Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
