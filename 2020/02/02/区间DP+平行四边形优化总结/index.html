@@ -14,7 +14,7 @@
   <meta name="description" content="一位在追梦路上的大二学生">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content>
-  <title>标签 ~ Chillstep</title>
+  <title>区间DP+平行四边形优化总结 ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -106,6 +106,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 二月 2日 2020, 5:51 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    844 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -116,22 +151,166 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center tagcloud">
-  <a href="/tags/ACM-Codeforces/" style="font-size: 15px; color: #bbe">ACM-Codeforces</a> <a href="/tags/ACM-动态规划/" style="font-size: 15px; color: #bbe">ACM-动态规划</a> <a href="/tags/ACM-图论/" style="font-size: 30px; color: #337ab7">ACM-图论</a> <a href="/tags/ACM-搜索/" style="font-size: 15px; color: #bbe">ACM-搜索</a> <a href="/tags/ACM-数据结构/" style="font-size: 15px; color: #bbe">ACM-数据结构</a> <a href="/tags/ACM-构造/" style="font-size: 15px; color: #bbe">ACM-构造</a> <a href="/tags/ACM-牛客多校/" style="font-size: 15px; color: #bbe">ACM-牛客多校</a> <a href="/tags/闲言碎语/" style="font-size: 15px; color: #bbe">闲言碎语</a>
-</div>
-              </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="区间DP-平行四边形优化总结"><a href="#区间DP-平行四边形优化总结" class="headerlink" title="区间DP+平行四边形优化总结"></a>区间DP+平行四边形优化总结</h1><h2 id="区间DP形式模板："><a href="#区间DP形式模板：" class="headerlink" title="区间DP形式模板："></a>区间DP形式模板：</h2><pre><code class="lang-c++">
+//n是区间长度，dp[i][j]存从i 到 j 区间合并的最优值
+//w[i][j]表示从i 到 j的花费
+for(i = 1;i &lt;= n;i++)
+    dp[i][i] = 初始值；
+for(len = 2;len &lt;= n;len++){//len选择区间长度
+    for(i = 1;i &lt;= n;i++){//枚举起点
+        j = i + len - 1;//合并终点
+        if(j &gt; n)break;//不可越界
+        for(k = i;k &lt; j;k++)//枚举分割点，寻找最优分割
+            dp[i][j] = max(dp[i][j], dp[i][k] + dp[k + 1][j] + w[i][j]);//状态转移
+    }
+}
+</code></pre>
+<h2 id="平行四边形优化："><a href="#平行四边形优化：" class="headerlink" title="平行四边形优化："></a>平行四边形优化：</h2><p>我们不难发现上面的复杂度为$O（n^3）$，通过平行四边形优化，可以将第三维枚举（枚举最优分割点）的范围大大缩小。</p>
+<h3 id="定理：二位决策单调性"><a href="#定理：二位决策单调性" class="headerlink" title="定理：二位决策单调性"></a>定理：二位决策单调性</h3><p>在转移方程$F[i,j]=min_{i\leq k&lt;j} \{F[i,k]+F[k+1,j]+w(i,j)\}$中,记S[i]为令F[i,j]取到最小值的K值。</p>
+<p>如果F满足四边形不等式，那么对于任意$i&lt;j$,有$P[i,j-1]\le P[i,j]\le P[i+1,j]$.</p>
+<h3 id="优化："><a href="#优化：" class="headerlink" title="优化："></a>优化：</h3><p>$P[i,j-1]\le P[i,j]\le P[i+1,j]$作为第三维的范围，这样就缩小了寻找最优分割点的次数</p>
+<h3 id="区间DP-四边形优化板子："><a href="#区间DP-四边形优化板子：" class="headerlink" title="区间DP+四边形优化板子："></a>区间DP+四边形优化板子：</h3><pre><code class="lang-c++">
+
+//n是区间长度，dp[i][j]存从i 到 j 区间合并的最优值
+//w[i][j]表示从i 到 j的花费， s[i][j]记录从i 到 j的最优分割点
+for(i = 1;i &lt;= n;i++){
+    dp[i][i] = 初始值；
+    s[i][i] = i;
+}
+for(len = 2;len &lt;= n;len++){//len选择区间长度
+    for(i = 1;i &lt;= n;i++){//枚举起点
+        j = i + len - 1;//合并终点
+        if(j &gt; n)break;//不可越界
+        for(k = s[i][j - 1];k &lt; s[i + 1][j];k++)//在最优分割点范围内枚举分割点（四边形优化）
+            if(dp[i][j] &gt; dp[i][k] + dp[k + 1][j] + w[i][j]){
+                dp[i][j] = dp[i][k] + dp[k + 1][j] + w[i][j];
+                s[i][j] = k;//更新最佳分割点
+            }
+    }
+}
+</code></pre>
+<h2 id="例题：HDU3561-Tree-Construction"><a href="#例题：HDU3561-Tree-Construction" class="headerlink" title="例题：HDU3561 Tree Construction"></a>例题：HDU3561 Tree Construction</h2><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=3516" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=3516</a></p>
+<p>转移方程：$dp[i][j]=min \{ dp[i][k-1]+dp[k][j] + dis(uni(i,k-1),uni(k,j))\}$</p>
+<p>其中$dp[i][j]$表示从$i$到$j$的最优解，$dis(i,j)$表示$i$和$j$之间的曼哈顿距离，$uni(i,j)$表示将$i$和$j$用平行于坐标轴的线段连在一起时的拐角点。</p>
+<p>然后可以证明这是满足四边形优化条件的。</p>
+<p>然后四边形优化一下就好。</p>
+<pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+const int inf=100000000;
+int dp[1000+5][1000+5];
+int s[1000+5][1000+5];
+int x[1000+5],y[1000+5];
+int main()
+{
+    int n;
+    while(scanf(&quot;%d&quot;,&amp;n)!=EOF)
+    {
+        for(int i=1;i&lt;=n;i++)
+        {
+             scanf(&quot;%d%d&quot;,&amp;x[i],&amp;y[i]);
+             //printf(&quot;i=%d\n&quot;,i);
+        }
+        for(int i=1;i&lt;=1000+2;i++) { s[i][i]=i;dp[i][i]=0;}//init
+        for(int len=1;len&lt;=n;len++)
+        {
+            for(int l=1;l+len&lt;=n;l++)
+            {
+                int r=l+len;
+                dp[l][r]=inf;
+                for(int k=s[l][r-1];k&lt;=s[l+1][r];k++)//四边形优化   单调决策性 :[s[i][j-1],s[i+1][j]]
+                {
+                    if(dp[l][k]+dp[k+1][r]+abs(x[k+1]-x[l])+abs(y[k]-y[r])&lt;=dp[l][r])
+                    {
+                        dp[l][r]=dp[l][k]+dp[k+1][r]+abs(x[k+1]-x[l])+abs(y[k]-y[r]);
+                        s[l][r]=k;
+                    }
+                }
+            }
+        }
+        printf(&quot;%d\n&quot;,dp[1][n]);
+    }
+    return 0;
+}
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/02/02/区间DP+平行四边形优化总结/';
+        this.page.identifier = '/2020/02/02/区间DP+平行四边形优化总结/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -206,6 +385,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -246,7 +430,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签&nbsp;",
+        "区间DP+平行四边形优化总结&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
