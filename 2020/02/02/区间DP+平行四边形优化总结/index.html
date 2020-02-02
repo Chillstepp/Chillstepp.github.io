@@ -175,7 +175,7 @@ for(len = 2;len &lt;= n;len++){//len选择区间长度
 }
 </code></pre>
 <h2 id="平行四边形优化："><a href="#平行四边形优化：" class="headerlink" title="平行四边形优化："></a>平行四边形优化：</h2><p>我们不难发现上面的复杂度为$O（n^3）$，通过平行四边形优化，可以将第三维枚举（枚举最优分割点）的范围大大缩小。</p>
-<h3 id="定理：二位决策单调性"><a href="#定理：二位决策单调性" class="headerlink" title="定理：二位决策单调性"></a>定理：二位决策单调性</h3><p>在转移方程$F[i,j]=min_{i\leq k&lt;j} \{F[i,k]+F[k+1,j]+w(i,j)\}$中,记S[i]为令F[i,j]取到最小值的K值。</p>
+<h3 id="定理：二位决策单调性"><a href="#定理：二位决策单调性" class="headerlink" title="定理：二位决策单调性"></a>定理：二位决策单调性</h3><p>在转移方程$F[i,j]=min_{i\leq k&lt;j} \{F[i,k]+F[k+1,j]+w(i,j)\}$中,记$P[i]$为令$F[i,j]$取到最小值的K值。</p>
 <p>如果F满足四边形不等式，那么对于任意$i&lt;j$,有$P[i,j-1]\le P[i,j]\le P[i+1,j]$.</p>
 <h3 id="优化："><a href="#优化：" class="headerlink" title="优化："></a>优化：</h3><p>$P[i,j-1]\le P[i,j]\le P[i+1,j]$作为第三维的范围，这样就缩小了寻找最优分割点的次数</p>
 <h3 id="区间DP-四边形优化板子："><a href="#区间DP-四边形优化板子：" class="headerlink" title="区间DP+四边形优化板子："></a>区间DP+四边形优化板子：</h3><pre><code class="lang-c++">
