@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="一位在追梦路上的大二学生">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content>
+  <title>数位DP总结+模板 ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css">
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/headpicture.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 二月 2日 2020, 6:23 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    2.3k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      9 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="数位DP总结-模板"><a href="#数位DP总结-模板" class="headerlink" title="数位DP总结+模板"></a>数位DP总结+模板</h1><h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><p>数位dp是一种计数用的dp，一般就是要统计一个区间[le,ri]内满足一些条件数的个数。所谓数位dp，字面意思就是在数位上进行dp咯。数位还算是比较好听的名字，数位的含义：一个数有个位、十位、百位、千位……数的每一位就是数位啦！<br>之所以要引入数位的概念完全就是为了dp。数位dp的实质就是换一种暴力枚举的方式，使得新的枚举方式满足dp的性质，然后记忆化就可以了。</p>
+<h2 id="一种新的枚举方式："><a href="#一种新的枚举方式：" class="headerlink" title="一种新的枚举方式："></a>一种新的枚举方式：</h2><p>两种不同的枚举：对于一个求区间[le,ri]满足条件数的个数，最简单的暴力枚举不方便记忆化，或者说根本无状态可言。<br>新的枚举：控制上界枚举，从最高位开始往下枚举，例如：ri=213，那么我们从百位开始枚举：百位可能的情况有0,1,2(觉得这里枚举0有问题的继续看)</p>
+<p>然后每一位枚举都不能让枚举的这个数超过上界213（下界就是0或者1，这个次要），当百位枚举了1，那么十位枚举就是从0到9，因为百位1已经比上界2小了，后面数位枚举什么都不可能超过上界。所以问题就在于：当高位枚举刚好达到上界是，那么紧接着的一位枚举就有上界限制了。具体的这里如果百位枚举了2，那么十位的枚举情况就是0到1，如果前两位枚举了21，最后一位之是0到3(这一点正好对于代码模板里的一个变量limit 专门用来判断枚举范围)。</p>
+<p>最后一个问题：最高位枚举0：百位枚举0，相当于此时我枚举的这个数最多是两位数，如果十位继续枚举0，那么我枚举的就是以为数咯，因为我们要枚举的是小于等于ri的所以数，当然不能少了位数比ri小的咯！(这样枚举是为了无遗漏的枚举，不过可能会带来一个问题，就是前导零的问题，模板里用lead变量表示，不过这个不是每个题目都是会有影响的，可能前导零不会影响我们计数，具体要看题目)</p>
+<p>由于这种新的枚举只控制了上界所以我们的Main函数总是这样：</p>
+<pre><code class="lang-c++">int main()
+{
+    long long le,ri;
+    while(~scanf(&quot;%lld%lld&quot;,&amp;le,&amp;ri))
+        printf(&quot;%lld\n&quot;,solve(ri)-solve(le-1));
+}
+</code></pre>
+<h2 id="数位DP板子-详解："><a href="#数位DP板子-详解：" class="headerlink" title="数位DP板子+详解："></a>数位DP板子+详解：</h2><pre><code class="lang-c++">typedef long long ll;
+int a[20];
+ll dp[20][state];//不同题目状态不同
+ll dfs(int pos,/*state变量*/,bool lead/*前导零*/,bool limit/*数位上界变量*/)//不是每个题都要判断前导零
+{
+    //递归边界，既然是按位枚举，最低位是0，那么pos==-1说明这个数我枚举完了
+    if(pos==-1) return 1;/*这里一般返回1，表示你枚举的这个数是合法的，那么这里就需要你在枚举时必须每一位都要满足题目条件，也就是说当前枚举到pos位，一定要保证前面已经枚举的数位是合法的。不过具体题目不同或者写法不同的话不一定要返回1 */
+    //第二个就是记忆化(在此前可能不同题目还能有一些剪枝)
+    if(!limit &amp;&amp; !lead &amp;&amp; dp[pos][state]!=-1) return dp[pos][state];
+    /*常规写法都是在没有限制的条件记忆化，这里与下面记录状态是对应，具体为什么是有条件的记忆化后面会讲*/
+    int up=limit?a[pos]:9;//根据limit判断枚举的上界up;这个的例子前面用213讲过了
+    ll ans=0;
+    //开始计数
+    for(int i=0;i&lt;=up;i++)//枚举，然后把不同情况的个数加到ans就可以了
+    {
+        if() ...
+        else if()...
+        ans+=dfs(pos-1,/*状态转移*/,lead &amp;&amp; i==0,limit &amp;&amp; i==a[pos]) //最后两个变量传参都是这样写的
+        /*这里还算比较灵活，不过做几个题就觉得这里也是套路了
+        大概就是说，我当前数位枚举的数是i，然后根据题目的约束条件分类讨论
+        去计算不同情况下的个数，还有要根据state变量来保证i的合法性，比如题目
+        要求数位上不能有62连续出现,那么就是state就是要保存前一位pre,然后分类，
+        前一位如果是6那么这意味就不能是2，这里一定要保存枚举的这个数是合法*/
+    }
+    //计算完，记录状态
+    if(!limit &amp;&amp; !lead) dp[pos][state]=ans;
+    /*这里对应上面的记忆化，在一定条件下时记录，保证一致性，当然如果约束条件不需要考虑lead，这里就是lead就完全不用考虑了*/
+    return ans;
+}
+ll solve(ll x)
+{
+    int pos=0;
+    while(x)//把数位都分解出来
+    {
+        a[pos++]=x%10;//个人老是喜欢编号为[0,pos),看不惯的就按自己习惯来，反正注意数位边界就行
+        x/=10;
+    }
+    return dfs(pos-1/*从最高位开始枚举*/,/*一系列状态 */,true,true);//刚开始最高位都是有限制并且有前导零的，显然比最高位还要高的一位视为0嘛
+}
+int main()
+{
+    ll le,ri;
+    while(~scanf(&quot;%lld%lld&quot;,&amp;le,&amp;ri))
+    {
+        //初始化dp数组为-1,这里还有更加优美的优化,后面讲
+        printf(&quot;%lld\n&quot;,solve(ri)-solve(le-1));
+    }
+}
+</code></pre>
+<h2 id="例题："><a href="#例题：" class="headerlink" title="例题："></a>例题：</h2><h3 id="HDU2089-不要62："><a href="#HDU2089-不要62：" class="headerlink" title="HDU2089-不要62："></a>HDU2089-不要62：</h3><p><strong>就是数位上不能有4也不能有连续的62，没有4的话在枚举的时候判断一下，不枚举4就可以保证状态合法了，所以这个约束没有记忆化的必要，而对于62的话，涉及到两位，当前一位是6或者不是6这两种不同情况我计数是不相同的，所以要用状态来记录不同的方案数。</strong><br><strong>$dp[pos][sta]$表示当前第$pos$位，前一位是否是6的状态，这里sta只需要去0和1两种状态就可以了，不是6的情况可视为同种，不会影响计数。</strong></p>
+<pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+
+int a[20];
+int dp[20][2];
+int dfs(int pos,int pre,int state,bool limit)
+{
+    if(pos==-1) return 1;
+    if(!limit&amp;&amp;dp[pos][state]!=-1) return dp[pos][state];
+    int up=limit?a[pos]:9;
+    int tep=0;
+    for(int i=0;i&lt;=up;i++)
+    {
+        if(pre==6&amp;&amp;i==2) continue;//62
+        if(i==4) continue;//4
+        tep+=dfs(pos-1,i ,i==6,limit&amp;&amp;i==a[pos]);
+    }
+    if(!limit) dp[pos][state]=tep;
+    return tep;
+}
+int solve(int x)
+{
+    int pos=0;
+    while(x)
+    {
+        a[pos++]=x%10;
+        x=x/10;
+    }
+    return dfs(pos-1,-1,0,true);
+}
+int main()
+{
+    int l,r;
+    while(scanf(&quot;%d%d&quot;,&amp;l,&amp;r)!=EOF&amp;&amp;(l||r))
+    {
+        memset(dp,-1,sizeof dp);
+        printf(&quot;%d\n&quot;,solve(r)-solve(l-1));
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="HDU3555-Bomb："><a href="#HDU3555-Bomb：" class="headerlink" title="HDU3555-Bomb："></a>HDU3555-Bomb：</h3><p><strong>一样，这个是不要49</strong></p>
+<pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+
+int a[20];
+ll dp[20][2];
+ll dfs(int pos,int pre,int state,bool limit)
+{
+    if(pos==-1) return 1;
+    if(!limit&amp;&amp;dp[pos][state]!=-1) return dp[pos][state];
+    int up=limit?a[pos]:9;
+    ll tep=0;
+    for(int i=0;i&lt;=up;i++)
+    {
+        if(pre==4&amp;&amp;i==9) continue;//49
+        //if(i==4) continue;//4
+        tep+=dfs(pos-1,i ,i==4,limit&amp;&amp;i==a[pos]);
+    }
+    if(!limit) dp[pos][state]=tep;
+    return tep;
+}
+ll solve(ll x)
+{
+    int pos=0;
+    while(x)
+    {
+        a[pos++]=x%10;
+        x=x/10;
+    }
+    return dfs(pos-1,-1,0,true);
+}
+int main()
+{
+    int T;
+    scanf(&quot;%d&quot;,&amp;T);
+    memset(dp,-1,sizeof dp);
+    while(T--)
+    {
+        ll x;
+        scanf(&quot;%lld&quot;,&amp;x);
+        printf(&quot;%lld\n&quot;,x-solve(x)+1);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="一些优化技巧："><a href="#一些优化技巧：" class="headerlink" title="一些优化技巧："></a>一些优化技巧：</h2><p><strong>第一:memset(dp,-1,sizeof dp);放在多组数据外面。</strong></p>
+<p>这一点是一个数位特点，使用的条件是：约束条件是每个数自身的属性，而与输入无关。<br>具体的：上一题不要62和4，这个约束对每一个数都是确定的，就是说任意一个数满不满足这个约束都是确定，比如444这个数，它不满足约束条件，不管你输入的区间是多少你都无法改变这个数不满足约束这个事实，这就是数自身的属性（我们每组数据只是在区间计数而已，只能说你输入的区间不包含444的话，我们就不把它统计在内，而无法改变任何事实）。<br>由此，我们保存的状态就可以一直用(注意还有要limit，不同区间是会影响数位在有限制条件下的上限的)<br>这点优化就不给具体题目了，这个还有进一步的扩展。不过说几个我遇到的简单的约束：<br>1.求数位和是10的倍数的个数,这里简化为数位sum%10这个状态，即dp[pos][sum]这里10 是与多组无关的，所以可以memset优化，不过注意如果题目的模是输入的话那就不能这样了。<br>2.求二进制1的数量与0的数量相等的个数，这个也是数自身的属性。</p>
+<h3 id="待补技巧："><a href="#待补技巧：" class="headerlink" title="待补技巧："></a>待补技巧：</h3><p>1.<a href="http://acm.hdu.edu.cn/showproblem.php?pid=4734" target="_blank" rel="noopener">HDU 4734</a> 所用到的相减技巧</p>
+<p>2.<a href="http://acm.hdu.edu.cn/showproblem.php?pid=3709" target="_blank" rel="noopener">HDU 3709</a> 这题就是要枚举中轴，然后数位dp</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/02/02/数位DP总结+模板+优化技巧/';
+        this.page.identifier = '/2020/02/02/数位DP总结+模板+优化技巧/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "数位DP总结+模板&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
