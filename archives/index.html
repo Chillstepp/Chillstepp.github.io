@@ -125,12 +125,18 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 10 篇文章</p>
+  <p class="h4">共计 11 篇文章</p>
   <hr>
   
     
       
       <p class="h5">2020</p>
+    
+    <a href="/2020/02/06/Codeforces Round #617 (Div. 3)全题解(A-F)/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Codeforces Round</span>
+      <span style="float: right;">02-06</span>
+    </a>
+  
     
     <a href="/2020/02/02/数位DP总结+模板+优化技巧/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">数位DP总结+模板</span>
@@ -188,13 +194,19 @@
       <span style="float: right;">09-16</span>
     </a>
   
-    
-    <a href="/2019/09/15/Meet-for-the-first-time/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Meet for the first time</span>
-      <span style="float: right;">09-15</span>
-    </a>
-  
 </div>
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
               </div>
