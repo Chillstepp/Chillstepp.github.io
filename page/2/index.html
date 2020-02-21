@@ -133,6 +133,52 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2019/11/01/ACM-树状数组基础/">
+        <p class="h4 index-header">ACM-树状数组基础</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">ACM- 树状数组我们约定：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。
+同时，最下面一行的数字所构成的数组为数组$a$.
+例如：C[2]管理的是 a[1],a[2].
+C[4]管理的是a[1],a[2],a[3],a[4].
+C[6]管理的是a[5],a[6].
+C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].
+操作函数1.lowbit()int lowbit(int x) 
+{
+  //算出x二进制的从右往左出现第一个1以及这个1之后的那些0组成数的二进制对应的十进制的数
+  return x &amp; -x;
+}
+
+意义：它可以求出数组c[x]管理几个数组a中的数。
+不难发现，每一个C[i]一定管理的数组a的下表的上限就是a[i]，那么往后找几个数呢，才是C[i]真正的管理范围呢？ 
+此时lowbit()函数就派上了用场，我们知道一个数组C[i]所管理的右端点，而且通过lowbit（i）我们就可以知道C[i]管理了几个数，因此我们就可以知道这个数组C[i]
+还是举上图的例子，比如所管理的范围了。
+2.add（x,k）单点</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-01&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">ACM-数据结构</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2019/09/16/2019牛客暑假多校训练（第一场）题解/">
         <p class="h4 index-header">2019牛客暑假多校训练（第一场）题解</p>
         
@@ -478,5 +524,20 @@ Github : https://github.com/Chillstepp
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
