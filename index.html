@@ -133,6 +133,44 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">
+        <p class="h4 index-header">《Hands-On-Machine-Learning》PART I</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">PART 1：The Fundamentals of Machine LearningCHAPTER 1 ：The Machine Learning Landscape （机器学习领域）什么是机器学习？例如，垃圾邮件过滤器是一个机器学习过程，可以学习标记垃圾邮件。系统用于学习的示例称为训练集。每个训练示例称为一个训练样本。在这种情况下，任务T是为新邮件标记垃圾邮件，E是训练数据，定义性能度量为P（比如p可以为是否正确区分出垃圾邮件），这种特殊的性能度量称为准确性，通常用于分类任务。
+为什么要使用机器学习？从上面的例子接着来看：
+1.首先你要关注的是典型的垃圾邮件长什么样，比如会有免费，信用卡等字眼
+2.您可以为您注意到的每个部分编写一个检测算法，如果检测到许多这样的部分，程序将把电子邮件标记为垃圾邮件。
+3.测试程序，并重复步骤1和步骤2，直到足够好为止。
+这是一种传统解决方法，如下图
+
+这样循环下来，你的程序很可能会变成一长串复杂的规则，也就是说它很难维护。
+相比之下，一个基于机器学习技术的垃圾邮件过滤器通过检测垃圾邮件示例中与非垃圾邮件示例相比单词的异常频率模式，自动学习哪些单词和</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Machine%20Learning">Machine Learning</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/22/Python-Notebook/">
         <p class="h4 index-header">Python Notebook</p>
         
@@ -569,46 +607,6 @@ int main()
       <div>
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/23/Codeforces#606-B-Two-Fairs(DFS遍历图，链式前向星，思维)/">
-        <p class="h4 index-header">Codeforces#606,B-Two_Fairs(DFS遍历图，链式前向星，思维)</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Codeforces #606 B-Two Fairs题意：https://codeforces.com/contest/1276/problem/b
-给出一个连通图（图中每个点都和任意其他点相通），现在给出n个点，m条边，和两个点a，b。求有多少点对一定要经过a，b点。
-思路：通过a点出发进行dfs，设置b点为禁止点（不能访问）,由于这个图是连通图，任意2点都是可达的，那么从a点出发发不通过a的能到达的点代表必须经过b才能到达。那么我们统计：
-a点出发不经过b不能到的点（必须经过b才能到的点） * 从b出发不经过a不能到的点（必须经过a才能到的点） = ans
-代码：#include &lt;cstdio&gt;
-typedef long long ll;
-const int N = 2e5 + 5, M = 5e5 + 5;
-//ans[0]保存a不通过b不能到的点 ans[1]保存b不通过a不能到的点 
-int head[N], len, cnt, t, n, m, a, b, u, v, ans[2];
-bool vis[N]; //看某个点是否访问过  
-struct edg</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-23&nbsp;&nbsp;
         
         
         
