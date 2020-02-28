@@ -133,6 +133,58 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities（SPFA优化）/">
+        <p class="h4 index-header">Codeforces 449B Jzzhu and Cities（SPFA优化）</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Codeforces 449B Jzzhu and Cities（SPFA优化）题意：
+
+前置知识：SPFA讲解：https://blog.csdn.net/qq_35644234/article/details/61614581
+code：建图方法很细节（mark一手
+题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const long long INF=0x3f3f3f3f3f3f3f;
+const int Maxn = 1e5+10;
+
+int cnt;
+vector &lt;pair&lt;int,int &gt; &gt; E[Maxn];
+int n,m,k;
+bool vis[Maxn];
+long long dis[Maxn];
+bool book[Maxn];
+queue &lt;int&gt; q;
+
+int main()
+{
+    int u,v,w;
+    memset(vis,0,sizeof(vis));
+    scanf(&</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/01/23/Codeforces#606-B-Two-Fairs(DFS遍历图，链式前向星，思维)/">
         <p class="h4 index-header">Codeforces#606,B-Two_Fairs(DFS遍历图，链式前向星，思维)</p>
         

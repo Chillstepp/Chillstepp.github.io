@@ -133,6 +133,56 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/28/Numpy数据分析基础/">
+        <p class="h4 index-header">Numpy数据分析基础</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Numpy模块学习numpy的基本属性import numpy as np
+
+array = np.array([[1,2,3],
+                  [2,3,4]])
+print(array)  # [[1 2 3]
+              #  [2 3 4]]
+
+print(&#39;number of dim:&#39;,array.ndim)  #维数  number of dim: 2
+print(&#39;shape:&#39;,array.shape)  #shape: (2, 3)
+print(&#39;size:&#39;,array.size)    #size: 6
+
+numpy创建的arrayimport numpy as np
+
+a = np.array([2,23,4],dtype=np.int)  #定义数据的类型
+print(a)  #[ 2 23  4]
+print(a.dtype)  #int32
+
+a = np.zeros((4,2))  #生成一个4行2列的全0矩阵
+print(a)
+
+a = np.ones((4,2))</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">
         <p class="h4 index-header">《Hands-On-Machine-Learning》PART I</p>
         
@@ -561,58 +611,6 @@ int main()
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-Codeforces">ACM-Codeforces</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities（SPFA优化）/">
-        <p class="h4 index-header">Codeforces 449B Jzzhu and Cities（SPFA优化）</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Codeforces 449B Jzzhu and Cities（SPFA优化）题意：
-
-前置知识：SPFA讲解：https://blog.csdn.net/qq_35644234/article/details/61614581
-code：建图方法很细节（mark一手
-题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const long long INF=0x3f3f3f3f3f3f3f;
-const int Maxn = 1e5+10;
-
-int cnt;
-vector &lt;pair&lt;int,int &gt; &gt; E[Maxn];
-int n,m,k;
-bool vis[Maxn];
-long long dis[Maxn];
-bool book[Maxn];
-queue &lt;int&gt; q;
-
-int main()
-{
-    int u,v,w;
-    memset(vis,0,sizeof(vis));
-    scanf(&</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>&nbsp;
           
         
       </div>
