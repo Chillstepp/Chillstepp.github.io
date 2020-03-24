@@ -119,7 +119,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    4.4k 字
+                    6.2k 字
                   </span>&nbsp;
                 
 
@@ -127,7 +127,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      15 分钟
+                      21 分钟
                   </span>&nbsp;
                 
 
@@ -277,11 +277,73 @@
 <p>可视化创建散点图，然后训练一个线性模型并进行预测：</p>
 <p><strong>Training and running a linear model using Scikit-Learn</strong> </p>
 <p>代码：</p>
-<pre><code>
+<pre><code class="lang-python">import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+# Load the data
+def prepare_country_stats(oecd_bli, gdp_per_capita):
+    oecd_bli = oecd_bli[oecd_bli[&quot;INEQUALITY&quot;]==&quot;TOT&quot;]
+    oecd_bli = oecd_bli.pivot(index=&quot;Country&quot;, columns=&quot;Indicator&quot;, values=&quot;Value&quot;)
+    gdp_per_capita.rename(columns={&quot;2015&quot;: &quot;GDP per capita&quot;}, inplace=True)
+    gdp_per_capita.set_index(&quot;Country&quot;, inplace=True)
+    full_country_stats = pd.merge(left=oecd_bli, right=gdp_per_capita,
+                                  left_index=True, right_index=True)
+    full_country_stats.sort_values(by=&quot;GDP per capita&quot;, inplace=True)
+    remove_indices = [0, 1, 6, 8, 33, 34, 35]
+    keep_indices = list(set(range(36)) - set(remove_indices))
+    return full_country_stats[[&quot;GDP per capita&quot;, &#39;Life satisfaction&#39;]].iloc[keep_indices]
 
-</code></pre><h3 id="机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）"><a href="#机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）" class="headerlink" title="机器学习的主要挑战（ Main Challenges Of Machine Learning）"></a>机器学习的主要挑战（ Main Challenges Of Machine Learning）</h3><p>////待补/////</p>
-<h3 id="测试与验证（Testing-and-Validating）"><a href="#测试与验证（Testing-and-Validating）" class="headerlink" title="测试与验证（Testing and Validating）"></a>测试与验证（Testing and Validating）</h3><p>////待补/////</p>
-
+oecd_bli = pd.read_csv(&quot;oecd_bli_2015.csv&quot;, thousands=&#39;,&#39;)
+gdp_per_capita = pd.read_csv(&quot;gdp_per_capita.csv&quot;,thousands=&#39;,&#39;,delimiter=&#39;\t&#39;,
+encoding=&#39;latin1&#39;, na_values=&quot;n/a&quot;)
+# Prepare the data
+country_stats = prepare_country_stats(oecd_bli, gdp_per_capita)
+X = np.c_[country_stats[&quot;GDP per capita&quot;]]
+y = np.c_[country_stats[&quot;Life satisfaction&quot;]]
+# Visualize the data
+country_stats.plot(kind=&#39;scatter&#39;, x=&quot;GDP per capita&quot;, y=&#39;Life satisfaction&#39;)
+plt.show()
+# Select a linear model
+lin_reg_model = LinearRegression()
+# Train the model
+lin_reg_model.fit(X, y)
+# Make a prediction for Cyprus
+X_new = [[22587]] # Cyprus&#39; GDP per capita
+print(lin_reg_model.predict(X_new)) # outputs [[ 5.96242338]]
+</code></pre>
+<h3 id="机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）"><a href="#机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）" class="headerlink" title="机器学习的主要挑战（ Main Challenges Of Machine Learning）"></a>机器学习的主要挑战（ Main Challenges Of Machine Learning）</h3><p>简而言之，由于您的主要任务是选择一种学习算法并对其进行数据训练，因此可能出错的两件事是“坏算法”和“坏数据”。让我们从坏数据的例子开始。</p>
+<h4 id="数据层面"><a href="#数据层面" class="headerlink" title="数据层面"></a>数据层面</h4><p><strong>培训数据数量不足（Insufficient Quantity of Training Data ）</strong></p>
+<p>机器学习还没有完全实现;大多数机器学习算法需要大量的数据才能正常工作。即使是非常简单的问题，你通常也需要成千上万的例子。</p>
+<p>在2001年发表的一篇著名论文中，微软研究员Michele Banko和Eric Brill  指出，包括相当简单的机器学习算法在内的各种不同的机器学习算法，一旦获得了足够的数据，在解决自然语言消除歧义的复杂问题上，其表现几乎是一样的好，如图：</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3Lfl26.png" srcset="undefined" alt="3Lfl26.png"></p>
+<p>这无疑体现了数据相对于算法的重要性。</p>
+<p><strong>非代表性的训练数据（Nonrepresentative Training Data ）</strong></p>
+<p>为了更好地泛化，重要的是您的训练数据要能够代表您想泛化到的新案例。无论您使用基于实例的学习还是基于模型的学习，这都是正确的。</p>
+<p>例如，我们之前用于训练线性模型的国家集并不完全具有代表性;有几个国家失踪了。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3LhkFA.png" srcset="undefined" alt="3LhkFA.png"></p>
+<p>如果你用这些数据训练一个线性模型，你会发现  ：而旧的模型用虚线表示。正如您所看到的，添加几个缺失的国家不仅会显著地改变模型，而且还清楚地表明，这样一个简单的线性模型可能永远不会很好地工作。非常富裕的国家似乎并不比中等富裕的国家更幸福(事实上，他们似乎更不幸福)，相反，一些贫穷的国家似乎比许多富裕的国家更幸福。</p>
+<p>通过使用非代表性的训练集，我们训练了一个不太可能做出准确预测的模型，特别是对于非常贫穷和非常富裕的国家。<br>使用一个能代表你想要了解的案例的培训集是至关重要的。这通常比听起来要困难:如果样本太小，就会产生采样噪声(即噪声)。但是，如果抽样方法有缺陷，即使是非常大的样本也可能不具有代表性。这叫做<strong>抽样偏差（sampling bias ）</strong>。</p>
+<p><strong>低质量数据（Poor-Quality Data ）</strong></p>
+<p>显然，如果您的训练数据充满了错误、异常值和噪声(例如，由于质量度量不佳)，那么系统将更难检测底层模式，因此您的系统不太可能表现良好。</p>
+<p><strong>无关的特性（Irrelevant Features）</strong></p>
+<p>机器学习项目成功的一个关键部分是提供一组良好的feature来进行训练，这叫做<strong>特征工程（feature engineering ）</strong>：</p>
+<p>•特性选择:在现有特性中选择最有用的特性进行培训。</p>
+<p>•特征提取:结合现有的特征，生成更有用的特征(正如我们前面看到的，降维算法可以提供帮助)。</p>
+<p>•通过收集新数据来创建新功能</p>
+<h4 id="算法层面"><a href="#算法层面" class="headerlink" title="算法层面"></a>算法层面</h4><p><strong>数据过拟合（overfitting the training data）</strong></p>
+<p>假设你在国外旅游，出租车司机把你敲诈了一顿。你可能会说那个国家所有的出租车司机都是小偷。过度概括是我们人类经常做的事情，不幸的是，如果我们不小心，机器也会落入同样的陷阱。</p>
+<p>在机器学习中，这被称为过度拟合:它意味着模型在训练数据上表现良好，但不能很好地泛化。</p>
+<p>比如预测GDP与幸福指数关系，拟合出了一个十分符合数据集的函数，但是很明显这是十分不可信的。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3L7t61.png" srcset="undefined" alt="3L7t61.png"></p>
+<p>当模型相对于训练数据的数量和噪声过于复杂时，就会发生过拟合。可能的解决办法是:<br>•通过选择参数较少的模型来简化模型(例如，一个线性模型而不是一个高次多项式模型)，通过减少训练数据中的属性数量或对模型进行约束</p>
+<p>•收集更多的培训数据</p>
+<p>•减少训练数据中的噪音(例如，修复数据错误并删除异常值)</p>
+<p>为了<strong>简化模型并降低过度拟合的风险</strong>而对模型进行约束称为<strong>正则化（regularization）</strong>。比如线性模型我们定义了两个参数$θ _0$和$θ _1$，所以这就给了算法两个维度的方向来训练，如果我们规定$\theta_0=0$，这样就只剩下了一个维度，也就是说直线只能进行上下移动，那么训练出的是一个均值的模型。如果我们允许算法修改$θ _1$，但我们迫使它让它很小,那么学习算法将有效地在一到两个维度之间。它将产生一个比有两个自由度时更简单的模型，但比只有一个自由度时更复杂。我们希望在<strong>完美地拟合数据</strong>和<strong>保持模型足够简单</strong>以确保它能够很好地泛化之间<strong>找到适当的平衡</strong>。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3LjWxe.png" srcset="undefined" alt="3LjWxe.png"></p>
+<p>学习过程中需要应用的正则化的数量可以由一个超参数控制。<strong>超参数</strong>是机器学习算法的参数(不是模型的参数)。因此，它不受学习算法本身的影响;它必须在训练前设置，并在训练中保持不变。如果你将正则化超参数设置为一个非常大的值，你会得到一个几乎平坦的模型(斜率接近于零);学习算法几乎肯定不会对训练数据进行过度拟合，但找到一个好的解决方案的可能性较小。<strong>调优超参数</strong>是构建机器学习系统的一个重要部分。</p>
+<h3 id="测试与验证（Testing-and-Validating）"><a href="#测试与验证（Testing-and-Validating）" class="headerlink" title="测试与验证（Testing and Validating）"></a>测试与验证（Testing and Validating）</h3>
             <hr>
           </div>
           <br>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="一位在追梦路上的大二学生">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content>
+  <title>OpenCv with Python for Image and Video Analysis(3/20) ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css">
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/bisa.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 三月 24日 2020, 10:57 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="OpenCv-with-Python-for-Image-and-Video-Analysis"><a href="#OpenCv-with-Python-for-Image-and-Video-Analysis" class="headerlink" title="OpenCv with Python for Image and Video Analysis"></a>OpenCv with Python for Image and Video Analysis</h1><h2 id="P1-intro-and-loading-Images"><a href="#P1-intro-and-loading-Images" class="headerlink" title="P1 intro and loading Images"></a>P1 intro and loading Images</h2><h3 id="1-利用cv2显示图像"><a href="#1-利用cv2显示图像" class="headerlink" title="1.利用cv2显示图像"></a><strong>1.利用cv2显示图像</strong></h3><pre><code class="lang-python">import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img = cv2.imread(&#39;cat.jpg&#39;,cv2.IMREAD_GRAYSCALE) #灰度图读入
+ #读图片
+ #IMREAD_GRAYSCALE = 0  灰度
+ #IMREAD_COLOR =  1   颜色
+ #IMREAD_UNCHANGE= -1  不变
+cv2.imshow(&#39;image&#39;, img)  #以窗口打开img，窗口名字叫做img
+cv2.waitKey(0)  #等待键入
+cv2.destroyAllWindows() #关闭所有窗口
+</code></pre>
+<h3 id="2-使用matplotlib显示图像"><a href="#2-使用matplotlib显示图像" class="headerlink" title="2.使用matplotlib显示图像"></a><strong>2.使用matplotlib显示图像</strong></h3><pre><code class="lang-python">import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img = cv2.imread(&#39;cat.jpg&#39;, cv2.IMREAD_GRAYSCALE)
+plt.imshow(img,cmap=&#39;gray&#39;,interpolation=&#39;bicubic&#39;)
+plt.plot([50,100],[80,100],&#39;c&#39;,linewidth=5)#linewidth=划线的宽度  &#39;c&#39;指线的颜色为青色
+plt.show()
+cv2.imwrite(&#39;gray.png&#39;, img)#保存img
+</code></pre>
+<p><strong>Colormap是MATLAB里面用来设定和获取当前色图的函数，可以设置如下色图：</strong>   </p>
+<p> <strong>hot 从黑平滑过度到红、橙色和黄色的背景色，然后到白色。</strong>    </p>
+<p><strong>cool 包含青绿色和品红色的阴影色。从青绿色平滑变化到品红色。</strong>    </p>
+<p><strong>gray 返回线性灰度色图。</strong>    </p>
+<p><strong>bone 具有较高的蓝色成分的灰度色图。该色图用于对灰度图添加电子的视图。</strong>    </p>
+<p><strong>white 全白的单色色图。</strong>     </p>
+<p><strong>spring 包含品红和黄的阴影颜色。</strong>     </p>
+<p><strong>summer 包含绿和黄的阴影颜色。</strong>    </p>
+<p><strong>autumn 从红色平滑变化到橙色，然后到黄色。</strong>     </p>
+<p><strong>winter 包含蓝和绿的阴影色。</strong></p>
+<h3 id="3-matplotlib中图片时rgb顺序，cv2中时bgr"><a href="#3-matplotlib中图片时rgb顺序，cv2中时bgr" class="headerlink" title="3.matplotlib中图片时rgb顺序，cv2中时bgr"></a><strong>3.matplotlib中图片时rgb顺序，cv2中时bgr</strong></h3><pre><code class="lang-python">import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img = cv2.imread(&#39;cat.jpg&#39;)
+b, g, r = cv2.split(img)
+img2 = cv2.merge([r, g, b])
+# img2 = img[:,:,::-1]    this can be faster
+plt.subplot(121) #subplot(xyz)的意思时分成x行y列个图 这是第z个图
+plt.imshow(img)  # expects distorted color
+plt.subplot(122)
+plt.imshow(img2)  # expects true color
+plt.show()
+
+cv2.imshow(&#39;bgr image&#39;, img)  # expects true color
+cv2.imshow(&#39;rgb image&#39;, img2)  # expects distrorted color
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+</code></pre>
+<p><img src="https://s1.ax1x.com/2020/03/22/8o902t.png" srcset="undefined" alt="8o902t.png"></p>
+<p><a href="https://imgchr.com/i/8oPxHO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/22/8oPxHO.th.png" srcset="undefined" alt="8oPxHO.th.png"></a><a href="https://imgchr.com/i/8oiPCd" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/22/8oiPCd.th.png" srcset="undefined" alt="8oiPCd.th.png"></a></p>
+<p>​           bgr  image                        rgb image</p>
+<h2 id="P2-loading-video-source"><a href="#P2-loading-video-source" class="headerlink" title="P2 loading video source"></a>P2 loading video source</h2><h3 id="1-加载摄像头"><a href="#1-加载摄像头" class="headerlink" title="1.加载摄像头"></a>1.加载摄像头</h3><pre><code class="lang-python">import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+cap = cv2.VideoCapture(0)
+while True:
+    ret, frame = cap.read()
+    cv2.imshow(&#39;frame&#39;, frame)
+    #gray = cv2.cvtColor(frame,cv2.COLOR_RGB2GRAY) 灰度图展示
+    #cv2.imshow(&#39;gray&#39;, gray)
+    if cv2.waitKey(1) == ord(&#39;q&#39;):
+        break
+cap.release()
+cv2.destroyAllWindows()
+</code></pre>
+<p><strong>1、cap = cv2.VideoCapture(0)</strong></p>
+<p>VideoCapture()中参数是0，表示打开笔记本的内置摄像头</p>
+<p>参数是视频文件路径则打开视频，如cap = cv2.VideoCapture(“../test.avi”)</p>
+<p><strong>2、ret,frame = cap.read()</strong></p>
+<p> cap.read()按帧读取视频，ret,frame是获cap.read()方法的两个返回值。其中ret是布尔值，如果读取帧是正确的则返回True，如果文件读取到结尾，它的返回值就为False。frame就是每一帧的图像，是个三维矩阵。</p>
+<p><strong>3、cv2.waitKey(1)，waitKey（）方法本身表示等待键盘输入</strong></p>
+<p><strong>参数是1</strong>，表示延时1ms切换到下一帧图像，对于视频而言；</p>
+<p><strong>参数为0</strong>，如cv2.waitKey(0)只显示当前帧图像，相当于视频暂停,；</p>
+<p><strong>参数过大</strong>，如cv2.waitKey(1000)，会因为延时过久而卡顿感觉到卡顿。</p>
+<p>得到的是键盘输入的ASCII码，<strong>ord(‘q’)</strong>表示q的ascii码</p>
+<p><strong>4、调用release()释放摄像头，调用destroyAllWindows()关闭所有图像窗口。</strong><br><strong>5.cv2.cvtColor(frame,cv2.COLOR_RGB2GRAY)</strong> 用于转换颜色</p>
+<h3 id="2-录制视频"><a href="#2-录制视频" class="headerlink" title="2.录制视频"></a>2.录制视频</h3><pre><code class="lang-python">import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+cap = cv2.VideoCapture(0)
+fourcc = cv2.VideoWriter_fourcc(*&#39;XVID&#39;)
+out = cv2.VideoWriter(&#39;output.avi&#39;, fourcc, 20.0, (640, 480))
+while True:
+    ret, frame = cap.read()
+    out.write(frame)
+    cv2.imshow(&quot;frame&quot;, frame)
+    if cv2.waitKey(1) == ord(&#39;q&#39;):
+        break
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+</code></pre>
+<p><strong>1.详解cv2.VideoWriter_fourcc对象(摘自Learning OpenCV3 Computer Vision with Python)</strong></p>
+<p>定义编码器：</p>
+<h1 id="fourcc意为四字符代码（Four-Character-Codes），顾名思义，该编码由四个字符组成-下面是VideoWriter-fourcc对象一些常用的参数，注意：字符顺序不能弄混"><a href="#fourcc意为四字符代码（Four-Character-Codes），顾名思义，该编码由四个字符组成-下面是VideoWriter-fourcc对象一些常用的参数，注意：字符顺序不能弄混" class="headerlink" title="fourcc意为四字符代码（Four-Character Codes），顾名思义，该编码由四个字符组成,下面是VideoWriter_fourcc对象一些常用的参数，注意：字符顺序不能弄混"></a>fourcc意为四字符代码（Four-Character Codes），顾名思义，该编码由四个字符组成,下面是VideoWriter_fourcc对象一些常用的参数，注意：字符顺序不能弄混</h1><h1 id="cv2-VideoWriter-fourcc-‘I’-‘4’-‘2’-‘0’-该参数是YUV编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘I’-‘4’-‘2’-‘0’-该参数是YUV编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘I’, ‘4’, ‘2’, ‘0’),该参数是YUV编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘I’, ‘4’, ‘2’, ‘0’),该参数是YUV编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘P’-‘I’-‘M’-‘I’-该参数是MPEG-1编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘P’-‘I’-‘M’-‘I’-该参数是MPEG-1编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘P’, ‘I’, ‘M’, ‘I’),该参数是MPEG-1编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘P’, ‘I’, ‘M’, ‘I’),该参数是MPEG-1编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘X’-‘V’-‘I’-‘D’-该参数是MPEG-4编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘X’-‘V’-‘I’-‘D’-该参数是MPEG-4编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘X’, ‘V’, ‘I’, ‘D’),该参数是MPEG-4编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘X’, ‘V’, ‘I’, ‘D’),该参数是MPEG-4编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘T’-‘H’-‘E’-‘O’-该参数是Ogg-Vorbis-文件名后缀为-ogv"><a href="#cv2-VideoWriter-fourcc-‘T’-‘H’-‘E’-‘O’-该参数是Ogg-Vorbis-文件名后缀为-ogv" class="headerlink" title="cv2.VideoWriter_fourcc(‘T’, ‘H’, ‘E’, ‘O’),该参数是Ogg Vorbis,文件名后缀为.ogv"></a>cv2.VideoWriter_fourcc(‘T’, ‘H’, ‘E’, ‘O’),该参数是Ogg Vorbis,文件名后缀为.ogv</h1><h1 id="cv2-VideoWriter-fourcc-‘F’-‘L’-‘V’-‘1’-该参数是Flash视频，文件名后缀为-flv"><a href="#cv2-VideoWriter-fourcc-‘F’-‘L’-‘V’-‘1’-该参数是Flash视频，文件名后缀为-flv" class="headerlink" title="cv2.VideoWriter_fourcc(‘F’, ‘L’, ‘V’, ‘1’),该参数是Flash视频，文件名后缀为.flv"></a>cv2.VideoWriter_fourcc(‘F’, ‘L’, ‘V’, ‘1’),该参数是Flash视频，文件名后缀为.flv</h1><p><strong>2.out = cv2.VideoWriter(‘output.avi’, fourcc, 20.0, (640, 480))</strong></p>
+<p>向视频文件写入一帧，输出成为output.avi文件，fourcc 指定编码器，fps=20.0 代表20帧，frameSize 要保存的文件的画面尺寸。</p>
+<h2 id="P3-drawing-and-writing-on-image"><a href="#P3-drawing-and-writing-on-image" class="headerlink" title="P3 drawing and writing on image"></a>P3 drawing and writing on image</h2>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/03/24/OpenCV/';
+        this.page.identifier = '/2020/03/24/OpenCV/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "OpenCv with Python for Image and Video Analysis(3/20)&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

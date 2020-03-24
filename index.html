@@ -133,6 +133,96 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/03/24/OpenCV/">
+        <p class="h4 index-header">OpenCv with Python for Image and Video Analysis(3/20)</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">OpenCv with Python for Image and Video AnalysisP1 intro and loading Images1.利用cv2显示图像import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img = cv2.imread(&#39;cat.jpg&#39;,cv2.IMREAD_GRAYSCALE) #灰度图读入
+ #读图片
+ #IMREAD_GRAYSCALE = 0  灰度
+ #IMREAD_COLOR =  1   颜色
+ #IMREAD_UNCHANGE= -1  不变
+cv2.imshow(&#39;image&#39;, img)  #以窗口打开img，窗口名字叫做img
+cv2.waitKey(0)  #等待键入
+cv2.destroyAllWindows() #关闭所有窗口
+
+2.使用matplotlib显示图像import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img = cv2.imre</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-24&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/03/24/2020AHU计算机视觉课ch1/">
+        <p class="h4 index-header">AHU计算机视觉课Ch1-改善图像质量</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机视觉课-改善图像质量Garbage in,garbage out.  对于cv来说，图像质量时十分重要，改善图像质量对cv十分有帮助.
+数字图像基础灰度图象：
+灰度图像可以看为一个二位数组（像素阵列），每个方格内的值对应着左方图片相应的像素的灰度值，范围是[0,255]，0是纯黑，255是纯白。
+
+彩色图象
+彩色图象有三个图象通道，分别是r,g,b。
+由此可以得出三通道图像的灰度值是三个单通道的灰度值的组合。灰度值为0-255，每个通道都是0-255，值越大图像看起来越亮，值越小图像越暗。
+灰度处理灰度变换：对数变换，指数变换，反转变换
+灰度变换就是要对每个像素点的灰度值进行改变，$T(r)$为一个关于输入灰度值和输出灰度值之间的函数关系，横坐标为输入灰度值，纵坐标为经过灰度变换的灰度值。
+上图也展示了几个常见的灰度变换函数$T(r ) $，比如对数函数，n次根函数可以用来增亮图像，n次幂，反对数函数则会把图象变暗，还有一类特殊的函数，叫反转变换，比如一个像素的灰度值是x，那么经过反转函数就变味了255-x。
+
+伽马变换
+$\gamma$  越小 ，灰度值越大，图象越亮。
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-24&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/28/Pandas数据分析基础/">
         <p class="h4 index-header">Pandas数据分析基础</p>
         
@@ -537,83 +627,6 @@ int main()
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-Codeforces">ACM-Codeforces</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/02/数位DP总结+模板+优化技巧/">
-        <p class="h4 index-header">数位DP总结+模板</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">数位DP总结+模板简介：数位dp是一种计数用的dp，一般就是要统计一个区间[le,ri]内满足一些条件数的个数。所谓数位dp，字面意思就是在数位上进行dp咯。数位还算是比较好听的名字，数位的含义：一个数有个位、十位、百位、千位……数的每一位就是数位啦！之所以要引入数位的概念完全就是为了dp。数位dp的实质就是换一种暴力枚举的方式，使得新的枚举方式满足dp的性质，然后记忆化就可以了。
-一种新的枚举方式：两种不同的枚举：对于一个求区间[le,ri]满足条件数的个数，最简单的暴力枚举不方便记忆化，或者说根本无状态可言。新的枚举：控制上界枚举，从最高位开始往下枚举，例如：ri=213，那么我们从百位开始枚举：百位可能的情况有0,1,2(觉得这里枚举0有问题的继续看)
-然后每一位枚举都不能让枚举的这个数超过上界213（下界就是0或者1，这个次要），当百位枚举了1，那么十位枚举就是从0到9，因为百位1已经比上界2小了，后面数位枚举什么都不可能超过上界。所以问题就在于：当高位枚举刚好达到上界是，那么紧接着的一位枚举就有上界限制了。具体的这里如果百位枚举了2，那么十位的枚举情况就是0到1，如果前两位枚</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-02&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/02/区间DP+平行四边形优化总结/">
-        <p class="h4 index-header">区间DP+平行四边形优化总结</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">区间DP+平行四边形优化总结区间DP形式模板：
-//n是区间长度，dp[i][j]存从i 到 j 区间合并的最优值
-//w[i][j]表示从i 到 j的花费
-for(i = 1;i &lt;= n;i++)
-    dp[i][i] = 初始值；
-for(len = 2;len &lt;= n;len++){//len选择区间长度
-    for(i = 1;i &lt;= n;i++){//枚举起点
-        j = i + len - 1;//合并终点
-        if(j &gt; n)break;//不可越界
-        for(k = i;k &lt; j;k++)//枚举分割点，寻找最优分割
-            dp[i][j] = max(dp[i][j], dp[i][k] + dp[k + 1][j] + w[i][j]);//状态转移
-    }
-}
-
-平行四边形优化：我们不难发现上面的复杂度为$O（n^3）$，通过平行四边形优化，可以将第三维枚举（枚举最优分割点）的范围大大缩小。
-定理：二位决策单调性在转移方程$F[i,j]=min_{i\leq</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-02&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>&nbsp;
           
         
       </div>
