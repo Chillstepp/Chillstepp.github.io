@@ -133,6 +133,46 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/04/10/后缀数组/">
+        <p class="h4 index-header">后缀数组(SA)+拓展应用</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">后缀数组（SA）+拓展应用什么是后缀数组？后缀后缀就是从字符串的某个位置i到字符串末尾的子串，我们定义以s的第i个字符为第一个元素的后缀为suff(i)
+后缀数组把s的每个后缀按照字典序排序
+后缀数组$sa[i]$就表示排名为i的后缀的起始位置的下标
+而它的映射数组$rk[i]$就表示起始位置的下标为i的后缀的排名
+简单来说，$sa$表示排名为i的是啥，$rk$表示第$i$个的排名是啥
+怎么求后缀数组？先说最暴力的情况，快排$O(n log n)$每个后缀，但是这是字符串，所以比较任意两个后缀的复杂度其实是$O(n)，$这样一来就是接近$O(n^2 log n)$的复杂度，复杂度太高，所以要优化，
+所以我们这里有两个优化。
+复杂度过高能不能优化呢？倍增首先读入字符串之后我们现根据单个字符排序，当然也可以理解为先按照每个后缀的第一个字符排序。对于每个字符，我们按照字典序给一个排名(当然可以并列)，这里称作关键字。
+(注：图片来自havana1)
+
+接下来我们再把相邻的两个关键字合并到一起，就相当于根据每一个后缀的前两个字符进行排序。想想看，这样就是以第一个字符(也就是自己本身)的排名为第</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-04-10&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84">ACM-后缀数组</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/03/31/AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔/">
         <p class="h4 index-header">AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔</p>
         
@@ -553,83 +593,6 @@ int main()
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97">ACM-算法竞赛进阶指南</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/15/Codeforces-Round-618-Div-2-全题解（A-E）/">
-        <p class="h4 index-header">Codeforces Round #618 (Div. 2)全题解（A-E）</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Codeforces Round #618 (Div. 2)全题解（A-E）比赛题目地址：https://codeforces.com/contest/1300
-
-
-
-
-#
-Name
-
-
-
-
-
-
-A
-Non-zero    standard input/output1 s, 256 MB
- 
- x10972
-
-
-B
-Assigning to Classes   standard input/output2 s, 256 MB
- 
- x9480
-
-
-C
-Anu Has a Function    standard input/output1 s, 256 MB
- 
- x4802
-
-
-D
-Aerodynamic    standard input/output1 s, 256 MB
- 
- x2146
-
-
-E
-Water Balance   standard input/output3 s, 256 MB
- 
- x839
-
-
-
-
-A.Non-zero#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-15&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-Codeforces">ACM-Codeforces</a>&nbsp;
           
         
       </div>
