@@ -1,170 +1,313 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
 
 
 
+  
 
 
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
-  <link rel="icon" type="image/png" href="/img/favicon1.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="description" content="">
-  <meta name="author" content="Chillstep">
-  <meta name="keywords" content="">
-  <title>Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解 ~ Chillstep</title>
-
-  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
-<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
-<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
-<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
 
 
 
-  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
-
-<link rel="stylesheet" href="/css/main.css"  >
 
 
-  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ACM-Codeforces," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解比赛链接：https:&#x2F;&#x2F;codeforces.com&#x2F;contest&#x2F;1295 A.Display The Number（思维+构造）题意： 思路：如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解">
+<meta property="og:url" content="https://chillstepp.github.io/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Chillstep">
+<meta property="og:description" content="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解比赛链接：https:&#x2F;&#x2F;codeforces.com&#x2F;contest&#x2F;1295 A.Display The Number（思维+构造）题意： 思路：如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/30/11GzEq.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/30/11JP8U.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/30/11JeV1.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/30/11JM8O.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/30/11ay4I.png">
+<meta property="article:published_time" content="2020-01-27T10:31:09.000Z">
+<meta property="article:modified_time" content="2020-01-30T14:34:23.550Z">
+<meta property="article:author" content="Chillstep">
+<meta property="article:tag" content="ACM-Codeforces">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/30/11GzEq.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chillstepp.github.io/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/"/>
+
+
+
+
+
+  <title>Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解 | Chillstep</title>
+  
+
+
+
+
+
+
 
 
 <meta name="generator" content="Hexo 4.2.1"></head>
 
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+  
+  
+    
+  
 
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-        
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
-          </li>
-        
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
-          </li>
-        
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
-          </li>
-        
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
-          </li>
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-          </li>
-        
-      </ul>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chillstep</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+      
+        <p class="site-subtitle">Reading enriches, thinking deepens, and conversation sobers.</p>
+      
   </div>
 
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
 
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="view intro-2" id="background"
-         style="background: url('/img/bisa.jfif')no-repeat center center;
-           background-size: cover;
-           background-attachment: fixed;">
-      <div class="full-bg-img">
-        <div class="mask rgba-black-light flex-center">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
-              
-            </span>
-
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
             
-              <br>
-              
-                <p class="mt-3">
-                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期一, 一月 27日 2020, 6:31 晚上
-                </p>
-              
-
-              <p>
-                
-                  
-                  &nbsp;<i class="far fa-chart-bar"></i>
-                  <span class="post-count">
-                    933 字
-                  </span>&nbsp;
-                
-
-                
-                  
-                  &nbsp;<i class="far fa-clock"></i>
-                  <span class="post-count">
-                      4 分钟
-                  </span>&nbsp;
-                
-
-                
-                  <!-- 不蒜子统计文章PV -->
-                  
-                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
-                  <span id="busuanzi_container_page_pv">
-                    <span id="busuanzi_value_page_pv"></span> 次
-                  </span>&nbsp;
-                
-              </p>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
       
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="py-5 z-depth-3" id="board">
-        <div class="post-content mx-auto" id="post">
-          <div class="markdown-body">
-            <h1 id="Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><a href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解" class="headerlink" title="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解"></a>Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</h1><p><strong>比赛链接：<a href="https://codeforces.com/contest/1295" target="_blank" rel="noopener">https://codeforces.com/contest/1295</a></strong></p>
-<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" srcset="undefined" alt="11GzEq.png"></p>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chillstepp.github.io/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chillstep">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chillstep">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-27T18:31:09+08:00">
+                2020-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><a href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解" class="headerlink" title="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解"></a>Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</h1><p><strong>比赛链接：<a href="https://codeforces.com/contest/1295" target="_blank" rel="noopener">https://codeforces.com/contest/1295</a></strong></p>
+<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" alt="11GzEq.png"></p>
 <h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。</p>
 <h3 id="Code："><a href="#Code：" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
@@ -192,7 +335,7 @@ int main()
     return 0;
 }
 </code></pre>
-<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" srcset="undefined" alt="11JP8U.png"></p>
+<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" alt="11JP8U.png"></p>
 <h3 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h3><p>对于每一个前缀，我们用ans[i]记录前i个字符的$cnt0-cnt1$的值，同时$k=整个串的cnt0-cnt1=ans[last]$。</p>
 <p>那么比如，$ans[z]=h$，若前面有n个串的$cnt0-cnt1$=$x-h$，那么$x-h+ans[z]=x$,即可以找出一个值为x的串。</p>
 <p>即寻找$n*k=x-h=x-ans[z]$符合这个式子的z和n的对数。</p>
@@ -241,7 +384,7 @@ int main()
     return 0;
 }
 </code></pre>
-<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" srcset="undefined" alt="11JeV1.png"></p>
+<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" alt="11JeV1.png"></p>
 <h3 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h3><p> $pos[x][y]$代表第y个字母x的位置 这个位置有单调性是单增的，我们对t串的每一个字符在s串中进行查询，比如查询字母a,通过二分$dig[a-‘0’][ t  ]$对t二分出第一个大于当前s串指针的位置，如果二分不出来就把指针移到s串开头，从头开始二分，同时ans++。</p>
 <h3 id="Code：-2"><a href="#Code：-2" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
@@ -293,8 +436,8 @@ int main()
     return 0;
 }
 </code></pre>
-<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" srcset="undefined" alt="11JM8O.png"></p>
-<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" srcset="undefined" alt="11ay4I.png"></p>
+<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" alt="11JM8O.png"></p>
+<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" alt="11ay4I.png"></p>
 <h3 id="Code：-3"><a href="#Code：-3" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
@@ -329,295 +472,396 @@ int main()
 }
 </code></pre>
 
-            <hr>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ACM-Codeforces/" rel="tag"># ACM-Codeforces</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities%EF%BC%88SPFA%E4%BC%98%E5%8C%96%EF%BC%89/" rel="next" title="Codeforces 449B Jzzhu and Cities（SPFA优化）">
+                <i class="fa fa-chevron-left"></i> Codeforces 449B Jzzhu and Cities（SPFA优化）
+              </a>
+            
           </div>
-          <br>
-          <div>
-            <p>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-              <span>
-                <i class="iconfont icon-tag"></i>
-                
-                  <a class="hover-with-bg" href="/tags/ACM-Codeforces">ACM-Codeforces</a>
-                
-              </span>
-            
-            </p>
-            
-              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              <a href="/2020/02/02/%E5%8C%BA%E9%97%B4DP+%E5%B9%B3%E8%A1%8C%E5%9B%9B%E8%BE%B9%E5%BD%A2%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" rel="prev" title="区间DP+平行四边形优化总结">
+                区间DP+平行四边形优化总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
-      </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
     </div>
-    <div class="d-none d-lg-block col-lg-2 toc-container">
-      
-  <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
-    <div id="tocbot"></div>
-  </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- custom -->
-
-
-<!-- Comments -->
-<div class="col-lg-7 mx-auto nopadding-md">
-  <div class="container comments mx-auto" id="comments">
-    
-      <br><br>
-      
-      
-  <div class="disqus" style="width:100%">
-    <div id="disqus_thread"></div>
-    <script>
-      var disqus_config = function () {
-        this.page.url = 'https://chillstepp.github.io/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
-        this.page.identifier = '/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
-      };
-      var oldLoad = window.onload;
-      window.onload = function () {
-        var d = document, s = d.createElement('script');
-        s.type = 'text/javascript';
-        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-      };
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
-        powered by Disqus.</a></noscript>
   </div>
 
 
-    
-  </div>
-</div>
+          </div>
+          
 
-    
-  </main>
+
+          
 
   
-    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
-      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
-    </a>
-  
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+
+
         </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chillstep</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><span class="nav-number">1.</span> <span class="nav-text">Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Display-The-Number（思维-构造）"><span class="nav-number">1.1.</span> <span class="nav-text">A.Display The Number（思维+构造）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意："><span class="nav-number">1.1.1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路："><span class="nav-number">1.1.2.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code："><span class="nav-number">1.1.3.</span> <span class="nav-text">Code：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Infinite-Prefixes（思维-构造转化）"><span class="nav-number">1.2.</span> <span class="nav-text">B. Infinite Prefixes（思维+构造转化）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意：-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code：-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">Code：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Obtain-The-String（二分-贪心）"><span class="nav-number">1.3.</span> <span class="nav-text">C-Obtain The String（二分+贪心）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意：-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code：-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">Code：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Same-GCDs（辗转相除法转化-phi）"><span class="nav-number">1.4.</span> <span class="nav-text">D-Same GCDs（辗转相除法转化+phi）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意：-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code：-3"><span class="nav-number">1.4.3.</span> <span class="nav-text">Code：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chillstep</span>
+
+  
 </div>
-  
 
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
-    <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
-    <br>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
 
     
-  
-    <!-- 不蒜子统计PV -->
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
-    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
-          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
-  
-  
-    <!-- 不蒜子统计UV -->
-    
-    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
-            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
-  
-  <br>
-
-
 
     
 
   </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script src="/lib/jquery/jquery.min.js" ></script>
-<script src="/lib/popper/popper.min.js" ></script>
-<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
-<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
-<script src="/js/main.js" ></script>
-
-
-  <script src="/js/lazyload.js" ></script>
-
-
-
-  
-    <script src="/lib/tocbot/tocbot.min.js" ></script>
-  
-  <script src="/js/post.js" ></script>
-
-
-
-  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
-
-
-
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-<!-- Plugins -->
-
 
   
 
-  
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
-  
 
-  
+
+
+
+
+
+
 
   
 
 
 
 
-  <script src="/lib/prettify/prettify.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      $('pre').addClass('prettyprint  linenums');
-      prettyPrint();
-    })
-  </script>
 
 
 
-  <script src="/lib/typed/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
 
 
 
-  <script src="/lib/anchor/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "false",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
 
-  <script src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      getSearchFile(path);
-      this.onclick = null
-    }
-  </script>
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
-  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
-  <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
-      }
-    );
-  </script>
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
 
 
 
   
 
   
-    <!-- MathJax -->
+
+  
+
+  
+  
+
+  
+  
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
-          tex2jax: {
-              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-              processEscapes: true,
-              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-          }
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
       });
-
-      MathJax.Hub.Queue(function() {
-          var all = MathJax.Hub.getAllJax(), i;
-          for(i=0; i < all.length; i += 1) {
-              all[i].SourceElement().parentNode.className += ' has-jax';
-          }
-      });
-
     </script>
 
-    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
-
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
+  
 
+  
 
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
