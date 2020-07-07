@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>Python Notebook ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/bisa.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期六, 二月 22日 2020, 10:26 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    2.8k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      13 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="Python-Notebook"><a href="#Python-Notebook" class="headerlink" title="Python Notebook"></a>Python Notebook</h1><h2 id="print"><a href="#print" class="headerlink" title="print()"></a>print()</h2><pre><code class="lang-python">print(1)
+print(&quot;we&#39;re the best&quot;)
+print(&#39;we are the best&#39;)
+print(&#39;we\&#39;re the best&#39;) 
+
+print(&quot;apple&quot;+&quot;car&quot;)
+print(&#39;apple&#39;+&#39;tree&#39;)
+
+print(&#39;apple&#39;+&#39;4&#39;)
+print(&#39;apple&#39;+str(4))
+
+print(1+2)
+print(&quot;1+2&quot;)
+print(int(&#39;1&#39;)+2)
+print(float(1.2)+2) #   &#39;1.2&#39;不可以转int
+</code></pre>
+<h2 id="数学："><a href="#数学：" class="headerlink" title="数学："></a>数学：</h2><pre><code class="lang-python">print(1+1)
+print(1-1)
+print(2*2)
+print(2^1)  #  异或xor
+print(2**3) #  高次幂
+print(8%3)  #  mod
+print(8//3) #  整除(下取整)
+</code></pre>
+<h2 id="自变量-variable"><a href="#自变量-variable" class="headerlink" title="自变量 variable"></a>自变量 variable</h2><pre><code class="lang-python">temp=999+1
+temp_2=1+temp
+print(temp,temp_2)
+</code></pre>
+<h2 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h2><pre><code class="lang-python">a=1
+while a&lt;10:
+    print(a)
+    a+=1
+</code></pre>
+<pre><code class="lang-python">while True:
+    print(&quot;123&quot;)
+</code></pre>
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><pre><code class="lang-python">example_list = [1,2,3,4,5]
+for i in example_list:
+    print(i)//-----
+    print(i+1)//---这两行都在for循环内(python十分看重结构)
+print(&quot;end&quot;)
+</code></pre>
+<pre><code class="lang-python">for i in range(1,10,2): #range(a,b,c) 为遍历范围[a,b)  步长为c，也可以直接range(a,b)默认步长为1
+    print(i)
+</code></pre>
+<pre><code class="lang-python">a = [7,6,5,4,3,2,1]
+for i in range(0,6): #range(a,b,c) 为遍历范围[a,b)  步长为c
+    print(a[i])
+</code></pre>
+<h2 id="if条件"><a href="#if条件" class="headerlink" title="if条件"></a>if条件</h2><pre><code class="lang-python">x=1
+y=2
+z=0
+if x&lt;y&gt;z:
+    print(&#39;x is less than y,and y is greater than z&#39;)
+a=1
+b=1
+if a==b:
+    print(&#39;a is equal to b&#39;)
+</code></pre>
+<pre><code class="lang-python">x=1
+y=2
+z=0
+if x&gt;y:
+    print(1)
+else:
+    print(2)
+</code></pre>
+<pre><code class="lang-python">x=1
+y=2
+z=0
+if x==1:
+    print(x)
+elif y==2:
+    print(y)
+else:
+    print(z)
+print(&#39;finished&#39;)
+</code></pre>
+<h2 id="def函数"><a href="#def函数" class="headerlink" title="def函数"></a>def函数</h2><pre><code class="lang-python">def f():
+    print(&#39;this is a f&#39;)
+f()
+</code></pre>
+<pre><code class="lang-python">def f(a,b):
+    c=a*b
+    print(c)
+f(1,2)
+</code></pre>
+<pre><code class="lang-python">def sale(price,color,brand,is_second=True): #提前定义好的值不能在未定义值的前面
+    print(&quot;price:&quot;,price,
+        &quot;color:&quot;,color,
+        &quot;brand:&quot;,brand,
+        &quot;second:&quot;,is_second)
+sale(1000,&quot;red&quot;,True,&quot;bmw&quot;)
+</code></pre>
+<pre><code class="lang-python">def fun(a):
+    return a*a
+b=1
+b+=fun(5)
+print(b)
+</code></pre>
+<h2 id="全局-amp-局部变量"><a href="#全局-amp-局部变量" class="headerlink" title="全局&amp;局部变量"></a>全局&amp;局部变量</h2><pre><code class="lang-python">def fun():
+    global a
+    a=20
+    return a*a
+print(fun()) #400
+print(a)   #20
+</code></pre>
+<h2 id="安装numpy模块"><a href="#安装numpy模块" class="headerlink" title="安装numpy模块"></a>安装numpy模块</h2><p><strong>cmd</strong>里直接<strong>pip install numpy</strong></p>
+<p>（如果需要更新输入<strong>python -m pip install —upgrade pip</strong>）</p>
+<h2 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h2><p>写入内容</p>
+<pre><code class="lang-python">text=&quot;this is my first text.\nThis is next line.&quot;
+# w是写 ，r是只读
+my_file=open(&#39;my file.txt&#39;,&#39;w&#39;)  #如果没有这个文件就会创建一个，且保存在.py文件同一个文件夹中
+my_file.write(text)
+my_file.close()
+</code></pre>
+<p>增加内容</p>
+<pre><code class="lang-python">text=&quot;\nThis is appended line.&quot;
+# w是写 ，r是只读, a是在原文件增加
+my_file=open(&#39;my file.txt&#39;,&#39;a&#39;)  #如果没有这个文件就会创建一个，且保存在.py文件同一个文件夹中
+my_file.write(text)
+my_file.close()
+</code></pre>
+<p>打印内容</p>
+<pre><code>my_file=open(&#39;my file.txt&#39;,&#39;r&#39;)  #如果没有这个文件就会创建一个，且保存在.py文件同一个文件夹中
+content=my_file.read()
+print(content)
+</code></pre><p>readline/readlines</p>
+<pre><code class="lang-python">my_file=open(&#39;my file.txt&#39;,&#39;r&#39;)  #如果没有这个文件就会创建一个，且保存在.py文件同一个文件夹中
+content=my_file.readline()#读完后，光标还在该行
+print(content)
+content=my_file.readlines()#紧跟着上次读完的地方开始读，且readlines会读从光标开始往后的所有内容
+print(content)
+</code></pre>
+<h2 id="class-类"><a href="#class-类" class="headerlink" title="class 类"></a>class 类</h2><pre><code class="lang-python">class Calculate:
+    name = &#39;Good calculator&#39;
+    price=18
+    def plus(self,x,y):
+        ans=x+y
+        return ans
+    def minus(self,x,y):
+        ans=x-y
+        return ans
+
+a=Calculate() 
+
+print(a.name)
+print(a.price)
+print(a.plus(2,3))
+</code></pre>
+<h2 id="类init功能"><a href="#类init功能" class="headerlink" title="类init功能"></a>类init功能</h2><p>含参构造函数</p>
+<pre><code class="lang-python">class Calculate:
+    name = &#39;Good calculator&#39;
+    price=18
+    def __init__(self,name,price,height):
+        self.name=name
+        self.price=price
+        self.h=height
+    def plus(self,x,y):
+        ans=x+y
+        return ans
+    def minus(self,x,y):
+        ans=x-y
+        return ans
+a=Calculate(&#39;bad calculator&#39;,15,12)
+print(a.name)
+print(a.price)
+print(a.plus(2,3))
+</code></pre>
+<h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><pre><code class="lang-python">a=input()  #输入 input返回值是字符串
+print(a)
+a=int(input())  #输入 input返回值是整数
+b=input(&#39;please give a number&#39;) #带提示字符输入
+print(b)
+</code></pre>
+<h2 id="元组-列表"><a href="#元组-列表" class="headerlink" title="元组 列表"></a>元组 列表</h2><p>这两者十分相似</p>
+<pre><code class="lang-python">a_tuple=(12,3,5,15,6)  #元组
+another_tuple=12,3,5,15,6   #这种写法也是元组
+a_list=[12,4,12,18,12]  #列表
+
+for content in a_list:   #把列表中的每一个数据赋值给content
+    print(content)
+for content in a_tuple:  # 把列表中的每一个数据赋值给content
+    print(content)
+for index in range(len(a_list)):
+    print(&#39;index=&#39;,index,&#39;number=&#39;,a_list[index])
+for index in range(len(a_tuple)):
+    print(&#39;index=&#39;,index,&#39;number=&#39;,a_list[index])
+</code></pre>
+<pre><code class="lang-python">a_list=[12,4,12,18,12]  #列表
+a_list.insert(1,0)  #.insert(x,y)  第x位插入一个y
+a_list.append(123)  #在列表后添加一个数字
+a_list.remove(12)  # .remove(value) 去掉第一次出现值为value的数字
+print(a_list)
+print(a_list[2])
+print(a_list[-1])  #-1会循环回去 ，索引到最后一个值
+print(a_list[0:3])    #打印第0-2位
+print(a_list[0:])     #打印第0-最后一位
+print(a_list.index(4))  #打印值为4的下标是多少
+print(a_list.count(12)) #打印某一个值出现的次数
+a_list.sort()  #从小到大
+print(a_list)
+a_list.sort(reverse=True)  # 从大到小排序
+print(a_list)
+</code></pre>
+<h2 id="多维列表"><a href="#多维列表" class="headerlink" title="多维列表"></a>多维列表</h2><pre><code class="lang-python">multi_list=[[1,2,3],[2,3,4],[3,4,5]]
+print(multi_list[1])
+print(multi_list[0][2])
+</code></pre>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><pre><code class="lang-python">a_list=[1,2,3,4,5]
+d={&#39;a&#39;:1,&#39;b&#39;:2,&#39;c&#39;:3} #字典
+d2={1:&#39;a&#39;,2:&#39;b&#39;,3:&#39;c&#39;}
+print(d[&#39;a&#39;])
+print(d2[2])
+
+del d[&#39;b&#39;]  #del 删除操作
+print(d)
+
+d[&#39;d&#39;]=4    #添加操作
+print(d)
+</code></pre>
+<p>字典套字典/字典套列表</p>
+<pre><code class="lang-python">d={&#39;a&#39;:[1,2,3],&#39;b&#39;:{&#39;c&#39;:3,5:&#39;e&#39;}}
+print(d[&#39;a&#39;][0])
+print(d[&#39;b&#39;][&#39;c&#39;])
+print(d[&#39;b&#39;][5])
+</code></pre>
+<h2 id="载入模块"><a href="#载入模块" class="headerlink" title="载入模块"></a>载入模块</h2><p>载入模块的四种方式</p>
+<pre><code class="lang-python">import time
+print(time.localtime())  #必须有time.才可以调用localtime()
+</code></pre>
+<pre><code class="lang-python">import time as t   #用t代替time
+print(t.localtime())
+</code></pre>
+<pre><code class="lang-python">from time import time,localtime  #只用time模块中的time和localtime这两个
+print(localtime())  #不用time.
+print(time())
+</code></pre>
+<pre><code class="lang-python">from time import*
+print(localtime())   #不用time.
+</code></pre>
+<h2 id="做一个自己的模块-脚本"><a href="#做一个自己的模块-脚本" class="headerlink" title="做一个自己的模块/脚本"></a>做一个自己的模块/脚本</h2><p>先自己写一个模块，并放在.py文件同根目录下</p>
+<p>这里我给他命名为 my_mod.py</p>
+<pre><code class="lang-python">def printdata(data):
+    print(data)
+</code></pre>
+<p>调用</p>
+<pre><code class="lang-python">import my_mod
+my_mod.printdata(&#39;test my mod&#39;)
+</code></pre>
+<h2 id="continue-break"><a href="#continue-break" class="headerlink" title="continue/break"></a>continue/break</h2><pre><code class="lang-python">while True:
+    b=int(input())
+    if b==1:
+        break
+    else:
+        pass
+</code></pre>
+<h2 id="错误处理Try"><a href="#错误处理Try" class="headerlink" title="错误处理Try"></a>错误处理Try</h2><p>下面这中方法可以输出错误信息，但是在pychram也可以做到，所以几乎用不到这种方法。</p>
+<pre><code class="lang-python">try:
+    file=open(&#39;eeee&#39;,&#39;r&#39;)
+except Exception as e:
+    print(e)
+</code></pre>
+<p>正确的用法出现在这种情况下：</p>
+<pre><code class="lang-python">try:
+    file=open(&#39;eeee&#39;,&#39;r+&#39;)
+except Exception as e:
+    print(&quot;no such file&quot;)
+    re=input(&#39;do you wanna creat a new file&#39;)
+    if re==&#39;yes&#39;:
+        file = open(&#39;eeee&#39;,&#39;w&#39;)
+        file.write(&quot;1234567&quot;)
+        file.close()
+    else:
+        pass
+else:
+    file.write(&quot;12345&quot;)
+    file.close()
+</code></pre>
+<h2 id="zip-lambda-map"><a href="#zip-lambda-map" class="headerlink" title="zip/lambda/map"></a>zip/lambda/map</h2><p>zip</p>
+<pre><code>a=[1,2,3]
+b=[4,5,6]
+c=list(zip(a,b))   # zip是一个操作，需要转换成list就是列表的形式了
+print(c)          # [(1, 4), (2, 5), (3, 6)]
+for i,j in zip(a,b):
+    print(i/2,i*2)
+#   0.5 2
+    1.0 4
+    1.5 6
+print(list(zip(a,a,b))) #三元组 [(1, 1, 4), (2, 2, 5), (3, 3, 6)]
+</code></pre><p>lambda</p>
+<p>和函数一样，常用来定义简单的函数</p>
+<pre><code class="lang-python">fun=lambda x,y:x+y
+print(fun(1,2)) #1+2=3
+</code></pre>
+<p>map</p>
+<pre><code class="lang-c++">fun=lambda x,y:x+y
+ans=list(map(fun,[3],[5]))
+print(ans)  #[8]
+ans=list(map(fun,[3,4,5],[6,7,8])) #[9, 11, 13]
+print(ans)
+</code></pre>
+<h2 id="浅复制-深复制-copy-amp-deepcopy"><a href="#浅复制-深复制-copy-amp-deepcopy" class="headerlink" title="浅复制/深复制 copy&amp;deepcopy"></a>浅复制/深复制 copy&amp;deepcopy</h2><p>赋值操作中的copy</p>
+<pre><code class="lang-python">a=[1,2,3]
+b=a
+print(id(a),id(b)) #1881324445568 1881324445568
+b[0]=15  #改变b后a也会改变，因为他俩地址都一样，你在地址上改，肯定两者都会改变
+print(a) # [15, 2, 3]
+print(b) # [15, 2, 3]
+</code></pre>
+<p>copy模块中的浅复制 copy</p>
+<pre><code class="lang-python">import copy
+a=[1,2,3]
+b=copy.copy(a)
+print(id(a),id(b))  #2007218349376 2007217831232
+b[0]=15
+print(a)  #[1, 2, 3]
+print(b)  #[15, 2, 3]
+</code></pre>
+<p>copy模块中的深复制 deepcopy</p>
+<p>什么是深复制？为什么要深复制？</p>
+<p>看一下下面这个例子</p>
+<pre><code class="lang-python">import copy
+a=[1,2,[3,4]]
+b=copy.copy(a)
+print(id(a[0])==id(b[0]))  #true
+print(id(a[2][0])==id(b[2][0]))  #true
+b[2][0]=15
+print(a)  #[1, 2, [15, 4]]
+print(b)  #[1, 2, [15, 4]]
+</code></pre>
+<p>可以发现列表中的列表并没有被改变地址</p>
+<p>因此需要deepcopy 相当于完完全全的重新复制出的一个东西，地址都不同</p>
+<pre><code>import copy
+a=[1,2,[3,4]]
+b=copy.deepcopy(a)
+print(id(a[0])==id(b[0]))    #true
+print(id(a[2][0])==id(b[2][0]))   #true
+b[2][0]=15
+print(id(a[2][0])==id(b[2][0]))   #flase
+print(a)  #[1, 2, [3, 4]]
+print(b)  #[1, 2, [15, 4]]
+</code></pre><p><strong>Q：上面这个例子有一点很奇怪，就是用了deepcopy/copy后为什么地址还是不变呢？</strong></p>
+<p> <strong>A：因为python里万物都是对象，所以数字也是对象。a[0]和b[0]是两个不同的指针，但他们指向的都是”数字1”这个对象的地址，所以他们的id()是相同的。</strong></p>
+<p><strong>id(a[2])!=id(b[2])是因为值不同了</strong></p>
+<h2 id="pickle模块"><a href="#pickle模块" class="headerlink" title="pickle模块"></a>pickle模块</h2><p>有时候用python处理数据需要很长时间，暂停后我们希望下次接着处理，这时候就要用到pickle模块</p>
+<p>写入pickle文件</p>
+<pre><code class="lang-python">import pickle
+a={&#39;a&#39;:1,&#39;b&#39;:2,&#39;c&#39;:3}
+file=open(&#39;example.pickle&#39;,&#39;wb&#39;)   #wb为二进制写入
+pickle.dump(a,file) #dump是倒入的意思 也就是把a倒入到file中
+file.close()
+</code></pre>
+<pre><code class="lang-python">import pickle
+file=open(&#39;example.pickle&#39;,&#39;rb&#39;)
+b=pickle.load(file)  #加载上一次存入的
+file.close()
+print(b)  #{&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}
+</code></pre>
+<p>也可以直接这样用with，就免去了file.close()这一步</p>
+<pre><code class="lang-python">import pickle
+with open(&#39;example.pickle&#39;,&#39;rb&#39;) as file:
+    b=pickle.load(file)  #加载上一次存入的
+print(b)
+</code></pre>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><pre><code class="lang-python">a={&#39;e&#39;,&#39;a&#39;,&#39;b&#39;,&#39;a&#39;,&#39;a&#39;,&#39;c&#39;,&#39;a&#39;}
+print(set(a))  #{&#39;b&#39;, &#39;e&#39;, &#39;c&#39;, &#39;a&#39;} 去重
+s=&#39;this is my test&#39; #{&#39;y&#39;, &#39;t&#39;, &#39; &#39;, &#39;i&#39;, &#39;e&#39;, &#39;s&#39;, &#39;m&#39;, &#39;h&#39;}
+print(set(s))
+</code></pre>
+<pre><code class="lang-python">a={&#39;e&#39;,&#39;a&#39;,&#39;b&#39;,&#39;a&#39;,&#39;a&#39;,&#39;c&#39;,&#39;a&#39;}
+b=set(a)  #此时b也变成了set类型
+b.add(&#39;x&#39;)  #set中在结尾添加不是append 而是add
+print(b)    #{&#39;a&#39;, &#39;e&#39;, &#39;b&#39;, &#39;c&#39;, &#39;x&#39;}
+b.add(&#39;a&#39;)
+print(b)   #{&#39;b&#39;, &#39;a&#39;, &#39;c&#39;, &#39;x&#39;, &#39;e&#39;}
+b.remove(&#39;x&#39;)  #去掉一个值
+print(b)   #{&#39;e&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;}
+b.discard(&#39;w&#39;)  #discard 与remove功能相同，但是remove不可以去掉本身就不存在的数据且会报错，而discard不会报错而是返回原来的值
+print(b)
+b.clear()  #清空set
+print(b)   #set()  清空
+set1={&#39;a&#39;,&#39;b&#39;,&#39;c&#39;}
+set2={&#39;a&#39;,&#39;x&#39;,&#39;y&#39;}
+print(set1.difference(set2))  #   .difference()找出不同返回数据  {&#39;c&#39;, &#39;b&#39;}
+print(set1.intersection(set2)) # .intersection()找出相同的值  {&#39;a&#39;}
+</code></pre>
+<p>set中怎么sort？</p>
+<pre><code class="lang-python">a={&#39;e&#39;,&#39;a&#39;,&#39;b&#39;,&#39;a&#39;,&#39;a&#39;,&#39;c&#39;,&#39;a&#39;}
+b=set(a)    #此时b也变成了set类型
+print(b)    #{&#39;a&#39;, &#39;e&#39;, &#39;b&#39;, &#39;c&#39;, &#39;x&#39;}
+c=list(b)   #转换成list
+c.sort()  
+print(c)    #[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;e&#39;]
+</code></pre>
+<h2 id="RegEx正则表达"><a href="#RegEx正则表达" class="headerlink" title="RegEx正则表达"></a>RegEx正则表达</h2><p>正则表达式 (Regular Expression) 又称 RegEx, 是用来匹配字符的一种工具. 在一大串字符中寻找你需要的内容. 它常被用在很多方面, 比如网页爬虫, 文稿整理, 数据筛选等等. 最简单的一个例子, 比如我需要爬取网页中每一页的标题. 而网页中的标题常常是这种形式.</p>
+<p>不用特意记忆，用的时候查一下即可</p>
+<p><img src="https://morvanzhou.github.io/static/results/basic/13-10-01.png" srcset="undefined" alt="正则表达式"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/02/22/Python-Notebook/';
+        this.page.identifier = '/2020/02/22/Python-Notebook/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Python Notebook&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
