@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>2019牛客暑假多校训练（第一场）题解 ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/bisa.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 九月 16日 2019, 11:40 中午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.4k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      8 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="2019牛客暑期多校训练营（第一场）"><a href="#2019牛客暑期多校训练营（第一场）" class="headerlink" title="2019牛客暑期多校训练营（第一场）"></a>2019牛客暑期多校训练营（第一场）</h1><h2 id="A-Equivalent-Prefixes"><a href="#A-Equivalent-Prefixes" class="headerlink" title="A-Equivalent Prefixes"></a>A-Equivalent Prefixes</h2><h2 id="（单调栈，思维，笛卡尔树）"><a href="#（单调栈，思维，笛卡尔树）" class="headerlink" title="（单调栈，思维，笛卡尔树）"></a>（单调栈，思维，笛卡尔树）</h2><pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int maxn=1e5+10;
+int ans1[maxn],ans2[maxn];
+int val1[maxn],val2[maxn];
+struct node
+{
+    int val,index;
+};
+
+int main()
+{
+    int n,i;
+    stack&lt;node&gt; s;
+    while(cin&gt;&gt;n)
+    {
+        for(i=1;i&lt;=n;i++)
+        cin&gt;&gt;val1[i];
+        for(i=1;i&lt;=n;i++)
+        cin&gt;&gt;val2[i];
+        val1[0]=val2[0]=-1;
+        for(i=n;i&gt;=0;i--)
+        {
+            while(!s.empty()&amp;&amp;s.top().val&gt;val1[i])
+            {
+                ans1[s.top().index]=i;
+                s.pop();
+            }
+            s.push(node{val1[i],i});
+        }
+        for(i=n;i&gt;=0;i--)
+        {
+            while(!s.empty()&amp;&amp;s.top().val&gt;val2[i])
+            {
+                ans2[s.top().index]=i;
+                s.pop();
+            }
+            s.push(node{val2[i],i});
+        }
+        for(i=1;i&lt;=n;i++)
+        {
+             if(ans1[i]!=ans2[i])
+             break;
+        }
+        cout&lt;&lt;i-1&lt;&lt;endl;  
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="B-Integration"><a href="#B-Integration" class="headerlink" title="B-Integration"></a>B-Integration</h2><h2 id="（数学积分推导，分式分解技巧，快速幂，逆元）"><a href="#（数学积分推导，分式分解技巧，快速幂，逆元）" class="headerlink" title="（数学积分推导，分式分解技巧，快速幂，逆元）"></a>（数学积分推导，分式分解技巧，快速幂，逆元）</h2><p>写这道题首先要知道 部分分式分解 这个技巧：</p>
+<p>假定$p_1$,$p_2$,………$p_n$均为实数，且无重根，例如，考虑如下的变换式求其逆变换：</p>
+<p>$F(s)=\frac{A(s)}{(s-p_1)(s-p_2)(s-p_3)}$</p>
+<p>式子中分母多项式的阶次高于分子多项式的阶次。这时$F(s)$可以分解为以下形式：</p>
+<p>$F(s)=\frac{K_1}{(s-p_1)}+\frac{K_2}{(s-p_2)}+\frac{K_3}{(s-p_3)}$</p>
+<p>其中 $K_i=(s-p_i)F(s)|（s=p_i)$</p>
+<p>知道这个结论后，开开始看原题的那个式子：$\frac{1}{\pi}\int_1^\infty\frac{1}{\prod_{i=1}^{n}(a^2_i+x^2)}dx$</p>
+<p>先考虑$\frac{1}{\prod_{i=1}^{n}(a^2_i+x^2)}$，我们可以用上面的公式进行变换，得到：</p>
+<p>$\sum_{i=1}^n\frac{C_i}{(a^2_i+x^2)}$  其中 $C_i=\frac{1}{\prod_{i!=j}^{}(a^2_j-a^2_i)}$</p>
+<p>因此原式：$\frac{1}{\pi}\int_1^\infty\frac{1}{\prod_{i=1}^{n}(a^2_i+x^2)}dx=\sum_1^n\frac{C_i}{2a_i}\pi$</p>
+<p>所以暴力就完事了。</p>
+<pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+
+#define int long long
+
+using namespace std;
+
+const int N = 1e3+5;
+const int Mod = 1e9+7;
+int a[N];
+
+inline int qpow(int a,int b){
+    a%=Mod;
+    int res = 1;
+    while(b){
+        if(b&amp;1) res = res*a%Mod;
+        a = a*a%Mod;
+        b&gt;&gt;=1;
+    }
+    return res;
+}
+
+inline int inv(int x){
+    return qpow(x,Mod-2);
+}
+
+int32_t main() {
+
+    ios_base::sync_with_stdio(false);cin.tie(0);
+
+    int n;
+    while(cin&gt;&gt;n){
+        for(int i=0;i&lt;n;i++){
+            cin&gt;&gt;a[i];
+        }
+        int ans = 0;
+        for(int i=0;i&lt;n;i++){
+            int p = 1;
+            for(int j=0;j&lt;n;j++){
+                if(i==j) continue;
+                p = p*((a[j]*a[j]-a[i]*a[i])%Mod)%Mod;
+            }
+            p = 2*a[i]*p%Mod;
+            p = inv(p);
+            ans = (ans+Mod+p)%Mod;
+        }
+
+        cout&lt;&lt;ans&lt;&lt;endl;
+
+    }
+
+    return 0;
+}
+</code></pre>
+<h2 id="C-Euclidean-Distance"><a href="#C-Euclidean-Distance" class="headerlink" title="C-  Euclidean Distance"></a>C-  Euclidean Distance</h2><p>照着唯神的思路写的，没用分数类，导致最后细节太多还是没处理好。<br>放一个正解，没用标解中的拉格朗日乘数法。<br><img src="https://img-blog.csdnimg.cn/20190719233158421.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTUzMTMz,size_16,color_FFFFFF,t_70" srcset="undefined" alt="在这里插入图片描述"></p>
+<h2 id="数学推导"><a href="#数学推导" class="headerlink" title="(数学推导)"></a>(数学推导)</h2><pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+const int maxn=10000;
+int m,n;
+struct frac
+{
+    ll p,q;
+    frac(){}
+    frac(ll _p,ll _q)
+    {
+        if(_p&lt;0&amp;&amp;_q&lt;0) _p=-_p,_q=-_q;
+        else
+            if(_q&lt;0) _q=-_q,_p=-_p;
+        //cout&lt;&lt;&quot;ce &quot;&lt;&lt;_p&lt;&lt; &quot; &quot;&lt;&lt;_q&lt;&lt;endl;
+        p=_p/__gcd(abs(_p),abs(_q));
+        q=_q/__gcd(abs(_p),abs(_q));
+        //cout&lt;&lt;&quot;ce &quot;&lt;&lt;p&lt;&lt; &quot; &quot;&lt;&lt;q&lt;&lt;endl;
+    }
+    bool operator &lt; (const frac &amp;x) const
+    {
+        return p*x.q&lt;q*x.p;
+    }
+    bool operator &lt;= (const frac &amp;x) const
+    {
+        return p*x.q&lt;=q*x.p;
+    }
+    bool operator == (const frac &amp;x) const
+    {
+        return p==x.p&amp;&amp;q==x.q;
+    }
+    frac operator + (const frac &amp;x)
+    {
+        return frac(p*x.q+q*x.p,q*x.q);
+    }
+    frac operator * (const frac &amp;x)
+    {
+        return frac(p*x.p,q*x.q);
+    }
+    frac operator / (const frac &amp;x)
+    {
+        return frac(p*x.q,q*x.p);
+    }
+    frac operator - (const frac &amp;x)
+    {
+        return frac(p*x.q-q*x.p,q*x.q);
+    }
+}a[maxn+5];
+int main()
+{
+
+    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;m)!=EOF)
+    {
+        for(int i=1;i&lt;=n;++i)
+        {
+            int x;
+            scanf(&quot;%d&quot;,&amp;x);
+            a[i]=frac(x,m);
+        }
+        sort(a+1,a+n+1);
+        //for(int i=1;i&lt;=n;++i) cout&lt;&lt;a[i].p&lt;&lt;&quot; &quot;&lt;&lt;a[i].q&lt;&lt;endl;
+        frac now(1,1);
+        frac left(1,1);
+        frac pos(0,0);
+        for(int i=n-1;i&gt;=1;--i)
+            if((a[i+1]-a[i])*now&lt;=left) left=left-(a[i+1]-a[i])*now,now.p+=1;
+            else
+            {
+                pos=a[i+1]-left/now;
+                break;
+            }
+       // cout&lt;&lt;&quot;left : &quot;&lt;&lt;left.p&lt;&lt;&quot; &quot;&lt;&lt;left.q&lt;&lt;endl;
+        //cout&lt;&lt;now.p&lt;&lt;endl;
+        if(pos.p==0&amp;&amp;pos.q==0)
+        {
+           // assert(now.p==n);
+           //a[1]-left/now
+            //cout&lt;&lt;&quot;ok&quot;&lt;&lt;endl;
+            pos=a[1]-left/now;
+            //cout&lt;&lt;pos.p&lt;&lt;&quot; &quot;&lt;&lt;pos.q&lt;&lt;endl;
+        }
+        frac ans(0,1);
+        for(int i=1;i+now.p&lt;=n;++i) ans=ans+a[i]*a[i];
+        ans=ans+now*pos*pos;
+        if(ans.p==0) printf(&quot;0\n&quot;);
+        else if(ans.q==1) printf(&quot;%lld\n&quot;,ans.p);
+        else printf(&quot;%lld/%lld\n&quot;,ans.p,ans.q);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="F-Random-Point-in-Triangle"><a href="#F-Random-Point-in-Triangle" class="headerlink" title="F-Random Point in Triangle"></a>F-Random Point in Triangle</h2><h2 id="数学推导，期望"><a href="#数学推导，期望" class="headerlink" title="(数学推导，期望)"></a>(数学推导，期望)</h2><p>选三个中点，连接中线，利用中心的性质即可得出，具体推倒不算特别简单，还需要再画辅助线，代换等数学推导。</p>
+<p>其实最简单的方法就是猜性质，我们画一个特例的等边三角形来算，这样节省了许多不必要的计算。</p>
+<pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+
+#define int long long
+using namespace std;
+
+
+int32_t main() {
+
+    ios_base::sync_with_stdio(false);cin.tie(0);
+
+    int x1,x2,x3,y1,y2,y3;
+    while(cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2&gt;&gt;x3&gt;&gt;y3){
+        int s = (x1*y2+x2*y3+x3*y1-x1*y3-x2*y1-x3*y2)*11;
+        cout&lt;&lt;abs(s)&lt;&lt;endl;
+    }
+
+    return 0;
+}
+</code></pre>
+<h2 id="J-Fraction-Comparision"><a href="#J-Fraction-Comparision" class="headerlink" title="J-Fraction Comparision"></a>J-Fraction Comparision</h2><h2 id="签到题"><a href="#签到题" class="headerlink" title="(签到题)"></a>(签到题)</h2><p>C++:</p>
+<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main()
+{
+    long long int x,a,y,b;
+    while(scanf(&quot;%lld%lld%lld%lld&quot;,&amp;x,&amp;a,&amp;y,&amp;b)!=EOF){
+        long long int i,o;
+        i=x/a;
+        o=y/b;
+        if(i&gt;o)printf(&quot;&gt;\n&quot;);
+        else if(i&lt;o) printf(&quot;&lt;\n&quot;);
+        else {
+            x=x%a*b;y=y%b*a;
+            if(x&gt;y)printf(&quot;&gt;\n&quot;);
+            else if(x&lt;y) printf(&quot;&lt;\n&quot;);
+            else printf(&quot;=\n&quot;);
+        }
+    }
+    return 0;
+ }
+</code></pre>
+<p>python：</p>
+<pre><code class="lang-python">import sys
+
+for line in sys.stdin:
+    a,b,c,d = map(int,line.split(&#39; &#39;))
+    if a*d&gt;b*c:
+        print(&#39;&gt;&#39;)
+    elif a*d==b*c:
+        print(&#39;=&#39;)
+    elif a*d&lt;b*c:
+        print(&#39;&lt;&#39;)
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2019/09/16/2019牛客暑假多校训练（第一场）题解/';
+        this.page.identifier = '/2019/09/16/2019牛客暑假多校训练（第一场）题解/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "2019牛客暑假多校训练（第一场）题解&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>算法竞赛进阶指南(第一章-基本算法)做题记录 ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/bisa.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期三, 二月 19日 2020, 10:35 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    2.8k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      15 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="《算法竞赛进阶指南》第一章-基础算法"><a href="#《算法竞赛进阶指南》第一章-基础算法" class="headerlink" title="《算法竞赛进阶指南》第一章-基础算法"></a>《算法竞赛进阶指南》第一章-基础算法</h1><h1 id="位运算⋙"><a href="#位运算⋙" class="headerlink" title="位运算⋙"></a>位运算⋙</h1><h2 id="89-a-b（快速幂）"><a href="#89-a-b（快速幂）" class="headerlink" title="89.a^b（快速幂）"></a>89.a^b（快速幂）</h2><pre><code class="lang-c++">//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=200000+7;
+
+ll ksm(ll n,ll x,ll p)
+{
+    ll ans=1;
+    ans=ans%p;
+    while(x)
+    {
+        if(x&amp;1) ans=ans*n%p;
+        n=n*n%p;
+        x&gt;&gt;=1;
+    }
+    return ans;
+}
+int main()
+{
+    ll a,b,p;
+    cin&gt;&gt;a&gt;&gt;b&gt;&gt;p;
+    cout&lt;&lt;ksm(a,b,p)&lt;&lt;endl;
+
+    return 0;
+}
+</code></pre>
+<h2 id="90-64位整数乘法"><a href="#90-64位整数乘法" class="headerlink" title="90.64位整数乘法"></a>90.64位整数乘法</h2><pre><code class="lang-c++">//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=200000+7;
+
+ll multi_big(ll a,ll b,ll p)
+{
+    ll ans=0;
+    while(b)
+    {
+        if(b&amp;1) ans=(ans+a)%p;
+        a=a*2%p;
+        b&gt;&gt;=1;
+    }
+    return ans;
+}
+int main()
+{
+    ll a,b,p;
+    cin&gt;&gt;a&gt;&gt;b&gt;&gt;p;
+    cout&lt;&lt;multi_big(a,b,p)&lt;&lt;endl;
+
+    return 0;
+}
+</code></pre>
+<h1 id="递推与递归⋙"><a href="#递推与递归⋙" class="headerlink" title="递推与递归⋙"></a>递推与递归⋙</h1><h2 id="※91-最短Hamilton路径（位运算，状压DP）"><a href="#※91-最短Hamilton路径（位运算，状压DP）" class="headerlink" title="※91.最短Hamilton路径（位运算，状压DP）"></a>※91.最短Hamilton路径（位运算，状压DP）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/93/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/93/</a></p>
+<pre><code class="lang-c++">//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=10+7;
+const double pi=cos(-1);
+
+int dp[(1&lt;&lt;20)+2][20];//第一维是当前状态，第二维是达到当前状态时走到了哪一个点。
+int mp[20+3][20+3];
+int hamilton(int n)
+{
+    memset(dp,0x3f,sizeof dp);
+    dp[1][0]=0;
+    for(int i=1;i&lt;(1&lt;&lt;n);i++)//枚举每一种状态
+    {
+        for(int j=0;j&lt;n;j++)//选择该种状态下的一个位置
+        {
+            if((i&gt;&gt;j)&amp;1)
+            {
+                for(int k=0;k&lt;n;k++)
+                {
+                    if((i^(1&lt;&lt;j))&gt;&gt;k&amp;1)
+                    {
+                        dp[i][j]=min(dp[i][j],dp[i^(1&lt;&lt;j)][k]+mp[k][j]);
+                    }
+                }
+            }
+        }
+    }
+    return dp[(1&lt;&lt;n)-1][n-1];
+}
+
+
+
+int main()
+{
+    int n;
+    cin&gt;&gt;n;
+    for(int i=0;i&lt;n;i++)
+        for(int j=0;j&lt;n;j++)
+            cin&gt;&gt;mp[i][j];
+    cout&lt;&lt;hamilton(n)&lt;&lt;endl;
+    return 0;
+}
+</code></pre>
+<h2 id="92-递归实现指数型枚举（二进制枚举）"><a href="#92-递归实现指数型枚举（二进制枚举）" class="headerlink" title="92. 递归实现指数型枚举（二进制枚举）"></a>92. 递归实现指数型枚举（二进制枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/94/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/94/</a></p>
+<pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main()
+{
+    int n;
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i=0; i&lt;=(1&lt;&lt;n)-1; i++)
+    {
+        for(int j=n; j&gt;=1; j--)
+        {
+            if((i&gt;&gt;j-1)&amp;1)
+                printf(&quot;%d &quot;,n-j+1);
+        }
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="93-递归实现组合型枚举（递归枚举）"><a href="#93-递归实现组合型枚举（递归枚举）" class="headerlink" title="93. 递归实现组合型枚举（递归枚举）"></a>93. 递归实现组合型枚举（递归枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/95/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/95/</a></p>
+<pre><code class="lang-c++">//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=10+7;
+const double pi=cos(-1);
+
+vector&lt;int&gt; chosen;
+int n,m;
+void calc(int x)
+{
+    if(chosen.size()==m)
+    {
+        for(int i=0;i&lt;chosen.size();i++)
+        {
+            printf(&quot;%d &quot;,chosen[i]);
+        }
+        printf(&quot;\n&quot;);
+        return;
+    }
+    if(x&gt;n) return;
+    chosen.push_back(x);
+    calc(x+1);
+    chosen.pop_back();
+    calc(x+1);
+}
+int main()
+{
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    calc(1);
+    return 0;
+}
+</code></pre>
+<h2 id="※94-递归实现排列型枚举（递归排列枚举）"><a href="#※94-递归实现排列型枚举（递归排列枚举）" class="headerlink" title="※94. 递归实现排列型枚举（递归排列枚举）"></a>※94. 递归实现排列型枚举（递归排列枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/96/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/96/</a></p>
+<pre><code class="lang-c++">//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=10+7;
+const double pi=cos(-1);
+
+
+int order[20];
+bool chosen[20];
+int n;
+void calc(int k)
+{
+    if(k==n+1)
+    {
+        for(int i=1; i&lt;=n; i++)
+        {
+            printf(&quot;%d &quot;,order[i]);
+        }
+        printf(&quot;\n&quot;);
+        return;
+    }
+    for(int i=1; i&lt;=n; i++)
+    {
+        if(chosen[i])
+            continue;
+        order[k]=i;
+        chosen[i]=true;
+        calc(k+1);
+        chosen[i]=false;
+        order[k]=0;
+    }
+}
+int main()
+{
+    scanf(&quot;%d&quot;,&amp;n);
+    calc(1);
+    return 0;
+}
+</code></pre>
+<h2 id="95-费解的开关（思维-递推-二进制）"><a href="#95-费解的开关（思维-递推-二进制）" class="headerlink" title="95. 费解的开关（思维+递推+二进制）"></a>95. 费解的开关（思维+递推+二进制）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/description/97/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/description/97/</a></p>
+<p>递推，枚举第一层，下面只要是0就改变。</p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=500+7;
+const double pi=cos(-1);
+
+char mp[8][8];
+int m[8][8];
+int T;
+void change(int x,int y)
+{
+    if(x+1&lt;=5&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x+1][y]=m[x+1][y]^1;
+    if(x-1&gt;=1&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x-1][y]=m[x-1][y]^1;
+    if(y-1&gt;=1&amp;&amp;x&gt;=1&amp;&amp;x&lt;=5) m[x][y-1]=m[x][y-1]^1;
+    if(y+1&lt;=5&amp;&amp;x&gt;=1&amp;&amp;x&lt;=5) m[x][y+1]=m[x][y+1]^1;
+    if(x&gt;=1&amp;&amp;x&lt;=5&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x][y]=m[x][y]^1;
+}
+bool check()
+{
+    for(int i=1;i&lt;=5;i++)
+        for(int j=1;j&lt;=5;j++)
+            if(m[i][j]!=1) return false;
+    return true;
+}
+int main()
+{
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--)
+    {
+        for(int i=1;i&lt;=5;i++) scanf(&quot;%s&quot;,mp[i]+1);
+        int ans=INF;
+        for(int i=0;i&lt;(1&lt;&lt;5);i++)
+        {
+            int step=0;
+            for(int j=1;j&lt;=5;j++)
+                for(int k=1;k&lt;=5;k++)
+                    m[j][k]=mp[j][k]-&#39;0&#39;;
+            for(int j=1;j&lt;=5;j++)
+                if(((i&gt;&gt;(j-1))&amp;1)==0) {change(1,j);step++;}
+            for(int j=2;j&lt;=5;j++)
+                for(int k=1;k&lt;=5;k++)
+                    if(!m[j-1][k]) {change(j,k);step++;}
+            if(check()==true&amp;&amp;step&lt;=6) ans=min(ans,step);
+        }
+        if(ans==INF) printf(&quot;-1\n&quot;);
+        else printf(&quot;%d\n&quot;,ans);
+
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="96-奇怪的汉诺塔（DP-递推）"><a href="#96-奇怪的汉诺塔（DP-递推）" class="headerlink" title="96. 奇怪的汉诺塔（DP+递推）"></a>96. 奇怪的汉诺塔（DP+递推）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/98/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/98/</a></p>
+<p>这里的汉诺塔有四个桩子，但我们可以从三个桩子入手。</p>
+<p>三个桩子递推很容易推出 式子$f[i]=2*f[i-1]+1$ 其中i为圆盘数</p>
+<p>那么在考虑四个桩子的情况，我们不妨把四个桩子i个圆盘需要的操作次数设为dp[i]</p>
+<p>考虑如何构造转移方程：</p>
+<p>加入我们先转移$j$个 那么就还剩$n-i$个需要转移，这$n-i$个转移的时候有一个桩已经被开始的j个占据了，也就是说还剩下三个桩子，这时候用上面的$f[n-i]$就是三个桩子的情况下转移到另一处的耗费。</p>
+<p>最后我们需要把转移的两个桩子合并在一起，需要$dp[j]$</p>
+<p>转移方程为$dp[i]=min(dp[i],dp[j]+dp[j]+f[i-j])$</p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=500+7;
+const double pi=cos(-1);
+
+int f[25],dp[25];
+int main()
+{
+    f[1]=1;
+    for(int i=2; i&lt;=12; i++)
+        f[i]=2*f[i-1]+1;
+    memset(dp,0x3f,sizeof dp);
+    dp[0]=0;
+    for(int i=1; i&lt;=12; i++)
+        for(int j=0; j&lt;i; j++)
+            dp[i]=min(dp[i],dp[j]+dp[j]+f[i-j]);
+    for(int i=1;i&lt;=12;i++) printf(&quot;%d\n&quot;,dp[i]);
+    return 0;
+}
+</code></pre>
+<h2 id="97-约数之和（矩阵快速幂-分治-逆元-特判）"><a href="#97-约数之和（矩阵快速幂-分治-逆元-特判）" class="headerlink" title="97. 约数之和（矩阵快速幂+分治/逆元+特判）"></a>97. 约数之和（矩阵快速幂+分治/逆元+特判）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/99/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/99/</a></p>
+<p>算贡献就好,可以分治也可以逆元来做，但是注意一点，由于模数为9901，所以费马小定理不能直接用，只有当$gcd(p,a)=1$时才可以用（<del>把我恶心坏了，看了一个小时找不出来错误</del>），所以要特判解决这个问题,当这个式子$gcd(p,a)=1$成立时单独拿出来加到ans中去，像下面这样。</p>
+<pre><code class="lang-c++">    if((p[i]-1)%MOD==0)
+    {
+        for(int j=1;j&lt;=cnt[i];j++)
+        {
+            ans=(ans+ksm(p[i],j,MOD))%MOD;
+        }
+    }
+</code></pre>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=5e7+7;
+const int MOD=9901;
+const double pi=cos(-1);
+//复杂度log2(x)
+ll ksm(int n,int x,int p)//n^x%p
+{
+    long long int ans=1;
+    ans=ans%p;//如果模数p=1，没这步会直接输出ans=1，而正确答案应该是0
+    while(x)
+    {
+        if(x&amp;1) ans=ans*1ll*n%p;//1ll防止溢出
+        n=n*1ll*n%p;
+        x&gt;&gt;=1;
+    }
+    return ans;
+}
+int gcd(int a,int b)
+{
+    return b==0?a:gcd(b,a%b);
+}
+int p[MAXN],cnt[MAXN];
+int main()
+{
+    int a,b;
+    cin&gt;&gt;a&gt;&gt;b;
+    int num=0;
+    for(int i=2;i&lt;=a;i++)
+    {
+        while(a%i==0)
+        {
+            if(p[num]!=i) num++;
+            p[num]=i;
+            cnt[num]++;
+            a=a/i;
+        }
+    }
+    for(int i=1;i&lt;=num;i++) cnt[i]=cnt[i]*b;
+    ll ans=1;
+    for(int i=1;i&lt;=num;i++)
+    {
+        if((p[i]-1)%MOD==0)
+        {
+            for(int j=1;j&lt;=cnt[i];j++)
+            {
+                ans=(ans+ksm(p[i],j,MOD))%MOD;
+            }
+        }
+        else
+        {
+            ll c1=ksm(p[i],cnt[i]+1,MOD);
+            c1=c1+MOD;
+            ans=ans*(c1-1)*ksm(p[i]-1,MOD-2,MOD)%MOD;
+        }
+    }
+    if(a==0) printf(&quot;0&quot;);
+    else if(b==0) printf(&quot;1&quot;);
+    else printf(&quot;%lld&quot;,ans);
+    return 0;
+}
+</code></pre>
+<h2 id="98-分形之城（线性代数坐标变换-规律-递归-分形图）"><a href="#98-分形之城（线性代数坐标变换-规律-递归-分形图）" class="headerlink" title="98. 分形之城（线性代数坐标变换+规律+递归+分形图）"></a>98. 分形之城（线性代数坐标变换+规律+递归+分形图）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/100/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/100/</a></p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=5e7+7;
+const int MOD=9901;
+const double pi=cos(-1);
+
+pll cal(ll n,ll m)
+{
+    if(n==0) return {0,0};
+    ll len=1ll&lt;&lt;n-1,cnt=1ll&lt;&lt;2*n-2;
+    auto pos=cal(n-1,m%cnt);
+    auto x=pos.first,y=pos.second;
+    auto z=m/cnt;
+    if(z==0) return {y,x};
+    if(z==1) return {x,y+len};
+    if(z==2) return {x+len,y+len};
+    else return {2*len-1-y,len-1-x};
+}
+int main()
+{
+    int T;
+    cin&gt;&gt;T;
+    while(T--)
+    {
+        ll n,a,b;
+        cin&gt;&gt;n&gt;&gt;a&gt;&gt;b;
+        auto ac=cal(n,a-1);
+        auto bc=cal(n,b-1);
+        double x=ac.first-bc.first;
+        double y=ac.second-bc.second;
+        printf(&quot;%.0f\n&quot;,sqrt(x*x+y*y)*10);
+    }
+    return 0;
+}
+</code></pre>
+<h1 id="前缀和⋙"><a href="#前缀和⋙" class="headerlink" title="前缀和⋙"></a>前缀和⋙</h1><h2 id="99-激光炸弹（二位前缀和-思维）"><a href="#99-激光炸弹（二位前缀和-思维）" class="headerlink" title="99.激光炸弹（二位前缀和+思维）"></a>99.激光炸弹（二位前缀和+思维）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/101/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/101/</a></p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=5000+4;
+const int MOD=9901;
+const double pi=cos(-1);
+
+int n,r;
+int max_r,max_c;
+int s[MAXN][MAXN];
+int main()
+{
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;r);
+    max_r=max_c=r;//很重要！！
+    for(int i=1;i&lt;=n;i++)
+    {
+        int x,y,w;
+        scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;w);
+        x++;
+        y++;
+        s[x][y]=w;
+        max_r=max(max_r,x);
+        max_c=max(max_c,y);
+    }
+    for(int i=1;i&lt;=max_r;i++)
+    {
+        for(int j=1;j&lt;=max_c;j++)
+        {
+            s[i][j]=s[i-1][j]+s[i][j-1]+s[i][j]-s[i-1][j-1];
+        }
+    }
+    int ans=0;
+    for(int i=r;i&lt;=max_r;i++)
+    {
+        for(int j=r;j&lt;=max_c;j++)
+        {
+            ans=max(ans,s[i][j]-s[i-r][j]-s[i][j-r]+s[i-r][j-r]);
+        }
+    }
+    printf(&quot;%d\n&quot;,ans);
+    return 0;
+}
+</code></pre>
+<h1 id="差分⋙"><a href="#差分⋙" class="headerlink" title="差分⋙"></a>差分⋙</h1><h2 id="100-增减序列"><a href="#100-增减序列" class="headerlink" title="100.增减序列"></a>100.增减序列</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/102/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/102/</a></p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+#define pdd pair&lt;double,double&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=2e5+5;
+const int MOD=1e9+7;
+const double pi=cos(-1);
+
+ll p=0,q=0;
+int a[MAXN];
+int d[MAXN];
+int main()
+{
+    int n;
+    cin&gt;&gt;n;
+    for(int i=1;i&lt;=n;i++) scanf(&quot;%d&quot;,&amp;a[i]);
+    for(int i=2;i&lt;=n;i++)
+    {
+        d[i]=a[i]-a[i-1];
+        if(d[i]&gt;0) p+=d[i];
+        if(d[i]&lt;0) q+=(-d[i]);
+    }
+    printf(&quot;%lld\n%lld&quot;,min(p,q)+abs(p-q),abs(p-q)+1);
+    return 0;
+}
+</code></pre>
+<h2 id="101-最高的牛"><a href="#101-最高的牛" class="headerlink" title="101. 最高的牛"></a>101. 最高的牛</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/103/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/103/</a></p>
+<p>题目中保证了m组对中不会出现重复的，但如果不保证的话只需要把每一对存入$pair<int,int>$即可 然后在q[x]!=y来去重</p>
+<pre><code class="lang-c++">//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+#define pdd pair&lt;double,double&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=1e4+5;
+const int MOD=1e9+7;
+const double pi=cos(-1);
+
+pii a[MAXN];
+int c[MAXN],d[MAXN];
+map&lt;ll,ll&gt;q;
+int main()
+{
+    int n,p,h,m;
+    cin&gt;&gt;n&gt;&gt;p&gt;&gt;h&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++)
+    {
+        int x,y;
+        cin&gt;&gt;x&gt;&gt;y;
+        if(x&gt;y) swap(x,y);
+        if(q[x]!=y)
+        {
+            q[x]=y;
+            d[x+1]--,d[y]++;
+        }
+    }
+    for(int i=1;i&lt;=n;i++) c[i]=c[i-1]+d[i];
+    for(int i=1;i&lt;=n;i++) printf(&quot;%d\n&quot;,c[i]+h);
+    return 0;
+}
+</code></pre>
+<h1 id="二分⋙"><a href="#二分⋙" class="headerlink" title="二分⋙"></a>二分⋙</h1>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ACM-%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97">ACM-算法竞赛进阶指南</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/02/19/算法竞赛进阶指南-第一章-基本算法-做题记录/';
+        this.page.identifier = '/2020/02/19/算法竞赛进阶指南-第一章-基本算法-做题记录/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "算法竞赛进阶指南(第一章-基本算法)做题记录&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
