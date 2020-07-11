@@ -136,6 +136,65 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/19/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95-%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
+        <p class="h4 index-header">算法竞赛进阶指南(第一章-基本算法)做题记录</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">《算法竞赛进阶指南》第一章-基础算法位运算⋙89.a^b（快速幂）//Chillstep
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+typedef long long ll;
+const int INF=0x3f3f3f3f;
+const int MAXN=200000+7;
+
+ll ksm(ll n,ll x,ll p)
+{
+    ll ans=1;
+    ans=ans%p;
+    while(x)
+    {
+        if(x&amp;1) ans=ans*n%p;
+        n=n*n%p;
+        x&gt;&gt;=1;
+    }
+    return ans;
+}
+int main()
+{
+    ll a,b,p;
+    cin&gt;&gt;a&gt;&gt;b&gt;&gt;p;
+    cout&lt;&lt;ksm(a,b,p)&lt;&lt;endl;
+
+    return 0;
+}
+
+90.64位整数乘</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-19&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97">ACM-算法竞赛进阶指南</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/15/Codeforces-Round-618-Div-2-%E5%85%A8%E9%A2%98%E8%A7%A3%EF%BC%88A-E%EF%BC%89/">
         <p class="h4 index-header">Codeforces Round #618 (Div. 2)全题解（A-E）</p>
         
@@ -559,59 +618,6 @@ C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">ACM-数据结构</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2019/09/16/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E5%81%87%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%EF%BC%88%E7%AC%AC%E4%B8%80%E5%9C%BA%EF%BC%89%E9%A2%98%E8%A7%A3/">
-        <p class="h4 index-header">2019牛客暑假多校训练（第一场）题解</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">2019牛客暑期多校训练营（第一场）A-Equivalent Prefixes（单调栈，思维，笛卡尔树）#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1e5+10;
-int ans1[maxn],ans2[maxn];
-int val1[maxn],val2[maxn];
-struct node
-{
-    int val,index;
-};
-
-int main()
-{
-    int n,i;
-    stack&lt;node&gt; s;
-    while(cin&gt;&gt;n)
-    {
-        for(i=1;i&lt;=n;i++)
-        cin&gt;&gt;val1[i];
-        for(i=1;i&lt;=n;i++)
-        cin&gt;&gt;val2[i];
-        val1[0]=val2[0]=-1;
-        for(i=n;i&gt;=0;i--)
-        {
-            while(!s.</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-16&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>&nbsp;
           
         
       </div>

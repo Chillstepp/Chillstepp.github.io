@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔 ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/cloud.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期六, 七月 11日 2020, 10:45 上午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配"><a href="#AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配" class="headerlink" title="AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配"></a>AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配</h1><h2 id="边缘检测"><a href="#边缘检测" class="headerlink" title="边缘检测"></a>边缘检测</h2><h3 id="边缘出现原因"><a href="#边缘出现原因" class="headerlink" title="边缘出现原因"></a>边缘出现原因</h3><p><img src="https://s1.ax1x.com/2020/07/10/Uug4Z6.png" srcset="undefined" alt="Uug4Z6.png"></p>
+<p><strong>illumination：</strong>光照不同，阴影导致的边缘。</p>
+<p><strong>shading：</strong>明暗变化，表面法向量朝向不同，表面不连续。</p>
+<p><strong>reflection：</strong>反射属性不同导致出现边缘，比如物体本身颜色而不同产生的边界。</p>
+<p><strong>occlusion：</strong>遮挡导致出现的边缘，比如图中立方体遮挡了背景圆盘，所以形成了边缘。</p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu2y0P.png" srcset="undefined" alt="Uu2y0P.png"></p>
+<h3 id="大脑中的边缘检测器"><a href="#大脑中的边缘检测器" class="headerlink" title="大脑中的边缘检测器"></a>大脑中的边缘检测器</h3><p><img src="https://s1.ax1x.com/2020/07/10/UuWLQJ.png" srcset="undefined" alt="UuWLQJ.png"></p>
+<h3 id="物理边缘与图像边缘"><a href="#物理边缘与图像边缘" class="headerlink" title="物理边缘与图像边缘"></a>物理边缘与图像边缘</h3><p>物理边缘：是真实存在的边缘</p>
+<p>图像边缘：可能是由光照阴影等造成的边缘</p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UufZwt.png" srcset="undefined" alt="UufZwt.png"></p>
+<h3 id="一阶微分算子检测边缘的方法"><a href="#一阶微分算子检测边缘的方法" class="headerlink" title="一阶微分算子检测边缘的方法"></a>一阶微分算子检测边缘的方法</h3><p><img src="https://s1.ax1x.com/2020/07/10/UufafU.png" srcset="undefined" alt="UufafU.png"></p>
+<p><a href="https://imgchr.com/i/UufRfO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/10/UufRfO.png" srcset="undefined" alt="UufRfO.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UuhyvQ.png" srcset="undefined" alt="UuhyvQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu41Zn.png" srcset="undefined" alt="Uu41Zn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu4BZR.png" srcset="undefined" alt="Uu4BZR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu4RQe.png" srcset="undefined" alt="Uu4RQe.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu4qSS.png" srcset="undefined" alt="Uu4qSS.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uu4ves.png" srcset="undefined" alt="Uu4ves.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UuIE38.png" srcset="undefined" alt="UuIE38.png"></p>
+<p>水平检测竖直边缘，竖直检测水平边缘。</p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UuIsgO.png" srcset="undefined" alt="UuIsgO.png"></p>
+<h3 id="噪声的影响"><a href="#噪声的影响" class="headerlink" title="噪声的影响"></a>噪声的影响</h3><p><img src="https://s1.ax1x.com/2020/07/10/UuIXan.png" srcset="undefined" alt="UuIXan.png"></p>
+<p>如第一张图，这张图存在噪声，为了对抗噪声的干扰，提取边缘时要先对原始图像做平滑滤波，去除噪声，再求梯度。</p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UuoNz8.png" srcset="undefined" alt="UuoNz8.png"></p>
+<p>我们可以对高斯核直接先做x，y方向上的卷积，这样就减少了一次卷积。</p>
+<p><img src="https://s1.ax1x.com/2020/07/10/Uuo6J0.png" srcset="undefined" alt="Uuo6J0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/10/UuT9Yt.png" srcset="undefined" alt="UuT9Yt.png"></p>
+<p>上图是直接x，y方向计算梯度，但是由于图像有噪声，最后结果效果很杂乱，有许多的噪点。</p>
+<p>下图经是高斯导数计算的梯度，效果好了很多，可以看到红色圈出的地方的噪点已经基本消失了。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQKOTf.png" srcset="undefined" alt="UQKOTf.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQMCXn.png" srcset="undefined" alt="UQMCXn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQMVtU.png" srcset="undefined" alt="UQMVtU.png"></p>
+<h3 id="阈值的正确选择"><a href="#阈值的正确选择" class="headerlink" title="阈值的正确选择"></a>阈值的正确选择</h3><p><a href="https://imgchr.com/i/UQMn1J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/11/UQMn1J.png" srcset="undefined" alt="UQMn1J.png"></a></p>
+<p>一个合适的阈值很重要，阈值过小会存在噪声，过大会存在一些边界检测不到。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQMajA.png" srcset="undefined" alt="UQMajA.png"></p>
+<h3 id="坎尼-Canny-边缘检测"><a href="#坎尼-Canny-边缘检测" class="headerlink" title="坎尼(Canny)边缘检测"></a>坎尼(Canny)边缘检测</h3><p><img src="https://s1.ax1x.com/2020/07/11/UQMsN8.png" srcset="undefined" alt="UQMsN8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQQQ2Q.png" srcset="undefined" alt="UQQQ2Q.png"></p>
+<p>说明一下：</p>
+<p><strong>非极大值抑制：</strong>首先沿着梯度方向，也就是垂直边界的方向搜索梯度的最大值，留下梯度最大的像素点。</p>
+<p><strong>延迟阈值：用两个不同的阈值筛选边缘点，一个阈值小一点叫做筛出的叫若边缘点，反之大阈值筛出的叫做强边缘点。然后根据弱边缘点邻域的强边缘点分布来确定弱边缘点是否可以为边缘点，比如一个弱边缘点旁边都是强边缘点，那么我们也可认为该弱边缘点是边缘点，这样提高了检测准确度，也防止了一些噪点的出现。</strong></p>
+<p>下面具体说明一下检测过程：</p>
+<p>首先获得边界大致边缘的梯度大小，和梯度的方向</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQlvtK.png" srcset="undefined" alt="UQlvtK.png"></p>
+<p>随后沿着梯度方向寻找最大梯度值</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ1p1e.png" srcset="undefined" alt="UQ1p1e.png"></p>
+<p>然后我们设置两个阈值，如下图，大阈值漏检了一些，小阈值出现了一些噪点。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ1EAP.png" srcset="undefined" alt="UQ1EAP.png"></p>
+<p>此时我们利用坎尼的思想，将对低阈值中的点和周围的像素点进行比对，如果周围都是强边缘点，那么我们有理由认为这个弱边缘点也是是一个边缘点。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ1KXj.png" srcset="undefined" alt="UQ1KXj.png"></p>
+<p>最后结束。</p>
+<p>对比一下阈值不同的边缘检测效果。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ1b8S.png" srcset="undefined" alt="UQ1b8S.png"></p>
+<p>大阈值越大，边缘越稀疏，小阈值越小，细节越多。</p>
+<h3 id="二阶微分算子检测边缘"><a href="#二阶微分算子检测边缘" class="headerlink" title="二阶微分算子检测边缘"></a>二阶微分算子检测边缘</h3><p>现在已经很少用二阶微分算子了，但是大卫玛尔的工作非常经典，有必要了解一下。</p>
+<p><a href="https://imgchr.com/i/UQ3rrj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/11/UQ3rrj.png" srcset="undefined" alt="UQ3rrj.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ8Pot.png" srcset="undefined" alt="UQ8Pot.png"></p>
+<p>那么选择什么方向上的二阶导数过零点呢？我们应该选择过零点两点尖峰差距最大的方向上的过零点。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ8awR.png" srcset="undefined" alt="UQ8awR.png"></p>
+<p>我们此时依然会遇到噪声的问题，因此先做高斯滤波 然后拉普拉斯</p>
+<p>由于有结合律，可以直接先计算高斯和拉普拉斯的乘积，我们称之为<strong>高斯拉普拉斯（LoG）</strong>。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQ8BY6.png" srcset="undefined" alt="UQ8BY6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQGvbd.png" srcset="undefined" alt="UQGvbd.png"></p>
+<p>四个方向分别检测</p>
+<p>1.是否符号不同</p>
+<p>2.是否差异两边差值足够大(阈值为t)</p>
+<h3 id="尺度问题（选择高斯滤波中合适的σ）"><a href="#尺度问题（选择高斯滤波中合适的σ）" class="headerlink" title="尺度问题（选择高斯滤波中合适的σ）"></a>尺度问题（选择高斯滤波中合适的σ）</h3><p>先做高斯平滑</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQJlxU.png" srcset="undefined" alt="UQJlxU.png"></p>
+<p>然后计算梯度强度图</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQJfRf.png" srcset="undefined" alt="UQJfRf.png"></p>
+<p>最后边缘检测结果如下：</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQJOJ0.png" srcset="undefined" alt="UQJOJ0.png"></p>
+<p>因此我们做高斯平滑的时候，尺度应该多大，过大就会使得细节缺失。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQYPoR.png" srcset="undefined" alt="UQYPoR.png"></p>
+<h2 id="距离变换与轮廓匹配"><a href="#距离变换与轮廓匹配" class="headerlink" title="距离变换与轮廓匹配"></a>距离变换与轮廓匹配</h2><p>我们考虑利用模板匹配</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQYJl8.png" srcset="undefined" alt="UQYJl8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQt8E9.png" srcset="undefined" alt="UQt8E9.png">这是一个距离图，也就是距离中心像素点的距离图。</p>
+<p>寻找边缘和模板距离最小，就可以匹配到图像。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQtzVJ.png" srcset="undefined" alt="UQtzVJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQNVqe.png" srcset="undefined" alt="UQNVqe.png"></p>
+<p>比如红色为模板，紫色为图像边缘，计算时只需要累加右图对应像素处的值即可。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQNDMT.png" srcset="undefined" alt="UQNDMT.png"></p>
+<p>左图为距离图，右图为结果响应图。</p>
+<p><img src="https://s1.ax1x.com/2020/07/11/UQNoLD.png" srcset="undefined" alt="UQNoLD.png"></p>
+<p>即最低处。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://s1.ax1x.com/2020/07/11/UQU3f1.png" srcset="undefined" alt="UQU3f1.png"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/07/11/AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配/';
+        this.page.identifier = '/2020/07/11/AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
