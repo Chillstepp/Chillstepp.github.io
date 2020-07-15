@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>AHU计算机视觉课实验1-镜头分割</title>
+    <link href="undefined2020/07/15/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E5%AE%9E%E9%AA%8C1-%E9%95%9C%E5%A4%B4%E5%88%86%E5%89%B2/"/>
+    <url>2020/07/15/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E5%AE%9E%E9%AA%8C1-%E9%95%9C%E5%A4%B4%E5%88%86%E5%89%B2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="AHU计算机视觉课实验1-镜头分割"><a href="#AHU计算机视觉课实验1-镜头分割" class="headerlink" title="AHU计算机视觉课实验1-镜头分割"></a>AHU计算机视觉课实验1-镜头分割</h1><h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>主要做一个镜头分割，在镜头切换，或者场景有所变换时进行截图。最后获得不同场景的图片。</p><h2 id="实验思路"><a href="#实验思路" class="headerlink" title="实验思路"></a>实验思路</h2><p>大概的思路就是先计算视频开头图片的直方图 Hist，这个可以利用 cv2.calcHist来计算。然后开始对视频逐帧读取并计算直方图 Hist1同时利用cv2.compareHist来计算直方图之间的区别，这里cv2.compareHist选用的参数是cv2.HISTCMP_CORREL，也就是相关度。设定一个阈值，相关度小于阈值就进行镜头裁剪，然后Hist=Hist1即可，以此循环进行对比即可。</p><h2 id="code"><a href="#code" class="headerlink" title="code:"></a>code:</h2><pre><code class="lang-python">import numpy as npimport cv2from matplotlib import pyplot as pltcap = cv2.VideoCapture(&#39;godfather.mp4&#39;)w = int(cap.get(3))h = int(cap.get(4))fps = cap.get(5)delay = int(1000/fps)-5print(&#39;width=%d ,height=%d ,fps=%d&#39; % (w, h, fps))ret, img = cap.read()imgBGR = imgimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)Hist = cv2.calcHist(images=[img], channels=[0], mask=None, histSize=[256], ranges=[0, 256])num = 0while True:    ret, frame = cap.read()    frameBGR = frame    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)    cv2.imshow(&#39;frame2&#39;, frameBGR)    if not ret:        break    Hist1 = cv2.calcHist(images=[frame], channels=[0], mask=None, histSize=[256], ranges=[0, 256])    delta = cv2.compareHist(Hist, Hist1, cv2.HISTCMP_CORREL)    print(delta)    if delta &lt; 0.5:        Hist = Hist1        cv2.imshow(&#39;frame&#39;, frameBGR)        cv2.waitKey(200)        num = num + 1    if cv2.waitKey(delay) &amp; 0xFF == ord(&#39;q&#39;):        breakcap.release()cv2.destroyAllWindows()</code></pre><h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><p><img src="https://s1.ax1x.com/2020/07/15/UdgCuR.gif" srcset="undefined" alt="UdgCuR.gif"></p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>第一个实验还是比较简单的，主要还是为了熟悉下opencv，其实有很多trick可以搞，但感觉没必要。等到了明年上这门课的时候再多搞一些好玩的trick。比如从RGB颜色通道检验区别等等。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>计算机视觉CV</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配</title>
     <link href="undefined2020/07/11/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh3-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%8C%E8%B7%9D%E7%A6%BB%E5%8F%98%E6%8D%A2%EF%BC%8C%E8%BD%AE%E5%BB%93%E5%8C%B9%E9%85%8D/"/>
     <url>2020/07/11/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh3-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%8C%E8%B7%9D%E7%A6%BB%E5%8F%98%E6%8D%A2%EF%BC%8C%E8%BD%AE%E5%BB%93%E5%8C%B9%E9%85%8D/</url>
