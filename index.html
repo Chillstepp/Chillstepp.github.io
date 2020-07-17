@@ -136,6 +136,173 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/17/SQL_tutorial/">
+        <p class="h4 index-header">AHU_SQL_Consise_Tutorial</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">SQL(Consise Tutorial)SQL_Consise_Tutorial写在前面：
+由于书上的SQL讲解太过于分散，因此我写了一个文档来总结这些知识点，以例子代替讲解，方便大家查漏补缺，由于开始时写这个文档是为了实验考试，但后来为了准备期末考试又添加了一些实验课上没有讲到的东西，如果有什么缺失的知识点，可以发邮件给我：howiewang.cs@gmail.com ，我会尽量补上缺失的内容。
+创建表创建STUDENT表
+CREATE TABLE STUDENT
+(SId INT IDENTITY(1,1),
+ SNo CHAR (5) PRIMARY KEY,
+ CLno CHAR(6),
+ SName VARCHAR(8) NOT NULL，
+ SSex CHAR(2) CHECK(SSex IN(&#39;男&#39;,&#39;女&#39;))，   //用CHECK短语指定列值该满足的条件
+ SBir DATETIME
+ SAge INT
+)
+
+创建表时，用CHECK短语指定列值该满足的条件
+CREATE TABLE STUDENT
+(
+Sno CHAR(9) PRIM</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/SQL">SQL</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+        <p class="h4 index-header">AHU计算机图形学笔记</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机图形学写在前面：对AHU计算机图形学课的一些笔记总结,我自认为总结的还算全面，期末靠着这个复习也拿到了相对不错的分数，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com 
+像素：绘图的最小单位。
+分辨率与像素的关系：若分辨率1024*768（每行有1024个像素，总共有768行）。
+第一章：绪论计算机图形学（Computer Graphics）是研究怎样利用计算机来显示、生成和处理图形的原理、方法和技术的一门学科。国际标准化组织（ISO）定义它为：计算机图形学是研究通过计算机将数据转换成图形，并在专门显示设备上显示的原理、方法和技术。
+
+​        计算机中表示带有颜色及形状信息的图和形常用两种方法：点阵法和参数法。点阵法是用具有灰度或颜色信息的点阵来表示图形的一种方法，它强调图形由哪些点组成，并且具有什么灰度或色彩。参数法是以计算机中所记录图形的形状参数与属性参数来表示图形的一种方法。形状参数可以是形状的方程系数、线段的起点和终点对等几何属性的描述；属性参数则描述灰度、色彩、线型等非几何属</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6">计算机图形学</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">
+        <p class="h4 index-header">2020牛客暑期多校训练营（第二场）</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">2020牛客暑期多校训练营（第二场）Chillstep个人补题记录：
+
+
+
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+
+
+
+
+
+√
+√
+√
+
+√
+
+
+
+√
+√
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Problem AProblem B题意：给n个点(不包括原点)，问经过原点的圆最多可以和多少个点相交？
+思路：枚举两个点，与原点三点确定一个圆。求得每个点的圆心位置，计算圆心位置设圆方程，然后带入两个点列方程即可，然后解出来带分式的圆心的横纵坐标即可，用分数类维护，维护分数类的时候千万不要gcd约分，直接__int128类型乘就好，gcd约分会超时，这道题应该是有点卡常的。
+用数据结构或排序维护每个圆心的出现次数。
+code：//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+#define pdd pair&lt;double,double&gt;
+typedef long long l</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/15/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E5%AE%9E%E9%AA%8C1-%E9%95%9C%E5%A4%B4%E5%88%86%E5%89%B2/">
         <p class="h4 index-header">AHU计算机视觉课实验1-镜头分割</p>
         
@@ -471,143 +638,6 @@ a = np.ones((4,2))</div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
-        <p class="h4 index-header">Pandas数据分析基础</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Pandas模块学习Pandas基本介绍import numpy as np
-import pandas as pd
-
-s = pd.Series([1,3,4,6,np.nan,44,1])
-print(s)
-#0     1.0
-#1     3.0
-#2     4.0
-#3     6.0
-#4     NaN
-#5    44.0
-#6     1.0
-
-dates = pd.date_range(&#39;20200202&#39;,periods=6)
-print(dates)  #DatetimeIndex([&#39;2020-02-02&#39;, &#39;2020-02-03&#39;, &#39;2020-02-04&#39;, &#39;2020-02-05&#39;,
-              #  &#39;2020-02-06&#39;, &#39;2020-02-07&#39;],
-
-df = pd.DataFrame(np.random.rand(6,4),index=dates,columns=[&#39;a&#39;,&#39;b&#39;,</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">
-        <p class="h4 index-header">《Hands-On-Machine-Learning》PART I</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">PART 1：The Fundamentals of Machine LearningCHAPTER 1 ：The Machine Learning Landscape （机器学习领域）什么是机器学习？例如，垃圾邮件过滤器是一个机器学习过程，可以学习标记垃圾邮件。系统用于学习的示例称为训练集。每个训练示例称为一个训练样本。在这种情况下，任务T是为新邮件标记垃圾邮件，E是训练数据，定义性能度量为P（比如p可以为是否正确区分出垃圾邮件），这种特殊的性能度量称为准确性，通常用于分类任务。
-为什么要使用机器学习？从上面的例子接着来看：
-1.首先你要关注的是典型的垃圾邮件长什么样，比如会有免费，信用卡等字眼
-2.您可以为您注意到的每个部分编写一个检测算法，如果检测到许多这样的部分，程序将把电子邮件标记为垃圾邮件。
-3.测试程序，并重复步骤1和步骤2，直到足够好为止。
-这是一种传统解决方法，如下图
-
-这样循环下来，你的程序很可能会变成一长串复杂的规则，也就是说它很难维护。
-相比之下，一个基于机器学习技术的垃圾邮件过滤器通过检测垃圾邮件示例中与非垃圾邮件示例相比单词的异常频率模式，自动学习哪些单词和</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Machine%20Learning">Machine Learning</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/22/Python-Notebook/">
-        <p class="h4 index-header">Python Notebook</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Python Notebookprint()print(1)
-print(&quot;we&#39;re the best&quot;)
-print(&#39;we are the best&#39;)
-print(&#39;we\&#39;re the best&#39;) 
-
-print(&quot;apple&quot;+&quot;car&quot;)
-print(&#39;apple&#39;+&#39;tree&#39;)
-
-print(&#39;apple&#39;+&#39;4&#39;)
-print(&#39;apple&#39;+str(4))
-
-print(1+2)
-print(&quot;1+2&quot;)
-print(int(&#39;1&#39;)+2)
-print(float(1.2)+2) #   &#39;1.2&#39;不可以转int
-
-数学：print(1+1)
-print(1-1)
-print(2*2)
-print(2^1)  #  异或xor
-print(2**3) #  高次幂
-print(8%3)  #  mod
-print(8//3) </div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-22&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -831,20 +861,5 @@ print(8//3) </div>
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
