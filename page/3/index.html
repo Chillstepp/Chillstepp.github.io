@@ -136,6 +136,95 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/02/%E5%8C%BA%E9%97%B4DP+%E5%B9%B3%E8%A1%8C%E5%9B%9B%E8%BE%B9%E5%BD%A2%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">区间DP+平行四边形优化总结</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">区间DP+平行四边形优化总结区间DP形式模板：
+//n是区间长度，dp[i][j]存从i 到 j 区间合并的最优值
+//w[i][j]表示从i 到 j的花费
+for(i = 1;i &lt;= n;i++)
+    dp[i][i] = 初始值；
+for(len = 2;len &lt;= n;len++){//len选择区间长度
+    for(i = 1;i &lt;= n;i++){//枚举起点
+        j = i + len - 1;//合并终点
+        if(j &gt; n)break;//不可越界
+        for(k = i;k &lt; j;k++)//枚举分割点，寻找最优分割
+            dp[i][j] = max(dp[i][j], dp[i][k] + dp[k + 1][j] + w[i][j]);//状态转移
+    }
+}
+
+平行四边形优化：我们不难发现上面的复杂度为$O（n^3）$，通过平行四边形优化，可以将第三维枚举（枚举最优分割点）的范围大大缩小。
+定理：二位决策单调性在转移方程$F[i,j]=min_{i\leq</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-02&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/">
+        <p class="h4 index-header">Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解比赛链接：https://codeforces.com/contest/1295
+A.Display The Number（思维+构造）题意：
+思路：如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。
+Code：#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+int ans[100000+7];
+int main()
+{
+    int T;
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--)
+    {
+        int n;
+        scanf(&quot;%d&quot</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-27&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-Codeforces">ACM-Codeforces</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities%EF%BC%88SPFA%E4%BC%98%E5%8C%96%EF%BC%89/">
         <p class="h4 index-header">Codeforces 449B Jzzhu and Cities（SPFA优化）</p>
         
@@ -666,5 +755,20 @@ Github : https://github.com/Chillstepp
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

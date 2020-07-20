@@ -15,7 +15,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解 ~ Chillstep</title>
+  <title>AHU计算机视觉课Ch4-模型拟合 ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -113,7 +113,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期一, 一月 27日 2020, 6:31 晚上
+                  星期一, 七月 20日 2020, 10:45 上午
                 </p>
               
 
@@ -122,7 +122,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    933 字
+                    665 字
                   </span>&nbsp;
                 
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      2 分钟
                   </span>&nbsp;
                 
 
@@ -163,171 +163,56 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><a href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解" class="headerlink" title="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解"></a>Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</h1><p><strong>比赛链接：<a href="https://codeforces.com/contest/1295" target="_blank" rel="noopener">https://codeforces.com/contest/1295</a></strong></p>
-<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" srcset="undefined" alt="11GzEq.png"></p>
-<h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。</p>
-<h3 id="Code："><a href="#Code：" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int ans[100000+7];
-int main()
-{
-    int T;
-    scanf(&quot;%d&quot;,&amp;T);
-    while(T--)
-    {
-        int n;
-        scanf(&quot;%d&quot;,&amp;n);
-        if(n==3) {printf(&quot;7\n&quot;);continue;}
-        int dig=n/2;
-        int lef=n%2;
-        for(int i=1;i&lt;=dig;i++)
-        {
-            ans[i]=1;
-        }
-        if(lef==1) ans[1]=7;
-        for(int i=1;i&lt;=dig;i++) printf(&quot;%d&quot;,ans[i]);
-        printf(&quot;\n&quot;);
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" srcset="undefined" alt="11JP8U.png"></p>
-<h3 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h3><p>对于每一个前缀，我们用ans[i]记录前i个字符的$cnt0-cnt1$的值，同时$k=整个串的cnt0-cnt1=ans[last]$。</p>
-<p>那么比如，$ans[z]=h$，若前面有n个串的$cnt0-cnt1$=$x-h$，那么$x-h+ans[z]=x$,即可以找出一个值为x的串。</p>
-<p>即寻找$n*k=x-h=x-ans[z]$符合这个式子的z和n的对数。</p>
-<p>注意：空串也算答案！</p>
-<h3 id="Code：-1"><a href="#Code：-1" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int ans[100000+7];
-char s[100000+5];
-int main()
-{
-    int T;
-    cin&gt;&gt;T;
-    while(T--)
-    {
-        int n,x,cnt0=0,cnt1=0;
-        scanf(&quot;%d%d&quot;,&amp;n,&amp;x);
-        scanf(&quot;%s&quot;,s);
-        for(int i=0;i&lt;n;i++)
-        {
-            if(s[i]-&#39;0&#39;==0) cnt0++;
-            else cnt1++;
-            ans[i]=cnt0-cnt1;
-        }
-        int k=cnt0-cnt1,flag=1,fin=0;
-        if(k==0)
-        {
-            for(int i=0;i&lt;n;i++)
-            {
-                if(ans[i]==x) {flag=0;break;}
-            }
-        }
-        if(flag==0)
-        {
-            printf(&quot;-1\n&quot;);
-            continue;
-        }
-        if(flag&amp;&amp;k==0) {printf(&quot;0\n&quot;);continue;}
-        for(int i=0;i&lt;n;i++)
-        {
-            if((x-ans[i])%k==0&amp;&amp;(x-ans[i])/k&gt;=0) fin++;
-        }
-        if(x==0) fin++;
-        printf(&quot;%d\n&quot;,fin);
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" srcset="undefined" alt="11JeV1.png"></p>
-<h3 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h3><p> $pos[x][y]$代表第y个字母x的位置 这个位置有单调性是单增的，我们对t串的每一个字符在s串中进行查询，比如查询字母a,通过二分$dig[a-‘0’][ t  ]$对t二分出第一个大于当前s串指针的位置，如果二分不出来就把指针移到s串开头，从头开始二分，同时ans++。</p>
-<h3 id="Code：-2"><a href="#Code：-2" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-char t[100000+5];
-char s[100000+5];
-int pos[27][100000+5];
-int main()
-{
-    int T;
-    cin&gt;&gt;T;
-    while(T--)
-    {
-        scanf(&quot;%s&quot;,s);
-        scanf(&quot;%s&quot;,t);
-        int ed[27];
-        memset(ed,-1,sizeof ed);
-        int lens=strlen(s);
-        for(int i=0;i&lt;lens;i++)
-        {
-            int tep=s[i]-&#39;a&#39;;
-            ed[tep]++;
-            pos[tep][ed[tep]]=i;
-        }
-        int lent=strlen(t),ans=1,now=-1,flag=1;
-        for(int i=0;i&lt;lent;i++)
-        {
-            int tep=t[i]-&#39;a&#39;;
-            int l=0,r=ed[tep];
-            if(r==-1) {printf(&quot;-1\n&quot;);flag=0;break;}
-            while(l&lt;r)
-            {
-                int mid=(l+r)&gt;&gt;1;
-                if(pos[tep][mid]&gt;now) r=mid;
-                else l=mid+1;
-            }
-            if(l==ed[tep]&amp;&amp;pos[tep][l]&lt;=now)
-            {
-                now=-1;
-                ans++;
-                i--;
-                continue;
-            }
-            else now=pos[tep][l];
-        }
-        if(flag) printf(&quot;%d\n&quot;,ans);
-
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" srcset="undefined" alt="11JM8O.png"></p>
-<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" srcset="undefined" alt="11ay4I.png"></p>
-<h3 id="Code：-3"><a href="#Code：-3" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-ll phi(ll n)
-{
-    ll result = n; // Initialize result as n
-    for (ll p = 2; p * p &lt;= n; ++p) {
-        if (n % p == 0) {
-
-            while (n % p == 0)
-                n /= p;
-            result -= result / p;
-        }
-    }
-    if (n &gt; 1)
-        result -= result / n;
-    return result;
-}
-int main()
-{
-    ll t; cin &gt;&gt; t;
-    while(t--) {
-        ll a, m;
-        cin &gt;&gt; a &gt;&gt; m;
-
-        ll g = __gcd(a, m);
-
-        m /= g;
-        cout &lt;&lt; phi(m) &lt;&lt; endl;
-    }
-    return 0;
-}
-</code></pre>
+            <h1 id="AHU计算机视觉课Ch4-模型拟合"><a href="#AHU计算机视觉课Ch4-模型拟合" class="headerlink" title="AHU计算机视觉课Ch4-模型拟合"></a>AHU计算机视觉课Ch4-模型拟合</h1><p><a href="https://imgchr.com/i/UsJUpR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UsJUpR.png" srcset="undefined" alt="UsJUpR.png"></a></p>
+<p>数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)</p>
+<h2 id="最小二乘法-Least-Squares"><a href="#最小二乘法-Least-Squares" class="headerlink" title="最小二乘法(Least Squares)"></a>最小二乘法(Least Squares)</h2><h3 id="拟合方法"><a href="#拟合方法" class="headerlink" title="拟合方法"></a>拟合方法</h3><p><img src="https://s1.ax1x.com/2020/07/17/UstSMt.png" srcset="undefined" alt="UstSMt.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UstMZT.png" srcset="undefined" alt="UstMZT.png"></p>
+<p>约束条件的作用之一是防止 $a=b=c=0$</p>
+<p>局部极小值点的导数为0</p>
+<p><img src="https://s1.ax1x.com/2020/07/17/Ust0oD.png" srcset="undefined" alt="Ust0oD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UstzY4.png" srcset="undefined" alt="UstzY4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNETO.png" srcset="undefined" alt="UsNETO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNmfH.png" srcset="undefined" alt="UsNmfH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNYtg.png" srcset="undefined" alt="UsNYtg.png"></p>
+<p><strong>拉格朗日乘子法：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsN4nx.png" srcset="undefined" alt="UsN4nx.png"></p>
+<h3 id="外点"><a href="#外点" class="headerlink" title="外点"></a>外点</h3><p><a href="https://imgchr.com/i/UswpE6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UswpE6.png" srcset="undefined" alt="UswpE6.png"></a></p>
+<p>外点可能会大幅度干扰直线，将直线拉到外点方向处。</p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UswNV0.png" srcset="undefined" alt="UswNV0.png"></p>
+<p>可以做误差控制，减少外点影响。</p>
+<p><img src="https://s1.ax1x.com/2020/07/17/Us0PZq.png" srcset="undefined" alt="Us0PZq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsBthT.png" srcset="undefined" alt="UsBthT.png"></p>
+<p>对于去除外点，我想了想是否可以这样操作：</p>
+<p>我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。</p>
+<h2 id="随机一致性采样算法（RANSAC）"><a href="#随机一致性采样算法（RANSAC）" class="headerlink" title="随机一致性采样算法（RANSAC）"></a>随机一致性采样算法（RANSAC）</h2><p><img src="https://s1.ax1x.com/2020/07/17/UsfPeO.png" srcset="undefined" alt="UsfPeO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsfVfA.png" srcset="undefined" alt="UsfVfA.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URe9w4.png" srcset="undefined" alt="URe9w4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URea7Q.png" srcset="undefined" alt="URea7Q.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UReycV.png" srcset="undefined" alt="UReycV.png"></p>
+<p><strong>如何模拟圆呢？</strong></p>
+<p>随机采样3个样本(三个点确定一个圆)</p>
+<p>拟合一个圆模型$M_i$</p>
+<p>计算$S(M_i)$，对每一个样本$X_j$,计算误差$d(X_j,M_i)$,如果$d(X_J,M_i)&lt;t$,那么$S(M_i)=S(M_i) \bigcup \{M_i\}$</p>
+<p>给模型打分，如果分数大于一定分数，认为是一个好的模型，然后使用这个模型所涉及的点再重新估计(比如最小二乘法等)，计算拟合误差$E_i$,保留$E_i$最小的模型作为拟合结果。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URua7D.png" srcset="undefined" alt="URua7D.png"></p>
+<h2 id="哈夫变换（Hough-Transform）"><a href="#哈夫变换（Hough-Transform）" class="headerlink" title="哈夫变换（Hough Transform）"></a>哈夫变换（Hough Transform）</h2><p><img src="https://s1.ax1x.com/2020/07/19/URKlb8.png" srcset="undefined" alt="URKlb8.png"></p>
+<p>$ρ$代表原点到直线距离，$θ$代表夹角。将两者放到参数空间成为一个点（右图）。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMKJJ.png" srcset="undefined" alt="URMKJJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMdWd.png" srcset="undefined" alt="URMdWd.png"></p>
+<p>左边图的每个点可以有多条线穿过，对应着右边的线（上图）。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMWWj.png" srcset="undefined" alt="URMWWj.png"></p>
+<p>左边的点是共线的，右边肯定是多条线共点  (上图)。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMjp9.png" srcset="undefined" alt="URMjp9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URQ6j1.png" srcset="undefined" alt="URQ6j1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URl3VK.png" srcset="undefined" alt="URl3VK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URlg2j.png" srcset="undefined" alt="URlg2j.png"></p>
+<p>那么如何用哈弗变换检测圆呢？</p>
+<p>我们以做一个三维的参数空间(x,y,r)</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URlqz9.png" srcset="undefined" alt="URlqz9.png"></p>
+<p>由于搜索空间是三维的，太过于大，因此我们考虑缩小搜索空间。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UR1Qzj.png" srcset="undefined" alt="UR1Qzj.png"></p>
+<p>哈夫变换在被遮挡时依然可以很好的检测。</p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UR3Jcd.png" srcset="undefined" alt="UR3Jcd.png"></p>
 
             <hr>
           </div>
@@ -339,7 +224,7 @@ int main()
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/ACM-Codeforces">ACM-Codeforces</a>
+                  <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>
                 
               </span>
             
@@ -376,8 +261,8 @@ int main()
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-        this.page.url = 'https://chillstepp.github.io/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
-        this.page.identifier = '/2020/01/27/Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解/';
+        this.page.url = 'https://chillstepp.github.io/2020/07/20/AHU计算机视觉课Ch4-模型拟合/';
+        this.page.identifier = '/2020/07/20/AHU计算机视觉课Ch4-模型拟合/';
       };
       var oldLoad = window.onload;
       window.onload = function () {
@@ -516,7 +401,7 @@ int main()
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解&nbsp;",
+        "AHU计算机视觉课Ch4-模型拟合&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

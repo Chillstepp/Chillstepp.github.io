@@ -136,6 +136,123 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh5-%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8C%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%96%91%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8CSIFT%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
+        <p class="h4 index-header">AHU计算机视觉课Ch4-AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符
+角点用来检测特殊的对应点，可以利用角点进行全景拼接。
+角点检测
+我们可以看到，在平坦区域我们随便移动也不会有像素点变换，在边缘上时上下移动也不会出现大量变化，只有在角点，任何方向移动都会出现变化。
+度量窗口变化多少的指标：
+每个像素差的平方和
+
+
+
+
+
+我们可以对每个像素求一个M。
+
+
+我们可以看出：
+当两个$\lambda$都很小，说明在平坦的区域，各个方向变化时变化幅度小。
+当一个$\lambda$都很小，另一个$\lambda$很大，说明在某个方向上变化很大，属于在边缘位置。
+当两个$\lambda$都很大，说明在角点，各个方向上变化都很大。
+
+最后我们定义一个R用来判断角点。
+
+由于像素范围较大不是一个点，因此进行非极大值抑制。
+
+
+图像的亮度变化一定程度会影响R值。
+
+图像旋转对角点的检测不影响。
+
+既然图像缩放大小会影响角点的检测，我们该如何确定尺度呢？
+
+大概的方法是找一个无关函数 f 随着取样框大小变化来寻找 f 最大的点，当两个点都在最大值，说明在同一点，这时候横坐标的就可以反映图像尺度大小的比例</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
+        <p class="h4 index-header">AHU计算机视觉课Ch4-模型拟合</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机视觉课Ch4-模型拟合
+数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)
+最小二乘法(Least Squares)拟合方法
+
+约束条件的作用之一是防止 $a=b=c=0$
+局部极小值点的导数为0
+
+
+
+
+
+拉格朗日乘子法：
+
+外点
+外点可能会大幅度干扰直线，将直线拉到外点方向处。
+
+可以做误差控制，减少外点影响。
+
+
+对于去除外点，我想了想是否可以这样操作：
+我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。
+随机一致性采样算法（RANSAC）
+
+
+
+
+如何模拟圆呢？
+随机采样3个样本(三个点确定一</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/17/SQL_tutorial/">
         <p class="h4 index-header">AHU_SQL_Consise_Tutorial</p>
         
@@ -541,103 +658,6 @@ n次幂，反对数函数则会把图象变暗；
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/03/24/OpenCV/">
-        <p class="h4 index-header">OpenCv with Python for Image and Video Analysis(3/20)</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">OpenCv with Python for Image and Video AnalysisP1 intro and loading Images1.利用cv2显示图像import numpy as np
-import matplotlib.pyplot as plt
-import cv2
-
-img = cv2.imread(&#39;cat.jpg&#39;,cv2.IMREAD_GRAYSCALE) #灰度图读入
- #读图片
- #IMREAD_GRAYSCALE = 0  灰度
- #IMREAD_COLOR =  1   颜色
- #IMREAD_UNCHANGE= -1  不变
-cv2.imshow(&#39;image&#39;, img)  #以窗口打开img，窗口名字叫做img
-cv2.waitKey(0)  #等待键入
-cv2.destroyAllWindows() #关闭所有窗口
-
-2.使用matplotlib显示图像import numpy as np
-import matplotlib.pyplot as plt
-import cv2
-
-img = cv2.imre</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-24&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
-        <p class="h4 index-header">Numpy数据分析基础</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Numpy模块学习numpy的基本属性import numpy as np
-
-array = np.array([[1,2,3],
-                  [2,3,4]])
-print(array)  # [[1 2 3]
-              #  [2 3 4]]
-
-print(&#39;number of dim:&#39;,array.ndim)  #维数  number of dim: 2
-print(&#39;shape:&#39;,array.shape)  #shape: (2, 3)
-print(&#39;size:&#39;,array.size)    #size: 6
-
-numpy创建的arrayimport numpy as np
-
-a = np.array([2,23,4],dtype=np.int)  #定义数据的类型
-print(a)  #[ 2 23  4]
-print(a.dtype)  #int32
-
-a = np.zeros((4,2))  #生成一个4行2列的全0矩阵
-print(a)
-
-a = np.ones((4,2))</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -861,5 +881,20 @@ a = np.ones((4,2))</div>
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

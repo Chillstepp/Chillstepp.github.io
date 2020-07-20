@@ -122,7 +122,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    4.4k 字
+                    4.6k 字
                   </span>&nbsp;
                 
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      19 分钟
+                      20 分钟
                   </span>&nbsp;
                 
 
@@ -751,6 +751,39 @@ ON SC
 <p>注：触发器在SQL99之后才被写入SQL标准。</p>
 <p>CREATE TRIGGER &lt;触发器名&gt;</p>
 <p>{BEFORE/AFTER}&lt;触发时间&gt; ON &lt;表名&gt;</p>
+<p>REFERENCING NEW|OLD ROW AS &lt;变量&gt;</p>
+<p>FOR EACH {ROW|STATEMENT}</p>
+<p>[WHEN &lt;触发条件&gt; ] &lt;触发动作体&gt;</p>
+<p>例：</p>
+<p>当对表SC的Grade属性进行修改时，若分数增加10%，则将此次操作记录到另一个表SC_U( Sno,Cno,Oldgrade,NewGrade)中，其中OLDgrade是修改前的分数，Newgrade是修改后的分数。</p>
+<pre><code class="lang-sql">CREATE TRIGGER SC_T
+AFTER UPDATE OF Grade ON SC
+REFERENCING
+    OLDROW AS Oldtuple,
+    NEWROW AS Newtuple
+FOR EACH ROW
+WHEN(Newtuple.Grade&gt;=1.1*Oldtuple.Grade)
+    INSERT INTO SC_U(Sno,Cno,Oldgrade,Newgrade)
+    VALUES(Oldtuple.Sno,Oldtuple.Cno,Oldtuple.Grade,Newtuple.Grade)
+</code></pre>
+<p>将每次对表STUDENT的插入操作所增加的学生个数记录到表Student-InsertLog中</p>
+<pre><code class="lang-sql">CREATE TRIGGER Student_Count
+AFTER INSERT ON STUDENT
+REFERENCING
+    NEWTABLE AS Delta
+FOR EACH ROW
+    INSERT INTO Student_InsertLog(Numbers)
+    SELECT COUNT(*) FROM DELTA
+</code></pre>
+<p>定义一个BEFORE行级触发器，为教师表TEACHER定义完整性规则“教授的工资不低于4000元，如果低于4000元，自动改为4000元”</p>
+<pre><code class="lang-sql">CREATE TRIGGER Insert_Or_Update_Sal
+BEFORE INSERT ON TEACHER
+REFERENCING
+    NEWROW AS Newtuple
+FOR EACH ROW
+WHEN(Newtuple.Sal&lt;4000 AND Newtuple.Job=&#39;教授&#39;)
+    Newtuple.Sal=4000
+</code></pre>
 
             <hr>
           </div>
@@ -1027,5 +1060,20 @@ ON SC
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
