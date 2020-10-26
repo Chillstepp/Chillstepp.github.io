@@ -146,11 +146,12 @@
           <div class="index-text mb-1">title: What is submodular function(次模函数)date: 2020-07-20 10:46:46tags: 影响力最大化
 次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
 ​    submodular实际上就对“边际效用递减”这个说法的形式化。
-​    就是对于一个集合函数，若，那么在S中增加一个元素所增加的收益要小于等于在S的子集中增加一个元素所增加的收益。
-​    形式化表述就是：对于函数f而言，若且，则
-​    在计算机领域，Submodular函数有个性质，即下面这个问题是NP-hard.
-​    对于一个Submodular函数f，如果给定一个限制条件C，找出一个满足条件C的集合S，使得f(S)值最大。
-​    进一步而言，对于上述NP-hard问题，最基本的贪</div>
+​    
+submodular function(次模函数)定义子模态是几何函数的一种性质。一个几何函数$f(x)$的定义要满足下面这个性质。
+$f:2^{Ω} → \R$
+也就是说：即f(x)的定义域为集合Ω的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个：
+(1)对于任何一个$X,Y\subset Ω$且$X\subset Y$,以及对任何一个$x\in Ω$，以下式子成立
+</div>
         </div>
       </a>
 
