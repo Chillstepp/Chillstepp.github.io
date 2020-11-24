@@ -136,30 +136,85 @@
     
     
     <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/10/23/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
-        <p class="h4 index-header">What is submodular function(次模函数)</p>
+      <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
+        <p class="h4 index-header">机器学习基石Ch1：The Learning Problem</p>
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">title: What is submodular function(次模函数)date: 2020-07-20 10:46:46tags: 影响力最大化
-次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
-​    submodular实际上就对“边际效用递减”这个说法的形式化。
-​    
-submodular function(次模函数)定义子模态是几何函数的一种性质。一个几何函数$f(x)$的定义要满足下面这个性质。
-$f:2^{Ω} → \R$
-也就是说：即f(x)的定义域为集合Ω的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个：
-(1)对于任何一个$X,Y\subset Ω$且$X\subset Y$,以及对任何一个$x\in Ω$，以下式子成立
-</div>
+          <div class="index-text mb-1">Ch1：The Learning Problem1.1 What is Machine Learning？
+skill可以定义为 某一种表现的提升，例如 你通过股票的数据 进行机器学习使得你获得了更多的收益
+
+对于辨别一棵树，我们是通过见过无数棵树后总结出来的判断规律。这和机器学习是相似的，通过数据进行学习。
+是否适合使用机器学习的一些基本判别关键点？
+1.能够有某些效能指标或者目标希望机器可以达到
+2.不知道怎么有效的定义
+3.有data
+
+正确答案：3
+第一个小女孩哭没有规则可以预测，第二个图里的环可以有效的定义，不需要机器学习。最后一个地球被核能毁灭没有相关的数据。
+1.2 Applications of Machine Learning1.3Components of Machine Learning信用卡是否发卡的预测问题：
+下面是一个申请表：
+
+
+input：$x\in X$   顾客的申请信息
+output: $y\in Y$  同意发卡后的顾客表现的好坏
+目标方程（target function）: $f:X→ Y$
+data: 训练样本$D=\{(x_1,y_1),(</div>
         </div>
       </a>
 
       <div>
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-10-23&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
         
         
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/">
+        <p class="h4 index-header">机器学习基石CH2：Learning to Answer Yes/No</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH2：Learning to Answer Yes/NoPerceptron Hypothesis Set
+$x$为 顾客的特征向量， $y$为是否发卡。
+$y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign$函数是一个符号函数，在0，=0分别取-1，1，0。$threshold$为是否发卡的阈值。
+
+我们为了书写简单，把$threshold$收入$w_ix_i$，下标改为从0开始。
+
+那么怎么直观的理解h(x)究竟是什么东西呢？
+我们把x看作一个只有两维的向量，那么它可以代表平面上的一个点，此时还有一个$w_1,w_2$来影响x向量，每个点 有一个label即圆圈还是叉叉。那么h就代表平面上的一条线。
+hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。
+Perceptron Learning Algorithm (PLA)
+H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
         
       </div>
     </div>
@@ -266,6 +321,46 @@ $[-3]_补$:0000 0011取反加1，即1111 1101
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
+        <p class="h4 index-header">What is submodular function(次模函数)</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
+​    submodular实际上就对“边际效用递减”这个说法的形式化。
+​    
+submodular function(次模函数)定义子模态是几何函数的一种性质。一个几何函数$f(x)$的定义要满足下面这个性质。
+$f:2^{Ω} → \R$
+也就是说：即f(x)的定义域为集合Ω的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个：
+(1)对于任何一个$X,Y\subset Ω$且$X\subset Y$,以及对任何一个$x\in Ω$，以下式子成立
+$f(X∪x)−f(X)≥f(Y∪x)−f(Y)$
+这个就是次模函数的本身定义。
+(2)对于任何一个$X,Y\subset Ω$，以下式子成立：
+$f(X)</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%BD%B1%E5%93%8D%E5%8A%9B%E6%9C%80%E5%A4%A7%E5%8C%96">影响力最大化</a>&nbsp;
           
         
       </div>
@@ -526,122 +621,6 @@ print(&#39;width=%d ,height=</div>
       <div>
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-15&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/11/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh3-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%8C%E8%B7%9D%E7%A6%BB%E5%8F%98%E6%8D%A2%EF%BC%8C%E8%BD%AE%E5%BB%93%E5%8C%B9%E9%85%8D/">
-        <p class="h4 index-header">AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配边缘检测边缘出现原因
-illumination：光照不同，阴影导致的边缘。
-shading：明暗变化，表面法向量朝向不同，表面不连续。
-reflection：反射属性不同导致出现边缘，比如物体本身颜色而不同产生的边界。
-occlusion：遮挡导致出现的边缘，比如图中立方体遮挡了背景圆盘，所以形成了边缘。
-
-大脑中的边缘检测器
-物理边缘与图像边缘物理边缘：是真实存在的边缘
-图像边缘：可能是由光照阴影等造成的边缘
-
-一阶微分算子检测边缘的方法
-
-
-
-
-
-
-
-
-水平检测竖直边缘，竖直检测水平边缘。
-
-噪声的影响
-如第一张图，这张图存在噪声，为了对抗噪声的干扰，提取边缘时要先对原始图像做平滑滤波，去除噪声，再求梯度。
-
-我们可以对高斯核直接先做x，y方向上的卷积，这样就减少了一次卷积。
-
-
-上图是直接x，y方向计算梯度，但是由于图像有噪声，最后结果效果很杂乱，有许多的噪点。
-下图经是高斯导数计算的梯度，效果好了很多，可以看到红色圈出的地方的噪点已经基本消失了。
-
-
-
-阈值的正确选择
-一个合适的阈值很重要，阈值过小会存在噪声，过大会存在一些</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-11&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/10/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh2-%E5%8D%B7%E7%A7%AF,%E6%A8%A1%E6%9D%BF%E5%8C%B9%E9%85%8D,%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/">
-        <p class="h4 index-header">AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔Ch1中所提到的均值滤波，高斯滤波等都用到了卷积，且是不同的卷积核。
-将图像与核做卷积得到的图象可以看作对图像进行了处理，例如均值滤波和高斯滤波
-
-
-1.一维卷积
-所以$R=P*Q=[R[0]，R[1] ，R[2]……..R[m+n]]$
-具体过程举个例子：
-
-一维卷积的长度为：$len(g)=len(f)+len(h)-1$
-卷积形象化过程如下图，可看作$h$的一个滑动过程
-
-2.二维卷积
-二维卷积的过程：
-
-看的是$f$的每个点与$h$重复的部分的乘积（即黄色框内对应的乘积和）
-
-上述所写的是卷积模型三种中的一种 : 称为Full Convolution
-Full Convolution：从f和h相交的时候就开始做运算。相交时，h在f外界的地方把f填充上0（也可理解为只算相交的地方）。
-大小    f：M×M       h：N×N   则g大小为为 (M+N-1)×(M+N-1)
-
-Same Convolution只有当$h$的中心与$f$相交时才开始运算。
-大小和f保持一致
-
-Valid Convolution只有h全部与f重</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-10&nbsp;&nbsp;
         
         
         

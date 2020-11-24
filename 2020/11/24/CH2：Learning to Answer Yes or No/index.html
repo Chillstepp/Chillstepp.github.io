@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon1.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>机器学习基石CH2：Learning to Answer Yes/No ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/cloud.jfif')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 十一月 24日 2020, 1:02 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="CH2：Learning-to-Answer-Yes-No"><a href="#CH2：Learning-to-Answer-Yes-No" class="headerlink" title="CH2：Learning to Answer Yes/No"></a>CH2：Learning to Answer Yes/No</h1><h2 id="Perceptron-Hypothesis-Set"><a href="#Perceptron-Hypothesis-Set" class="headerlink" title="Perceptron Hypothesis Set"></a>Perceptron Hypothesis Set</h2><p><a href="https://imgchr.com/i/BwNSPJ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwNSPJ.png" srcset="undefined" alt="BwNSPJ.png"></a></p>
+<p>$x$为 顾客的特征向量， $y$为是否发卡。</p>
+<p>$y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign$函数是一个符号函数，在<0,>0，=0分别取-1，1，0。$threshold$为是否发卡的阈值。</p>
+<p><a href="https://imgchr.com/i/BwU3lR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwU3lR.png" srcset="undefined" alt="BwU3lR.png"></a></p>
+<p>我们为了书写简单，把$threshold$收入$w_ix_i$，下标改为从0开始。</p>
+<p><a href="https://imgchr.com/i/BwaA4e" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwaA4e.png" srcset="undefined" alt="BwaA4e.png"></a></p>
+<p>那么怎么直观的理解h(x)究竟是什么东西呢？</p>
+<p>我们把x看作一个只有两维的向量，那么它可以代表平面上的一个点，此时还有一个$w_1,w_2$来影响x向量，每个点 有一个label即圆圈还是叉叉。那么h就代表平面上的一条线。</p>
+<p>hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。</p>
+<h2 id="Perceptron-Learning-Algorithm-PLA"><a href="#Perceptron-Learning-Algorithm-PLA" class="headerlink" title="Perceptron Learning Algorithm (PLA)"></a>Perceptron Learning Algorithm (PLA)</h2><p><a href="https://imgchr.com/i/BwwnTf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwwnTf.png" srcset="undefined" alt="BwwnTf.png"></a></p>
+<p>H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行旋转移动等方法对他进行修正。</p>
+<p><a href="https://imgchr.com/i/Bw0Sjs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw0Sjs.png" srcset="undefined" alt="Bw0Sjs.png"></a></p>
+<p>我们找到一个错误的$w_t^T$ 使得 $sign(w_t^Tx_{n(t)})$被错误的分类(其中n(t)代表第n个样本在第t轮)。因此我们想要对他改进纠错，当$y=+1$时，代表我们想要正的却识别出了负的，因此我们要进行改错，我们把$w_t^Tx_{n(t)}$可以看作向量$w$和向量$x$的夹角，夹角太大就要减小，即$w$更新为$w+yx$。当$y=-1$时同理。</p>
+<p>不断改错直到没有错误或者错误最少。</p>
+<p><a href="https://imgchr.com/i/Bwr1U0" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwr1U0.png" srcset="undefined" alt="Bwr1U0.png"></a></p>
+<p><a href="https://imgchr.com/i/Bwry8O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwry8O.png" srcset="undefined" alt="Bwry8O.png"></a></p>
+<p><a href="https://imgchr.com/i/BwrOqs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwrOqs.png" srcset="undefined" alt="BwrOqs.png"></a></p>
+<p><a href="https://imgchr.com/i/Bw6xII" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw6xII.png" srcset="undefined" alt="Bw6xII.png"></a></p>
+<p><a href="https://imgchr.com/i/BwcEZj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwcEZj.png" srcset="undefined" alt="BwcEZj.png"></a></p>
+<p>一定会找到全部符合的h吗？  即使找出来g一定就是h吗？</p>
+<h2 id="Guarantee-of-PLA"><a href="#Guarantee-of-PLA" class="headerlink" title="Guarantee of PLA"></a>Guarantee of PLA</h2><p><a href="https://imgchr.com/i/Bw2hZQ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw2hZQ.png" srcset="undefined" alt="Bw2hZQ.png"></a></p>
+<p>后面两种并不能找出一条直线完美切分。</p>
+<p><strong>迭代保证的证明：</strong></p>
+<p><a href="https://imgchr.com/i/DY5lmq" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DY5lmq.png" srcset="undefined" alt="DY5lmq.png"></a></p>
+<p>这里有意思的证明方法是，他对 $w_f$和$w_t$进行了内积，这里采用的度量方式是内积越大，说明和perfect直线越接近。</p>
+<p>但是我们仔细想想会发现，内积不仅取决于角度（角度变小可以使得内积变大），同时向量的模也有作用，在你不断迭代，可能由于$w_t$长度影响了内积的大小。</p>
+<p>那怎么证明这个问题呢？</p>
+<p><a href="https://imgchr.com/i/DYIw8g" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYIw8g.png" srcset="undefined" alt="DYIw8g.png"></a></p>
+<p>但是仔细思考一下 我们是只在错误的时候才做更新，如上图黄色部分。</p>
+<p>因此我们再次考虑长度变化问题，看到蓝色的一项是小于0的，因此我们加上不等式关系后我们可以看作0</p>
+<p>我们再观察红色项，这个是用来调节的向量，因此无论左右怎么调节，我们直接选一个极值 也就是 $yx$的最大偏移。取完以后我们是可以把$y_n$忽略掉的，因为$y_n$是{-1，+1}是不会影响长度这个标量的。</p>
+<p>最后我们可以推到得出下式：</p>
+<p><a href="https://imgchr.com/i/DYoIfS" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYoIfS.png" srcset="undefined" alt="DYoIfS.png"></a></p>
+<p>这个式子的<strong>常数constant是多少</strong>呢？我们做以下推导：</p>
+<p><a href="https://imgchr.com/i/DtwqHA" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtwqHA.png" srcset="undefined" alt="DtwqHA.png"></a></p>
+<p><a href="https://imgchr.com/i/Dtwz38" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtwz38.png" srcset="undefined" alt="Dtwz38.png"></a></p>
+<p>最后这个有关于T的不等式 可以用来估计 调整次数 </p>
+<p><a href="https://imgchr.com/i/DtBJds" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBJds.png" srcset="undefined" alt="DtBJds.png"></a></p>
+<h2 id="Non-Separable-Data"><a href="#Non-Separable-Data" class="headerlink" title="Non-Separable Data"></a>Non-Separable Data</h2><p><a href="https://imgchr.com/i/DtBqYt" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBqYt.png" srcset="undefined" alt="DtBqYt.png"></a></p>
+<p>PLA可以拓展到n维。</p>
+<p>PLA的一些问题：我们假设这是线性可分的，我们不知道到底需要多少次迭代，因为$w_f$我们是不知道的，同时真正的样本会存在一些噪音杂质。</p>
+<p>对于下列这样一个问题，我们想找到一个w来线性分割使得 犯的错误最少，但这个是一个NP-hard问题。</p>
+<p><a href="https://imgchr.com/i/DtDElT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDElT.png" srcset="undefined" alt="DtDElT.png"></a></p>
+<p>虽然我们找到完美的一条线是np-hard问题，但是在一个优秀的复杂度内找到近似最优的一条线还是有解决方法的，如下：<strong>Pocket Algorithm</strong></p>
+<p>这其实就是一个简单的贪心算法，迭代时我们多考虑一下这条线是否比现在的更优。</p>
+<p><a href="https://imgchr.com/i/DtDz36" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDz36.png" srcset="undefined" alt="DtDz36.png"></a></p>
+<p><a href="https://imgchr.com/i/Dtre8P" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtre8P.png" srcset="undefined" alt="Dtre8P.png"></a></p>
+<p>答案：A</p>
+<p>pocket算法可能和 PLA得到的结果是一样的，因此34都不对，pocket是一定比PLA慢的，因为Pocket需要对比迭代的直线是不是比当前更好，因此要对比所有的数据才可以知道，这会大大浪费时间。</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2020/11/24/CH2：Learning to Answer Yes or No/';
+        this.page.identifier = '/2020/11/24/CH2：Learning to Answer Yes or No/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'Fluid-dev' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "机器学习基石CH2：Learning to Answer Yes/No&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
