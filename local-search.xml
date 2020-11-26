@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>机器学习基石CH3：Types of Learning</title>
+    <link href="undefined2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/"/>
+    <url>2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/</url>
+    
+    <content type="html"><![CDATA[<h1 id="CH3：Types-of-Learning"><a href="#CH3：Types-of-Learning" class="headerlink" title="CH3：Types of Learning"></a>CH3：Types of Learning</h1><h2 id="Learning-with-Different-Output-Space"><a href="#Learning-with-Different-Output-Space" class="headerlink" title="Learning with Different Output Space"></a>Learning with Different Output Space</h2><p>二元分类我们成为<strong>Binary Classification</strong> </p><p>多分类问题：</p><p><a href="https://imgchr.com/i/Dwma2n" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/Dwma2n.png" srcset="undefined" alt="Dwma2n.png"></a></p><p>回归预策分析问题：</p><p>结构学习：例如自然语言</p><p><a href="https://imgchr.com/i/Dwn5Ss" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/Dwn5Ss.png" srcset="undefined" alt="Dwn5Ss.png"></a></p><p><a href="https://imgchr.com/i/DwuKnP" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwuKnP.png" srcset="undefined" alt="DwuKnP.png"></a></p><h2 id="Learning-with-Different-Data-Label"><a href="#Learning-with-Different-Data-Label" class="headerlink" title="Learning with Different Data Label"></a>Learning with Different Data Label</h2><p><strong>监督学习/无监督学习：</strong>  </p><p><a href="https://imgchr.com/i/DwKPvn" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwKPvn.png" srcset="undefined" alt="DwKPvn.png"></a></p><p><strong>半监督学习：</strong></p><p><a href="https://imgchr.com/i/DwKDqP" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwKDqP.png" srcset="undefined" alt="DwKDqP.png"></a></p><p><strong>强化学习：</strong></p><p><a href="https://imgchr.com/i/DwMpdK" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwMpdK.png" srcset="undefined" alt="DwMpdK.png"></a></p><h2 id="Learning-with-Different-Protocol"><a href="#Learning-with-Different-Protocol" class="headerlink" title="Learning with Different Protocol"></a>Learning with Different Protocol</h2><p><strong>Batch Learning 批量学习：</strong></p><p><a href="https://imgchr.com/i/DwMXtS" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwMXtS.png" srcset="undefined" alt="DwMXtS.png"></a></p><p><strong>Online Learning 在线学习：</strong></p><p><a href="https://imgchr.com/i/DwQS6s" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/DwQS6s.png" srcset="undefined" alt="DwQS6s.png"></a></p><p>线上学习是一种passive学习方式，而批量学习是一种填鸭式学习。</p><h2 id="Learning-with-Different-Input-Space"><a href="#Learning-with-Different-Input-Space" class="headerlink" title="Learning with Different Input Space"></a>Learning with Different Input Space</h2><p>对于这样一个问题，我们喂给机器什么样的数据？</p><p><a href="https://imgchr.com/i/Dw1jfO" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/Dw1jfO.png" srcset="undefined" alt="Dw1jfO.png"></a></p><p>我们可以从以下方法来入手：</p><p><a href="https://imgchr.com/i/Dw38hT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/Dw38hT.png" srcset="undefined" alt="Dw38hT.png"></a></p><p>比如 x=(对称性，多样性)  这样的数据，或者是是16*16像素点的256维向量。</p><p>第二种方法看起来很好，但是对于机器来说，对于这么多维的数据，对于机器是很难训练的，同时需要大量数据来学习。</p><p>自己抽取特征，也可以是机器自己发现的：</p><p><a href="https://imgchr.com/i/Dw8kr9" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/26/Dw8kr9.png" srcset="undefined" alt="Dw8kr9.png"></a></p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>[<img src="https://s3.ax1x.com/2020/11/26/Dw8RRU.png" srcset="undefined" alt="Dw8RRU.png">](</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>机器学习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>机器学习基石Ch1：The Learning Problem</title>
     <link href="undefined2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/"/>
     <url>2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/</url>
