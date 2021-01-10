@@ -136,6 +136,92 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">
+        <p class="h4 index-header">2020牛客暑期多校训练营（第二场）</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">2020牛客暑期多校训练营（第二场）Chillstep个人补题记录：
+
+
+
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+
+
+
+
+
+√
+√
+√
+
+√
+
+
+
+√
+√
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Problem AProblem B题意：给n个点(不包括原点)，问经过原点的圆最多可以和多少个点相交？
+思路：枚举两个点，与原点三点确定一个圆。求得每个点的圆心位置，计算圆心位置设圆方程，然后带入两个点列方程即可，然后解出来带分式的圆心的横纵坐标即可，用分数类维护，维护分数类的时候千万不要gcd约分，直接__int128类型乘就好，gcd约分会超时，这道题应该是有点卡常的。
+用数据结构或排序维护每个圆心的出现次数。
+code：//Chillstep ^_^
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define pii pair&lt;int,int&gt;
+#define pll pair&lt;ll,ll&gt;
+#define pdd pair&lt;double,double&gt;
+typedef long long l</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/15/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E5%AE%9E%E9%AA%8C1-%E9%95%9C%E5%A4%B4%E5%88%86%E5%89%B2/">
         <p class="h4 index-header">AHU计算机视觉课实验1-镜头分割</p>
         
@@ -556,58 +642,6 @@ df = pd.DataFrame(np.random.rand(6,4),index=dates,columns=[&#39;a&#39;,&#39;b&#3
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/22/Python-Notebook/">
-        <p class="h4 index-header">Python Notebook</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Python Notebookprint()print(1)
-print(&quot;we&#39;re the best&quot;)
-print(&#39;we are the best&#39;)
-print(&#39;we\&#39;re the best&#39;) 
-
-print(&quot;apple&quot;+&quot;car&quot;)
-print(&#39;apple&#39;+&#39;tree&#39;)
-
-print(&#39;apple&#39;+&#39;4&#39;)
-print(&#39;apple&#39;+str(4))
-
-print(1+2)
-print(&quot;1+2&quot;)
-print(int(&#39;1&#39;)+2)
-print(float(1.2)+2) #   &#39;1.2&#39;不可以转int
-
-数学：print(1+1)
-print(1-1)
-print(2*2)
-print(2^1)  #  异或xor
-print(2**3) #  高次幂
-print(8%3)  #  mod
-print(8//3) </div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-22&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -831,5 +865,20 @@ print(8//3) </div>
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

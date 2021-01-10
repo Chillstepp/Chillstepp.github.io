@@ -23,6 +23,25 @@
   
   
   <entry>
+    <title>机器学习基石CH4:Feasibility of Learning（学习可行性）</title>
+    <link href="undefined2020/11/26/CH4%EF%BC%9ACH4Feasibility%20of%20Learning%EF%BC%88%E5%AD%A6%E4%B9%A0%E5%8F%AF%E8%A1%8C%E6%80%A7%EF%BC%89/"/>
+    <url>2020/11/26/CH4%EF%BC%9ACH4Feasibility%20of%20Learning%EF%BC%88%E5%AD%A6%E4%B9%A0%E5%8F%AF%E8%A1%8C%E6%80%A7%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<h1 id="CH4-Feasibility-of-Learning（学习可行性）"><a href="#CH4-Feasibility-of-Learning（学习可行性）" class="headerlink" title="CH4:Feasibility of Learning（学习可行性）"></a>CH4:Feasibility of Learning（学习可行性）</h1><h2 id="Learning-is-impossible？"><a href="#Learning-is-impossible？" class="headerlink" title="Learning is  impossible？"></a>Learning is  impossible？</h2><p>对于有些问题，机器学习给出的答案可能并不是对的，因为样本自身可能符合多个hypothesis，对于不同的hypothesis有不同的结果，这使得结果具有不确定性。</p><h2 id="Probability-to-the-Rescue"><a href="#Probability-to-the-Rescue" class="headerlink" title="Probability to the Rescue"></a>Probability to the Rescue</h2><p><img src="https://i.loli.net/2021/01/10/tvlKCAyiIWYRJZS.png" srcset="undefined" alt="image-20210110222508982"></p><p>我们估测一个大瓶子里的橘色圆球占比可以通过随机抓一把求橘色圆球占比来估计</p><p><img src="https://i.loli.net/2021/01/10/nV812sjfPtIkS5Z.png" srcset="undefined" alt="image-20210110222641205"></p><p>这个依据称为$ Hoeffding$ 霍夫丁不等式。从不等式可以看出当数量N越大，这个准确率是越准确的。</p><p><img src="https://i.loli.net/2021/01/10/AZH3qv5nz81xmVP.png" srcset="undefined" alt="image-20210110223003852"></p><h2 id="Connection-to-Learning"><a href="#Connection-to-Learning" class="headerlink" title="Connection to Learning"></a>Connection to Learning</h2><p><img src="https://i.loli.net/2021/01/10/ZiPGhDmRI3fSwje.png" srcset="undefined" alt="image-20210110223448087"></p><p>​        将其转换为机器学习的问题:</p><ul><li><p>机器学习中$hypothesis$与目标函数相等的可能性类比于罐子中橙色弹珠的概率问题 </p></li><li><p>将罐子中的一颗颗弹珠类比于机器学习中的样本空间x，橙色弹珠类比于$h(x)$和$f(x)$结果不相同，绿色弹珠类比于$h(x)$和$f(x)$结果相同</p></li><li><p>从罐子中抽取的N个弹珠类比于机器学习中的训练样本D，且这两种抽样的样本与总体样本之间是独立同分布的，假设样本的数量N够大且是独立同分布的，可以通过样本中hx和fx不一样的几率大概推断出样本外的样本数据中hx和fx不一样的几率。</p></li></ul><hr><p><img src="https://i.loli.net/2021/01/10/qbT4EV2fvlBUgZ5.png" srcset="undefined" alt="image-20210110224158726"></p><p>因此机器学习可以类比为，$E_{in}(h)$代表着真正的目标函数$f$, 而我们自己提出来的hypothesis在一部分样本上运行效果不错的hypothesis  $g$代表着$E_{in}(h)$，机器学习就是一个这样的概率问题，在罐子中用一部分球就可以大致的求出概率，机器学习中用一些样本就可以学得和target function差不多的预测函数g。</p><p>$E_{in}$代表着人手上样本的错误率，$E_{out}代表所有的数据的错误率$</p><p><img src="https://i.loli.net/2021/01/10/ZmYVCiSHx1qravh.png" srcset="undefined" alt="image-20210110224455052"></p><p>类比可知，我们在一个比较大的样本所做到的算法效果很好，那么在所有数据上也会比较好。</p><hr><p>那么按照上面的说法，我们一定可以找到机器学习比较好的学习效果了，这是和之前所说的<strong>Learning is impossible？</strong>中的的说法不太一样。我们仔细回想可以发现，这个g并没有人告诉我们，我们要从hypothesis中一大堆的g中选出这个g后，才可以进行我们之前所提到的工作。也就是说你不一定可以找一个在样本上表现很好的（即$E_{in}$ 比较小）的算法。</p><p>因此这个并不是学习，而是Verification验证表现，也就是说确认表现好不好（如果在样本表现好，那么很大可能在所有数据上表现很好）。</p><h2 id="Connection-to-Real-Learning"><a href="#Connection-to-Real-Learning" class="headerlink" title="Connection to Real Learning"></a>Connection to Real Learning</h2><p><img src="https://i.loli.net/2021/01/10/lhmIPiJLDOSWsaC.png" srcset="undefined" alt="image-20210110225230417"></p><p>我们的hypothesis中有许多h，那么我们从每个选择十个球来测量绿球的占比，那么这样得出的结果可能不一定是正确的。</p><p><img src="https://i.loli.net/2021/01/10/OdtWCBzE4sxZmRT.png" srcset="undefined" alt="image-20210110225643569"></p><p>上图的表我们可以看做，抽x个球来估计概率时多少种不同的抽法，得出来的数据有差距时我们认为这就是一个BAD的资料。即$E_{in}(h)$和$E_{out}(h)$差距比较大时，我们认为这是一个bad的资料。</p><p><strong>因此用来训练的资料/数据集 要是比较正确的才可以训练出好的模型。</strong></p><p><img src="https://i.loli.net/2021/01/10/oLwBuCmjTI46UJy.png" srcset="undefined" alt="image-20210110230400881"></p><p>上述列表中D代表着不同的资料/数据训练集， 只要有一个资料对h来说是bad的，我们就认为这个资料为bad的。</p><p><img src="https://i.loli.net/2021/01/10/xNVK9nQchgzjSTv.png" srcset="undefined" alt="image-20210110230752309"></p><p>因此：</p><ul><li><p>要么N大一些，即资料够多，可以进行机器学习。</p></li><li><p>或者我们找到了一个g可以让$E_{in}≈0$，那么我们也可以估计到整体$E_{out}$也约等于0。那么这个也是一个犯错很少的方法。因此可以进行机器学习。</p></li></ul><p>那么这里我们默认M为finite（有限的），那么对于无限的M呢？如感知机perceptron，这里对应着下一章的内容。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>机器学习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>机器学习基石Ch1：The Learning Problem</title>
     <link href="undefined2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/"/>
     <url>2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/</url>

@@ -193,6 +193,49 @@ Learning with Different Input Space对于这样一个问题，我们喂给机器
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/11/26/CH4%EF%BC%9ACH4Feasibility%20of%20Learning%EF%BC%88%E5%AD%A6%E4%B9%A0%E5%8F%AF%E8%A1%8C%E6%80%A7%EF%BC%89/">
+        <p class="h4 index-header">机器学习基石CH4:Feasibility of Learning（学习可行性）</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH4:Feasibility of Learning（学习可行性）Learning is  impossible？对于有些问题，机器学习给出的答案可能并不是对的，因为样本自身可能符合多个hypothesis，对于不同的hypothesis有不同的结果，这使得结果具有不确定性。
+Probability to the Rescue
+我们估测一个大瓶子里的橘色圆球占比可以通过随机抓一把求橘色圆球占比来估计
+
+这个依据称为$ Hoeffding$ 霍夫丁不等式。从不等式可以看出当数量N越大，这个准确率是越准确的。
+
+Connection to Learning
+​        将其转换为机器学习的问题:
+
+机器学习中$hypothesis$与目标函数相等的可能性类比于罐子中橙色弹珠的概率问题 
+
+将罐子中的一颗颗弹珠类比于机器学习中的样本空间x，橙色弹珠类比于$h(x)$和$f(x)$结果不相同，绿色弹珠类比于$h(x)$和$f(x)$结果相同
+
+从罐子中抽取的N个弹珠类比于机器学习中的训练样本D，且这两种抽样的样本与总体样本之间是独立同分布的，假设样本的数量N够大且是独立同分布的，可以通</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-26&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
         <p class="h4 index-header">机器学习基石Ch1：The Learning Problem</p>
         
@@ -562,92 +605,6 @@ Sno CHAR(9) PRIM</div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">
-        <p class="h4 index-header">2020牛客暑期多校训练营（第二场）</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">2020牛客暑期多校训练营（第二场）Chillstep个人补题记录：
-
-
-
-
-A
-B
-C
-D
-E
-F
-G
-H
-I
-J
-K
-
-
-
-
-
-√
-√
-√
-
-√
-
-
-
-√
-√
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Problem AProblem B题意：给n个点(不包括原点)，问经过原点的圆最多可以和多少个点相交？
-思路：枚举两个点，与原点三点确定一个圆。求得每个点的圆心位置，计算圆心位置设圆方程，然后带入两个点列方程即可，然后解出来带分式的圆心的横纵坐标即可，用分数类维护，维护分数类的时候千万不要gcd约分，直接__int128类型乘就好，gcd约分会超时，这道题应该是有点卡常的。
-用数据结构或排序维护每个圆心的出现次数。
-code：//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-#define pdd pair&lt;double,double&gt;
-typedef long long l</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -871,5 +828,20 @@ typedef long long l</div>
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
