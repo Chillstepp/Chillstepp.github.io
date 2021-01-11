@@ -15,7 +15,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石Ch1：The Learning Problem ~ Chillstep</title>
+  <title>机器学习基石CH4:Feasibility of Learning（学习可行性） ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -113,7 +113,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期二, 十一月 24日 2020, 1:00 下午
+                  星期一, 一月 11日 2021, 10:54 上午
                 </p>
               
 
@@ -122,7 +122,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    406 字
+                    1k 字
                   </span>&nbsp;
                 
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      1 分钟
+                      3 分钟
                   </span>&nbsp;
                 
 
@@ -163,34 +163,47 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="Ch1：The-Learning-Problem"><a href="#Ch1：The-Learning-Problem" class="headerlink" title="Ch1：The Learning Problem"></a>Ch1：The Learning Problem</h1><h2 id="1-1-What-is-Machine-Learning？"><a href="#1-1-What-is-Machine-Learning？" class="headerlink" title="1.1 What is Machine Learning？"></a>1.1 What is Machine Learning？</h2><p><a href="https://imgchr.com/i/BYxop4" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/30/BYxop4.png" srcset="undefined" alt="BYxop4.png"></a></p>
-<p><strong>skill</strong>可以定义为 某一种表现的提升，例如 你通过<strong>股票的数据</strong> 进行机器学习使得你获得了<strong>更多的收益</strong></p>
-<p><a href="https://imgchr.com/i/BYxL0x" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/30/BYxL0x.png" srcset="undefined" alt="BYxL0x.png"></a></p>
-<p>对于辨别一棵树，我们是通过见过无数棵树后总结出来的判断规律。这和机器学习是相似的，通过数据进行学习。</p>
-<p><strong>是否适合使用机器学习的一些基本判别关键点？</strong></p>
-<p>1.能够有某些效能指标或者目标希望机器可以达到</p>
-<p>2.不知道怎么有效的定义</p>
-<p>3.有data</p>
-<p><a href="https://imgchr.com/i/BYzb8g" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/30/BYzb8g.png" srcset="undefined" alt="BYzb8g.png"></a></p>
-<p>正确答案：3</p>
-<p>第一个小女孩哭没有规则可以预测，第二个图里的环可以有效的定义，不需要机器学习。最后一个地球被核能毁灭没有相关的数据。</p>
-<h2 id="1-2-Applications-of-Machine-Learning"><a href="#1-2-Applications-of-Machine-Learning" class="headerlink" title="1.2 Applications of Machine Learning"></a>1.2 Applications of Machine Learning</h2><h2 id="1-3Components-of-Machine-Learning"><a href="#1-3Components-of-Machine-Learning" class="headerlink" title="1.3Components of Machine Learning"></a>1.3Components of Machine Learning</h2><p>信用卡是否发卡的预测问题：</p>
-<p>下面是一个申请表：</p>
-<p><a href="https://imgchr.com/i/BtCFxg" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/30/BtCFxg.png" srcset="undefined" alt="BtCFxg.png"></a></p>
+            <h1 id="CH4-Feasibility-of-Learning（学习可行性）"><a href="#CH4-Feasibility-of-Learning（学习可行性）" class="headerlink" title="CH4:Feasibility of Learning（学习可行性）"></a>CH4:Feasibility of Learning（学习可行性）</h1><h2 id="Learning-is-impossible？"><a href="#Learning-is-impossible？" class="headerlink" title="Learning is  impossible？"></a>Learning is  impossible？</h2><p>对于有些问题，机器学习给出的答案可能并不是对的，因为样本自身可能符合多个hypothesis，对于不同的hypothesis有不同的结果，这使得结果具有不确定性。</p>
+<h2 id="Probability-to-the-Rescue"><a href="#Probability-to-the-Rescue" class="headerlink" title="Probability to the Rescue"></a>Probability to the Rescue</h2><p><img src="https://i.loli.net/2021/01/10/tvlKCAyiIWYRJZS.png" srcset="undefined" alt="image-20210110222508982"></p>
+<p>我们估测一个大瓶子里的橘色圆球占比可以通过随机抓一把求橘色圆球占比来估计</p>
+<p><img src="https://i.loli.net/2021/01/10/nV812sjfPtIkS5Z.png" srcset="undefined" alt="image-20210110222641205"></p>
+<p>这个依据称为$ Hoeffding$ 霍夫丁不等式。从不等式可以看出当数量N越大，这个准确率是越准确的。</p>
+<p><img src="https://i.loli.net/2021/01/10/AZH3qv5nz81xmVP.png" srcset="undefined" alt="image-20210110223003852"></p>
+<h2 id="Connection-to-Learning"><a href="#Connection-to-Learning" class="headerlink" title="Connection to Learning"></a>Connection to Learning</h2><p><img src="https://i.loli.net/2021/01/10/ZiPGhDmRI3fSwje.png" srcset="undefined" alt="image-20210110223448087"></p>
+<p>​        将其转换为机器学习的问题:</p>
 <ul>
-<li>input：$x\in X$   顾客的申请信息</li>
-<li>output: $y\in Y$  同意发卡后的顾客表现的好坏</li>
-<li>目标方程（target function）: $f:X→ Y$</li>
-<li>data: 训练样本$D=\{(x_1,y_1),(x_2,y_2)…(x_N,y_N)\}$  代表以前同样的顾客x给他发信用卡后的表现y</li>
-<li>hypothesis：训练出一个函数$g：X→Y$来衡量要不要给顾客信用卡。</li>
+<li><p>机器学习中$hypothesis$与目标函数相等的可能性类比于罐子中橙色弹珠的概率问题 </p>
+</li>
+<li><p>将罐子中的一颗颗弹珠类比于机器学习中的样本空间x，橙色弹珠类比于$h(x)$和$f(x)$结果不相同，绿色弹珠类比于$h(x)$和$f(x)$结果相同</p>
+</li>
+<li><p>从罐子中抽取的N个弹珠类比于机器学习中的训练样本D，且这两种抽样的样本与总体样本之间是独立同分布的，假设样本的数量N够大且是独立同分布的，可以通过样本中hx和fx不一样的几率大概推断出样本外的样本数据中hx和fx不一样的几率。</p>
+</li>
 </ul>
-<p><a href="https://imgchr.com/i/BtPCwR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/30/BtPCwR.png" srcset="undefined" alt="BtPCwR.png"></a></p>
-<p>我们希望训练出来的$g$和$f$越像越好。</p>
-<h2 id="1-4-Machine-Learning-and-Other-Fields"><a href="#1-4-Machine-Learning-and-Other-Fields" class="headerlink" title="1.4 Machine Learning and Other Fields"></a>1.4 Machine Learning and Other Fields</h2><p><strong>资料勘探和机器学习：</strong> 我们用机器学习来寻找相关的资料，这些资料可以用于其它领域的机器学习训练的数据</p>
-<h2 id="1-5-Homework-0"><a href="#1-5-Homework-0" class="headerlink" title="1.5 Homework  #0"></a>1.5 Homework  #0</h2><p><a href="https://imgchr.com/i/BUsa4S" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/31/BUsa4S.png" srcset="undefined" alt="BUsa4S.png"></a></p>
-<p><a href="https://imgchr.com/i/BUO6N8" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/31/BUO6N8.png" srcset="undefined" alt="BUO6N8.png"></a></p>
-<p><a href="https://imgchr.com/i/BUXkgH" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/31/BUXkgH.png" srcset="undefined" alt="BUXkgH.png"></a></p>
-<p><a href="https://imgchr.com/i/Bw3XQK" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw3XQK.png" srcset="undefined" alt="Bw3XQK.png"></a></p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/10/qbT4EV2fvlBUgZ5.png" srcset="undefined" alt="image-20210110224158726"></p>
+<p>因此机器学习可以类比为，$E_{in}(h)$代表着真正的目标函数$f$, 而我们自己提出来的hypothesis在一部分样本上运行效果不错的hypothesis  $g$代表着$E_{in}(h)$，机器学习就是一个这样的概率问题，在罐子中用一部分球就可以大致的求出概率，机器学习中用一些样本就可以学得和target function差不多的预测函数g。</p>
+<p>$E_{in}$代表着人手上样本的错误率，$E_{out}代表所有的数据的错误率$</p>
+<p><img src="https://i.loli.net/2021/01/10/ZmYVCiSHx1qravh.png" srcset="undefined" alt="image-20210110224455052"></p>
+<p>类比可知，我们在一个比较大的样本所做到的算法效果很好，那么在所有数据上也会比较好。</p>
+<hr>
+<p>那么按照上面的说法，我们一定可以找到机器学习比较好的学习效果了，这是和之前所说的<strong>Learning is impossible？</strong>中的的说法不太一样。我们仔细回想可以发现，这个g并没有人告诉我们，我们要从hypothesis中一大堆的g中选出这个g后，才可以进行我们之前所提到的工作。也就是说你不一定可以找一个在样本上表现很好的（即$E_{in}$ 比较小）的算法。</p>
+<p>因此这个并不是学习，而是Verification验证表现，也就是说确认表现好不好（如果在样本表现好，那么很大可能在所有数据上表现很好）。</p>
+<h2 id="Connection-to-Real-Learning"><a href="#Connection-to-Real-Learning" class="headerlink" title="Connection to Real Learning"></a>Connection to Real Learning</h2><p><img src="https://i.loli.net/2021/01/10/lhmIPiJLDOSWsaC.png" srcset="undefined" alt="image-20210110225230417"></p>
+<p>我们的hypothesis中有许多h，那么我们从每个选择十个球来测量绿球的占比，那么这样得出的结果可能不一定是正确的。</p>
+<p><img src="https://i.loli.net/2021/01/10/OdtWCBzE4sxZmRT.png" srcset="undefined" alt="image-20210110225643569"></p>
+<p>上图的表我们可以看做，抽x个球来估计概率时多少种不同的抽法，得出来的数据有差距时我们认为这就是一个BAD的资料。即$E_{in}(h)$和$E_{out}(h)$差距比较大时，我们认为这是一个bad的资料。</p>
+<p><strong>因此用来训练的资料/数据集 要是比较正确的才可以训练出好的模型。</strong></p>
+<p><img src="https://i.loli.net/2021/01/10/oLwBuCmjTI46UJy.png" srcset="undefined" alt="image-20210110230400881"></p>
+<p>上述列表中D代表着不同的资料/数据训练集， 只要有一个资料对h来说是bad的，我们就认为这个资料为bad的。</p>
+<p><img src="https://i.loli.net/2021/01/10/xNVK9nQchgzjSTv.png" srcset="undefined" alt="image-20210110230752309"></p>
+<p>因此：</p>
+<ul>
+<li><p>要么N大一些，即资料够多，可以进行机器学习。</p>
+</li>
+<li><p>或者我们找到了一个g可以让$E_{in}≈0$，那么我们也可以估计到整体$E_{out}$也约等于0。那么这个也是一个犯错很少的方法。因此可以进行机器学习。</p>
+</li>
+</ul>
+<p>那么这里我们默认M为finite（有限的），那么对于无限的M呢？如感知机perceptron，这里对应着下一章的内容。</p>
 
             <hr>
           </div>
@@ -239,8 +252,8 @@
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-        this.page.url = 'https://chillstepp.github.io/2020/11/24/CH1：The Learning Problem/';
-        this.page.identifier = '/2020/11/24/CH1：The Learning Problem/';
+        this.page.url = 'https://chillstepp.github.io/2021/01/11/CH4：CH4Feasibility of Learning（学习可行性）/';
+        this.page.identifier = '/2021/01/11/CH4：CH4Feasibility of Learning（学习可行性）/';
       };
       var oldLoad = window.onload;
       window.onload = function () {
@@ -379,7 +392,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "机器学习基石Ch1：The Learning Problem&nbsp;",
+        "机器学习基石CH4:Feasibility of Learning（学习可行性）&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
