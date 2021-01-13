@@ -136,6 +136,82 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/01/13/%E3%80%8A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E3%80%8BCH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
+        <p class="h4 index-header">《线性代数及其应用》CH1：线性代数中的线性方程组</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">[TOC]
+第1章 线性代数中的线性方程组1.1 线性方程组
+线性方程的解有三种情况
+
+无解
+唯一解
+无穷多解
+
+当方程组有解，我们称线性方程组是相容的。反之无解称之为不相容的。
+
+我们称 为系数矩阵，称为增广矩阵。
+解方程的方法：我们可以通过变换先变成
+然后通过第三行消去第二行的$x_3$，然后用只包含$x_2$的第二行和只包含$x_3$的第三行消去第一行的$x_2$和$x_3$
+最后得到：
+
+
+直观理解就是三个平面交于一点，这也是线性方程组的几何意义。
+初等变换主要有三种：
+
+倍加：把某一行可以以某个倍数加到另一行上
+对换：把两行对换
+倍乘：把某一行的所有元素乘以同一个非零数
+
+
+我们通过进行如上提到的变换可以得到：
+
+1.2 行化简与阶梯形矩阵阶梯型矩阵：
+
+其实就是下面这样的矩阵：
+
+化简阶梯矩阵：
+
+定理1： 每个矩阵等价于唯一的化简阶梯形矩阵
+
+举个例子来说明一下主元位置和主元列的具体意义：
+
+例如上图，我们首先化简为阶梯型
+
+观察上图不难理解主元列就是主元位置所在的列，主元位置就是每行第一个非0的元素所在的位置。
+
+
+同理：
+
+存在与唯一性定理：
+
+
+1.3 向量方程定义</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-13&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0">线性代数</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/">
         <p class="h4 index-header">机器学习基石Ch5：Training VS Testing</p>
         
@@ -583,52 +659,6 @@ $f(X)</div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/17/SQL_tutorial/">
-        <p class="h4 index-header">AHU_SQL_Consise_Tutorial</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">SQL(Consise Tutorial)SQL_Consise_Tutorial写在前面：
-由于书上的SQL讲解太过于分散，因此我写了一个文档来总结这些知识点，以例子代替讲解，方便大家查漏补缺，由于开始时写这个文档是为了实验考试，但后来为了准备期末考试又添加了一些实验课上没有讲到的东西，如果有什么缺失的知识点，可以发邮件给我：howiewang.cs@gmail.com ，我会尽量补上缺失的内容。
-创建表创建STUDENT表
-CREATE TABLE STUDENT
-(SId INT IDENTITY(1,1),
- SNo CHAR (5) PRIMARY KEY,
- CLno CHAR(6),
- SName VARCHAR(8) NOT NULL，
- SSex CHAR(2) CHECK(SSex IN(&#39;男&#39;,&#39;女&#39;))，   //用CHECK短语指定列值该满足的条件
- SBir DATETIME
- SAge INT
-)
-
-创建表时，用CHECK短语指定列值该满足的条件
-CREATE TABLE STUDENT
-(
-Sno CHAR(9) PRIM</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/SQL">SQL</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -852,5 +882,20 @@ Sno CHAR(9) PRIM</div>
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

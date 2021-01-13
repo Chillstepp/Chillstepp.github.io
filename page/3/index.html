@@ -136,6 +136,53 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+        <p class="h4 index-header">Pandas数据分析基础</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Pandas模块学习Pandas基本介绍import numpy as np
+import pandas as pd
+
+s = pd.Series([1,3,4,6,np.nan,44,1])
+print(s)
+#0     1.0
+#1     3.0
+#2     4.0
+#3     6.0
+#4     NaN
+#5    44.0
+#6     1.0
+
+dates = pd.date_range(&#39;20200202&#39;,periods=6)
+print(dates)  #DatetimeIndex([&#39;2020-02-02&#39;, &#39;2020-02-03&#39;, &#39;2020-02-04&#39;, &#39;2020-02-05&#39;,
+              #  &#39;2020-02-06&#39;, &#39;2020-02-07&#39;],
+
+df = pd.DataFrame(np.random.rand(6,4),index=dates,columns=[&#39;a&#39;,&#39;b&#39;,</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">
         <p class="h4 index-header">《Hands-On-Machine-Learning》PART I</p>
         
@@ -570,58 +617,6 @@ int main()
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities%EF%BC%88SPFA%E4%BC%98%E5%8C%96%EF%BC%89/">
-        <p class="h4 index-header">Codeforces 449B Jzzhu and Cities（SPFA优化）</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Codeforces 449B Jzzhu and Cities（SPFA优化）题意：
-
-前置知识：SPFA讲解：https://blog.csdn.net/qq_35644234/article/details/61614581
-code：建图方法很细节（mark一手
-题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const long long INF=0x3f3f3f3f3f3f3f;
-const int Maxn = 1e5+10;
-
-int cnt;
-vector &lt;pair&lt;int,int &gt; &gt; E[Maxn];
-int n,m,k;
-bool vis[Maxn];
-long long dis[Maxn];
-bool book[Maxn];
-queue &lt;int&gt; q;
-
-int main()
-{
-    int u,v,w;
-    memset(vis,0,sizeof(vis));
-    scanf(&</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA">ACM-图论</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -845,5 +840,20 @@ int main()
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
