@@ -136,6 +136,63 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
+        <p class="h4 index-header">AHU计算机视觉课Ch4-模型拟合</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机视觉课Ch4-模型拟合
+数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)
+最小二乘法(Least Squares)拟合方法
+
+约束条件的作用之一是防止 $a=b=c=0$
+局部极小值点的导数为0
+
+
+
+
+
+拉格朗日乘子法：
+
+外点
+外点可能会大幅度干扰直线，将直线拉到外点方向处。
+
+可以做误差控制，减少外点影响。
+
+
+对于去除外点，我想了想是否可以这样操作：
+我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。
+随机一致性采样算法（RANSAC）
+
+
+
+
+如何模拟圆呢？
+随机采样3个样本(三个点确定一</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
         <p class="h4 index-header">AHU计算机图形学笔记</p>
         
@@ -588,56 +645,6 @@ img = cv2.imre</div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
-        <p class="h4 index-header">Numpy数据分析基础</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Numpy模块学习numpy的基本属性import numpy as np
-
-array = np.array([[1,2,3],
-                  [2,3,4]])
-print(array)  # [[1 2 3]
-              #  [2 3 4]]
-
-print(&#39;number of dim:&#39;,array.ndim)  #维数  number of dim: 2
-print(&#39;shape:&#39;,array.shape)  #shape: (2, 3)
-print(&#39;size:&#39;,array.size)    #size: 6
-
-numpy创建的arrayimport numpy as np
-
-a = np.array([2,23,4],dtype=np.int)  #定义数据的类型
-print(a)  #[ 2 23  4]
-print(a.dtype)  #int32
-
-a = np.zeros((4,2))  #生成一个4行2列的全0矩阵
-print(a)
-
-a = np.ones((4,2))</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -861,20 +868,5 @@ a = np.ones((4,2))</div>
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
