@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>terz ~ Chillstep</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/sdqryn.webp')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 一月 14日 2021, 4:44 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    930 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="CH6-Theory-of-Generalization"><a href="#CH6-Theory-of-Generalization" class="headerlink" title="CH6: Theory of Generalization"></a>CH6: Theory of Generalization</h1><h2 id="Restriction-of-break-point"><a href="#Restriction-of-break-point" class="headerlink" title="Restriction of break point"></a>Restriction of break point</h2><p>还是回到上节，我们做出了以下的猜想：</p>
+<p><img src="https://i.loli.net/2021/01/12/3TBh9clC4XJHvUt.png" srcset="undefined" alt="image-20210112002301731"></p>
+<p>我们做出了以下的猜想：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113164632541.png" srcset="undefined" alt="image-20210113164632541"></p>
+<hr>
+<p>我们思考,当$break  point = 2$的时候：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113165702360.png" srcset="undefined" alt="image-20210113165702360"></p>
+<p>那么 N=1的时候小于break point，所以还是符合$2^N$的规律。</p>
+<p>N=2 ,也就是break point，此时 $m_H(N)&lt;2^N$,也就是说$m_H(N)$最大也就是3.</p>
+<p>接下来考虑，N=3：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113165958230.png" srcset="undefined" alt="image-20210113165958230"></p>
+<p>上图这样的情况可以吗？</p>
+<p>当然不可以，因为如果此时我们不要$x_1$这个点了，也就说退化到N=2的时候，$x_2,x_3$此时为4种，也就是$2^N$,但是前面说到了，N=2是breakpoint，最多三种。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113170251771.png" srcset="undefined" alt="image-20210113170251771"></p>
+<p>因此上图这种是不可能的，N=3时，dichotomies变成成上图这样是错误的。</p>
+<p>那么我们不难发现，如果要N=3找dichotomies时，要符合N=2的规矩，也就任意两个点不能shatter</p>
+<p>(这里的shatter指，情况等于$2^N$，也就是所有情况都存在，而这对于break point是错误的)。</p>
+<p>那么我们再接着试一试</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113170629990.png" srcset="undefined" alt="image-20210113170629990"></p>
+<p>上图这种dichotomies是正确的。</p>
+<p>如果接着加就会发现，无论怎么添加也会产生两个点的shatter，所以最大dichotomies也就是4种了。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113170818798.png" srcset="undefined" alt="image-20210113170818798"></p>
+<p>这么一看，break point严重抑制了$m_H$的增长。</p>
+<p>因此接下来我们的证明思路如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113170927679.png" srcset="undefined" alt="image-20210113170927679"></p>
+<p>如果证明了是多项式大小的，那么问题就可以解决了。</p>
+<hr>
+<p>最后的课堂问题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113171037210.png" srcset="undefined" alt="image-20210113171037210"></p>
+<p>不难想到是1种，因为<strong>不能出现某一列有两个不同的</strong>，也就是说他们每行都长得一样，即只有一种。</p>
+<h2 id="Bounding-Function"><a href="#Bounding-Function" class="headerlink" title="Bounding Function"></a>Bounding Function</h2><p><strong>Bounding Function的定义如下：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113171503127.png" srcset="undefined" alt="image-20210113171503127"></p>
+<p>N个点，breakpoint为k时，$m_H(N)$可能的最大值</p>
+<p>那么下面问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113171623047.png" srcset="undefined" alt="image-20210113171623047"></p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113184205356.png" srcset="undefined" alt="image-20210113184205356"></p>
+<p><strong>N&lt;k</strong>  不难理解，还没到break point还符合$2^N$规律</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113184345391.png" srcset="undefined" alt="image-20210113184345391"></p>
+<p><strong>N=k</strong>，也不难理解</p>
+<p>因为此时：$m_H(N)&lt;2^N$,也就是说$m_H(N)$最大也就是$2^N-1$.</p>
+<p><strong>N&gt;k时：</strong></p>
+<p>我们就要慢慢分析以下这个问题了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113191405755.png" srcset="undefined" alt="image-20210113191405755"></p>
+<p>我们枚举以下发现B(4,3)=9 。然后发现 是B(3,2)和B(3,3)的和。</p>
+<p>我们把这是11个分类一下：如下图</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113191459649.png" srcset="undefined" alt="image-20210113191459649"></p>
+<p>其中B(4,3)的组成成分如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113192112584.png" srcset="undefined" alt="image-20210113192112584"></p>
+<p>我们可以看出橘色的$x_1,x_2,x_3$ 没两个都是相同的(深橘色/浅橘色)，只有$x_4$不同。</p>
+<p>我们仅看前三个$x_1,x_2,x_3 $ ,不难得出：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113192331348.png" srcset="undefined" alt="image-20210113192331348"></p>
+<p>也就是说：4个点则不能出现3个点的shatter。</p>
+<p>但是还记得shatter的定义吗，可不是存在，而是任意三个，那玩意三个中包含$x_4$呢？</p>
+<p>对于这个问题我们先考虑，去重后的并不包含$x_4$，如下图</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193409035.png" srcset="undefined" alt="image-20210113193409035"></p>
+<p>此时如果存在两个x有shatter  加上x_4会对这一列出现 圈圈/叉叉 ，那不就是三个x的shatter 了吗，那就又不符合定义了。因此我们要阻止2个点在橙色区域shatter的出现。</p>
+<p>即：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193705109.png" srcset="undefined" alt="image-20210113193705109"></p>
+<p>那么我们就可以推出：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193721790.png" srcset="undefined" alt="image-20210113193721790"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193739859.png" srcset="undefined" alt="image-20210113193739859"></p>
+<p>那么对于B(N,k),我们不难推出递推公式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193818613.png" srcset="undefined" alt="image-20210113193818613"></p>
+<p>上式其实是一个多项式的，幂次最大的一项是$N^{k-1}$</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113193934678.png" srcset="undefined" alt="image-20210113193934678"></p>
+<p>那么问题到此就解决了。</p>
+<h2 id="A-pictorial-proof-一个形象的证明"><a href="#A-pictorial-proof-一个形象的证明" class="headerlink" title="A pictorial proof(一个形象的证明)"></a>A pictorial proof(一个形象的证明)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210113194852086.png" srcset="undefined" alt="image-20210113194852086"></p>
+<p>实际上，我们最后得到其实是 浅绿色框中的公式，怎么来的呢？ 接下来证明：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114001417465.png" srcset="undefined" alt="image-20210114001417465"></p>
+<p>$E_{in}$的个数不是无穷多个，一共就是$m_H(N)$ 这么多个。而$E_{out}$ 是有无穷的多个的。</p>
+<p>所以第一步我们想把$E_{out}$替换掉：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114002307272.png" srcset="undefined" alt="image-20210114002307272"></p>
+<p>由于这个E的可能性分布几乎是关于Eout对称的，不妨改写为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114002445075.png" srcset="undefined" alt="image-20210114002445075"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114003129258.png" srcset="undefined" alt="image-20210114003129258"></p>
+<p>$E_{in}$的$D$ 有N个点 ，$E_{out}$的$D’$也有N个点，那么最多也就是$m_H(2N)$种hypothesis</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114003604842.png" srcset="undefined" alt="image-20210114003604842"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210114004126453.png" srcset="undefined" alt="image-20210114004126453"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = 'https://chillstepp.github.io/2021/01/14/CH6 ：Theory of Generalization/';
+        this.page.identifier = '/2021/01/14/CH6 ：Theory of Generalization/';
+      };
+      var oldLoad = window.onload;
+      window.onload = function () {
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments
+        powered by Disqus.</a></noscript>
+  </div>
+
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 2
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 2
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "terz&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -136,6 +136,55 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/">
+        <p class="h4 index-header">terz</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH6: Theory of GeneralizationRestriction of break point还是回到上节，我们做出了以下的猜想：
+
+我们做出了以下的猜想：
+
+
+我们思考,当$break  point = 2$的时候：
+
+那么 N=1的时候小于break point，所以还是符合$2^N$的规律。
+N=2 ,也就是break point，此时 $m_H(N)&lt;2^N$,也就是说$m_H(N)$最大也就是3.
+接下来考虑，N=3：
+
+上图这样的情况可以吗？
+当然不可以，因为如果此时我们不要$x_1$这个点了，也就说退化到N=2的时候，$x_2,x_3$此时为4种，也就是$2^N$,但是前面说到了，N=2是breakpoint，最多三种。
+
+因此上图这种是不可能的，N=3时，dichotomies变成成上图这样是错误的。
+那么我们不难发现，如果要N=3找dichotomies时，要符合N=2的规矩，也就任意两个点不能shatter
+(这里的shatter指，情况等于$2^N$，也就是所有情况都存在，而这对于break point是错误的)。
+那么我们再接着试一试
+
+上</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-14&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
         <p class="h4 index-header">《线性代数及其应用》CH1：线性代数中的线性方程组</p>
         
@@ -596,63 +645,6 @@ $f(X)</div>
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/%E5%BD%B1%E5%93%8D%E5%8A%9B%E6%9C%80%E5%A4%A7%E5%8C%96">影响力最大化</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
-        <p class="h4 index-header">AHU计算机视觉课Ch4-模型拟合</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch4-模型拟合
-数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)
-最小二乘法(Least Squares)拟合方法
-
-约束条件的作用之一是防止 $a=b=c=0$
-局部极小值点的导数为0
-
-
-
-
-
-拉格朗日乘子法：
-
-外点
-外点可能会大幅度干扰直线，将直线拉到外点方向处。
-
-可以做误差控制，减少外点影响。
-
-
-对于去除外点，我想了想是否可以这样操作：
-我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。
-随机一致性采样算法（RANSAC）
-
-
-
-
-如何模拟圆呢？
-随机采样3个样本(三个点确定一</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
           
         
       </div>

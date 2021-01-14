@@ -136,6 +136,56 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+        <p class="h4 index-header">Numpy数据分析基础</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Numpy模块学习numpy的基本属性import numpy as np
+
+array = np.array([[1,2,3],
+                  [2,3,4]])
+print(array)  # [[1 2 3]
+              #  [2 3 4]]
+
+print(&#39;number of dim:&#39;,array.ndim)  #维数  number of dim: 2
+print(&#39;shape:&#39;,array.shape)  #shape: (2, 3)
+print(&#39;size:&#39;,array.size)    #size: 6
+
+numpy创建的arrayimport numpy as np
+
+a = np.array([2,23,4],dtype=np.int)  #定义数据的类型
+print(a)  #[ 2 23  4]
+print(a.dtype)  #int32
+
+a = np.zeros((4,2))  #生成一个4行2列的全0矩阵
+print(a)
+
+a = np.ones((4,2))</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Python-%E5%9F%BA%E7%A1%80">Python-基础</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
         <p class="h4 index-header">Pandas数据分析基础</p>
         
@@ -567,50 +617,6 @@ for(len = 2;len &lt;= n;len++){//len选择区间长度
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">ACM-动态规划</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/">
-        <p class="h4 index-header">Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解比赛链接：https://codeforces.com/contest/1295
-A.Display The Number（思维+构造）题意：
-思路：如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。
-Code：#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int ans[100000+7];
-int main()
-{
-    int T;
-    scanf(&quot;%d&quot;,&amp;T);
-    while(T--)
-    {
-        int n;
-        scanf(&quot;%d&quot</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-27&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-Codeforces">ACM-Codeforces</a>&nbsp;
           
         
       </div>
