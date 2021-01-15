@@ -136,6 +136,46 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
+        <p class="h4 index-header">What is submodular function(次模函数)</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
+​    submodular实际上就对“边际效用递减”这个说法的形式化。
+​    
+submodular function(次模函数)定义子模态是几何函数的一种性质。一个几何函数$f(x)$的定义要满足下面这个性质。
+$f:2^{Ω} → \R$
+也就是说：即f(x)的定义域为集合Ω的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个：
+(1)对于任何一个$X,Y\subset Ω$且$X\subset Y$,以及对任何一个$x\in Ω$，以下式子成立
+$f(X∪x)−f(X)≥f(Y∪x)−f(Y)$
+这个就是次模函数的本身定义。
+(2)对于任何一个$X,Y\subset Ω$，以下式子成立：
+$f(X)</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%BD%B1%E5%93%8D%E5%8A%9B%E6%9C%80%E5%A4%A7%E5%8C%96">影响力最大化</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
         <p class="h4 index-header">AHU计算机视觉课Ch4-模型拟合</p>
         
@@ -592,53 +632,6 @@ n次幂，反对数函数则会把图象变暗；
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/ACM-%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84">ACM-后缀数组</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/03/24/OpenCV/">
-        <p class="h4 index-header">OpenCv with Python for Image and Video Analysis(3/20)</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">OpenCv with Python for Image and Video AnalysisP1 intro and loading Images1.利用cv2显示图像import numpy as np
-import matplotlib.pyplot as plt
-import cv2
-
-img = cv2.imread(&#39;cat.jpg&#39;,cv2.IMREAD_GRAYSCALE) #灰度图读入
- #读图片
- #IMREAD_GRAYSCALE = 0  灰度
- #IMREAD_COLOR =  1   颜色
- #IMREAD_UNCHANGE= -1  不变
-cv2.imshow(&#39;image&#39;, img)  #以窗口打开img，窗口名字叫做img
-cv2.waitKey(0)  #等待键入
-cv2.destroyAllWindows() #关闭所有窗口
-
-2.使用matplotlib显示图像import numpy as np
-import matplotlib.pyplot as plt
-import cv2
-
-img = cv2.imre</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-24&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
           
         
       </div>
