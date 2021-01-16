@@ -136,6 +136,66 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh5-%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8C%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%96%91%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8CSIFT%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
+        <p class="h4 index-header">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符
+角点用来检测特殊的对应点，可以利用角点进行全景拼接。
+角点检测
+我们可以看到，在平坦区域我们随便移动也不会有像素点变换，在边缘上时上下移动也不会出现大量变化，只有在角点，任何方向移动都会出现变化。
+度量窗口变化多少的指标：
+每个像素差的平方和
+
+
+
+
+
+我们可以对每个像素求一个M。
+
+
+我们可以看出：
+当两个$\lambda$都很小，说明在平坦的区域，各个方向变化时变化幅度小。
+当一个$\lambda$都很小，另一个$\lambda$很大，说明在某个方向上变化很大，属于在边缘位置。
+当两个$\lambda$都很大，说明在角点，各个方向上变化都很大。
+
+最后我们定义一个R用来判断角点。
+
+由于像素范围较大不是一个点，因此进行非极大值抑制。
+
+
+图像的亮度变化一定程度会影响R值。
+
+图像旋转对角点的检测不影响。
+
+既然图像缩放大小会影响角点的检测，我们该如何确定尺度呢？
+
+大概的方法是找一个无关函数 f 随着取样框大小变化来寻找 f 最大的点，当两个点都在最大值，说明在同一点，这时候横坐标的就可以反映图像尺度大小的比例</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
         <p class="h4 index-header">What is submodular function(次模函数)</p>
         
@@ -592,46 +652,6 @@ n次幂，反对数函数则会把图象变暗；
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/04/10/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">
-        <p class="h4 index-header">后缀数组(SA)+拓展应用</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">后缀数组（SA）+拓展应用什么是后缀数组？后缀后缀就是从字符串的某个位置i到字符串末尾的子串，我们定义以s的第i个字符为第一个元素的后缀为suff(i)
-后缀数组把s的每个后缀按照字典序排序
-后缀数组$sa[i]$就表示排名为i的后缀的起始位置的下标
-而它的映射数组$rk[i]$就表示起始位置的下标为i的后缀的排名
-简单来说，$sa$表示排名为i的是啥，$rk$表示第$i$个的排名是啥
-怎么求后缀数组？先说最暴力的情况，快排$O(n log n)$每个后缀，但是这是字符串，所以比较任意两个后缀的复杂度其实是$O(n)，$这样一来就是接近$O(n^2 log n)$的复杂度，复杂度太高，所以要优化，
-所以我们这里有两个优化。
-复杂度过高能不能优化呢？倍增首先读入字符串之后我们现根据单个字符排序，当然也可以理解为先按照每个后缀的第一个字符排序。对于每个字符，我们按照字典序给一个排名(当然可以并列)，这里称作关键字。
-(注：图片来自havana1)
-
-接下来我们再把相邻的两个关键字合并到一起，就相当于根据每一个后缀的前两个字符进行排序。想想看，这样就是以第一个字符(也就是自己本身)的排名为第</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-04-10&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84">ACM-后缀数组</a>&nbsp;
           
         
       </div>
