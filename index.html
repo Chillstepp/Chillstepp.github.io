@@ -136,14 +136,45 @@
     
     
     <div class="col-12 col-md-8 m-auto">
-      <a href="/2021/01/16/123/">
-        <p class="h4 index-header">123</p>
+      <a href="/2021/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH8%EF%BC%9ANoise%20and%20Error/">
+        <p class="h4 index-header">机器学习基石CH8：Noise and Error</p>
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1"></div>
+          <div class="index-text mb-1">CH8: Noise and Error[toc]
+Noise and Probabilistic Target我们之前对于机器学习的流程如下图：
+那么在加上noise后是否会影响机器学习呢？
+
+原来的瓶子里抽弹珠是确定的，即输入x，出来就是f(x) ：
+
+现在出来可能有一些不是f(x)了，即出现了噪声：
+
+但是这并不影响我们估计一个。
+那么：
+
+VC Bound依然适用。
+
+
+我们以前的机器学习都是target，而今天是一个target distribution，即一个目标分布。
+
+target distribution的看法
+
+在这里他把distribution看作是 最理想的目标函数和 noise 的组合(0.7 + 0.3)，所以我们把0.7当作target，然后我们会犯30%的错误。
+
+
+新的learning flow：
+ 
+Error Measure错误率的计算方式：
+
+pointwise error measure
+这个就是每个都测一遍，然后统计一下错误率，这也是最常用的。
+
+
+
+
+two important pointwise error measure(分别是0/1 </div>
         </div>
       </a>
 
@@ -152,6 +183,11 @@
           <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-16&nbsp;&nbsp;
         
         
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
         
       </div>
     </div>
