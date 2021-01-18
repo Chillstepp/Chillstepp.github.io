@@ -136,6 +136,63 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/01/18/CH9%EF%BC%9ALinear-Regression/">
+        <p class="h4 index-header">机器学习基石CH9：Linear Regression</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH9: Linear RegressionLinear Regression Problem(线性回归)首先我们要知道线性回归要反映在一个具体的实数上才可以做回归，因此我们要把数据通过某种方式整合成实数。
+
+加权计算一个分数是一种方法：
+
+$W^T$ 是权重 ，$x$是顾客的信息，这样算出来一个加权的分数。
+
+
+所以：
+
+我们的hypothesis对于二维时，即我们找了一个$f(x)$,作为计算加权分数，然后找一条线来合适的分开这些点。
+
+我们的hypothesis对于三维时，即我们找了一个$f(x_1,x_2)$,作为计算加权分数，然后找一个面来合适的分开这些点。
+
+
+线性回归的问题是希望这些红色线(即余数)越小越好。
+
+
+线性回归的错误衡量方式：
+
+有VC Bound的理论做支撑，保证了$E_{in}，E_{out}$相差不大，那么下面我们的问题就是：
+
+Linear Regression Algorithm接着上节的这个问题开始：
+
+首先看一下$E_{in}$的公式：
+
+我们首先把$w^Tx_n$ 变化下顺序$x_n^Tw$,当然这个变化是很自然的，并不会改变结果。
+
+接下来我</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-18&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/">
         <p class="h4 index-header">《线性代数及其应用》CH2：矩阵代数</p>
         
@@ -143,7 +200,8 @@
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">第二章  矩阵代数2.1 矩阵运算对角矩阵，零矩阵定义：
+          <div class="index-text mb-1">[toc]
+第二章  矩阵代数2.1 矩阵运算对角矩阵，零矩阵定义：
 
 矩阵与标量的乘法：
 
@@ -181,7 +239,7 @@ c.证明：
 
 我们想让$E_1$ 乘一个矩阵边为单位矩阵，那么可以让矩阵为 第一行的+4倍加到第三行就变成了单位矩阵了，这可以利用上面那个性质。
 
-这个矩阵相当于对单位矩阵做了第一行的+4倍加到第三行的初等变化，那么乘上$E_1$ 就相当于$E_1$做了 初等变化（第一行的+4倍加到第三行的初等变化），从而变成了单位矩阵</div>
+这个矩阵相当于对单位矩阵做了第一行的+4倍加到第三行的初等变化，那么乘上$E_1$ 就相当于$E_1$做了 初等变化（第一行的+4倍加到第三行的初等变化），从而变</div>
         </div>
       </a>
 
@@ -622,54 +680,6 @@ $y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign
 hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。
 Perceptron Learning Algorithm (PLA)
 H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
-        <p class="h4 index-header">机器学习基石Ch1：The Learning Problem</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Ch1：The Learning Problem1.1 What is Machine Learning？
-skill可以定义为 某一种表现的提升，例如 你通过股票的数据 进行机器学习使得你获得了更多的收益
-
-对于辨别一棵树，我们是通过见过无数棵树后总结出来的判断规律。这和机器学习是相似的，通过数据进行学习。
-是否适合使用机器学习的一些基本判别关键点？
-1.能够有某些效能指标或者目标希望机器可以达到
-2.不知道怎么有效的定义
-3.有data
-
-正确答案：3
-第一个小女孩哭没有规则可以预测，第二个图里的环可以有效的定义，不需要机器学习。最后一个地球被核能毁灭没有相关的数据。
-1.2 Applications of Machine Learning1.3Components of Machine Learning信用卡是否发卡的预测问题：
-下面是一个申请表：
-
-
-input：$x\in X$   顾客的申请信息
-output: $y\in Y$  同意发卡后的顾客表现的好坏
-目标方程（target function）: $f:X→ Y$
-data: 训练样本$D=\{(x_1,y_1),(</div>
         </div>
       </a>
 
