@@ -136,6 +136,46 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/">
+        <p class="h4 index-header">机器学习基石CH2：Learning to Answer Yes/No</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH2：Learning to Answer Yes/NoPerceptron Hypothesis Set
+$x$为 顾客的特征向量， $y$为是否发卡。
+$y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign$函数是一个符号函数，在0，=0分别取-1，1，0。$threshold$为是否发卡的阈值。
+
+我们为了书写简单，把$threshold$收入$w_ix_i$，下标改为从0开始。
+
+那么怎么直观的理解h(x)究竟是什么东西呢？
+我们把x看作一个只有两维的向量，那么它可以代表平面上的一个点，此时还有一个$w_1,w_2$来影响x向量，每个点 有一个label即圆圈还是叉叉。那么h就代表平面上的一条线。
+hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。
+Perceptron Learning Algorithm (PLA)
+H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
         <p class="h4 index-header">机器学习基石Ch1：The Learning Problem</p>
         
@@ -581,69 +621,6 @@ print(&#39;width=%d ,height=</div>
       <div>
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-15&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/11/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh3-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%8C%E8%B7%9D%E7%A6%BB%E5%8F%98%E6%8D%A2%EF%BC%8C%E8%BD%AE%E5%BB%93%E5%8C%B9%E9%85%8D/">
-        <p class="h4 index-header">AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch3-边缘检测，距离变换，轮廓匹配边缘检测边缘出现原因
-illumination：光照不同，阴影导致的边缘。
-shading：明暗变化，表面法向量朝向不同，表面不连续。
-reflection：反射属性不同导致出现边缘，比如物体本身颜色而不同产生的边界。
-occlusion：遮挡导致出现的边缘，比如图中立方体遮挡了背景圆盘，所以形成了边缘。
-
-大脑中的边缘检测器
-物理边缘与图像边缘物理边缘：是真实存在的边缘
-图像边缘：可能是由光照阴影等造成的边缘
-
-一阶微分算子检测边缘的方法
-
-
-
-
-
-
-
-
-水平检测竖直边缘，竖直检测水平边缘。
-
-噪声的影响
-如第一张图，这张图存在噪声，为了对抗噪声的干扰，提取边缘时要先对原始图像做平滑滤波，去除噪声，再求梯度。
-
-我们可以对高斯核直接先做x，y方向上的卷积，这样就减少了一次卷积。
-
-
-上图是直接x，y方向计算梯度，但是由于图像有噪声，最后结果效果很杂乱，有许多的噪点。
-下图经是高斯导数计算的梯度，效果好了很多，可以看到红色圈出的地方的噪点已经基本消失了。
-
-
-
-阈值的正确选择
-一个合适的阈值很重要，阈值过小会存在噪声，过大会存在一些</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-11&nbsp;&nbsp;
         
         
         
