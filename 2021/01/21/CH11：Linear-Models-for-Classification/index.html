@@ -15,7 +15,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>ACM-树状数组基础 ~ Chillstep</title>
+  <title>机器学习基石CH11：Linear Models for Classification ~ Chillstep</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -113,7 +113,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期五, 十一月 1日 2019, 9:32 晚上
+                  星期四, 一月 21日 2021, 1:52 下午
                 </p>
               
 
@@ -122,7 +122,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.1k 字
+                    898 字
                   </span>&nbsp;
                 
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      3 分钟
                   </span>&nbsp;
                 
 
@@ -163,113 +163,95 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="ACM-树状数组"><a href="#ACM-树状数组" class="headerlink" title="ACM- 树状数组"></a>ACM- 树状数组</h1><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://oi-wiki.org/ds/images/bit1.png" srcset="undefined" alt="img"></h2><p><strong>我们约定</strong>：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。</p>
-<p>同时，最下面一行的数字所构成的数组为数组$a$.</p>
-<p><strong>例如</strong>：C[2]管理的是 a[1],a[2].</p>
-<p>C[4]管理的是a[1],a[2],a[3],a[4].</p>
-<p>C[6]管理的是a[5],a[6].</p>
-<p>C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].</p>
-<h2 id="操作函数"><a href="#操作函数" class="headerlink" title="操作函数"></a>操作函数</h2><h3 id="1-lowbit"><a href="#1-lowbit" class="headerlink" title="1.lowbit()"></a>1.lowbit()</h3><pre><code class="lang-c++">int lowbit(int x) 
-{
-  //算出x二进制的从右往左出现第一个1以及这个1之后的那些0组成数的二进制对应的十进制的数
-  return x &amp; -x;
-}
-</code></pre>
-<p>意义：它可以求出数组c[x]管理几个数组a中的数。</p>
-<p>不难发现，每一个C[i]一定管理的数组a的下表的上限就是a[i]，那么往后找几个数呢，才是C[i]真正的管理范围呢？ </p>
-<p>此时lowbit()函数就派上了用场，我们知道一个数组C[i]所管理的右端点，而且通过lowbit（i）我们就可以知道C[i]管理了几个数，因此我们就可以知道这个数组C[i]</p>
-<p>还是举上图的例子，比如所管理的范围了。</p>
-<h3 id="2-add（x-k）单点修改a-x-a-x-k"><a href="#2-add（x-k）单点修改a-x-a-x-k" class="headerlink" title="2.add（x,k）单点修改a[x]=a[x]+k"></a>2.add（x,k）单点修改a[x]=a[x]+k</h3><pre><code class="lang-c++">void add(int x, int k) {
-  while (x &lt;= n) {  //不能越界
-    c[x] = c[x] + k;
-    x = x + lowbit(x);
-  }
-}
-</code></pre>
-<p>怎么理解这个函数呢？</p>
-<p>单点修改后我们就要维护数组C的值了，具体维护哪些数组C呢，又怎么找到这些数组C呢？</p>
-<p>比如 a[4]要加上一个数k，C[4]肯定管理着a[4]，C[4]之前的C[i] (i=1.2.3)肯定管理不到a[4]，那么我们只需要往后找。</p>
-<p>我们发现C[4+lowbit[4]]也是。</p>
-<p>因此我们推广后可以猜到：</p>
-<p>c[x] = c[x] + k;<br>x = x + lowbit(x);  便可以将所有C更新。</p>
-<p>同时不要忘记加上边界条件下x&lt;=n  ，这样就完成了单点修改。</p>
-<h3 id="3-区间求和-amp-amp-区间加"><a href="#3-区间求和-amp-amp-区间加" class="headerlink" title="3.区间求和&amp;&amp;区间加"></a>3.区间求和&amp;&amp;区间加</h3><p>首先要介绍差分数组：</p>
-<p>比如 a[1] a[2] a[3] a[4] a[5] a[6] a[7] a[8]</p>
-<p>​        b[1] b[2] b[3] b[4] b[5] b[6] b[7] b[8]</p>
-<p>其中b[i]=a[i]-a[i-1].</p>
-<p>可是造出这样的一个数组有什么用呢，我们假如进行区间加的话若对每个数字都操作，这样的复杂度显然是很差的。</p>
-<p>我们考虑一下，当我们对数组a区间加上k的时候，所对应的数组b有什么变化呢？</p>
-<p>显而易见，数组b大部分还是没变得，只有区间开头和结尾后一个会变。我们举一个例子就显而易见了，比如我们对a[3-6]同时加上k, b[4-6]都没有变，而b[3]=a[3]-a[2]，b[7]=a[7]-a[6],所以这两个都变了，我们只需要维护两个点就行了。</p>
-<pre><code class="lang-c++">int t1[MAXN], t2[MAXN], n;
-//t1为维护得第一个数组 t2为维护的第二个数组
-inline int lowbit(int x) { return x &amp; (-x); }
-
-void add(int k, int v) {          //维护更新上述的两个数组t1,t2
-  int v1 = k * v;
-  while (k &lt;= n) {
-    t1[k] += v, t2[k] += v1;
-    k += lowbit(k);
-  }
-}
-
-int getsum(int *t, int k) {
-  int ret = 0;
-  while (k) {
-    ret += t[k];       //t[1]+t[2]...+t[k]
-    k -= lowbit(k);    //
-  }
-  return ret;
-}
-
-void add1(int l, int r, int v) {
-  add(l, v), add(r + 1, -v);       //将区间加差分为两个前缀加
-}
-
-long long getsum1(int l, int r) {
-  return (r + 1ll) * getsum(t1, r) - 1ll * l * getsum(t1, l - 1) -
-      (getsum(t2, r) - getsum(t2, l - 1));
-}
-</code></pre>
-<h3 id="4-树状数组的O-n-建树，O（logn）查询第K大-小"><a href="#4-树状数组的O-n-建树，O（logn）查询第K大-小" class="headerlink" title="4.树状数组的O(n)建树，O（logn）查询第K大/小"></a>4.树状数组的O(n)建树，O（logn）查询第K大/小</h3><pre><code class="lang-c++">// O(n)建树
-void init() {
-  for (int i = 1; i &lt;= n; ++i) {
-    t[i] += a[i];
-    int j = i + lowbit(i);
-    if (j &lt;= n) t[j] += t[i];
-  }
-}
-
-int kth(int k) {  //权值树状数组查询第k小
-  int cnt = 0, ret = 0;
-  for (int i = log2(n); ~i; --i) {
-    ret += 1 &lt;&lt; i;
-    if (ret &gt;= n || cnt + t[ret] &gt;= k)
-      ret -= 1 &lt;&lt; i;
-    else
-      cnt += t[ret];
-  }
-  return ret + 1;
-}
-
-//时间戳优化add() sum()
-int tag[MAXN], t[MAXN], Tag;
-void reset() { ++Tag; }
-void add(int k, int v) {
-  while (k &lt;= n) {
-    if (tag[k] != Tag) t[k] = 0;
-    t[k] += v, tag[k] = Tag;
-    k += lowbit(k);
-  }
-}
-int getsum(int k) {
-  int ret = 0;
-  while (k) {
-    if (tag[k] == Tag) ret += t[k];
-    k -= lowbit(k);
-  }
-  return ret;
-}
-</code></pre>
+            <h1 id="CH11：Linear-Models-for-Classification"><a href="#CH11：Linear-Models-for-Classification" class="headerlink" title="CH11：Linear Models for Classification"></a>CH11：Linear Models for Classification</h1><h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>我们回顾一下线性模型：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114057461.png" srcset="undefined" alt="image-20210121114057461"></p>
+<p>我们看一下三个error function在做classification时的区别：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114816534.png" srcset="undefined" alt="image-20210121114816534"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115146949.png" srcset="undefined" alt="image-20210121115146949"></p>
+<p>$ys$代表着正确的分数。</p>
+<p>下面我们画个图来看一下3个error function的图像：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115356316.png" srcset="undefined" alt="image-20210121115356316"></p>
+<p>这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角处。</p>
+<p>此时我们称之为 <strong>scaled cross entropy</strong>：（把取ln改为取log2）</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115838748.png" srcset="undefined" alt="image-20210121115838748"></p>
+<p>这么做会让我们的推导容易一些。</p>
+<p>我们来证明一下这个事情，用换底公式不难得到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120115701.png" srcset="undefined" alt="image-20210121120115701"></p>
+<p>我们从VC Bound不难得知：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120309197.png" srcset="undefined" alt="image-20210121120309197"></p>
+<p>我们话可以用<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120424784.png" srcset="undefined" alt="image-20210121120424784"></p>
+<p>直接得出：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120434073.png" srcset="undefined" alt="image-20210121120434073"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120507857.png" srcset="undefined" alt="image-20210121120507857"></p>
+<p><strong>注：</strong>上述式子的提出可能会有疑问，之前不是讲得是</p>
+<p><img src="https://i.loli.net/2021/01/15/e4IbzRNaWT5p6xB.png" srcset="undefined" alt="image.png"></p>
+<p>单一的让$E_{in}$小并不合理,应该找一个合适的不是吗？但我们不难发现这里面说的是$d_{VC}$,而我们这里要调的是$w$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122259920.png" srcset="undefined" alt="image-20210121122259920"></p>
+<p>所以这里我们做完逻辑回归或者线性回归后，传回去的值要加一个sign()即可。</p>
+<p>我们最后总结一下这三个方法的优劣：</p>
+<ul>
+<li>用PLA时，要线性可分，若不是线性可分，那就要跑pocket</li>
+<li>用linear regression时，因为有闭式解，很容易算出w，但是会lose bound（毕竟衡量错误不准确，比一般的0/1 error measure的值全都大）。</li>
+<li>logistic regression同理，gradient descent很容易找到一个最优解，但是也会lose bound</li>
+</ul>
+<p>我们可以通过组合的方法找出一个比较好用的解，比如：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122818625.png" srcset="undefined" alt="image-20210121122818625"></p>
+<p>还有一点，logistic regression用得一般比pocket用的多，这是因为logistic regression的最优化性质比较好用一些。</p>
+<h2 id="Stochastic-Grad-Descent（随机梯度下降）"><a href="#Stochastic-Grad-Descent（随机梯度下降）" class="headerlink" title="Stochastic Grad. Descent（随机梯度下降）"></a>Stochastic Grad. Descent（随机梯度下降）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121123736533.png" srcset="undefined" alt="image-20210121123736533"></p>
+<p>这两种方式每轮迭代的速度是不一样的一个时O(1)一个是O(N)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124041845.png" srcset="undefined" alt="image-20210121124041845"></p>
+<p>我们想用一个随机平均代替连加，这样复杂度就会降下来。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124254571.png" srcset="undefined" alt="image-20210121124254571"></p>
+<p>我们可以把这样一个随机梯度理解为，实际的梯度+平均为0的噪声</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124329250.png" srcset="undefined" alt="image-20210121124329250"></p>
+<p>但是我们经理足够多轮的更新后，还是会非常接近真正的梯度的。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121125406460.png" srcset="undefined" alt="image-20210121125406460"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130038979.png" srcset="undefined" alt="image-20210121130038979"></p>
+<p>我们来对比一下 ，SGD中是错了多少，而PLA中是有没有错误。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130140897.png" srcset="undefined" alt="image-20210121130140897"></p>
+<p>因此我们一般说SGD logistic regression ≈ soft PLA</p>
+<p>但是问题是，SGD跑到什么时候结束呢？SGD跑到谷底是很难的</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130413560.png" srcset="undefined" alt="image-20210121130413560"></p>
+<ul>
+<li>一般是跑足够多轮</li>
+<li>学习率一般选0.1，如果x的范围不是特别离谱</li>
+</ul>
+<h2 id="Multiclass-via-logistic"><a href="#Multiclass-via-logistic" class="headerlink" title="Multiclass via logistic"></a>Multiclass via logistic</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131742756.png" srcset="undefined" alt="image-20210121131742756"></p>
+<p>我们可以一次只做一种：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131835446.png" srcset="undefined" alt="image-20210121131835446"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131941507.png" srcset="undefined" alt="image-20210121131941507"></p>
+<p>但是在</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132108920.png" srcset="undefined" alt="image-20210121132108920"></p>
+<p>这几个地方会出现都不是四个类别或者属于多个类别的情况。</p>
+<p>那么我们可以作soft classification，告诉我是这个类的概率。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132316066.png" srcset="undefined" alt="image-20210121132316066"></p>
+<p>明暗代表概率，我们取最高概率作为划分：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132353785.png" srcset="undefined" alt="image-20210121132353785"></p>
+<p>我们上面用的算法称为：</p>
+<p><strong>One-Versus-All(OVA) Decomposition:</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132621679.png" srcset="undefined" alt="image-20210121132621679"></p>
+<p>这个<strong>算法的特点：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132811971.png" srcset="undefined" alt="image-20210121132811971"></p>
+<ul>
+<li>很高效</li>
+<li>当数据量特别大时，可能会造成不平等的问题，比如100类，我们做one versus all的时候就会有99类都当作叉叉，那么会导致分类器直接全当做叉叉就好了。</li>
+</ul>
+<h2 id="Multiclass-via-Binary"><a href="#Multiclass-via-Binary" class="headerlink" title="Multiclass via Binary"></a>Multiclass via Binary</h2><p>刚才说到了 one versus all的不平等问题，纳闷我们可以考虑一半一半的分：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134125030.png" srcset="undefined" alt="image-20210121134125030"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134257356.png" srcset="undefined" alt="image-20210121134257356"></p>
+<p>我们选两种作为圈圈，有上面六种方式。</p>
+<p>我们发现包括方块的有前三个圈圈都包括方块</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134503676.png" srcset="undefined" alt="image-20210121134503676"></p>
+<p>这样我们按比例就可以化作方块区域,其他同理即可以做出:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134540367.png" srcset="undefined" alt="image-20210121134540367"></p>
+<p>这个算法称为：</p>
+<p><strong>one-versus-one（OVO） Decomposition：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134642325.png" srcset="undefined" alt="image-20210121134642325"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134733980.png" srcset="undefined" alt="image-20210121134733980"></p>
+<ul>
+<li>好处还是很快</li>
+<li>坏处就是 比起OVA 花的时间更多，需要的空间更多。</li>
+</ul>
 
             <hr>
           </div>
@@ -281,7 +263,7 @@ int getsum(int k) {
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/ACM-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">ACM-数据结构</a>
+                  <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
                 
               </span>
             
@@ -318,8 +300,8 @@ int getsum(int k) {
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-        this.page.url = 'https://chillstepp.github.io/2019/11/01/ACM-树状数组基础/';
-        this.page.identifier = '/2019/11/01/ACM-树状数组基础/';
+        this.page.url = 'https://chillstepp.github.io/2021/01/21/CH11：Linear-Models-for-Classification/';
+        this.page.identifier = '/2021/01/21/CH11：Linear-Models-for-Classification/';
       };
       var oldLoad = window.onload;
       window.onload = function () {
@@ -458,7 +440,7 @@ int getsum(int k) {
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "ACM-树状数组基础&nbsp;",
+        "机器学习基石CH11：Linear Models for Classification&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

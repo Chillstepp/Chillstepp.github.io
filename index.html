@@ -136,6 +136,69 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/" target="_self">
+          <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石CH11：Linear Models for Classification" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/">
+        <p class="h4 index-header">机器学习基石CH11：Linear Models for Classification</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CH11：Linear Models for ClassificationBinary Classification我们回顾一下线性模型：
+
+我们看一下三个error function在做classification时的区别：
+
+
+$ys$代表着正确的分数。
+下面我们画个图来看一下3个error function的图像：
+
+这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角处。
+此时我们称之为 scaled cross entropy：（把取ln改为取log2）
+
+这么做会让我们的推导容易一些。
+我们来证明一下这个事情，用换底公式不难得到：
+
+我们从VC Bound不难得知：
+
+我们话可以用
+直接得出：
+
+
+注：上述式子的提出可能会有疑问，之前不是讲得是
+
+单一的让$E_{in}$小并不合理,应该找一个合适的不是吗？但我们不难发现这里面说的是$d_{VC}$,而我们这里要调的是$w$。
+
+所以这里我们做完逻辑回归或者线性回归后，传回去的值要加一个sign()即可。
+我们最后总结一下这三个方法的优劣：
+
+用PLA时，要线性可分，若不是线性可分，那就要跑pocket</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-21&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/" target="_self">
           <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石CH10：Logistic Regression" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -705,69 +768,6 @@ Connection to Learning
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/" target="_self">
-          <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石CH3：Types of Learning" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/">
-        <p class="h4 index-header">机器学习基石CH3：Types of Learning</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">CH3：Types of LearningLearning with Different Output Space二元分类我们成为Binary Classification 
-多分类问题：
-
-回归预策分析问题：
-结构学习：例如自然语言
-
-
-Learning with Different Data Label监督学习/无监督学习：  
-
-半监督学习：
-
-强化学习：
-
-Learning with Different ProtocolBatch Learning 批量学习：
-
-Online Learning 在线学习：
-
-线上学习是一种passive学习方式，而批量学习是一种填鸭式学习。
-Learning with Different Input Space对于这样一个问题，我们喂给机器什么样的数据？
-
-我们可以从以下方法来入手：
-
-比如 x=(对称性，多样性)  这样的数据，或者是是16*16像素点的256维向量。
-第二种方法看起来很好，但是对于机器来说，对于这么多维的数据，对于机器是很难训练的，同时需要大量数据来学习。
-自己抽取特征，也可以是机器自己发现的：
-
-总结：[](
-</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-26&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -991,20 +991,5 @@ Learning with Different Input Space对于这样一个问题，我们喂给机器
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
