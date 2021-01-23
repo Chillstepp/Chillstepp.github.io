@@ -227,53 +227,53 @@
             <h1 style="display: none">机器学习基石CH2：Learning to Answer Yes/No</h1>
             
             <div class="markdown-body">
-              <h1 id="CH2：Learning-to-Answer-Yes-No"><a href="#CH2：Learning-to-Answer-Yes-No" class="headerlink" title="CH2：Learning to Answer Yes/No"></a>CH2：Learning to Answer Yes/No</h1><h2 id="Perceptron-Hypothesis-Set"><a href="#Perceptron-Hypothesis-Set" class="headerlink" title="Perceptron Hypothesis Set"></a>Perceptron Hypothesis Set</h2><p><a href="https://imgchr.com/i/BwNSPJ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwNSPJ.png" srcset="undefined" alt="BwNSPJ.png"></a></p>
+              <h1 id="CH2：Learning-to-Answer-Yes-No"><a href="#CH2：Learning-to-Answer-Yes-No" class="headerlink" title="CH2：Learning to Answer Yes/No"></a>CH2：Learning to Answer Yes/No</h1><h2 id="Perceptron-Hypothesis-Set"><a href="#Perceptron-Hypothesis-Set" class="headerlink" title="Perceptron Hypothesis Set"></a>Perceptron Hypothesis Set</h2><p><a href="https://imgchr.com/i/BwNSPJ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwNSPJ.png" srcset="/img/loading.gif" alt="BwNSPJ.png"></a></p>
 <p>$x$为 顾客的特征向量， $y$为是否发卡。</p>
 <p>$y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign$函数是一个符号函数，在<0,>0，=0分别取-1，1，0。$threshold$为是否发卡的阈值。</p>
-<p><a href="https://imgchr.com/i/BwU3lR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwU3lR.png" srcset="undefined" alt="BwU3lR.png"></a></p>
+<p><a href="https://imgchr.com/i/BwU3lR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwU3lR.png" srcset="/img/loading.gif" alt="BwU3lR.png"></a></p>
 <p>我们为了书写简单，把$threshold$收入$w_ix_i$，下标改为从0开始。</p>
-<p><a href="https://imgchr.com/i/BwaA4e" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwaA4e.png" srcset="undefined" alt="BwaA4e.png"></a></p>
+<p><a href="https://imgchr.com/i/BwaA4e" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwaA4e.png" srcset="/img/loading.gif" alt="BwaA4e.png"></a></p>
 <p>那么怎么直观的理解h(x)究竟是什么东西呢？</p>
 <p>我们把x看作一个只有两维的向量，那么它可以代表平面上的一个点，此时还有一个$w_1,w_2$来影响x向量，每个点 有一个label即圆圈还是叉叉。那么h就代表平面上的一条线。</p>
 <p>hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。</p>
-<h2 id="Perceptron-Learning-Algorithm-PLA"><a href="#Perceptron-Learning-Algorithm-PLA" class="headerlink" title="Perceptron Learning Algorithm (PLA)"></a>Perceptron Learning Algorithm (PLA)</h2><p><a href="https://imgchr.com/i/BwwnTf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwwnTf.png" srcset="undefined" alt="BwwnTf.png"></a></p>
+<h2 id="Perceptron-Learning-Algorithm-PLA"><a href="#Perceptron-Learning-Algorithm-PLA" class="headerlink" title="Perceptron Learning Algorithm (PLA)"></a>Perceptron Learning Algorithm (PLA)</h2><p><a href="https://imgchr.com/i/BwwnTf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwwnTf.png" srcset="/img/loading.gif" alt="BwwnTf.png"></a></p>
 <p>H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行旋转移动等方法对他进行修正。</p>
-<p><a href="https://imgchr.com/i/Bw0Sjs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw0Sjs.png" srcset="undefined" alt="Bw0Sjs.png"></a></p>
+<p><a href="https://imgchr.com/i/Bw0Sjs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw0Sjs.png" srcset="/img/loading.gif" alt="Bw0Sjs.png"></a></p>
 <p>我们找到一个错误的$w_t^T$ 使得 $sign(w_t^Tx_{n(t)})$被错误的分类(其中n(t)代表第n个样本在第t轮)。因此我们想要对他改进纠错，当$y=+1$时，代表我们想要正的却识别出了负的，因此我们要进行改错，我们把$w_t^Tx_{n(t)}$可以看作向量$w$和向量$x$的夹角，夹角太大就要减小，即$w$更新为$w+yx$。当$y=-1$时同理。</p>
 <p>不断改错直到没有错误或者错误最少。</p>
-<p><a href="https://imgchr.com/i/Bwr1U0" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwr1U0.png" srcset="undefined" alt="Bwr1U0.png"></a></p>
-<p><a href="https://imgchr.com/i/Bwry8O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwry8O.png" srcset="undefined" alt="Bwry8O.png"></a></p>
-<p><a href="https://imgchr.com/i/BwrOqs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwrOqs.png" srcset="undefined" alt="BwrOqs.png"></a></p>
-<p><a href="https://imgchr.com/i/Bw6xII" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw6xII.png" srcset="undefined" alt="Bw6xII.png"></a></p>
-<p><a href="https://imgchr.com/i/BwcEZj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwcEZj.png" srcset="undefined" alt="BwcEZj.png"></a></p>
+<p><a href="https://imgchr.com/i/Bwr1U0" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwr1U0.png" srcset="/img/loading.gif" alt="Bwr1U0.png"></a></p>
+<p><a href="https://imgchr.com/i/Bwry8O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bwry8O.png" srcset="/img/loading.gif" alt="Bwry8O.png"></a></p>
+<p><a href="https://imgchr.com/i/BwrOqs" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwrOqs.png" srcset="/img/loading.gif" alt="BwrOqs.png"></a></p>
+<p><a href="https://imgchr.com/i/Bw6xII" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw6xII.png" srcset="/img/loading.gif" alt="Bw6xII.png"></a></p>
+<p><a href="https://imgchr.com/i/BwcEZj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/BwcEZj.png" srcset="/img/loading.gif" alt="BwcEZj.png"></a></p>
 <p>一定会找到全部符合的h吗？  即使找出来g一定就是h吗？</p>
-<h2 id="Guarantee-of-PLA"><a href="#Guarantee-of-PLA" class="headerlink" title="Guarantee of PLA"></a>Guarantee of PLA</h2><p><a href="https://imgchr.com/i/Bw2hZQ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw2hZQ.png" srcset="undefined" alt="Bw2hZQ.png"></a></p>
+<h2 id="Guarantee-of-PLA"><a href="#Guarantee-of-PLA" class="headerlink" title="Guarantee of PLA"></a>Guarantee of PLA</h2><p><a href="https://imgchr.com/i/Bw2hZQ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/01/Bw2hZQ.png" srcset="/img/loading.gif" alt="Bw2hZQ.png"></a></p>
 <p>后面两种并不能找出一条直线完美切分。</p>
 <p><strong>迭代保证的证明：</strong></p>
-<p><a href="https://imgchr.com/i/DY5lmq" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DY5lmq.png" srcset="undefined" alt="DY5lmq.png"></a></p>
+<p><a href="https://imgchr.com/i/DY5lmq" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DY5lmq.png" srcset="/img/loading.gif" alt="DY5lmq.png"></a></p>
 <p>这里有意思的证明方法是，他对 $w_f$和$w_t$进行了内积，这里采用的度量方式是内积越大，说明和perfect直线越接近。</p>
 <p>但是我们仔细想想会发现，内积不仅取决于角度（角度变小可以使得内积变大），同时向量的模也有作用，在你不断迭代，可能由于$w_t$长度影响了内积的大小。</p>
 <p>那怎么证明这个问题呢？</p>
-<p><a href="https://imgchr.com/i/DYIw8g" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYIw8g.png" srcset="undefined" alt="DYIw8g.png"></a></p>
+<p><a href="https://imgchr.com/i/DYIw8g" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYIw8g.png" srcset="/img/loading.gif" alt="DYIw8g.png"></a></p>
 <p>但是仔细思考一下 我们是只在错误的时候才做更新，如上图黄色部分。</p>
 <p>因此我们再次考虑长度变化问题，看到蓝色的一项是小于0的，因此我们加上不等式关系后我们可以看作0</p>
 <p>我们再观察红色项，这个是用来调节的向量，因此无论左右怎么调节，我们直接选一个极值 也就是 $yx$的最大偏移。取完以后我们是可以把$y_n$忽略掉的，因为$y_n$是{-1，+1}是不会影响长度这个标量的。</p>
 <p>最后我们可以推到得出下式：</p>
-<p><a href="https://imgchr.com/i/DYoIfS" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYoIfS.png" srcset="undefined" alt="DYoIfS.png"></a></p>
+<p><a href="https://imgchr.com/i/DYoIfS" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/23/DYoIfS.png" srcset="/img/loading.gif" alt="DYoIfS.png"></a></p>
 <p>这个式子的<strong>常数constant是多少</strong>呢？我们做以下推导：</p>
-<p><a href="https://imgchr.com/i/DtwqHA" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtwqHA.png" srcset="undefined" alt="DtwqHA.png"></a></p>
-<p><a href="https://imgchr.com/i/Dtwz38" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtwz38.png" srcset="undefined" alt="Dtwz38.png"></a></p>
+<p><a href="https://imgchr.com/i/DtwqHA" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtwqHA.png" srcset="/img/loading.gif" alt="DtwqHA.png"></a></p>
+<p><a href="https://imgchr.com/i/Dtwz38" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtwz38.png" srcset="/img/loading.gif" alt="Dtwz38.png"></a></p>
 <p>最后这个有关于T的不等式 可以用来估计 调整次数 </p>
-<p><a href="https://imgchr.com/i/DtBJds" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBJds.png" srcset="undefined" alt="DtBJds.png"></a></p>
-<h2 id="Non-Separable-Data"><a href="#Non-Separable-Data" class="headerlink" title="Non-Separable Data"></a>Non-Separable Data</h2><p><a href="https://imgchr.com/i/DtBqYt" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBqYt.png" srcset="undefined" alt="DtBqYt.png"></a></p>
+<p><a href="https://imgchr.com/i/DtBJds" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBJds.png" srcset="/img/loading.gif" alt="DtBJds.png"></a></p>
+<h2 id="Non-Separable-Data"><a href="#Non-Separable-Data" class="headerlink" title="Non-Separable Data"></a>Non-Separable Data</h2><p><a href="https://imgchr.com/i/DtBqYt" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtBqYt.png" srcset="/img/loading.gif" alt="DtBqYt.png"></a></p>
 <p>PLA可以拓展到n维。</p>
 <p>PLA的一些问题：我们假设这是线性可分的，我们不知道到底需要多少次迭代，因为$w_f$我们是不知道的，同时真正的样本会存在一些噪音杂质。</p>
 <p>对于下列这样一个问题，我们想找到一个w来线性分割使得 犯的错误最少，但这个是一个NP-hard问题。</p>
-<p><a href="https://imgchr.com/i/DtDElT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDElT.png" srcset="undefined" alt="DtDElT.png"></a></p>
+<p><a href="https://imgchr.com/i/DtDElT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDElT.png" srcset="/img/loading.gif" alt="DtDElT.png"></a></p>
 <p>虽然我们找到完美的一条线是np-hard问题，但是在一个优秀的复杂度内找到近似最优的一条线还是有解决方法的，如下：<strong>Pocket Algorithm</strong></p>
 <p>这其实就是一个简单的贪心算法，迭代时我们多考虑一下这条线是否比现在的更优。</p>
-<p><a href="https://imgchr.com/i/DtDz36" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDz36.png" srcset="undefined" alt="DtDz36.png"></a></p>
-<p><a href="https://imgchr.com/i/Dtre8P" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtre8P.png" srcset="undefined" alt="Dtre8P.png"></a></p>
+<p><a href="https://imgchr.com/i/DtDz36" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/DtDz36.png" srcset="/img/loading.gif" alt="DtDz36.png"></a></p>
+<p><a href="https://imgchr.com/i/Dtre8P" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/24/Dtre8P.png" srcset="/img/loading.gif" alt="Dtre8P.png"></a></p>
 <p>答案：A</p>
 <p>pocket算法可能和 PLA得到的结果是一样的，因此34都不对，pocket是一定比PLA慢的，因为Pocket需要对比迭代的直线是不是比当前更好，因此要对比所有的数据才可以知道，这会大大浪费时间。</p>
 

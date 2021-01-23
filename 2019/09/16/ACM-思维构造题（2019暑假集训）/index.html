@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.5k 字
+      2.6k 字
     </span>
   
 
@@ -233,23 +233,7 @@
 <h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>对每个数据输出一行，表示需要的时间(以分钟为单位)</p>
 <h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h3><p>4<br>5<br>6</p>
 <h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h3><p>2<br>4<br>6</p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int main()
-{
-    int n;
-    while(scanf(&quot;%d&quot;,&amp;n)!=EOF)
-    {
-        int m=n/2;
-        int sum=((m-1)*m)/2;
-        if(n%2==1)
-            sum+=sum+m;
-        else
-            sum+=sum;
-        printf(&quot;%d\n&quot;,sum);
-    }
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;n)!=EOF)<br>    &#123;<br>        <span class="hljs-keyword">int</span> m=n/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">int</span> sum=((m<span class="hljs-number">-1</span>)*m)/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">if</span>(n%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<br>            sum+=sum+m;<br>        <span class="hljs-keyword">else</span><br>            sum+=sum;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,sum);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="Ehab-and-the-Expected-XOR-Problem"><a href="#Ehab-and-the-Expected-XOR-Problem" class="headerlink" title="Ehab and the Expected XOR Problem"></a>Ehab and the Expected XOR Problem</h1><h1 id="CodeForces-1174D"><a href="#CodeForces-1174D" class="headerlink" title="CodeForces - 1174D"></a>CodeForces - 1174D</h1><p>Given two integers n and x, construct an array that satisfies the following conditions:</p>
 <p>for any element ai in the array, 1≤ai&lt;2n;<br>there is no non-empty subsegment with bitwise XOR equal to 0 or x,<br>its length l should be maximized.<br>A sequence b is a subsegment of a sequence a if b can be obtained from a by deletion of several (possibly, zero or all) elements from the beginning and several (possibly, zero or all) elements from the end.</p>
 <h3 id="Input-1"><a href="#Input-1" class="headerlink" title="Input"></a>Input</h3><p>The only line contains two integers n and x (1≤n≤18, 1≤x&lt;218).</p>
@@ -262,46 +246,7 @@ int main()
 <h3 id="Output-3"><a href="#Output-3" class="headerlink" title="Output"></a>Output</h3><p>3<br>1 3 1 </p>
 <h3 id="Input-4"><a href="#Input-4" class="headerlink" title="Input"></a>Input</h3><p>1 1</p>
 <h3 id="Output-4"><a href="#Output-4" class="headerlink" title="Output"></a>Output</h3><p>0</p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int s[(1&lt;&lt;19)];
-int ex[(1&lt;&lt;19)];
-int go=1;
-int cnt=1;
-int main()
-{
-    int n,x;
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;x);
-    if(x&gt;=(1&lt;&lt;n))
-    {
-        printf(&quot;%d\n&quot;,(1&lt;&lt;n)-1);
-        for(int i=1;i&lt;=(1&lt;&lt;n)-1;i++)
-        {
-            printf(&quot;%d &quot;,i^(i-1));
-        }
-        return 0;
-    }
-    else
-    {
-        ex[0]=1;
-        for(int i=1;i&lt;=(1&lt;&lt;n)-1;i++)
-        {
-            if(!ex[i^x])
-            {
-                ex[i]=1;
-                s[cnt]=i;
-                cnt++;
-            }
-        }
-    }
-    printf(&quot;%d\n&quot;,cnt-1);
-    for(int i=1;i&lt;=cnt-1;i++)
-    {
-        printf(&quot;%d &quot;,s[i]^s[i-1]);
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">int</span> s[(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">19</span>)];<br><span class="hljs-keyword">int</span> ex[(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">19</span>)];<br><span class="hljs-keyword">int</span> go=<span class="hljs-number">1</span>;<br><span class="hljs-keyword">int</span> cnt=<span class="hljs-number">1</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n,x;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;x);<br>    <span class="hljs-keyword">if</span>(x&gt;=(<span class="hljs-number">1</span>&lt;&lt;n))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,(<span class="hljs-number">1</span>&lt;&lt;n)<span class="hljs-number">-1</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=(<span class="hljs-number">1</span>&lt;&lt;n)<span class="hljs-number">-1</span>;i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>,i^(i<span class="hljs-number">-1</span>));<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        ex[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=(<span class="hljs-number">1</span>&lt;&lt;n)<span class="hljs-number">-1</span>;i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(!ex[i^x])<br>            &#123;<br>                ex[i]=<span class="hljs-number">1</span>;<br>                s[cnt]=i;<br>                cnt++;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,cnt<span class="hljs-number">-1</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=cnt<span class="hljs-number">-1</span>;i++)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>,s[i]^s[i<span class="hljs-number">-1</span>]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="The-LCMs-Must-be-Large"><a href="#The-LCMs-Must-be-Large" class="headerlink" title="The LCMs Must be Large"></a>The LCMs Must be Large</h1><h1 id="CodeForces-1166E"><a href="#CodeForces-1166E" class="headerlink" title="CodeForces - 1166E"></a>CodeForces - 1166E</h1><p>Dora the explorer has decided to use her money after several years of juicy royalties to go shopping. What better place to shop than Nlogonia?</p>
 <p>There are n stores numbered from 1 to n in Nlogonia. The i-th of these stores offers a positive integer ai.</p>
 <p>Each day among the last m days Dora bought a single integer from some of the stores. The same day, Swiper the fox bought a single integer from all the stores that Dora did not buy an integer from on that day.</p>
@@ -318,33 +263,7 @@ int main()
 <h3 id="Input-7"><a href="#Input-7" class="headerlink" title="Input"></a>Input</h3><p>10 10<br>1 1<br>1 2<br>1 3<br>1 4<br>1 5<br>1 6<br>1 7<br>1 8<br>1 9<br>1 10</p>
 <h3 id="Output-7"><a href="#Output-7" class="headerlink" title="Output"></a>Output</h3><p>impossible</p>
 <h3 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h3><p>In the first sample, a possible choice for the values of the ai is 3,4,3,5,2. On the first day, Dora buys the integers 3,4 and 3, whose LCM is 12, while Swiper buys integers 5 and 2, whose LCM is 10. On the second day, Dora buys 3,5 and 2, whose LCM is 30, and Swiper buys integers 3 and 4, whose LCM is 12.</p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-bitset&lt;11111&gt; b[55],t;
-int main()
-{
-    int i,j,n,m,k,x;
-    cin&gt;&gt;n&gt;&gt;m;
-    for(i=0; i&lt;n; ++i)
-    {
-        cin&gt;&gt;k;
-        for(j=0; j&lt;k; ++j)
-            cin&gt;&gt;x,b[i][x]=1;
-    }
-    for(i=0; i&lt;n; ++i)
-        for(j=i+1; j&lt;n; ++j)
-        {
-            t=b[i]&amp;b[j];
-            if(t.count()==0)
-            {
-                printf(&quot;impossible&quot;);
-                return 0;
-            }
-        }
-    printf(&quot;possible&quot;);
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-built_in">bitset</span>&lt;11111&gt; b[<span class="hljs-number">55</span>],t;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> i,j,n,m,k,x;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;m;<br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;n; ++i)<br>    &#123;<br>        <span class="hljs-built_in">cin</span>&gt;&gt;k;<br>        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>; j&lt;k; ++j)<br>            <span class="hljs-built_in">cin</span>&gt;&gt;x,b[i][x]=<span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;n; ++i)<br>        <span class="hljs-keyword">for</span>(j=i+<span class="hljs-number">1</span>; j&lt;n; ++j)<br>        &#123;<br>            t=b[i]&amp;b[j];<br>            <span class="hljs-keyword">if</span>(t.count()==<span class="hljs-number">0</span>)<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"impossible"</span>);<br>                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>            &#125;<br>        &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"possible"</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="Frog-and-Portal"><a href="#Frog-and-Portal" class="headerlink" title="Frog and Portal"></a>Frog and Portal</h1><h1 id="HihoCoder-1873"><a href="#HihoCoder-1873" class="headerlink" title="HihoCoder - 1873"></a>HihoCoder - 1873</h1><p>A small frog wants to get to the other side of a river. The frog is initially located at one bank of the river (position 0) and wants to get to the other bank (position 200). Luckily, there are 199 leaves (from position 1 to position 199) on the river, and the frog can jump between the leaves. When at position p, the frog can jump to position p+1 or position p+2.</p>
 <p>How many different ways can the small frog get to the bank at position 200? This is a classical problem. The solution is the 201st number of Fibonacci sequence. The Fibonacci sequence is constructed as follows: F1=F2=1;Fn=Fn-1+Fn-2.</p>
 <p>Now you can build some portals on the leaves. For each leaf, you can choose whether to build a portal on it. And you should set a destination for each portal. When the frog gets to a leaf with a portal, it will be teleported to the corresponding destination immediately. If there is a portal at the destination, the frog will be teleported again immediately. If some portal destinations form a cycle, the frog will be permanently trapped inside. Note that You cannot build two portals on the same leaf.</p>
@@ -357,145 +276,9 @@ int main()
 <p>You should guarantee that 1 ≤ K, ai, bi ≤ 199, and ai ≠ aj if i ≠ j. If there are multiple solutions, any one of them is acceptable.</p>
 <h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input"></a>Sample Input</h3><p>0<br>1<br>5</p>
 <h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output"></a>Sample Output</h3><p>2<br>1 1<br>2 1<br>2<br>1 199<br>2 2<br>2<br>4 199<br>5 5</p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-#define ll long long
-int main()
-{
-    ll n;
-    while(scanf(&quot;%lld&quot;,&amp;n)!=EOF)
-    {
-        printf(&quot;65\n&quot;);
-        if(n&amp;(1ll&lt;&lt;0)) printf(&quot;1 199\n&quot;);
-        else
-            printf(&quot;1 1\n&quot;);
-        for(ll i=1; i&lt;32; i++)
-        {
-            printf(&quot;%lld %lld\n&quot;,5+(i-1)*6,5+(i-1)*6);
-            if(n&amp;(1ll&lt;&lt;i))
-                printf(&quot;%lld 199\n&quot;,7+(i-1)*6);
-            else
-                printf(&quot;%lld %lld\n&quot;,7+(i-1)*6,7+(i-1)*6);
-        }
-        printf(&quot;197 197\n&quot;);//no
-        printf(&quot;198 198\n&quot;);
-    }
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ll long long</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ll n;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%lld"</span>,&amp;n)!=EOF)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"65\n"</span>);<br>        <span class="hljs-keyword">if</span>(n&amp;(<span class="hljs-number">1l</span>l&lt;&lt;<span class="hljs-number">0</span>)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"1 199\n"</span>);<br>        <span class="hljs-keyword">else</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"1 1\n"</span>);<br>        <span class="hljs-keyword">for</span>(ll i=<span class="hljs-number">1</span>; i&lt;<span class="hljs-number">32</span>; i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld %lld\n"</span>,<span class="hljs-number">5</span>+(i<span class="hljs-number">-1</span>)*<span class="hljs-number">6</span>,<span class="hljs-number">5</span>+(i<span class="hljs-number">-1</span>)*<span class="hljs-number">6</span>);<br>            <span class="hljs-keyword">if</span>(n&amp;(<span class="hljs-number">1l</span>l&lt;&lt;i))<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld 199\n"</span>,<span class="hljs-number">7</span>+(i<span class="hljs-number">-1</span>)*<span class="hljs-number">6</span>);<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld %lld\n"</span>,<span class="hljs-number">7</span>+(i<span class="hljs-number">-1</span>)*<span class="hljs-number">6</span>,<span class="hljs-number">7</span>+(i<span class="hljs-number">-1</span>)*<span class="hljs-number">6</span>);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"197 197\n"</span>);<span class="hljs-comment">//no</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"198 198\n"</span>);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="Snake-Carpet-UVALive-7269"><a href="#Snake-Carpet-UVALive-7269" class="headerlink" title="Snake Carpet UVALive - 7269"></a>Snake Carpet UVALive - 7269</h1><p><a href="https://vjudge.net/problem/UVALive-7269" target="_blank" rel="noopener">题目链接</a></p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-#define ll long long
-int main()
-{
-    int n;
-    while(scanf(&quot;%d&quot;,&amp;n)!=EOF)
-    {
-        int wide1,height1,wide2,height2;
-        if(n%2==1) height1=wide1=n/2+1;
-        else height1=wide1=n/2;
-        if(n/2%2==0)
-        {
-            wide2=n/2;
-            height2=n/2+1;
-        }
-        else {wide2=n/2+1;height2=n/2;}
-        if(wide1==height2)
-        {
-            int newheight=wide1,newwide=wide1+wide2;
-            printf(&quot;%d %d\n&quot;,newheight,newwide);
-            for(int i=1;i&lt;=n;i++)
-            {
-                if(i%2==1)//left
-                {
-                    for(int t=1;t&lt;=(i+1)/2;t++)
-                    {
-                        printf(&quot;%d %d &quot;,t,(i+1)/2);
-                    }
-                    for(int t=(i+1)/2-1;t&gt;=1;t--)
-                    {
-                        printf(&quot;%d %d &quot;,(i+1)/2,t);
-                    }
-                    printf(&quot;\n&quot;);
-                }
-                else if(i%2==0)//right
-                {
-                     if(i/2%2==1)
-                     {
-                         for(int t=1;t&lt;=i/2;t++)
-                         {
-                             printf(&quot;%d %d &quot;,t,i/2+wide1);
-                         }
-                         for(int t=i/2;t&gt;=1;t--)
-                         {
-                             printf(&quot;%d %d &quot;,t,i/2+1+wide1);
-                         }
-                         printf(&quot;\n&quot;);
-                     }
-                     else
-                     {
-                         for(int t=1;t&lt;=i/2;t++)
-                         {
-                             printf(&quot;%d %d &quot;,i/2,t+wide1);
-                         }
-                         for(int t=i/2;t&gt;=1;t--)
-                         {
-                             printf(&quot;%d %d &quot;,i/2+1,t+wide1);
-                         }
-                         printf(&quot;\n&quot;);
-                     }
-                }
-            }
-        }
-        else
-        {
-            int newheight=wide1+height2,newwide=wide1;
-            printf(&quot;%d %d\n&quot;,newheight,newwide);
-            for(int i=1;i&lt;=n;i++)
-            {
-                if(i%2==1)//left
-                {
-                    for(int t=1;t&lt;=(i+1)/2;t++)
-                    {
-                        printf(&quot;%d %d &quot;,t,(i+1)/2);
-                    }
-                    for(int t=(i+1)/2-1;t&gt;=1;t--)
-                    {
-                        printf(&quot;%d %d &quot;,(i+1)/2,t);
-                    }
-                    printf(&quot;\n&quot;);
-                }
-                else if(i%2==0)//right
-                {
-                     if(i/2%2==1)
-                     {
-                         for(int t=1;t&lt;=i/2;t++)
-                         {
-                             printf(&quot;%d %d &quot;,t+wide1,i/2);
-                         }
-                         for(int t=i/2;t&gt;=1;t--)
-                         {
-                             printf(&quot;%d %d &quot;,t+wide1,i/2+1);
-                         }
-                         printf(&quot;\n&quot;);
-                     }
-                     else
-                     {
-                         for(int t=1;t&lt;=i/2;t++)
-                         {
-                             printf(&quot;%d %d &quot;,i/2+wide1,t);
-                         }
-                         for(int t=i/2;t&gt;=1;t--)
-                         {
-                             printf(&quot;%d %d &quot;,i/2+1+wide1,t);
-                         }
-                         printf(&quot;\n&quot;);
-                     }
-                }
-            }
-        }
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ll long long</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;n)!=EOF)<br>    &#123;<br>        <span class="hljs-keyword">int</span> wide1,height1,wide2,height2;<br>        <span class="hljs-keyword">if</span>(n%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>) height1=wide1=n/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span> height1=wide1=n/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">if</span>(n/<span class="hljs-number">2</span>%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)<br>        &#123;<br>            wide2=n/<span class="hljs-number">2</span>;<br>            height2=n/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;wide2=n/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>;height2=n/<span class="hljs-number">2</span>;&#125;<br>        <span class="hljs-keyword">if</span>(wide1==height2)<br>        &#123;<br>            <span class="hljs-keyword">int</span> newheight=wide1,newwide=wide1+wide2;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d\n"</span>,newheight,newwide);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(i%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<span class="hljs-comment">//left</span><br>                &#123;<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;t++)<br>                    &#123;<br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t,(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>);<br>                    &#125;<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span><span class="hljs-number">-1</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                    &#123;<br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>,t);<br>                    &#125;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)<span class="hljs-comment">//right</span><br>                &#123;<br>                     <span class="hljs-keyword">if</span>(i/<span class="hljs-number">2</span>%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<br>                     &#123;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=i/<span class="hljs-number">2</span>;t++)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t,i/<span class="hljs-number">2</span>+wide1);<br>                         &#125;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=i/<span class="hljs-number">2</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t,i/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>+wide1);<br>                         &#125;<br>                         <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                     &#125;<br>                     <span class="hljs-keyword">else</span><br>                     &#123;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=i/<span class="hljs-number">2</span>;t++)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,i/<span class="hljs-number">2</span>,t+wide1);<br>                         &#125;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=i/<span class="hljs-number">2</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,i/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,t+wide1);<br>                         &#125;<br>                         <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                     &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">int</span> newheight=wide1+height2,newwide=wide1;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d\n"</span>,newheight,newwide);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(i%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<span class="hljs-comment">//left</span><br>                &#123;<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;t++)<br>                    &#123;<br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t,(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>);<br>                    &#125;<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span><span class="hljs-number">-1</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                    &#123;<br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,(i+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>,t);<br>                    &#125;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)<span class="hljs-comment">//right</span><br>                &#123;<br>                     <span class="hljs-keyword">if</span>(i/<span class="hljs-number">2</span>%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<br>                     &#123;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=i/<span class="hljs-number">2</span>;t++)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t+wide1,i/<span class="hljs-number">2</span>);<br>                         &#125;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=i/<span class="hljs-number">2</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,t+wide1,i/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>);<br>                         &#125;<br>                         <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                     &#125;<br>                     <span class="hljs-keyword">else</span><br>                     &#123;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;t&lt;=i/<span class="hljs-number">2</span>;t++)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,i/<span class="hljs-number">2</span>+wide1,t);<br>                         &#125;<br>                         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t=i/<span class="hljs-number">2</span>;t&gt;=<span class="hljs-number">1</span>;t--)<br>                         &#123;<br>                             <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d %d "</span>,i/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>+wide1,t);<br>                         &#125;<br>                         <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>                     &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="The-minimal-unique-substring"><a href="#The-minimal-unique-substring" class="headerlink" title="The minimal unique substring"></a>The minimal unique substring</h1><h1 id="CodeForces-1158B"><a href="#CodeForces-1158B" class="headerlink" title="CodeForces - 1158B"></a>CodeForces - 1158B</h1><p>Let s be some string consisting of symbols “0” or “1”. Let’s call a string t a substring of string s, if there exists such number 1≤l≤|s|−|t|+1 that t=slsl+1…sl+|t|−1. Let’s call a substring t of string s unique, if there exist only one such l.</p>
 <p>For example, let s=”1010111”. A string t=”010” is an unique substring of s, because l=2 is the only one suitable number. But, for example t=”10” isn’t a unique substring of s, because l=1 and l=3 are suitable. And for example t=”00” at all isn’t a substring of s, because there is no suitable l.</p>
 <p>Today Vasya solved the following problem at the informatics lesson: given a string consisting of symbols “0” and “1”, the task is to find the length of its minimal unique substring. He has written a solution to this problem and wants to test it. He is asking you to help him.</p>
@@ -512,18 +295,7 @@ int main()
 <p>In the second test a string s=”01010” has minimal unique substring t=”101”, which has length 3.</p>
 <p>In the third test a string s=”1011011” has minimal unique substring t=”110”, which has length 3.</p>
 <p><a href="https://www.cnblogs.com/dd-bond/p/10858347.html" target="_blank" rel="noopener">详细题解</a></p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int n,k;
-int main()
-{
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
-    for(int i=1;i&lt;=n;i++){
-        printf(&quot;%d&quot;,(i%((n-k)/2+1)&gt;0));
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">int</span> n,k;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;k);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>,(i%((n-k)/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>)&gt;<span class="hljs-number">0</span>));<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>

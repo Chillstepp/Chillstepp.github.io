@@ -236,9 +236,9 @@
 <p>所以我们这里有<strong>两个优化</strong>。</p>
 <h2 id="复杂度过高能不能优化呢？"><a href="#复杂度过高能不能优化呢？" class="headerlink" title="复杂度过高能不能优化呢？"></a>复杂度过高能不能优化呢？</h2><h3 id="倍增"><a href="#倍增" class="headerlink" title="倍增"></a>倍增</h3><p>首先读入字符串之后我们现<strong>根据单个字符排序</strong>，当然也可以理解为先<strong>按照每个后缀的第一个字符排序</strong>。对于每个字符，我们按照字典序给一个排名(当然<strong>可以并列</strong>)，这里称作<strong>关键字</strong>。</p>
 <p>(注：图片来自<strong>havana1</strong>)</p>
-<p><img src="https://github.com/xMinh/xMinh.github.io/blob/master/pic/havana1.png?raw=true" srcset="undefined" alt="havana1"></p>
+<p><img src="https://github.com/xMinh/xMinh.github.io/blob/master/pic/havana1.png?raw=true" srcset="/img/loading.gif" alt="havana1"></p>
 <p>接下来我们再把相邻的两个关键字合并到一起，就相当于根据每一个后缀的前两个字符进行排序。想想看，这样就是以第一个字符(也就是自己本身)的排名为第一关键字，以第二个字符的排名为第二关键字，把组成的新数排完序之后再次标号。没有第二关键字的补零。</p>
-<p><img src="https://github.com/xMinh/xMinh.github.io/blob/master/pic/havana2.png?raw=true" srcset="undefined" alt="havana2"></p>
+<p><img src="https://github.com/xMinh/xMinh.github.io/blob/master/pic/havana2.png?raw=true" srcset="/img/loading.gif" alt="havana2"></p>
 <p>接下来我们对于一个在第i位（第i位指的是下标，是排名会说排名为i）上的关键字，它的<strong>第二关键字就是第(i+2)位置上的</strong>，联想一下，因为现在<strong>第i位上的关键字是suff(i)的前两个字符（i和i+1）的排名</strong>，<strong>第i+2位置上的关键字是suff(i+2)的前两个字符（i+2和i+3）的排名</strong>，这两个一合并，不就是<strong>suff(i)的前四个字符的排名</strong>吗？方法同上，排序之后重新标号，没有第二关键字的补零。同理我们可以证明，下一次我们要合并的是第i位和第i+4位，以此类推即可…… 这不就是倍增的思想吗？</p>
 <p>那么我们什么时候结束呢？很简单，当所有的排名都不同的时候我们直接退出就可以了，因为已经排好了。</p>
 <p>显然<strong>这样排序的速度稳定在$O(nlog^2 n)$(每次$nlogn$排序，排了$log n$次)</strong></p>

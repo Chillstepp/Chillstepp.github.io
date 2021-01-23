@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      477 字
+      484 字
     </span>
   
 
@@ -231,55 +231,7 @@
 <p>给出一个连通图（图中每个点都和任意其他点相通），现在给出n个点，m条边，和两个点a，b。求有多少点对一定要经过a，b点。</p>
 <h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>通过a点出发进行dfs，设置b点为禁止点（不能访问）,由于这个图是连通图，任意2点都是可达的，那么从a点出发发不通过a的能到达的点代表必须经过b才能到达。<br>那么我们统计：</p>
 <p>a点出发不经过b不能到的点（必须经过b才能到的点） * 从b出发不经过a不能到的点（必须经过a才能到的点） = ans</p>
-<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code class="lang-c++">#include &lt;cstdio&gt;
-typedef long long ll;
-const int N = 2e5 + 5, M = 5e5 + 5;
-//ans[0]保存a不通过b不能到的点 ans[1]保存b不通过a不能到的点 
-int head[N], len, cnt, t, n, m, a, b, u, v, ans[2];
-bool vis[N]; //看某个点是否访问过  
-struct edge{
-    int v, next; 
-} e[M * 2];
-void add(int u, int v) {
-    e[len].v = v;
-    e[len].next = head[u];
-    head[u] = len++;
-} 
-void dfs(int u, int ban) {
-    cnt++; 
-    vis[u] = true;
-    for (int j = head[u]; j; j = e[j].next) {
-        v = e[j].v;
-        if (v == ban) continue; //不能通过ban点
-        if (!vis[v]) dfs(v, ban); 
-    }
-}
-int main() {
-    scanf(&quot;%d&quot;, &amp;t);
-    while (t--) {
-        len = 1;         
-        scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;a, &amp;b);
-        for (int i = 1; i &lt;= n; i++) head[i] = 0;
-        for (int i = 1; i &lt;= m; i++) {
-            scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
-            add(u, v);
-            add(v, u);
-        }
-        //统计a不能到达那些点（不通过b）
-        for (int i = 1; i &lt;= n; i++) vis[i] = false;
-        cnt = 0; //a 能到的点 (不通过b) 
-        dfs(a, b);  
-        ans[0] = n - cnt - 1; //多减1包括a点 
-         //统计b不能到达那些点 （不通过a）
-        for (int i = 1; i &lt;= n; i++) vis[i] = false;
-        cnt = 0;
-        dfs(b, a); 
-        ans[1] = n - cnt - 1;  
-        printf(&quot;%lld\n&quot;, (ll)ans[0] * ans[1]); 
-    } 
-    return 0;
-}
-</code></pre>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">5e5</span> + <span class="hljs-number">5</span>;<br><span class="hljs-comment">//ans[0]保存a不通过b不能到的点 ans[1]保存b不通过a不能到的点 </span><br><span class="hljs-keyword">int</span> head[N], len, cnt, t, n, m, a, b, u, v, ans[<span class="hljs-number">2</span>];<br><span class="hljs-keyword">bool</span> vis[N]; <span class="hljs-comment">//看某个点是否访问过  </span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">edge</span>&#123;</span><br>	<span class="hljs-keyword">int</span> v, next; <br>&#125; e[M * <span class="hljs-number">2</span>];<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>&#123;<br>	e[len].v = v;<br>	e[len].next = head[u];<br>	head[u] = len++;<br>&#125; <br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> ban)</span> </span>&#123;<br>	cnt++; <br>	vis[u] = <span class="hljs-literal">true</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = head[u]; j; j = e[j].next) &#123;<br>		v = e[j].v;<br>		<span class="hljs-keyword">if</span> (v == ban) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">//不能通过ban点</span><br>		<span class="hljs-keyword">if</span> (!vis[v]) dfs(v, ban); <br>	&#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;t);<br>	<span class="hljs-keyword">while</span> (t--) &#123;<br>		len = <span class="hljs-number">1</span>; 		<br>		<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d%d%d"</span>, &amp;n, &amp;m, &amp;a, &amp;b);<br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) head[i] = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;<br>			<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>, &amp;u, &amp;v);<br>			add(u, v);<br>			add(v, u);<br>		&#125;<br>		<span class="hljs-comment">//统计a不能到达那些点（不通过b）</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) vis[i] = <span class="hljs-literal">false</span>;<br>		cnt = <span class="hljs-number">0</span>; <span class="hljs-comment">//a 能到的点 (不通过b) </span><br>		dfs(a, b);  <br>		ans[<span class="hljs-number">0</span>] = n - cnt - <span class="hljs-number">1</span>; <span class="hljs-comment">//多减1包括a点 </span><br> 		<span class="hljs-comment">//统计b不能到达那些点 （不通过a）</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) vis[i] = <span class="hljs-literal">false</span>;<br>		cnt = <span class="hljs-number">0</span>;<br>		dfs(b, a); <br>		ans[<span class="hljs-number">1</span>] = n - cnt - <span class="hljs-number">1</span>;  <br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld\n"</span>, (ll)ans[<span class="hljs-number">0</span>] * ans[<span class="hljs-number">1</span>]); <br>	&#125; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>

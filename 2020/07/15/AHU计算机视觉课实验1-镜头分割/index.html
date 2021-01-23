@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      414 字
+      397 字
     </span>
   
 
@@ -229,47 +229,8 @@
             <div class="markdown-body">
               <h1 id="AHU计算机视觉课实验1-镜头分割"><a href="#AHU计算机视觉课实验1-镜头分割" class="headerlink" title="AHU计算机视觉课实验1-镜头分割"></a>AHU计算机视觉课实验1-镜头分割</h1><h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>主要做一个镜头分割，在镜头切换，或者场景有所变换时进行截图。最后获得不同场景的图片。</p>
 <h2 id="实验思路"><a href="#实验思路" class="headerlink" title="实验思路"></a>实验思路</h2><p>大概的思路就是先计算视频开头图片的直方图 Hist，这个可以利用 cv2.calcHist来计算。然后开始对视频逐帧读取并计算直方图 Hist1同时利用cv2.compareHist来计算直方图之间的区别，这里cv2.compareHist选用的参数是cv2.HISTCMP_CORREL，也就是相关度。设定一个阈值，相关度小于阈值就进行镜头裁剪，然后Hist=Hist1即可，以此循环进行对比即可。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code:"></a>code:</h2><pre><code class="lang-python">import numpy as np
-import cv2
-from matplotlib import pyplot as plt
-
-cap = cv2.VideoCapture(&#39;godfather.mp4&#39;)
-w = int(cap.get(3))
-h = int(cap.get(4))
-fps = cap.get(5)
-delay = int(1000/fps)-5
-
-print(&#39;width=%d ,height=%d ,fps=%d&#39; % (w, h, fps))
-
-ret, img = cap.read()
-imgBGR = img
-img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-Hist = cv2.calcHist(images=[img], channels=[0], mask=None, histSize=[256], ranges=[0, 256])
-num = 0
-
-while True:
-    ret, frame = cap.read()
-    frameBGR = frame
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    cv2.imshow(&#39;frame2&#39;, frameBGR)
-    if not ret:
-        break
-    Hist1 = cv2.calcHist(images=[frame], channels=[0], mask=None, histSize=[256], ranges=[0, 256])
-    delta = cv2.compareHist(Hist, Hist1, cv2.HISTCMP_CORREL)
-    print(delta)
-    if delta &lt; 0.5:
-        Hist = Hist1
-        cv2.imshow(&#39;frame&#39;, frameBGR)
-        cv2.waitKey(200)
-        num = num + 1
-    if cv2.waitKey(delay) &amp; 0xFF == ord(&#39;q&#39;):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-</code></pre>
-<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><p><img src="https://s1.ax1x.com/2020/07/15/UdgCuR.gif" srcset="undefined" alt="UdgCuR.gif"></p>
+<h2 id="code"><a href="#code" class="headerlink" title="code:"></a>code:</h2><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><br>cap = cv2.VideoCapture(<span class="hljs-string">'godfather.mp4'</span>)<br>w = int(cap.get(<span class="hljs-number">3</span>))<br>h = int(cap.get(<span class="hljs-number">4</span>))<br>fps = cap.get(<span class="hljs-number">5</span>)<br>delay = int(<span class="hljs-number">1000</span>/fps)<span class="hljs-number">-5</span><br><br>print(<span class="hljs-string">'width=%d ,height=%d ,fps=%d'</span> % (w, h, fps))<br><br>ret, img = cap.read()<br>imgBGR = img<br>img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)<br>Hist = cv2.calcHist(images=[img], channels=[<span class="hljs-number">0</span>], mask=<span class="hljs-literal">None</span>, histSize=[<span class="hljs-number">256</span>], ranges=[<span class="hljs-number">0</span>, <span class="hljs-number">256</span>])<br>num = <span class="hljs-number">0</span><br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    ret, frame = cap.read()<br>    frameBGR = frame<br>    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)<br><br>    cv2.imshow(<span class="hljs-string">'frame2'</span>, frameBGR)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ret:<br>        <span class="hljs-keyword">break</span><br>    Hist1 = cv2.calcHist(images=[frame], channels=[<span class="hljs-number">0</span>], mask=<span class="hljs-literal">None</span>, histSize=[<span class="hljs-number">256</span>], ranges=[<span class="hljs-number">0</span>, <span class="hljs-number">256</span>])<br>    delta = cv2.compareHist(Hist, Hist1, cv2.HISTCMP_CORREL)<br>    print(delta)<br>    <span class="hljs-keyword">if</span> delta &lt; <span class="hljs-number">0.5</span>:<br>        Hist = Hist1<br>        cv2.imshow(<span class="hljs-string">'frame'</span>, frameBGR)<br>        cv2.waitKey(<span class="hljs-number">200</span>)<br>        num = num + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> cv2.waitKey(delay) &amp; <span class="hljs-number">0xFF</span> == ord(<span class="hljs-string">'q'</span>):<br>        <span class="hljs-keyword">break</span><br><br>cap.release()<br>cv2.destroyAllWindows()<br></code></pre></div></td></tr></table></figure>
+<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><p><img src="https://s1.ax1x.com/2020/07/15/UdgCuR.gif" srcset="/img/loading.gif" alt="UdgCuR.gif"></p>
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>第一个实验还是比较简单的，主要还是为了熟悉下opencv，其实有很多trick可以搞，但感觉没必要。等到了明年上这门课的时候再多搞一些好玩的trick。比如从RGB颜色通道检验区别等等。</p>
 
             </div>

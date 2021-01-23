@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      933 字
+      953 字
     </span>
   
 
@@ -228,170 +228,21 @@
             
             <div class="markdown-body">
               <h1 id="Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解"><a href="#Educational-Codeforces-Round-81-Rated-for-Div-2-A-B-C-D题解" class="headerlink" title="Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解"></a>Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解</h1><p><strong>比赛链接：<a href="https://codeforces.com/contest/1295" target="_blank" rel="noopener">https://codeforces.com/contest/1295</a></strong></p>
-<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" srcset="undefined" alt="11GzEq.png"></p>
+<h2 id="A-Display-The-Number（思维-构造）"><a href="#A-Display-The-Number（思维-构造）" class="headerlink" title="A.Display The Number（思维+构造）"></a>A.Display The Number（思维+构造）</h2><h3 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11GzEq.png" srcset="/img/loading.gif" alt="11GzEq.png"></p>
 <h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段都用来构造1，此时构造的数字最大。当数量为奇数时，构造完全1的数字后还剩一根线段，我们肯定要把这根线段用在构造的数字最高位，将1变为7，此时便构造出了最大的数字。</p>
-<h3 id="Code："><a href="#Code：" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int ans[100000+7];
-int main()
-{
-    int T;
-    scanf(&quot;%d&quot;,&amp;T);
-    while(T--)
-    {
-        int n;
-        scanf(&quot;%d&quot;,&amp;n);
-        if(n==3) {printf(&quot;7\n&quot;);continue;}
-        int dig=n/2;
-        int lef=n%2;
-        for(int i=1;i&lt;=dig;i++)
-        {
-            ans[i]=1;
-        }
-        if(lef==1) ans[1]=7;
-        for(int i=1;i&lt;=dig;i++) printf(&quot;%d&quot;,ans[i]);
-        printf(&quot;\n&quot;);
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" srcset="undefined" alt="11JP8U.png"></p>
+<h3 id="Code："><a href="#Code：" class="headerlink" title="Code："></a>Code：</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">int</span> ans[<span class="hljs-number">100000</span>+<span class="hljs-number">7</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> T;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;T);<br>    <span class="hljs-keyword">while</span>(T--)<br>    &#123;<br>        <span class="hljs-keyword">int</span> n;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;n);<br>        <span class="hljs-keyword">if</span>(n==<span class="hljs-number">3</span>) &#123;<span class="hljs-built_in">printf</span>(<span class="hljs-string">"7\n"</span>);<span class="hljs-keyword">continue</span>;&#125;<br>        <span class="hljs-keyword">int</span> dig=n/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">int</span> lef=n%<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=dig;i++)<br>        &#123;<br>            ans[i]=<span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(lef==<span class="hljs-number">1</span>) ans[<span class="hljs-number">1</span>]=<span class="hljs-number">7</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=dig;i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>,ans[i]);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="B-Infinite-Prefixes（思维-构造转化）"><a href="#B-Infinite-Prefixes（思维-构造转化）" class="headerlink" title="B. Infinite Prefixes（思维+构造转化）"></a>B. Infinite Prefixes（思维+构造转化）</h2><h3 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JP8U.png" srcset="/img/loading.gif" alt="11JP8U.png"></p>
 <h3 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h3><p>对于每一个前缀，我们用ans[i]记录前i个字符的$cnt0-cnt1$的值，同时$k=整个串的cnt0-cnt1=ans[last]$。</p>
 <p>那么比如，$ans[z]=h$，若前面有n个串的$cnt0-cnt1$=$x-h$，那么$x-h+ans[z]=x$,即可以找出一个值为x的串。</p>
 <p>即寻找$n*k=x-h=x-ans[z]$符合这个式子的z和n的对数。</p>
 <p>注意：空串也算答案！</p>
-<h3 id="Code：-1"><a href="#Code：-1" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int ans[100000+7];
-char s[100000+5];
-int main()
-{
-    int T;
-    cin&gt;&gt;T;
-    while(T--)
-    {
-        int n,x,cnt0=0,cnt1=0;
-        scanf(&quot;%d%d&quot;,&amp;n,&amp;x);
-        scanf(&quot;%s&quot;,s);
-        for(int i=0;i&lt;n;i++)
-        {
-            if(s[i]-&#39;0&#39;==0) cnt0++;
-            else cnt1++;
-            ans[i]=cnt0-cnt1;
-        }
-        int k=cnt0-cnt1,flag=1,fin=0;
-        if(k==0)
-        {
-            for(int i=0;i&lt;n;i++)
-            {
-                if(ans[i]==x) {flag=0;break;}
-            }
-        }
-        if(flag==0)
-        {
-            printf(&quot;-1\n&quot;);
-            continue;
-        }
-        if(flag&amp;&amp;k==0) {printf(&quot;0\n&quot;);continue;}
-        for(int i=0;i&lt;n;i++)
-        {
-            if((x-ans[i])%k==0&amp;&amp;(x-ans[i])/k&gt;=0) fin++;
-        }
-        if(x==0) fin++;
-        printf(&quot;%d\n&quot;,fin);
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" srcset="undefined" alt="11JeV1.png"></p>
+<h3 id="Code：-1"><a href="#Code：-1" class="headerlink" title="Code："></a>Code：</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">int</span> ans[<span class="hljs-number">100000</span>+<span class="hljs-number">7</span>];<br><span class="hljs-keyword">char</span> s[<span class="hljs-number">100000</span>+<span class="hljs-number">5</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> T;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;T;<br>    <span class="hljs-keyword">while</span>(T--)<br>    &#123;<br>        <span class="hljs-keyword">int</span> n,x,cnt0=<span class="hljs-number">0</span>,cnt1=<span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;x);<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%s"</span>,s);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(s[i]-<span class="hljs-string">'0'</span>==<span class="hljs-number">0</span>) cnt0++;<br>            <span class="hljs-keyword">else</span> cnt1++;<br>            ans[i]=cnt0-cnt1;<br>        &#125;<br>        <span class="hljs-keyword">int</span> k=cnt0-cnt1,flag=<span class="hljs-number">1</span>,fin=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span>(k==<span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(ans[i]==x) &#123;flag=<span class="hljs-number">0</span>;<span class="hljs-keyword">break</span>;&#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(flag==<span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"-1\n"</span>);<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(flag&amp;&amp;k==<span class="hljs-number">0</span>) &#123;<span class="hljs-built_in">printf</span>(<span class="hljs-string">"0\n"</span>);<span class="hljs-keyword">continue</span>;&#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>((x-ans[i])%k==<span class="hljs-number">0</span>&amp;&amp;(x-ans[i])/k&gt;=<span class="hljs-number">0</span>) fin++;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(x==<span class="hljs-number">0</span>) fin++;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,fin);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="C-Obtain-The-String（二分-贪心）"><a href="#C-Obtain-The-String（二分-贪心）" class="headerlink" title="C-Obtain The String（二分+贪心）"></a>C-Obtain The String（二分+贪心）</h2><h3 id="题意：-2"><a href="#题意：-2" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JeV1.png" srcset="/img/loading.gif" alt="11JeV1.png"></p>
 <h3 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h3><p> $pos[x][y]$代表第y个字母x的位置 这个位置有单调性是单增的，我们对t串的每一个字符在s串中进行查询，比如查询字母a,通过二分$dig[a-‘0’][ t  ]$对t二分出第一个大于当前s串指针的位置，如果二分不出来就把指针移到s串开头，从头开始二分，同时ans++。</p>
-<h3 id="Code：-2"><a href="#Code：-2" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-char t[100000+5];
-char s[100000+5];
-int pos[27][100000+5];
-int main()
-{
-    int T;
-    cin&gt;&gt;T;
-    while(T--)
-    {
-        scanf(&quot;%s&quot;,s);
-        scanf(&quot;%s&quot;,t);
-        int ed[27];
-        memset(ed,-1,sizeof ed);
-        int lens=strlen(s);
-        for(int i=0;i&lt;lens;i++)
-        {
-            int tep=s[i]-&#39;a&#39;;
-            ed[tep]++;
-            pos[tep][ed[tep]]=i;
-        }
-        int lent=strlen(t),ans=1,now=-1,flag=1;
-        for(int i=0;i&lt;lent;i++)
-        {
-            int tep=t[i]-&#39;a&#39;;
-            int l=0,r=ed[tep];
-            if(r==-1) {printf(&quot;-1\n&quot;);flag=0;break;}
-            while(l&lt;r)
-            {
-                int mid=(l+r)&gt;&gt;1;
-                if(pos[tep][mid]&gt;now) r=mid;
-                else l=mid+1;
-            }
-            if(l==ed[tep]&amp;&amp;pos[tep][l]&lt;=now)
-            {
-                now=-1;
-                ans++;
-                i--;
-                continue;
-            }
-            else now=pos[tep][l];
-        }
-        if(flag) printf(&quot;%d\n&quot;,ans);
-
-    }
-    return 0;
-}
-</code></pre>
-<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" srcset="undefined" alt="11JM8O.png"></p>
-<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" srcset="undefined" alt="11ay4I.png"></p>
-<h3 id="Code：-3"><a href="#Code：-3" class="headerlink" title="Code："></a>Code：</h3><pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-ll phi(ll n)
-{
-    ll result = n; // Initialize result as n
-    for (ll p = 2; p * p &lt;= n; ++p) {
-        if (n % p == 0) {
-
-            while (n % p == 0)
-                n /= p;
-            result -= result / p;
-        }
-    }
-    if (n &gt; 1)
-        result -= result / n;
-    return result;
-}
-int main()
-{
-    ll t; cin &gt;&gt; t;
-    while(t--) {
-        ll a, m;
-        cin &gt;&gt; a &gt;&gt; m;
-
-        ll g = __gcd(a, m);
-
-        m /= g;
-        cout &lt;&lt; phi(m) &lt;&lt; endl;
-    }
-    return 0;
-}
-</code></pre>
+<h3 id="Code：-2"><a href="#Code：-2" class="headerlink" title="Code："></a>Code：</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">char</span> t[<span class="hljs-number">100000</span>+<span class="hljs-number">5</span>];<br><span class="hljs-keyword">char</span> s[<span class="hljs-number">100000</span>+<span class="hljs-number">5</span>];<br><span class="hljs-keyword">int</span> pos[<span class="hljs-number">27</span>][<span class="hljs-number">100000</span>+<span class="hljs-number">5</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> T;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;T;<br>    <span class="hljs-keyword">while</span>(T--)<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%s"</span>,s);<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%s"</span>,t);<br>        <span class="hljs-keyword">int</span> ed[<span class="hljs-number">27</span>];<br>        <span class="hljs-built_in">memset</span>(ed,<span class="hljs-number">-1</span>,<span class="hljs-keyword">sizeof</span> ed);<br>        <span class="hljs-keyword">int</span> lens=<span class="hljs-built_in">strlen</span>(s);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;lens;i++)<br>        &#123;<br>            <span class="hljs-keyword">int</span> tep=s[i]-<span class="hljs-string">'a'</span>;<br>            ed[tep]++;<br>            pos[tep][ed[tep]]=i;<br>        &#125;<br>        <span class="hljs-keyword">int</span> lent=<span class="hljs-built_in">strlen</span>(t),ans=<span class="hljs-number">1</span>,now=<span class="hljs-number">-1</span>,flag=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;lent;i++)<br>        &#123;<br>            <span class="hljs-keyword">int</span> tep=t[i]-<span class="hljs-string">'a'</span>;<br>            <span class="hljs-keyword">int</span> l=<span class="hljs-number">0</span>,r=ed[tep];<br>            <span class="hljs-keyword">if</span>(r==<span class="hljs-number">-1</span>) &#123;<span class="hljs-built_in">printf</span>(<span class="hljs-string">"-1\n"</span>);flag=<span class="hljs-number">0</span>;<span class="hljs-keyword">break</span>;&#125;<br>            <span class="hljs-keyword">while</span>(l&lt;r)<br>            &#123;<br>                <span class="hljs-keyword">int</span> mid=(l+r)&gt;&gt;<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span>(pos[tep][mid]&gt;now) r=mid;<br>                <span class="hljs-keyword">else</span> l=mid+<span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(l==ed[tep]&amp;&amp;pos[tep][l]&lt;=now)<br>            &#123;<br>                now=<span class="hljs-number">-1</span>;<br>                ans++;<br>                i--;<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span> now=pos[tep][l];<br>        &#125;<br>        <span class="hljs-keyword">if</span>(flag) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,ans);<br><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="D-Same-GCDs（辗转相除法转化-phi）"><a href="#D-Same-GCDs（辗转相除法转化-phi）" class="headerlink" title="D-Same GCDs（辗转相除法转化+phi）"></a>D-Same GCDs（辗转相除法转化+phi）</h2><h3 id="题意：-3"><a href="#题意：-3" class="headerlink" title="题意："></a>题意：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11JM8O.png" srcset="/img/loading.gif" alt="11JM8O.png"></p>
+<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><p><img src="https://s2.ax1x.com/2020/01/30/11ay4I.png" srcset="/img/loading.gif" alt="11ay4I.png"></p>
+<h3 id="Code：-3"><a href="#Code：-3" class="headerlink" title="Code："></a>Code：</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-function">ll <span class="hljs-title">phi</span><span class="hljs-params">(ll n)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll result = n; <span class="hljs-comment">// Initialize result as n</span><br>    <span class="hljs-keyword">for</span> (ll p = <span class="hljs-number">2</span>; p * p &lt;= n; ++p) &#123;<br>        <span class="hljs-keyword">if</span> (n % p == <span class="hljs-number">0</span>) &#123;<br><br>            <span class="hljs-keyword">while</span> (n % p == <span class="hljs-number">0</span>)<br>                n /= p;<br>            result -= result / p;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">1</span>)<br>        result -= result / n;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ll t; <span class="hljs-built_in">cin</span> &gt;&gt; t;<br>    <span class="hljs-keyword">while</span>(t--) &#123;<br>        ll a, m;<br>        <span class="hljs-built_in">cin</span> &gt;&gt; a &gt;&gt; m;<br><br>        ll g = __gcd(a, m);<br><br>        m /= g;<br>        <span class="hljs-built_in">cout</span> &lt;&lt; phi(m) &lt;&lt; <span class="hljs-built_in">endl</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>

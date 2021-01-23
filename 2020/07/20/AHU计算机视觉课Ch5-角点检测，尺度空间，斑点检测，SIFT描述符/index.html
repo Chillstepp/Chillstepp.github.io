@@ -227,38 +227,38 @@
             <h1 style="display: none">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</h1>
             
             <div class="markdown-body">
-              <h1 id="AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符"><a href="#AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符" class="headerlink" title="AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符"></a>AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</h1><p><a href="https://imgchr.com/i/UR8ePS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/19/UR8ePS.png" srcset="undefined" alt="UR8ePS.png"></a></p>
+              <h1 id="AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符"><a href="#AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符" class="headerlink" title="AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符"></a>AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</h1><p><a href="https://imgchr.com/i/UR8ePS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/19/UR8ePS.png" srcset="/img/loading.gif" alt="UR8ePS.png"></a></p>
 <p>角点用来检测特殊的对应点，可以利用角点进行全景拼接。</p>
-<h2 id="角点检测"><a href="#角点检测" class="headerlink" title="角点检测"></a>角点检测</h2><p><img src="https://s1.ax1x.com/2020/07/19/UR8YPU.png" srcset="undefined" alt="UR8YPU.png"></p>
+<h2 id="角点检测"><a href="#角点检测" class="headerlink" title="角点检测"></a>角点检测</h2><p><img src="https://s1.ax1x.com/2020/07/19/UR8YPU.png" srcset="/img/loading.gif" alt="UR8YPU.png"></p>
 <p>我们可以看到，在平坦区域我们随便移动也不会有像素点变换，在边缘上时上下移动也不会出现大量变化，只有在角点，任何方向移动都会出现变化。</p>
 <p><strong>度量窗口变化多少的指标：</strong></p>
 <p>每个像素差的平方和</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/UR82xH.png" srcset="undefined" alt="UR82xH.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URG2kV.png" srcset="undefined" alt="URG2kV.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URGTmR.png" srcset="undefined" alt="URGTmR.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URJZcQ.png" srcset="undefined" alt="URJZcQ.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/20/UfRGxe.png" srcset="undefined" alt="UfRGxe.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UR82xH.png" srcset="/img/loading.gif" alt="UR82xH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URG2kV.png" srcset="/img/loading.gif" alt="URG2kV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URGTmR.png" srcset="/img/loading.gif" alt="URGTmR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URJZcQ.png" srcset="/img/loading.gif" alt="URJZcQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/UfRGxe.png" srcset="/img/loading.gif" alt="UfRGxe.png"></p>
 <p>我们可以对每个像素求一个M。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/UfRozF.png" srcset="undefined" alt="UfRozF.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/20/UfWdOJ.png" srcset="undefined" alt="UfWdOJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/UfRozF.png" srcset="/img/loading.gif" alt="UfRozF.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/UfWdOJ.png" srcset="/img/loading.gif" alt="UfWdOJ.png"></p>
 <p>我们可以看出：</p>
 <p>当两个$\lambda$都很小，说明在平坦的区域，各个方向变化时变化幅度小。</p>
 <p>当一个$\lambda$都很小，另一个$\lambda$很大，说明在某个方向上变化很大，属于在边缘位置。</p>
 <p>当两个$\lambda$都很大，说明在角点，各个方向上变化都很大。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/UffcEn.png" srcset="undefined" alt="UffcEn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/UffcEn.png" srcset="/img/loading.gif" alt="UffcEn.png"></p>
 <p>最后我们<strong>定义一个R用来判断角点</strong>。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/Ufh1P0.png" srcset="undefined" alt="Ufh1P0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/Ufh1P0.png" srcset="/img/loading.gif" alt="Ufh1P0.png"></p>
 <p>由于像素范围较大不是一个点，因此进行非极大值抑制。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/Ufhcse.png" srcset="undefined" alt="Ufhcse.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/20/Uf5i1f.png" srcset="undefined" alt="Uf5i1f.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/Ufhcse.png" srcset="/img/loading.gif" alt="Ufhcse.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/Uf5i1f.png" srcset="/img/loading.gif" alt="Uf5i1f.png"></p>
 <p>图像的亮度变化一定程度会影响R值。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/Uf5lcT.png" srcset="undefined" alt="Uf5lcT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/Uf5lcT.png" srcset="/img/loading.gif" alt="Uf5lcT.png"></p>
 <p>图像旋转对角点的检测不影响。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/Uf5U41.png" srcset="undefined" alt="Uf5U41.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/Uf5U41.png" srcset="/img/loading.gif" alt="Uf5U41.png"></p>
 <p>既然图像缩放大小会影响角点的检测，我们该如何确定尺度呢？</p>
-<p><a href="https://imgchr.com/i/Uf5IKS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/20/Uf5IKS.png" srcset="undefined" alt="Uf5IKS.png"></a></p>
+<p><a href="https://imgchr.com/i/Uf5IKS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/20/Uf5IKS.png" srcset="/img/loading.gif" alt="Uf5IKS.png"></a></p>
 <p>大概的方法是找一个无关函数 f 随着取样框大小变化来寻找 f 最大的点，当两个点都在最大值，说明在同一点，这时候横坐标的就可以反映图像尺度大小的比例。</p>
-<p><img src="https://s1.ax1x.com/2020/07/20/UfIVxK.png" srcset="undefined" alt="UfIVxK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/20/UfIVxK.png" srcset="/img/loading.gif" alt="UfIVxK.png"></p>
 
             </div>
             <hr>

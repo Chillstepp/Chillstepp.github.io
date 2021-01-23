@@ -227,56 +227,56 @@
             <h1 style="display: none">AHU计算机视觉课Ch4-模型拟合</h1>
             
             <div class="markdown-body">
-              <h1 id="AHU计算机视觉课Ch4-模型拟合"><a href="#AHU计算机视觉课Ch4-模型拟合" class="headerlink" title="AHU计算机视觉课Ch4-模型拟合"></a>AHU计算机视觉课Ch4-模型拟合</h1><p><a href="https://imgchr.com/i/UsJUpR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UsJUpR.png" srcset="undefined" alt="UsJUpR.png"></a></p>
+              <h1 id="AHU计算机视觉课Ch4-模型拟合"><a href="#AHU计算机视觉课Ch4-模型拟合" class="headerlink" title="AHU计算机视觉课Ch4-模型拟合"></a>AHU计算机视觉课Ch4-模型拟合</h1><p><a href="https://imgchr.com/i/UsJUpR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UsJUpR.png" srcset="/img/loading.gif" alt="UsJUpR.png"></a></p>
 <p>数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)</p>
-<h2 id="最小二乘法-Least-Squares"><a href="#最小二乘法-Least-Squares" class="headerlink" title="最小二乘法(Least Squares)"></a>最小二乘法(Least Squares)</h2><h3 id="拟合方法"><a href="#拟合方法" class="headerlink" title="拟合方法"></a>拟合方法</h3><p><img src="https://s1.ax1x.com/2020/07/17/UstSMt.png" srcset="undefined" alt="UstSMt.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UstMZT.png" srcset="undefined" alt="UstMZT.png"></p>
+<h2 id="最小二乘法-Least-Squares"><a href="#最小二乘法-Least-Squares" class="headerlink" title="最小二乘法(Least Squares)"></a>最小二乘法(Least Squares)</h2><h3 id="拟合方法"><a href="#拟合方法" class="headerlink" title="拟合方法"></a>拟合方法</h3><p><img src="https://s1.ax1x.com/2020/07/17/UstSMt.png" srcset="/img/loading.gif" alt="UstSMt.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UstMZT.png" srcset="/img/loading.gif" alt="UstMZT.png"></p>
 <p>约束条件的作用之一是防止 $a=b=c=0$</p>
 <p>局部极小值点的导数为0</p>
-<p><img src="https://s1.ax1x.com/2020/07/17/Ust0oD.png" srcset="undefined" alt="Ust0oD.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UstzY4.png" srcset="undefined" alt="UstzY4.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsNETO.png" srcset="undefined" alt="UsNETO.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsNmfH.png" srcset="undefined" alt="UsNmfH.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsNYtg.png" srcset="undefined" alt="UsNYtg.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/Ust0oD.png" srcset="/img/loading.gif" alt="Ust0oD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UstzY4.png" srcset="/img/loading.gif" alt="UstzY4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNETO.png" srcset="/img/loading.gif" alt="UsNETO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNmfH.png" srcset="/img/loading.gif" alt="UsNmfH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsNYtg.png" srcset="/img/loading.gif" alt="UsNYtg.png"></p>
 <p><strong>拉格朗日乘子法：</strong></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsN4nx.png" srcset="undefined" alt="UsN4nx.png"></p>
-<h3 id="外点"><a href="#外点" class="headerlink" title="外点"></a>外点</h3><p><a href="https://imgchr.com/i/UswpE6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UswpE6.png" srcset="undefined" alt="UswpE6.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsN4nx.png" srcset="/img/loading.gif" alt="UsN4nx.png"></p>
+<h3 id="外点"><a href="#外点" class="headerlink" title="外点"></a>外点</h3><p><a href="https://imgchr.com/i/UswpE6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/17/UswpE6.png" srcset="/img/loading.gif" alt="UswpE6.png"></a></p>
 <p>外点可能会大幅度干扰直线，将直线拉到外点方向处。</p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UswNV0.png" srcset="undefined" alt="UswNV0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UswNV0.png" srcset="/img/loading.gif" alt="UswNV0.png"></p>
 <p>可以做误差控制，减少外点影响。</p>
-<p><img src="https://s1.ax1x.com/2020/07/17/Us0PZq.png" srcset="undefined" alt="Us0PZq.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsBthT.png" srcset="undefined" alt="UsBthT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/Us0PZq.png" srcset="/img/loading.gif" alt="Us0PZq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsBthT.png" srcset="/img/loading.gif" alt="UsBthT.png"></p>
 <p>对于去除外点，我想了想是否可以这样操作：</p>
 <p>我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。</p>
-<h2 id="随机一致性采样算法（RANSAC）"><a href="#随机一致性采样算法（RANSAC）" class="headerlink" title="随机一致性采样算法（RANSAC）"></a>随机一致性采样算法（RANSAC）</h2><p><img src="https://s1.ax1x.com/2020/07/17/UsfPeO.png" srcset="undefined" alt="UsfPeO.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/17/UsfVfA.png" srcset="undefined" alt="UsfVfA.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URe9w4.png" srcset="undefined" alt="URe9w4.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URea7Q.png" srcset="undefined" alt="URea7Q.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/UReycV.png" srcset="undefined" alt="UReycV.png"></p>
+<h2 id="随机一致性采样算法（RANSAC）"><a href="#随机一致性采样算法（RANSAC）" class="headerlink" title="随机一致性采样算法（RANSAC）"></a>随机一致性采样算法（RANSAC）</h2><p><img src="https://s1.ax1x.com/2020/07/17/UsfPeO.png" srcset="/img/loading.gif" alt="UsfPeO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/17/UsfVfA.png" srcset="/img/loading.gif" alt="UsfVfA.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URe9w4.png" srcset="/img/loading.gif" alt="URe9w4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URea7Q.png" srcset="/img/loading.gif" alt="URea7Q.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UReycV.png" srcset="/img/loading.gif" alt="UReycV.png"></p>
 <p><strong>如何模拟圆呢？</strong></p>
 <p>随机采样3个样本(三个点确定一个圆)</p>
 <p>拟合一个圆模型$M_i$</p>
 <p>计算$S(M_i)$，对每一个样本$X_j$,计算误差$d(X_j,M_i)$,如果$d(X_J,M_i)&lt;t$,那么$S(M_i)=S(M_i) \bigcup \{M_i\}$</p>
 <p>给模型打分，如果分数大于一定分数，认为是一个好的模型，然后使用这个模型所涉及的点再重新估计(比如最小二乘法等)，计算拟合误差$E_i$,保留$E_i$最小的模型作为拟合结果。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URua7D.png" srcset="undefined" alt="URua7D.png"></p>
-<h2 id="哈夫变换（Hough-Transform）"><a href="#哈夫变换（Hough-Transform）" class="headerlink" title="哈夫变换（Hough Transform）"></a>哈夫变换（Hough Transform）</h2><p><img src="https://s1.ax1x.com/2020/07/19/URKlb8.png" srcset="undefined" alt="URKlb8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URua7D.png" srcset="/img/loading.gif" alt="URua7D.png"></p>
+<h2 id="哈夫变换（Hough-Transform）"><a href="#哈夫变换（Hough-Transform）" class="headerlink" title="哈夫变换（Hough Transform）"></a>哈夫变换（Hough Transform）</h2><p><img src="https://s1.ax1x.com/2020/07/19/URKlb8.png" srcset="/img/loading.gif" alt="URKlb8.png"></p>
 <p>$ρ$代表原点到直线距离，$θ$代表夹角。将两者放到参数空间成为一个点（右图）。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URMKJJ.png" srcset="undefined" alt="URMKJJ.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URMdWd.png" srcset="undefined" alt="URMdWd.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMKJJ.png" srcset="/img/loading.gif" alt="URMKJJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMdWd.png" srcset="/img/loading.gif" alt="URMdWd.png"></p>
 <p>左边图的每个点可以有多条线穿过，对应着右边的线（上图）。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URMWWj.png" srcset="undefined" alt="URMWWj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMWWj.png" srcset="/img/loading.gif" alt="URMWWj.png"></p>
 <p>左边的点是共线的，右边肯定是多条线共点  (上图)。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URMjp9.png" srcset="undefined" alt="URMjp9.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URQ6j1.png" srcset="undefined" alt="URQ6j1.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URl3VK.png" srcset="undefined" alt="URl3VK.png"></p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URlg2j.png" srcset="undefined" alt="URlg2j.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URMjp9.png" srcset="/img/loading.gif" alt="URMjp9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URQ6j1.png" srcset="/img/loading.gif" alt="URQ6j1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URl3VK.png" srcset="/img/loading.gif" alt="URl3VK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URlg2j.png" srcset="/img/loading.gif" alt="URlg2j.png"></p>
 <p>那么如何用哈弗变换检测圆呢？</p>
 <p>我们以做一个三维的参数空间(x,y,r)</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/URlqz9.png" srcset="undefined" alt="URlqz9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/URlqz9.png" srcset="/img/loading.gif" alt="URlqz9.png"></p>
 <p>由于搜索空间是三维的，太过于大，因此我们考虑缩小搜索空间。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/UR1Qzj.png" srcset="undefined" alt="UR1Qzj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UR1Qzj.png" srcset="/img/loading.gif" alt="UR1Qzj.png"></p>
 <p>哈夫变换在被遮挡时依然可以很好的检测。</p>
-<p><img src="https://s1.ax1x.com/2020/07/19/UR3Jcd.png" srcset="undefined" alt="UR3Jcd.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/19/UR3Jcd.png" srcset="/img/loading.gif" alt="UR3Jcd.png"></p>
 
             </div>
             <hr>

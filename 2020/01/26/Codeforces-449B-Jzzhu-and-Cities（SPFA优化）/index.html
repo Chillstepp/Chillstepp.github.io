@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      308 字
+      317 字
     </span>
   
 
@@ -227,79 +227,12 @@
             <h1 style="display: none">Codeforces 449B Jzzhu and Cities（SPFA优化）</h1>
             
             <div class="markdown-body">
-              <h1 id="Codeforces-449B-Jzzhu-and-Cities（SPFA优化）"><a href="#Codeforces-449B-Jzzhu-and-Cities（SPFA优化）" class="headerlink" title="Codeforces 449B Jzzhu and Cities（SPFA优化）"></a>Codeforces 449B Jzzhu and Cities（SPFA优化）</h1><h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p><img src="https://s2.ax1x.com/2020/01/26/1mst1S.png" srcset="undefined" alt="1mst1S.png"></p>
-<p><img src="https://s2.ax1x.com/2020/01/26/1msYp8.png" srcset="undefined" alt="1msYp8.png"></p>
+              <h1 id="Codeforces-449B-Jzzhu-and-Cities（SPFA优化）"><a href="#Codeforces-449B-Jzzhu-and-Cities（SPFA优化）" class="headerlink" title="Codeforces 449B Jzzhu and Cities（SPFA优化）"></a>Codeforces 449B Jzzhu and Cities（SPFA优化）</h1><h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p><img src="https://s2.ax1x.com/2020/01/26/1mst1S.png" srcset="/img/loading.gif" alt="1mst1S.png"></p>
+<p><img src="https://s2.ax1x.com/2020/01/26/1msYp8.png" srcset="/img/loading.gif" alt="1msYp8.png"></p>
 <h2 id="前置知识："><a href="#前置知识：" class="headerlink" title="前置知识："></a>前置知识：</h2><h3 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h3><p>讲解：<a href="https://blog.csdn.net/qq_35644234/article/details/61614581" target="_blank" rel="noopener">https://blog.csdn.net/qq_35644234/article/details/61614581</a></p>
 <h2 id="code："><a href="#code：" class="headerlink" title="code："></a>code：</h2><p>建图方法很细节（mark一手</p>
 <p>题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。</p>
-<pre><code class="lang-c++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const long long INF=0x3f3f3f3f3f3f3f;
-const int Maxn = 1e5+10;
-
-int cnt;
-vector &lt;pair&lt;int,int &gt; &gt; E[Maxn];
-int n,m,k;
-bool vis[Maxn];
-long long dis[Maxn];
-bool book[Maxn];
-queue &lt;int&gt; q;
-
-int main()
-{
-    int u,v,w;
-    memset(vis,0,sizeof(vis));
-    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
-    for(int i=1; i&lt;=n; i++)
-        dis[i]=INF;
-    for(int i=1; i&lt;=m; i++)
-    {
-        scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-        E[u].push_back(make_pair(v,w));
-        E[v].push_back(make_pair(u,w));
-    }
-    q.push(1);
-    dis[1]=0;
-    vis[1]=1;
-    for(int i=1; i&lt;=k; i++)
-    {
-        scanf(&quot;%d%d&quot;,&amp;v,&amp;w);
-        if(w&lt;dis[v])
-        {
-            dis[v]=w;
-            vis[v]=1;
-            book[v]=1;
-            q.push(v);
-        }
-    }
-    while(!q.empty())
-    {
-        int u=q.front();
-        q.pop();
-        vis[u]=0;
-        for(int i=0; i&lt;E[u].size(); i++)
-        {
-            int v=E[u][i].first;
-            int w=E[u][i].second;
-            if(dis[v]&gt;=dis[u]+w)
-            {
-                dis[v]=dis[u]+w;
-                book[v]=0;
-                if(!vis[v])
-                {
-                    vis[v]=1;
-                    q.push(v);
-                }
-            }
-        }
-    }
-    int ans = 0;
-    for(int i=1; i&lt;=n; i++)
-        if(book[i]==1) ans++;
-    printf(&quot;%d&quot;,k-ans);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> INF=<span class="hljs-number">0x3f3f3f3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> Maxn = <span class="hljs-number">1e5</span>+<span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> cnt;<br><span class="hljs-built_in">vector</span> &lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span> &gt; &gt; E[Maxn];<br><span class="hljs-keyword">int</span> n,m,k;<br><span class="hljs-keyword">bool</span> vis[Maxn];<br><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> dis[Maxn];<br><span class="hljs-keyword">bool</span> book[Maxn];<br><span class="hljs-built_in">queue</span> &lt;<span class="hljs-keyword">int</span>&gt; q;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> u,v,w;<br>    <span class="hljs-built_in">memset</span>(vis,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(vis));<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d%d"</span>,&amp;n,&amp;m,&amp;k);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++)<br>        dis[i]=INF;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=m; i++)<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d%d"</span>,&amp;u,&amp;v,&amp;w);<br>        E[u].push_back(make_pair(v,w));<br>        E[v].push_back(make_pair(u,w));<br>    &#125;<br>    q.push(<span class="hljs-number">1</span>);<br>    dis[<span class="hljs-number">1</span>]=<span class="hljs-number">0</span>;<br>    vis[<span class="hljs-number">1</span>]=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=k; i++)<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;v,&amp;w);<br>        <span class="hljs-keyword">if</span>(w&lt;dis[v])<br>        &#123;<br>            dis[v]=w;<br>            vis[v]=<span class="hljs-number">1</span>;<br>            book[v]=<span class="hljs-number">1</span>;<br>            q.push(v);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">while</span>(!q.empty())<br>    &#123;<br>        <span class="hljs-keyword">int</span> u=q.front();<br>        q.pop();<br>        vis[u]=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;E[u].size(); i++)<br>        &#123;<br>            <span class="hljs-keyword">int</span> v=E[u][i].first;<br>            <span class="hljs-keyword">int</span> w=E[u][i].second;<br>            <span class="hljs-keyword">if</span>(dis[v]&gt;=dis[u]+w)<br>            &#123;<br>                dis[v]=dis[u]+w;<br>                book[v]=<span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">if</span>(!vis[v])<br>                &#123;<br>                    vis[v]=<span class="hljs-number">1</span>;<br>                    q.push(v);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++)<br>        <span class="hljs-keyword">if</span>(book[i]==<span class="hljs-number">1</span>) ans++;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>,k-ans);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>

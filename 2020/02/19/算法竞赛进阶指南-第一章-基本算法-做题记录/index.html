@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.8k 字
+      2.9k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      49
+      51
        分钟
     </span>
   
@@ -227,266 +227,19 @@
             <h1 style="display: none">算法竞赛进阶指南(第一章-基本算法)做题记录</h1>
             
             <div class="markdown-body">
-              <h1 id="《算法竞赛进阶指南》第一章-基础算法"><a href="#《算法竞赛进阶指南》第一章-基础算法" class="headerlink" title="《算法竞赛进阶指南》第一章-基础算法"></a>《算法竞赛进阶指南》第一章-基础算法</h1><h1 id="位运算⋙"><a href="#位运算⋙" class="headerlink" title="位运算⋙"></a>位运算⋙</h1><h2 id="89-a-b（快速幂）"><a href="#89-a-b（快速幂）" class="headerlink" title="89.a^b（快速幂）"></a>89.a^b（快速幂）</h2><pre><code class="lang-c++">//Chillstep
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=200000+7;
-
-ll ksm(ll n,ll x,ll p)
-{
-    ll ans=1;
-    ans=ans%p;
-    while(x)
-    {
-        if(x&amp;1) ans=ans*n%p;
-        n=n*n%p;
-        x&gt;&gt;=1;
-    }
-    return ans;
-}
-int main()
-{
-    ll a,b,p;
-    cin&gt;&gt;a&gt;&gt;b&gt;&gt;p;
-    cout&lt;&lt;ksm(a,b,p)&lt;&lt;endl;
-
-    return 0;
-}
-</code></pre>
-<h2 id="90-64位整数乘法"><a href="#90-64位整数乘法" class="headerlink" title="90.64位整数乘法"></a>90.64位整数乘法</h2><pre><code class="lang-c++">//Chillstep
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=200000+7;
-
-ll multi_big(ll a,ll b,ll p)
-{
-    ll ans=0;
-    while(b)
-    {
-        if(b&amp;1) ans=(ans+a)%p;
-        a=a*2%p;
-        b&gt;&gt;=1;
-    }
-    return ans;
-}
-int main()
-{
-    ll a,b,p;
-    cin&gt;&gt;a&gt;&gt;b&gt;&gt;p;
-    cout&lt;&lt;multi_big(a,b,p)&lt;&lt;endl;
-
-    return 0;
-}
-</code></pre>
+              <h1 id="《算法竞赛进阶指南》第一章-基础算法"><a href="#《算法竞赛进阶指南》第一章-基础算法" class="headerlink" title="《算法竞赛进阶指南》第一章-基础算法"></a>《算法竞赛进阶指南》第一章-基础算法</h1><h1 id="位运算⋙"><a href="#位运算⋙" class="headerlink" title="位运算⋙"></a>位运算⋙</h1><h2 id="89-a-b（快速幂）"><a href="#89-a-b（快速幂）" class="headerlink" title="89.a^b（快速幂）"></a>89.a^b（快速幂）</h2><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">200000</span>+<span class="hljs-number">7</span>;<br><br><span class="hljs-function">ll <span class="hljs-title">ksm</span><span class="hljs-params">(ll n,ll x,ll p)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll ans=<span class="hljs-number">1</span>;<br>    ans=ans%p;<br>    <span class="hljs-keyword">while</span>(x)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(x&amp;<span class="hljs-number">1</span>) ans=ans*n%p;<br>        n=n*n%p;<br>        x&gt;&gt;=<span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ll a,b,p;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;p;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;ksm(a,b,p)&lt;&lt;<span class="hljs-built_in">endl</span>;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="90-64位整数乘法"><a href="#90-64位整数乘法" class="headerlink" title="90.64位整数乘法"></a>90.64位整数乘法</h2><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">200000</span>+<span class="hljs-number">7</span>;<br><br><span class="hljs-function">ll <span class="hljs-title">multi_big</span><span class="hljs-params">(ll a,ll b,ll p)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll ans=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(b)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(b&amp;<span class="hljs-number">1</span>) ans=(ans+a)%p;<br>        a=a*<span class="hljs-number">2</span>%p;<br>        b&gt;&gt;=<span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ll a,b,p;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;p;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;multi_big(a,b,p)&lt;&lt;<span class="hljs-built_in">endl</span>;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="递推与递归⋙"><a href="#递推与递归⋙" class="headerlink" title="递推与递归⋙"></a>递推与递归⋙</h1><h2 id="※91-最短Hamilton路径（位运算，状压DP）"><a href="#※91-最短Hamilton路径（位运算，状压DP）" class="headerlink" title="※91.最短Hamilton路径（位运算，状压DP）"></a>※91.最短Hamilton路径（位运算，状压DP）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/93/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/93/</a></p>
-<pre><code class="lang-c++">//Chillstep
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=10+7;
-const double pi=cos(-1);
-
-int dp[(1&lt;&lt;20)+2][20];//第一维是当前状态，第二维是达到当前状态时走到了哪一个点。
-int mp[20+3][20+3];
-int hamilton(int n)
-{
-    memset(dp,0x3f,sizeof dp);
-    dp[1][0]=0;
-    for(int i=1;i&lt;(1&lt;&lt;n);i++)//枚举每一种状态
-    {
-        for(int j=0;j&lt;n;j++)//选择该种状态下的一个位置
-        {
-            if((i&gt;&gt;j)&amp;1)
-            {
-                for(int k=0;k&lt;n;k++)
-                {
-                    if((i^(1&lt;&lt;j))&gt;&gt;k&amp;1)
-                    {
-                        dp[i][j]=min(dp[i][j],dp[i^(1&lt;&lt;j)][k]+mp[k][j]);
-                    }
-                }
-            }
-        }
-    }
-    return dp[(1&lt;&lt;n)-1][n-1];
-}
-
-
-
-int main()
-{
-    int n;
-    cin&gt;&gt;n;
-    for(int i=0;i&lt;n;i++)
-        for(int j=0;j&lt;n;j++)
-            cin&gt;&gt;mp[i][j];
-    cout&lt;&lt;hamilton(n)&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">10</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-keyword">int</span> dp[(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">20</span>)+<span class="hljs-number">2</span>][<span class="hljs-number">20</span>];<span class="hljs-comment">//第一维是当前状态，第二维是达到当前状态时走到了哪一个点。</span><br><span class="hljs-keyword">int</span> mp[<span class="hljs-number">20</span>+<span class="hljs-number">3</span>][<span class="hljs-number">20</span>+<span class="hljs-number">3</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hamilton</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dp,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dp);<br>    dp[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;(<span class="hljs-number">1</span>&lt;&lt;n);i++)<span class="hljs-comment">//枚举每一种状态</span><br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++)<span class="hljs-comment">//选择该种状态下的一个位置</span><br>        &#123;<br>            <span class="hljs-keyword">if</span>((i&gt;&gt;j)&amp;<span class="hljs-number">1</span>)<br>            &#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k=<span class="hljs-number">0</span>;k&lt;n;k++)<br>                &#123;<br>                    <span class="hljs-keyword">if</span>((i^(<span class="hljs-number">1</span>&lt;&lt;j))&gt;&gt;k&amp;<span class="hljs-number">1</span>)<br>                    &#123;<br>                        dp[i][j]=min(dp[i][j],dp[i^(<span class="hljs-number">1</span>&lt;&lt;j)][k]+mp[k][j]);<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> dp[(<span class="hljs-number">1</span>&lt;&lt;n)<span class="hljs-number">-1</span>][n<span class="hljs-number">-1</span>];<br>&#125;<br><br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++)<br>            <span class="hljs-built_in">cin</span>&gt;&gt;mp[i][j];<br>    <span class="hljs-built_in">cout</span>&lt;&lt;hamilton(n)&lt;&lt;<span class="hljs-built_in">endl</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="92-递归实现指数型枚举（二进制枚举）"><a href="#92-递归实现指数型枚举（二进制枚举）" class="headerlink" title="92. 递归实现指数型枚举（二进制枚举）"></a>92. 递归实现指数型枚举（二进制枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/94/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/94/</a></p>
-<pre><code class="lang-c++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-int main()
-{
-    int n;
-    scanf(&quot;%d&quot;,&amp;n);
-    for(int i=0; i&lt;=(1&lt;&lt;n)-1; i++)
-    {
-        for(int j=n; j&gt;=1; j--)
-        {
-            if((i&gt;&gt;j-1)&amp;1)
-                printf(&quot;%d &quot;,n-j+1);
-        }
-        printf(&quot;\n&quot;);
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;n);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;=(<span class="hljs-number">1</span>&lt;&lt;n)<span class="hljs-number">-1</span>; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=n; j&gt;=<span class="hljs-number">1</span>; j--)<br>        &#123;<br>            <span class="hljs-keyword">if</span>((i&gt;&gt;j<span class="hljs-number">-1</span>)&amp;<span class="hljs-number">1</span>)<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>,n-j+<span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="93-递归实现组合型枚举（递归枚举）"><a href="#93-递归实现组合型枚举（递归枚举）" class="headerlink" title="93. 递归实现组合型枚举（递归枚举）"></a>93. 递归实现组合型枚举（递归枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/95/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/95/</a></p>
-<pre><code class="lang-c++">//Chillstep
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=10+7;
-const double pi=cos(-1);
-
-vector&lt;int&gt; chosen;
-int n,m;
-void calc(int x)
-{
-    if(chosen.size()==m)
-    {
-        for(int i=0;i&lt;chosen.size();i++)
-        {
-            printf(&quot;%d &quot;,chosen[i]);
-        }
-        printf(&quot;\n&quot;);
-        return;
-    }
-    if(x&gt;n) return;
-    chosen.push_back(x);
-    calc(x+1);
-    chosen.pop_back();
-    calc(x+1);
-}
-int main()
-{
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-    calc(1);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">10</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; chosen;<br><span class="hljs-keyword">int</span> n,m;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">calc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(chosen.size()==m)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;chosen.size();i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>,chosen[i]);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(x&gt;n) <span class="hljs-keyword">return</span>;<br>    chosen.push_back(x);<br>    calc(x+<span class="hljs-number">1</span>);<br>    chosen.pop_back();<br>    calc(x+<span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;m);<br>    calc(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="※94-递归实现排列型枚举（递归排列枚举）"><a href="#※94-递归实现排列型枚举（递归排列枚举）" class="headerlink" title="※94. 递归实现排列型枚举（递归排列枚举）"></a>※94. 递归实现排列型枚举（递归排列枚举）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/96/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/96/</a></p>
-<pre><code class="lang-c++">//Chillstep
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=10+7;
-const double pi=cos(-1);
-
-
-int order[20];
-bool chosen[20];
-int n;
-void calc(int k)
-{
-    if(k==n+1)
-    {
-        for(int i=1; i&lt;=n; i++)
-        {
-            printf(&quot;%d &quot;,order[i]);
-        }
-        printf(&quot;\n&quot;);
-        return;
-    }
-    for(int i=1; i&lt;=n; i++)
-    {
-        if(chosen[i])
-            continue;
-        order[k]=i;
-        chosen[i]=true;
-        calc(k+1);
-        chosen[i]=false;
-        order[k]=0;
-    }
-}
-int main()
-{
-    scanf(&quot;%d&quot;,&amp;n);
-    calc(1);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">10</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><br><span class="hljs-keyword">int</span> order[<span class="hljs-number">20</span>];<br><span class="hljs-keyword">bool</span> chosen[<span class="hljs-number">20</span>];<br><span class="hljs-keyword">int</span> n;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">calc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(k==n+<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>,order[i]);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(chosen[i])<br>            <span class="hljs-keyword">continue</span>;<br>        order[k]=i;<br>        chosen[i]=<span class="hljs-literal">true</span>;<br>        calc(k+<span class="hljs-number">1</span>);<br>        chosen[i]=<span class="hljs-literal">false</span>;<br>        order[k]=<span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;n);<br>    calc(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="95-费解的开关（思维-递推-二进制）"><a href="#95-费解的开关（思维-递推-二进制）" class="headerlink" title="95. 费解的开关（思维+递推+二进制）"></a>95. 费解的开关（思维+递推+二进制）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/description/97/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/description/97/</a></p>
 <p>递推，枚举第一层，下面只要是0就改变。</p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=500+7;
-const double pi=cos(-1);
-
-char mp[8][8];
-int m[8][8];
-int T;
-void change(int x,int y)
-{
-    if(x+1&lt;=5&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x+1][y]=m[x+1][y]^1;
-    if(x-1&gt;=1&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x-1][y]=m[x-1][y]^1;
-    if(y-1&gt;=1&amp;&amp;x&gt;=1&amp;&amp;x&lt;=5) m[x][y-1]=m[x][y-1]^1;
-    if(y+1&lt;=5&amp;&amp;x&gt;=1&amp;&amp;x&lt;=5) m[x][y+1]=m[x][y+1]^1;
-    if(x&gt;=1&amp;&amp;x&lt;=5&amp;&amp;y&gt;=1&amp;&amp;y&lt;=5) m[x][y]=m[x][y]^1;
-}
-bool check()
-{
-    for(int i=1;i&lt;=5;i++)
-        for(int j=1;j&lt;=5;j++)
-            if(m[i][j]!=1) return false;
-    return true;
-}
-int main()
-{
-    scanf(&quot;%d&quot;,&amp;T);
-    while(T--)
-    {
-        for(int i=1;i&lt;=5;i++) scanf(&quot;%s&quot;,mp[i]+1);
-        int ans=INF;
-        for(int i=0;i&lt;(1&lt;&lt;5);i++)
-        {
-            int step=0;
-            for(int j=1;j&lt;=5;j++)
-                for(int k=1;k&lt;=5;k++)
-                    m[j][k]=mp[j][k]-&#39;0&#39;;
-            for(int j=1;j&lt;=5;j++)
-                if(((i&gt;&gt;(j-1))&amp;1)==0) {change(1,j);step++;}
-            for(int j=2;j&lt;=5;j++)
-                for(int k=1;k&lt;=5;k++)
-                    if(!m[j-1][k]) {change(j,k);step++;}
-            if(check()==true&amp;&amp;step&lt;=6) ans=min(ans,step);
-        }
-        if(ans==INF) printf(&quot;-1\n&quot;);
-        else printf(&quot;%d\n&quot;,ans);
-
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">500</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-keyword">char</span> mp[<span class="hljs-number">8</span>][<span class="hljs-number">8</span>];<br><span class="hljs-keyword">int</span> m[<span class="hljs-number">8</span>][<span class="hljs-number">8</span>];<br><span class="hljs-keyword">int</span> T;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">change</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(x+<span class="hljs-number">1</span>&lt;=<span class="hljs-number">5</span>&amp;&amp;y&gt;=<span class="hljs-number">1</span>&amp;&amp;y&lt;=<span class="hljs-number">5</span>) m[x+<span class="hljs-number">1</span>][y]=m[x+<span class="hljs-number">1</span>][y]^<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(x<span class="hljs-number">-1</span>&gt;=<span class="hljs-number">1</span>&amp;&amp;y&gt;=<span class="hljs-number">1</span>&amp;&amp;y&lt;=<span class="hljs-number">5</span>) m[x<span class="hljs-number">-1</span>][y]=m[x<span class="hljs-number">-1</span>][y]^<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(y<span class="hljs-number">-1</span>&gt;=<span class="hljs-number">1</span>&amp;&amp;x&gt;=<span class="hljs-number">1</span>&amp;&amp;x&lt;=<span class="hljs-number">5</span>) m[x][y<span class="hljs-number">-1</span>]=m[x][y<span class="hljs-number">-1</span>]^<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(y+<span class="hljs-number">1</span>&lt;=<span class="hljs-number">5</span>&amp;&amp;x&gt;=<span class="hljs-number">1</span>&amp;&amp;x&lt;=<span class="hljs-number">5</span>) m[x][y+<span class="hljs-number">1</span>]=m[x][y+<span class="hljs-number">1</span>]^<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(x&gt;=<span class="hljs-number">1</span>&amp;&amp;x&lt;=<span class="hljs-number">5</span>&amp;&amp;y&gt;=<span class="hljs-number">1</span>&amp;&amp;y&lt;=<span class="hljs-number">5</span>) m[x][y]=m[x][y]^<span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">5</span>;i++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=<span class="hljs-number">5</span>;j++)<br>            <span class="hljs-keyword">if</span>(m[i][j]!=<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;T);<br>    <span class="hljs-keyword">while</span>(T--)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">5</span>;i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%s"</span>,mp[i]+<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">int</span> ans=INF;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">5</span>);i++)<br>        &#123;<br>            <span class="hljs-keyword">int</span> step=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=<span class="hljs-number">5</span>;j++)<br>                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k=<span class="hljs-number">1</span>;k&lt;=<span class="hljs-number">5</span>;k++)<br>                    m[j][k]=mp[j][k]-<span class="hljs-string">'0'</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=<span class="hljs-number">5</span>;j++)<br>                <span class="hljs-keyword">if</span>(((i&gt;&gt;(j<span class="hljs-number">-1</span>))&amp;<span class="hljs-number">1</span>)==<span class="hljs-number">0</span>) &#123;change(<span class="hljs-number">1</span>,j);step++;&#125;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">2</span>;j&lt;=<span class="hljs-number">5</span>;j++)<br>                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k=<span class="hljs-number">1</span>;k&lt;=<span class="hljs-number">5</span>;k++)<br>                    <span class="hljs-keyword">if</span>(!m[j<span class="hljs-number">-1</span>][k]) &#123;change(j,k);step++;&#125;<br>            <span class="hljs-keyword">if</span>(check()==<span class="hljs-literal">true</span>&amp;&amp;step&lt;=<span class="hljs-number">6</span>) ans=min(ans,step);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(ans==INF) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"-1\n"</span>);<br>        <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,ans);<br><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="96-奇怪的汉诺塔（DP-递推）"><a href="#96-奇怪的汉诺塔（DP-递推）" class="headerlink" title="96. 奇怪的汉诺塔（DP+递推）"></a>96. 奇怪的汉诺塔（DP+递推）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/98/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/98/</a></p>
 <p>这里的汉诺塔有四个桩子，但我们可以从三个桩子入手。</p>
 <p>三个桩子递推很容易推出 式子$f[i]=2*f[i-1]+1$ 其中i为圆盘数</p>
@@ -495,263 +248,20 @@ int main()
 <p>加入我们先转移$j$个 那么就还剩$n-i$个需要转移，这$n-i$个转移的时候有一个桩已经被开始的j个占据了，也就是说还剩下三个桩子，这时候用上面的$f[n-i]$就是三个桩子的情况下转移到另一处的耗费。</p>
 <p>最后我们需要把转移的两个桩子合并在一起，需要$dp[j]$</p>
 <p>转移方程为$dp[i]=min(dp[i],dp[j]+dp[j]+f[i-j])$</p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=500+7;
-const double pi=cos(-1);
-
-int f[25],dp[25];
-int main()
-{
-    f[1]=1;
-    for(int i=2; i&lt;=12; i++)
-        f[i]=2*f[i-1]+1;
-    memset(dp,0x3f,sizeof dp);
-    dp[0]=0;
-    for(int i=1; i&lt;=12; i++)
-        for(int j=0; j&lt;i; j++)
-            dp[i]=min(dp[i],dp[j]+dp[j]+f[i-j]);
-    for(int i=1;i&lt;=12;i++) printf(&quot;%d\n&quot;,dp[i]);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">500</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-keyword">int</span> f[<span class="hljs-number">25</span>],dp[<span class="hljs-number">25</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    f[<span class="hljs-number">1</span>]=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">2</span>; i&lt;=<span class="hljs-number">12</span>; i++)<br>        f[i]=<span class="hljs-number">2</span>*f[i<span class="hljs-number">-1</span>]+<span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">memset</span>(dp,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dp);<br>    dp[<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=<span class="hljs-number">12</span>; i++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>; j&lt;i; j++)<br>            dp[i]=min(dp[i],dp[j]+dp[j]+f[i-j]);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">12</span>;i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,dp[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="97-约数之和（矩阵快速幂-分治-逆元-特判）"><a href="#97-约数之和（矩阵快速幂-分治-逆元-特判）" class="headerlink" title="97. 约数之和（矩阵快速幂+分治/逆元+特判）"></a>97. 约数之和（矩阵快速幂+分治/逆元+特判）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/99/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/99/</a></p>
 <p>算贡献就好,可以分治也可以逆元来做，但是注意一点，由于模数为9901，所以费马小定理不能直接用，只有当$gcd(p,a)=1$时才可以用（<del>把我恶心坏了，看了一个小时找不出来错误</del>），所以要特判解决这个问题,当这个式子$gcd(p,a)=1$成立时单独拿出来加到ans中去，像下面这样。</p>
-<pre><code class="lang-c++">    if((p[i]-1)%MOD==0)
-    {
-        for(int j=1;j&lt;=cnt[i];j++)
-        {
-            ans=(ans+ksm(p[i],j,MOD))%MOD;
-        }
-    }
-</code></pre>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=5e7+7;
-const int MOD=9901;
-const double pi=cos(-1);
-//复杂度log2(x)
-ll ksm(int n,int x,int p)//n^x%p
-{
-    long long int ans=1;
-    ans=ans%p;//如果模数p=1，没这步会直接输出ans=1，而正确答案应该是0
-    while(x)
-    {
-        if(x&amp;1) ans=ans*1ll*n%p;//1ll防止溢出
-        n=n*1ll*n%p;
-        x&gt;&gt;=1;
-    }
-    return ans;
-}
-int gcd(int a,int b)
-{
-    return b==0?a:gcd(b,a%b);
-}
-int p[MAXN],cnt[MAXN];
-int main()
-{
-    int a,b;
-    cin&gt;&gt;a&gt;&gt;b;
-    int num=0;
-    for(int i=2;i&lt;=a;i++)
-    {
-        while(a%i==0)
-        {
-            if(p[num]!=i) num++;
-            p[num]=i;
-            cnt[num]++;
-            a=a/i;
-        }
-    }
-    for(int i=1;i&lt;=num;i++) cnt[i]=cnt[i]*b;
-    ll ans=1;
-    for(int i=1;i&lt;=num;i++)
-    {
-        if((p[i]-1)%MOD==0)
-        {
-            for(int j=1;j&lt;=cnt[i];j++)
-            {
-                ans=(ans+ksm(p[i],j,MOD))%MOD;
-            }
-        }
-        else
-        {
-            ll c1=ksm(p[i],cnt[i]+1,MOD);
-            c1=c1+MOD;
-            ans=ans*(c1-1)*ksm(p[i]-1,MOD-2,MOD)%MOD;
-        }
-    }
-    if(a==0) printf(&quot;0&quot;);
-    else if(b==0) printf(&quot;1&quot;);
-    else printf(&quot;%lld&quot;,ans);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">if</span>((p[i]<span class="hljs-number">-1</span>)%MOD==<span class="hljs-number">0</span>)<br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=cnt[i];j++)<br>    &#123;<br>        ans=(ans+ksm(p[i],j,MOD))%MOD;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">5e7</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD=<span class="hljs-number">9901</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><span class="hljs-comment">//复杂度log2(x)</span><br><span class="hljs-function">ll <span class="hljs-title">ksm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> p)</span><span class="hljs-comment">//n^x%p</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> ans=<span class="hljs-number">1</span>;<br>    ans=ans%p;<span class="hljs-comment">//如果模数p=1，没这步会直接输出ans=1，而正确答案应该是0</span><br>    <span class="hljs-keyword">while</span>(x)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(x&amp;<span class="hljs-number">1</span>) ans=ans*<span class="hljs-number">1l</span>l*n%p;<span class="hljs-comment">//1ll防止溢出</span><br>        n=n*<span class="hljs-number">1l</span>l*n%p;<br>        x&gt;&gt;=<span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> b==<span class="hljs-number">0</span>?a:gcd(b,a%b);<br>&#125;<br><span class="hljs-keyword">int</span> p[MAXN],cnt[MAXN];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> a,b;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b;<br>    <span class="hljs-keyword">int</span> num=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">2</span>;i&lt;=a;i++)<br>    &#123;<br>        <span class="hljs-keyword">while</span>(a%i==<span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(p[num]!=i) num++;<br>            p[num]=i;<br>            cnt[num]++;<br>            a=a/i;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=num;i++) cnt[i]=cnt[i]*b;<br>    ll ans=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=num;i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>((p[i]<span class="hljs-number">-1</span>)%MOD==<span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=cnt[i];j++)<br>            &#123;<br>                ans=(ans+ksm(p[i],j,MOD))%MOD;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            ll c1=ksm(p[i],cnt[i]+<span class="hljs-number">1</span>,MOD);<br>            c1=c1+MOD;<br>            ans=ans*(c1<span class="hljs-number">-1</span>)*ksm(p[i]<span class="hljs-number">-1</span>,MOD<span class="hljs-number">-2</span>,MOD)%MOD;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(a==<span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"0"</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(b==<span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"1"</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld"</span>,ans);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="98-分形之城（线性代数坐标变换-规律-递归-分形图）"><a href="#98-分形之城（线性代数坐标变换-规律-递归-分形图）" class="headerlink" title="98. 分形之城（线性代数坐标变换+规律+递归+分形图）"></a>98. 分形之城（线性代数坐标变换+规律+递归+分形图）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/100/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/100/</a></p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=5e7+7;
-const int MOD=9901;
-const double pi=cos(-1);
-
-pll cal(ll n,ll m)
-{
-    if(n==0) return {0,0};
-    ll len=1ll&lt;&lt;n-1,cnt=1ll&lt;&lt;2*n-2;
-    auto pos=cal(n-1,m%cnt);
-    auto x=pos.first,y=pos.second;
-    auto z=m/cnt;
-    if(z==0) return {y,x};
-    if(z==1) return {x,y+len};
-    if(z==2) return {x+len,y+len};
-    else return {2*len-1-y,len-1-x};
-}
-int main()
-{
-    int T;
-    cin&gt;&gt;T;
-    while(T--)
-    {
-        ll n,a,b;
-        cin&gt;&gt;n&gt;&gt;a&gt;&gt;b;
-        auto ac=cal(n,a-1);
-        auto bc=cal(n,b-1);
-        double x=ac.first-bc.first;
-        double y=ac.second-bc.second;
-        printf(&quot;%.0f\n&quot;,sqrt(x*x+y*y)*10);
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pll pair<span class="hljs-meta-string">&lt;ll,ll&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">5e7</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD=<span class="hljs-number">9901</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-function">pll <span class="hljs-title">cal</span><span class="hljs-params">(ll n,ll m)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(n==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;;<br>    ll len=<span class="hljs-number">1l</span>l&lt;&lt;n<span class="hljs-number">-1</span>,cnt=<span class="hljs-number">1l</span>l&lt;&lt;<span class="hljs-number">2</span>*n<span class="hljs-number">-2</span>;<br>    <span class="hljs-keyword">auto</span> pos=cal(n<span class="hljs-number">-1</span>,m%cnt);<br>    <span class="hljs-keyword">auto</span> x=pos.first,y=pos.second;<br>    <span class="hljs-keyword">auto</span> z=m/cnt;<br>    <span class="hljs-keyword">if</span>(z==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;y,x&#125;;<br>    <span class="hljs-keyword">if</span>(z==<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> &#123;x,y+len&#125;;<br>    <span class="hljs-keyword">if</span>(z==<span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> &#123;x+len,y+len&#125;;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> &#123;<span class="hljs-number">2</span>*len<span class="hljs-number">-1</span>-y,len<span class="hljs-number">-1</span>-x&#125;;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> T;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;T;<br>    <span class="hljs-keyword">while</span>(T--)<br>    &#123;<br>        ll n,a,b;<br>        <span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;a&gt;&gt;b;<br>        <span class="hljs-keyword">auto</span> ac=cal(n,a<span class="hljs-number">-1</span>);<br>        <span class="hljs-keyword">auto</span> bc=cal(n,b<span class="hljs-number">-1</span>);<br>        <span class="hljs-keyword">double</span> x=ac.first-bc.first;<br>        <span class="hljs-keyword">double</span> y=ac.second-bc.second;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%.0f\n"</span>,<span class="hljs-built_in">sqrt</span>(x*x+y*y)*<span class="hljs-number">10</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="前缀和⋙"><a href="#前缀和⋙" class="headerlink" title="前缀和⋙"></a>前缀和⋙</h1><h2 id="99-激光炸弹（二位前缀和-思维）"><a href="#99-激光炸弹（二位前缀和-思维）" class="headerlink" title="99.激光炸弹（二位前缀和+思维）"></a>99.激光炸弹（二位前缀和+思维）</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/101/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/101/</a></p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=5000+4;
-const int MOD=9901;
-const double pi=cos(-1);
-
-int n,r;
-int max_r,max_c;
-int s[MAXN][MAXN];
-int main()
-{
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;r);
-    max_r=max_c=r;//很重要！！
-    for(int i=1;i&lt;=n;i++)
-    {
-        int x,y,w;
-        scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;w);
-        x++;
-        y++;
-        s[x][y]=w;
-        max_r=max(max_r,x);
-        max_c=max(max_c,y);
-    }
-    for(int i=1;i&lt;=max_r;i++)
-    {
-        for(int j=1;j&lt;=max_c;j++)
-        {
-            s[i][j]=s[i-1][j]+s[i][j-1]+s[i][j]-s[i-1][j-1];
-        }
-    }
-    int ans=0;
-    for(int i=r;i&lt;=max_r;i++)
-    {
-        for(int j=r;j&lt;=max_c;j++)
-        {
-            ans=max(ans,s[i][j]-s[i-r][j]-s[i][j-r]+s[i-r][j-r]);
-        }
-    }
-    printf(&quot;%d\n&quot;,ans);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pll pair<span class="hljs-meta-string">&lt;ll,ll&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">5000</span>+<span class="hljs-number">4</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD=<span class="hljs-number">9901</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br><span class="hljs-keyword">int</span> n,r;<br><span class="hljs-keyword">int</span> max_r,max_c;<br><span class="hljs-keyword">int</span> s[MAXN][MAXN];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;r);<br>    max_r=max_c=r;<span class="hljs-comment">//很重要！！</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        <span class="hljs-keyword">int</span> x,y,w;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d%d"</span>,&amp;x,&amp;y,&amp;w);<br>        x++;<br>        y++;<br>        s[x][y]=w;<br>        max_r=max(max_r,x);<br>        max_c=max(max_c,y);<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=max_r;i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=max_c;j++)<br>        &#123;<br>            s[i][j]=s[i<span class="hljs-number">-1</span>][j]+s[i][j<span class="hljs-number">-1</span>]+s[i][j]-s[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=r;i&lt;=max_r;i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=r;j&lt;=max_c;j++)<br>        &#123;<br>            ans=max(ans,s[i][j]-s[i-r][j]-s[i][j-r]+s[i-r][j-r]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,ans);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="差分⋙"><a href="#差分⋙" class="headerlink" title="差分⋙"></a>差分⋙</h1><h2 id="100-增减序列"><a href="#100-增减序列" class="headerlink" title="100.增减序列"></a>100.增减序列</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/102/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/102/</a></p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-#define pdd pair&lt;double,double&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=2e5+5;
-const int MOD=1e9+7;
-const double pi=cos(-1);
-
-ll p=0,q=0;
-int a[MAXN];
-int d[MAXN];
-int main()
-{
-    int n;
-    cin&gt;&gt;n;
-    for(int i=1;i&lt;=n;i++) scanf(&quot;%d&quot;,&amp;a[i]);
-    for(int i=2;i&lt;=n;i++)
-    {
-        d[i]=a[i]-a[i-1];
-        if(d[i]&gt;0) p+=d[i];
-        if(d[i]&lt;0) q+=(-d[i]);
-    }
-    printf(&quot;%lld\n%lld&quot;,min(p,q)+abs(p-q),abs(p-q)+1);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pll pair<span class="hljs-meta-string">&lt;ll,ll&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pdd pair<span class="hljs-meta-string">&lt;double,double&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">2e5</span>+<span class="hljs-number">5</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD=<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br>ll p=<span class="hljs-number">0</span>,q=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">int</span> a[MAXN];<br><span class="hljs-keyword">int</span> d[MAXN];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;a[i]);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">2</span>;i&lt;=n;i++)<br>    &#123;<br>        d[i]=a[i]-a[i<span class="hljs-number">-1</span>];<br>        <span class="hljs-keyword">if</span>(d[i]&gt;<span class="hljs-number">0</span>) p+=d[i];<br>        <span class="hljs-keyword">if</span>(d[i]&lt;<span class="hljs-number">0</span>) q+=(-d[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld\n%lld"</span>,min(p,q)+<span class="hljs-built_in">abs</span>(p-q),<span class="hljs-built_in">abs</span>(p-q)+<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="101-最高的牛"><a href="#101-最高的牛" class="headerlink" title="101. 最高的牛"></a>101. 最高的牛</h2><p>题目链接：<a href="https://www.acwing.com/problem/content/103/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/103/</a></p>
 <p>题目中保证了m组对中不会出现重复的，但如果不保证的话只需要把每一对存入$pair<int,int>$即可 然后在q[x]!=y来去重</p>
-<pre><code class="lang-c++">//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-#define pdd pair&lt;double,double&gt;
-typedef long long ll;
-const int INF=0x3f3f3f3f;
-const int MAXN=1e4+5;
-const int MOD=1e9+7;
-const double pi=cos(-1);
-
-pii a[MAXN];
-int c[MAXN],d[MAXN];
-map&lt;ll,ll&gt;q;
-int main()
-{
-    int n,p,h,m;
-    cin&gt;&gt;n&gt;&gt;p&gt;&gt;h&gt;&gt;m;
-    for(int i=1;i&lt;=m;i++)
-    {
-        int x,y;
-        cin&gt;&gt;x&gt;&gt;y;
-        if(x&gt;y) swap(x,y);
-        if(q[x]!=y)
-        {
-            q[x]=y;
-            d[x+1]--,d[y]++;
-        }
-    }
-    for(int i=1;i&lt;=n;i++) c[i]=c[i-1]+d[i];
-    for(int i=1;i&lt;=n;i++) printf(&quot;%d\n&quot;,c[i]+h);
-    return 0;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//Chillstep ^_^</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pii pair<span class="hljs-meta-string">&lt;int,int&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pll pair<span class="hljs-meta-string">&lt;ll,ll&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pdd pair<span class="hljs-meta-string">&lt;double,double&gt;</span></span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN=<span class="hljs-number">1e4</span>+<span class="hljs-number">5</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD=<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> pi=<span class="hljs-built_in">cos</span>(<span class="hljs-number">-1</span>);<br><br>pii a[MAXN];<br><span class="hljs-keyword">int</span> c[MAXN],d[MAXN];<br><span class="hljs-built_in">map</span>&lt;ll,ll&gt;q;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n,p,h,m;<br>    <span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;p&gt;&gt;h&gt;&gt;m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<br>    &#123;<br>        <span class="hljs-keyword">int</span> x,y;<br>        <span class="hljs-built_in">cin</span>&gt;&gt;x&gt;&gt;y;<br>        <span class="hljs-keyword">if</span>(x&gt;y) swap(x,y);<br>        <span class="hljs-keyword">if</span>(q[x]!=y)<br>        &#123;<br>            q[x]=y;<br>            d[x+<span class="hljs-number">1</span>]--,d[y]++;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++) c[i]=c[i<span class="hljs-number">-1</span>]+d[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>,c[i]+h);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h1 id="二分⋙"><a href="#二分⋙" class="headerlink" title="二分⋙"></a>二分⋙</h1>
             </div>
             <hr>

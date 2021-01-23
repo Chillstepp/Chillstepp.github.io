@@ -250,8 +250,8 @@
 <p>$(X∪x1)\subset (X∪x_2∪x_1)$</p>
 <p>故等价于(1)</p>
 <p><strong>推论：</strong></p>
-<pre><code> 设$f1(x),f2(x),⋯,fk(x)$都是有子模态性质的函数，$c1,c2,⋯,ck $是非负实数，则下面这个函数:
-</code></pre><p><a href="https://imgchr.com/i/BAeyvD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAeyvD.png" srcset="undefined" alt="BAeyvD.png"></a></p>
+<div class="hljs code-wrapper"><pre><code> 设$f1(x),f2(x),⋯,fk(x)$都是有子模态性质的函数，$c1,c2,⋯,ck $是非负实数，则下面这个函数:
+</code></pre></div><p><a href="https://imgchr.com/i/BAeyvD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAeyvD.png" srcset="/img/loading.gif" alt="BAeyvD.png"></a></p>
 <p>仍然是次模函数。即多个次模函数的非负线性组合仍然是次模函数。</p>
 <h2 id="次模函数与贪心方法"><a href="#次模函数与贪心方法" class="headerlink" title="次模函数与贪心方法"></a>次模函数与贪心方法</h2><p>​    次模函数的性质我们称之为子模态，这个子模态的性质主要的作用就是保证我们在贪心求解问题时所得到的近似解不会太差，提供了一个近似保证。即贪心的解$f(x)$的值不会小于$(1-\frac{1}{e})*OPT$,其中$OPT$为最优解。</p>
 <p>​    我们的贪心规则是，每一次将一个新的元素加入到所想要构建的目标集合$x$,迭代k步。我们用$X_i$来表示迭代$i$次之后的$x$集合,初始时$x=\varnothing$。故可以用以下式子表示贪心规则：</p>
@@ -271,9 +271,9 @@
 <p>$arg\max_u{f(S_{i-1}\cup{u})}$</p>
 <p>​    但是，如何证明这个贪心是有效的一个难题，因为这是一个随机过程，每个点的增益在每一个时刻都是一个不同的随机变量，函数表达式也不是一个解析式。</p>
 <p>​    我们现在先从简化问题出发，然后再去求解原问题。而简化问题就是我们之前提到的集合覆盖问题$f(S)$，这个问题其实是子模态的。在$t$时刻节点$v$引发$w$的概率为$p_{vw}$ ，这是一个01分布。事实上这个结果是0还是1与时刻t是无关的，所以我们可以预先生成好这个随机变量。对所有的边进行提前生成随机变量之后，我们就得到了一个图N.</p>
-<p><img src="http://spiritsaway.info/image/Submodual/NewGraph1.png" srcset="undefined" alt="新图1"></p>
-<p><img src="http://spiritsaway.info/image/Submodual/NewGraph2.png" srcset="undefined" alt="新图2"></p>
-<p><img src="http://spiritsaway.info/image/Submodual/NewGraph3.png" srcset="undefined" alt="新图3"></p>
+<p><img src="http://spiritsaway.info/image/Submodual/NewGraph1.png" srcset="/img/loading.gif" alt="新图1"></p>
+<p><img src="http://spiritsaway.info/image/Submodual/NewGraph2.png" srcset="/img/loading.gif" alt="新图2"></p>
+<p><img src="http://spiritsaway.info/image/Submodual/NewGraph3.png" srcset="/img/loading.gif" alt="新图3"></p>
 <p>而当$v$引发$w$时,$p_{vw}=1$，否则就等于0.在$N$中的影响最大等价于之前讨论的集合覆盖问题。设生成图$Ni$ 的概率为$pi$ ，设$f_i(X)$为在图$N_i$ 上寻找影响最大的解，则</p>
 <p>可以看出这是多个子模态函数的非负线性组合，因此$f(X)$是子模态的。又根据我们在之前证明贪心法在子模态函数上是可行的，所以贪心法对影响最大问题是可行的。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>1.怎么理解次模函数 submodular function？ - 彭鹏的回答 - 知乎<br><a href="https://www.zhihu.com/question/34720027/answer/79260358" target="_blank" rel="noopener">https://www.zhihu.com/question/34720027/answer/79260358</a></p>

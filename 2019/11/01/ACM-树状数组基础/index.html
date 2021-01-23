@@ -227,29 +227,18 @@
             <h1 style="display: none">ACM-树状数组基础</h1>
             
             <div class="markdown-body">
-              <h1 id="ACM-树状数组"><a href="#ACM-树状数组" class="headerlink" title="ACM- 树状数组"></a>ACM- 树状数组</h1><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://oi-wiki.org/ds/images/bit1.png" srcset="undefined" alt="img"></h2><p><strong>我们约定</strong>：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。</p>
+              <h1 id="ACM-树状数组"><a href="#ACM-树状数组" class="headerlink" title="ACM- 树状数组"></a>ACM- 树状数组</h1><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://oi-wiki.org/ds/images/bit1.png" srcset="/img/loading.gif" alt="img"></h2><p><strong>我们约定</strong>：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。</p>
 <p>同时，最下面一行的数字所构成的数组为数组$a$.</p>
 <p><strong>例如</strong>：C[2]管理的是 a[1],a[2].</p>
 <p>C[4]管理的是a[1],a[2],a[3],a[4].</p>
 <p>C[6]管理的是a[5],a[6].</p>
 <p>C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].</p>
-<h2 id="操作函数"><a href="#操作函数" class="headerlink" title="操作函数"></a>操作函数</h2><h3 id="1-lowbit"><a href="#1-lowbit" class="headerlink" title="1.lowbit()"></a>1.lowbit()</h3><pre><code class="lang-c++">int lowbit(int x) 
-{
-  //算出x二进制的从右往左出现第一个1以及这个1之后的那些0组成数的二进制对应的十进制的数
-  return x &amp; -x;
-}
-</code></pre>
+<h2 id="操作函数"><a href="#操作函数" class="headerlink" title="操作函数"></a>操作函数</h2><h3 id="1-lowbit"><a href="#1-lowbit" class="headerlink" title="1.lowbit()"></a>1.lowbit()</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">//算出x二进制的从右往左出现第一个1以及这个1之后的那些0组成数的二进制对应的十进制的数</span><br>  <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>意义：它可以求出数组c[x]管理几个数组a中的数。</p>
 <p>不难发现，每一个C[i]一定管理的数组a的下表的上限就是a[i]，那么往后找几个数呢，才是C[i]真正的管理范围呢？ </p>
 <p>此时lowbit()函数就派上了用场，我们知道一个数组C[i]所管理的右端点，而且通过lowbit（i）我们就可以知道C[i]管理了几个数，因此我们就可以知道这个数组C[i]</p>
 <p>还是举上图的例子，比如所管理的范围了。</p>
-<h3 id="2-add（x-k）单点修改a-x-a-x-k"><a href="#2-add（x-k）单点修改a-x-a-x-k" class="headerlink" title="2.add（x,k）单点修改a[x]=a[x]+k"></a>2.add（x,k）单点修改a[x]=a[x]+k</h3><pre><code class="lang-c++">void add(int x, int k) {
-  while (x &lt;= n) {  //不能越界
-    c[x] = c[x] + k;
-    x = x + lowbit(x);
-  }
-}
-</code></pre>
+<h3 id="2-add（x-k）单点修改a-x-a-x-k"><a href="#2-add（x-k）单点修改a-x-a-x-k" class="headerlink" title="2.add（x,k）单点修改a[x]=a[x]+k"></a>2.add（x,k）单点修改a[x]=a[x]+k</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> k)</span> </span>&#123;<br>  <span class="hljs-keyword">while</span> (x &lt;= n) &#123;  <span class="hljs-comment">//不能越界</span><br>    c[x] = c[x] + k;<br>    x = x + lowbit(x);<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>怎么理解这个函数呢？</p>
 <p>单点修改后我们就要维护数组C的值了，具体维护哪些数组C呢，又怎么找到这些数组C呢？</p>
 <p>比如 a[4]要加上一个数k，C[4]肯定管理着a[4]，C[4]之前的C[i] (i=1.2.3)肯定管理不到a[4]，那么我们只需要往后找。</p>
@@ -264,76 +253,8 @@
 <p>可是造出这样的一个数组有什么用呢，我们假如进行区间加的话若对每个数字都操作，这样的复杂度显然是很差的。</p>
 <p>我们考虑一下，当我们对数组a区间加上k的时候，所对应的数组b有什么变化呢？</p>
 <p>显而易见，数组b大部分还是没变得，只有区间开头和结尾后一个会变。我们举一个例子就显而易见了，比如我们对a[3-6]同时加上k, b[4-6]都没有变，而b[3]=a[3]-a[2]，b[7]=a[7]-a[6],所以这两个都变了，我们只需要维护两个点就行了。</p>
-<pre><code class="lang-c++">int t1[MAXN], t2[MAXN], n;
-//t1为维护得第一个数组 t2为维护的第二个数组
-inline int lowbit(int x) { return x &amp; (-x); }
-
-void add(int k, int v) {          //维护更新上述的两个数组t1,t2
-  int v1 = k * v;
-  while (k &lt;= n) {
-    t1[k] += v, t2[k] += v1;
-    k += lowbit(k);
-  }
-}
-
-int getsum(int *t, int k) {
-  int ret = 0;
-  while (k) {
-    ret += t[k];       //t[1]+t[2]...+t[k]
-    k -= lowbit(k);    //
-  }
-  return ret;
-}
-
-void add1(int l, int r, int v) {
-  add(l, v), add(r + 1, -v);       //将区间加差分为两个前缀加
-}
-
-long long getsum1(int l, int r) {
-  return (r + 1ll) * getsum(t1, r) - 1ll * l * getsum(t1, l - 1) -
-      (getsum(t2, r) - getsum(t2, l - 1));
-}
-</code></pre>
-<h3 id="4-树状数组的O-n-建树，O（logn）查询第K大-小"><a href="#4-树状数组的O-n-建树，O（logn）查询第K大-小" class="headerlink" title="4.树状数组的O(n)建树，O（logn）查询第K大/小"></a>4.树状数组的O(n)建树，O（logn）查询第K大/小</h3><pre><code class="lang-c++">// O(n)建树
-void init() {
-  for (int i = 1; i &lt;= n; ++i) {
-    t[i] += a[i];
-    int j = i + lowbit(i);
-    if (j &lt;= n) t[j] += t[i];
-  }
-}
-
-int kth(int k) {  //权值树状数组查询第k小
-  int cnt = 0, ret = 0;
-  for (int i = log2(n); ~i; --i) {
-    ret += 1 &lt;&lt; i;
-    if (ret &gt;= n || cnt + t[ret] &gt;= k)
-      ret -= 1 &lt;&lt; i;
-    else
-      cnt += t[ret];
-  }
-  return ret + 1;
-}
-
-//时间戳优化add() sum()
-int tag[MAXN], t[MAXN], Tag;
-void reset() { ++Tag; }
-void add(int k, int v) {
-  while (k &lt;= n) {
-    if (tag[k] != Tag) t[k] = 0;
-    t[k] += v, tag[k] = Tag;
-    k += lowbit(k);
-  }
-}
-int getsum(int k) {
-  int ret = 0;
-  while (k) {
-    if (tag[k] == Tag) ret += t[k];
-    k -= lowbit(k);
-  }
-  return ret;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> t1[MAXN], t2[MAXN], n;<br><span class="hljs-comment">//t1为维护得第一个数组 t2为维护的第二个数组</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>&#123; <span class="hljs-keyword">return</span> x &amp; (-x); &#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> v)</span> </span>&#123;          <span class="hljs-comment">//维护更新上述的两个数组t1,t2</span><br>  <span class="hljs-keyword">int</span> v1 = k * v;<br>  <span class="hljs-keyword">while</span> (k &lt;= n) &#123;<br>    t1[k] += v, t2[k] += v1;<br>    k += lowbit(k);<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getsum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *t, <span class="hljs-keyword">int</span> k)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">while</span> (k) &#123;<br>    ret += t[k];       <span class="hljs-comment">//t[1]+t[2]...+t[k]</span><br>    k -= lowbit(k);    <span class="hljs-comment">//</span><br>  &#125;<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add1</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> v)</span> </span>&#123;<br>  add(l, v), add(r + <span class="hljs-number">1</span>, -v);       <span class="hljs-comment">//将区间加差分为两个前缀加</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">getsum1</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>&#123;<br>  <span class="hljs-keyword">return</span> (r + <span class="hljs-number">1l</span>l) * getsum(t1, r) - <span class="hljs-number">1l</span>l * l * getsum(t1, l - <span class="hljs-number">1</span>) -<br>      (getsum(t2, r) - getsum(t2, l - <span class="hljs-number">1</span>));<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="4-树状数组的O-n-建树，O（logn）查询第K大-小"><a href="#4-树状数组的O-n-建树，O（logn）查询第K大-小" class="headerlink" title="4.树状数组的O(n)建树，O（logn）查询第K大/小"></a>4.树状数组的O(n)建树，O（logn）查询第K大/小</h3><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">// O(n)建树</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i) &#123;<br>    t[i] += a[i];<br>    <span class="hljs-keyword">int</span> j = i + lowbit(i);<br>    <span class="hljs-keyword">if</span> (j &lt;= n) t[j] += t[i];<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">kth</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span> </span>&#123;  <span class="hljs-comment">//权值树状数组查询第k小</span><br>  <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>, ret = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = log2(n); ~i; --i) &#123;<br>    ret += <span class="hljs-number">1</span> &lt;&lt; i;<br>    <span class="hljs-keyword">if</span> (ret &gt;= n || cnt + t[ret] &gt;= k)<br>      ret -= <span class="hljs-number">1</span> &lt;&lt; i;<br>    <span class="hljs-keyword">else</span><br>      cnt += t[ret];<br>  &#125;<br>  <span class="hljs-keyword">return</span> ret + <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">//时间戳优化add() sum()</span><br><span class="hljs-keyword">int</span> tag[MAXN], t[MAXN], Tag;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset</span><span class="hljs-params">()</span> </span>&#123; ++Tag; &#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> v)</span> </span>&#123;<br>  <span class="hljs-keyword">while</span> (k &lt;= n) &#123;<br>    <span class="hljs-keyword">if</span> (tag[k] != Tag) t[k] = <span class="hljs-number">0</span>;<br>    t[k] += v, tag[k] = Tag;<br>    k += lowbit(k);<br>  &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getsum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">while</span> (k) &#123;<br>    <span class="hljs-keyword">if</span> (tag[k] == Tag) ret += t[k];<br>    k -= lowbit(k);<br>  &#125;<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>

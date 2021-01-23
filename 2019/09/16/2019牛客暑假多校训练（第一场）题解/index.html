@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.5k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25
+      26
        分钟
     </span>
   
@@ -227,55 +227,7 @@
             <h1 style="display: none">2019牛客暑假多校训练（第一场）题解</h1>
             
             <div class="markdown-body">
-              <h1 id="2019牛客暑期多校训练营（第一场）"><a href="#2019牛客暑期多校训练营（第一场）" class="headerlink" title="2019牛客暑期多校训练营（第一场）"></a>2019牛客暑期多校训练营（第一场）</h1><h2 id="A-Equivalent-Prefixes"><a href="#A-Equivalent-Prefixes" class="headerlink" title="A-Equivalent Prefixes"></a>A-Equivalent Prefixes</h2><h2 id="（单调栈，思维，笛卡尔树）"><a href="#（单调栈，思维，笛卡尔树）" class="headerlink" title="（单调栈，思维，笛卡尔树）"></a>（单调栈，思维，笛卡尔树）</h2><pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int maxn=1e5+10;
-int ans1[maxn],ans2[maxn];
-int val1[maxn],val2[maxn];
-struct node
-{
-    int val,index;
-};
-
-int main()
-{
-    int n,i;
-    stack&lt;node&gt; s;
-    while(cin&gt;&gt;n)
-    {
-        for(i=1;i&lt;=n;i++)
-        cin&gt;&gt;val1[i];
-        for(i=1;i&lt;=n;i++)
-        cin&gt;&gt;val2[i];
-        val1[0]=val2[0]=-1;
-        for(i=n;i&gt;=0;i--)
-        {
-            while(!s.empty()&amp;&amp;s.top().val&gt;val1[i])
-            {
-                ans1[s.top().index]=i;
-                s.pop();
-            }
-            s.push(node{val1[i],i});
-        }
-        for(i=n;i&gt;=0;i--)
-        {
-            while(!s.empty()&amp;&amp;s.top().val&gt;val2[i])
-            {
-                ans2[s.top().index]=i;
-                s.pop();
-            }
-            s.push(node{val2[i],i});
-        }
-        for(i=1;i&lt;=n;i++)
-        {
-             if(ans1[i]!=ans2[i])
-             break;
-        }
-        cout&lt;&lt;i-1&lt;&lt;endl;  
-    }
-    return 0;
-}
-</code></pre>
+              <h1 id="2019牛客暑期多校训练营（第一场）"><a href="#2019牛客暑期多校训练营（第一场）" class="headerlink" title="2019牛客暑期多校训练营（第一场）"></a>2019牛客暑期多校训练营（第一场）</h1><h2 id="A-Equivalent-Prefixes"><a href="#A-Equivalent-Prefixes" class="headerlink" title="A-Equivalent Prefixes"></a>A-Equivalent Prefixes</h2><h2 id="（单调栈，思维，笛卡尔树）"><a href="#（单调栈，思维，笛卡尔树）" class="headerlink" title="（单调栈，思维，笛卡尔树）"></a>（单调栈，思维，笛卡尔树）</h2><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> maxn=<span class="hljs-number">1e5</span>+<span class="hljs-number">10</span>;<br><span class="hljs-keyword">int</span> ans1[maxn],ans2[maxn];<br><span class="hljs-keyword">int</span> val1[maxn],val2[maxn];<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> val,index;<br>&#125;;<br>  <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n,i;<br>    <span class="hljs-built_in">stack</span>&lt;node&gt; s;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">cin</span>&gt;&gt;n)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        <span class="hljs-built_in">cin</span>&gt;&gt;val1[i];<br>        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        <span class="hljs-built_in">cin</span>&gt;&gt;val2[i];<br>        val1[<span class="hljs-number">0</span>]=val2[<span class="hljs-number">0</span>]=<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(i=n;i&gt;=<span class="hljs-number">0</span>;i--)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!s.empty()&amp;&amp;s.top().val&gt;val1[i])<br>            &#123;<br>                ans1[s.top().index]=i;<br>                s.pop();<br>            &#125;<br>            s.push(node&#123;val1[i],i&#125;);<br>        &#125;<br>        <span class="hljs-keyword">for</span>(i=n;i&gt;=<span class="hljs-number">0</span>;i--)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!s.empty()&amp;&amp;s.top().val&gt;val2[i])<br>            &#123;<br>                ans2[s.top().index]=i;<br>                s.pop();<br>            &#125;<br>            s.push(node&#123;val2[i],i&#125;);<br>        &#125;<br>        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        &#123;<br>             <span class="hljs-keyword">if</span>(ans1[i]!=ans2[i])<br>             <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-built_in">cout</span>&lt;&lt;i<span class="hljs-number">-1</span>&lt;&lt;<span class="hljs-built_in">endl</span>;  <br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="B-Integration"><a href="#B-Integration" class="headerlink" title="B-Integration"></a>B-Integration</h2><h2 id="（数学积分推导，分式分解技巧，快速幂，逆元）"><a href="#（数学积分推导，分式分解技巧，快速幂，逆元）" class="headerlink" title="（数学积分推导，分式分解技巧，快速幂，逆元）"></a>（数学积分推导，分式分解技巧，快速幂，逆元）</h2><p>写这道题首先要知道 部分分式分解 这个技巧：</p>
 <p>假定$p_1$,$p_2$,………$p_n$均为实数，且无重根，例如，考虑如下的变换式求其逆变换：</p>
 <p>$F(s)=\frac{A(s)}{(s-p_1)(s-p_2)(s-p_3)}$</p>
@@ -287,208 +239,16 @@ int main()
 <p>$\sum_{i=1}^n\frac{C_i}{(a^2_i+x^2)}$  其中 $C_i=\frac{1}{\prod_{i!=j}^{}(a^2_j-a^2_i)}$</p>
 <p>因此原式：$\frac{1}{\pi}\int_1^\infty\frac{1}{\prod_{i=1}^{n}(a^2_i+x^2)}dx=\sum_1^n\frac{C_i}{2a_i}\pi$</p>
 <p>所以暴力就完事了。</p>
-<pre><code class="lang-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-
-#define int long long
-
-using namespace std;
-
-const int N = 1e3+5;
-const int Mod = 1e9+7;
-int a[N];
-
-inline int qpow(int a,int b){
-    a%=Mod;
-    int res = 1;
-    while(b){
-        if(b&amp;1) res = res*a%Mod;
-        a = a*a%Mod;
-        b&gt;&gt;=1;
-    }
-    return res;
-}
-
-inline int inv(int x){
-    return qpow(x,Mod-2);
-}
-
-int32_t main() {
-
-    ios_base::sync_with_stdio(false);cin.tie(0);
-
-    int n;
-    while(cin&gt;&gt;n){
-        for(int i=0;i&lt;n;i++){
-            cin&gt;&gt;a[i];
-        }
-        int ans = 0;
-        for(int i=0;i&lt;n;i++){
-            int p = 1;
-            for(int j=0;j&lt;n;j++){
-                if(i==j) continue;
-                p = p*((a[j]*a[j]-a[i]*a[i])%Mod)%Mod;
-            }
-            p = 2*a[i]*p%Mod;
-            p = inv(p);
-            ans = (ans+Mod+p)%Mod;
-        }
-
-        cout&lt;&lt;ans&lt;&lt;endl;
-
-    }
-
-    return 0;
-}
-</code></pre>
-<h2 id="C-Euclidean-Distance"><a href="#C-Euclidean-Distance" class="headerlink" title="C-  Euclidean Distance"></a>C-  Euclidean Distance</h2><p>照着唯神的思路写的，没用分数类，导致最后细节太多还是没处理好。<br>放一个正解，没用标解中的拉格朗日乘数法。<br><img src="https://img-blog.csdnimg.cn/20190719233158421.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTUzMTMz,size_16,color_FFFFFF,t_70" srcset="undefined" alt="在这里插入图片描述"></p>
-<h2 id="数学推导"><a href="#数学推导" class="headerlink" title="(数学推导)"></a>(数学推导)</h2><pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-const int maxn=10000;
-int m,n;
-struct frac
-{
-    ll p,q;
-    frac(){}
-    frac(ll _p,ll _q)
-    {
-        if(_p&lt;0&amp;&amp;_q&lt;0) _p=-_p,_q=-_q;
-        else
-            if(_q&lt;0) _q=-_q,_p=-_p;
-        //cout&lt;&lt;&quot;ce &quot;&lt;&lt;_p&lt;&lt; &quot; &quot;&lt;&lt;_q&lt;&lt;endl;
-        p=_p/__gcd(abs(_p),abs(_q));
-        q=_q/__gcd(abs(_p),abs(_q));
-        //cout&lt;&lt;&quot;ce &quot;&lt;&lt;p&lt;&lt; &quot; &quot;&lt;&lt;q&lt;&lt;endl;
-    }
-    bool operator &lt; (const frac &amp;x) const
-    {
-        return p*x.q&lt;q*x.p;
-    }
-    bool operator &lt;= (const frac &amp;x) const
-    {
-        return p*x.q&lt;=q*x.p;
-    }
-    bool operator == (const frac &amp;x) const
-    {
-        return p==x.p&amp;&amp;q==x.q;
-    }
-    frac operator + (const frac &amp;x)
-    {
-        return frac(p*x.q+q*x.p,q*x.q);
-    }
-    frac operator * (const frac &amp;x)
-    {
-        return frac(p*x.p,q*x.q);
-    }
-    frac operator / (const frac &amp;x)
-    {
-        return frac(p*x.q,q*x.p);
-    }
-    frac operator - (const frac &amp;x)
-    {
-        return frac(p*x.q-q*x.p,q*x.q);
-    }
-}a[maxn+5];
-int main()
-{
-
-    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;m)!=EOF)
-    {
-        for(int i=1;i&lt;=n;++i)
-        {
-            int x;
-            scanf(&quot;%d&quot;,&amp;x);
-            a[i]=frac(x,m);
-        }
-        sort(a+1,a+n+1);
-        //for(int i=1;i&lt;=n;++i) cout&lt;&lt;a[i].p&lt;&lt;&quot; &quot;&lt;&lt;a[i].q&lt;&lt;endl;
-        frac now(1,1);
-        frac left(1,1);
-        frac pos(0,0);
-        for(int i=n-1;i&gt;=1;--i)
-            if((a[i+1]-a[i])*now&lt;=left) left=left-(a[i+1]-a[i])*now,now.p+=1;
-            else
-            {
-                pos=a[i+1]-left/now;
-                break;
-            }
-       // cout&lt;&lt;&quot;left : &quot;&lt;&lt;left.p&lt;&lt;&quot; &quot;&lt;&lt;left.q&lt;&lt;endl;
-        //cout&lt;&lt;now.p&lt;&lt;endl;
-        if(pos.p==0&amp;&amp;pos.q==0)
-        {
-           // assert(now.p==n);
-           //a[1]-left/now
-            //cout&lt;&lt;&quot;ok&quot;&lt;&lt;endl;
-            pos=a[1]-left/now;
-            //cout&lt;&lt;pos.p&lt;&lt;&quot; &quot;&lt;&lt;pos.q&lt;&lt;endl;
-        }
-        frac ans(0,1);
-        for(int i=1;i+now.p&lt;=n;++i) ans=ans+a[i]*a[i];
-        ans=ans+now*pos*pos;
-        if(ans.p==0) printf(&quot;0\n&quot;);
-        else if(ans.q==1) printf(&quot;%lld\n&quot;,ans.p);
-        else printf(&quot;%lld/%lld\n&quot;,ans.p,ans.q);
-    }
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br> <br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span><br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br> <br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e3</span>+<span class="hljs-number">5</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> Mod = <span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">int</span> a[N];<br> <br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">qpow</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b)</span></span>&#123;<br>    a%=Mod;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span>(b)&#123;<br>        <span class="hljs-keyword">if</span>(b&amp;<span class="hljs-number">1</span>) res = res*a%Mod;<br>        a = a*a%Mod;<br>        b&gt;&gt;=<span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br> <br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">inv</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>&#123;<br>    <span class="hljs-keyword">return</span> qpow(x,Mod<span class="hljs-number">-2</span>);<br>&#125;<br> <br><span class="hljs-keyword">int32_t</span> main() &#123;<br> <br>    ios_base::sync_with_stdio(<span class="hljs-literal">false</span>);<span class="hljs-built_in">cin</span>.tie(<span class="hljs-number">0</span>);<br> <br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">cin</span>&gt;&gt;n)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            <span class="hljs-built_in">cin</span>&gt;&gt;a[i];<br>        &#125;<br>        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            <span class="hljs-keyword">int</span> p = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++)&#123;<br>                <span class="hljs-keyword">if</span>(i==j) <span class="hljs-keyword">continue</span>;<br>                p = p*((a[j]*a[j]-a[i]*a[i])%Mod)%Mod;<br>            &#125;<br>            p = <span class="hljs-number">2</span>*a[i]*p%Mod;<br>            p = inv(p);<br>            ans = (ans+Mod+p)%Mod;<br>        &#125;<br> <br>        <span class="hljs-built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="hljs-built_in">endl</span>;<br> <br>    &#125;<br> <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="C-Euclidean-Distance"><a href="#C-Euclidean-Distance" class="headerlink" title="C-  Euclidean Distance"></a>C-  Euclidean Distance</h2><p>照着唯神的思路写的，没用分数类，导致最后细节太多还是没处理好。<br>放一个正解，没用标解中的拉格朗日乘数法。<br><img src="https://img-blog.csdnimg.cn/20190719233158421.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTUzMTMz,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="数学推导"><a href="#数学推导" class="headerlink" title="(数学推导)"></a>(数学推导)</h2><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> maxn=<span class="hljs-number">10000</span>;<br><span class="hljs-keyword">int</span> m,n;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">frac</span></span><br><span class="hljs-class">&#123;</span><br>    ll p,q;<br>    frac()&#123;&#125;<br>    frac(ll _p,ll _q)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(_p&lt;<span class="hljs-number">0</span>&amp;&amp;_q&lt;<span class="hljs-number">0</span>) _p=-_p,_q=-_q;<br>        <span class="hljs-keyword">else</span><br>            <span class="hljs-keyword">if</span>(_q&lt;<span class="hljs-number">0</span>) _q=-_q,_p=-_p;<br>        <span class="hljs-comment">//cout&lt;&lt;"ce "&lt;&lt;_p&lt;&lt; " "&lt;&lt;_q&lt;&lt;endl;</span><br>        p=_p/__gcd(<span class="hljs-built_in">abs</span>(_p),<span class="hljs-built_in">abs</span>(_q));<br>        q=_q/__gcd(<span class="hljs-built_in">abs</span>(_p),<span class="hljs-built_in">abs</span>(_q));<br>        <span class="hljs-comment">//cout&lt;&lt;"ce "&lt;&lt;p&lt;&lt; " "&lt;&lt;q&lt;&lt;endl;</span><br>    &#125;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-keyword">const</span> frac &amp;x) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> p*x.q&lt;q*x.p;<br>    &#125;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt;= (<span class="hljs-keyword">const</span> frac &amp;x) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> p*x.q&lt;=q*x.p;<br>    &#125;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> == (<span class="hljs-keyword">const</span> frac &amp;x) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> p==x.p&amp;&amp;q==x.q;<br>    &#125;<br>    frac <span class="hljs-keyword">operator</span> + (<span class="hljs-keyword">const</span> frac &amp;x)<br>    &#123;<br>        <span class="hljs-keyword">return</span> frac(p*x.q+q*x.p,q*x.q);<br>    &#125;<br>    frac <span class="hljs-keyword">operator</span> * (<span class="hljs-keyword">const</span> frac &amp;x)<br>    &#123;<br>        <span class="hljs-keyword">return</span> frac(p*x.p,q*x.q);<br>    &#125;<br>    frac <span class="hljs-keyword">operator</span> / (<span class="hljs-keyword">const</span> frac &amp;x)<br>    &#123;<br>        <span class="hljs-keyword">return</span> frac(p*x.q,q*x.p);<br>    &#125;<br>    frac <span class="hljs-keyword">operator</span> - (<span class="hljs-keyword">const</span> frac &amp;x)<br>    &#123;<br>        <span class="hljs-keyword">return</span> frac(p*x.q-q*x.p,q*x.q);<br>    &#125;<br>&#125;a[maxn+<span class="hljs-number">5</span>];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br> <br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d%d"</span>,&amp;n,&amp;m)!=EOF)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>        &#123;<br>            <span class="hljs-keyword">int</span> x;<br>            <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>,&amp;x);<br>            a[i]=frac(x,m);<br>        &#125;<br>        sort(a+<span class="hljs-number">1</span>,a+n+<span class="hljs-number">1</span>);<br>        <span class="hljs-comment">//for(int i=1;i&lt;=n;++i) cout&lt;&lt;a[i].p&lt;&lt;" "&lt;&lt;a[i].q&lt;&lt;endl;</span><br>        <span class="hljs-function">frac <span class="hljs-title">now</span><span class="hljs-params">(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)</span></span>;<br>        <span class="hljs-function">frac <span class="hljs-title">left</span><span class="hljs-params">(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)</span></span>;<br>        <span class="hljs-function">frac <span class="hljs-title">pos</span><span class="hljs-params">(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">1</span>;--i)<br>            <span class="hljs-keyword">if</span>((a[i+<span class="hljs-number">1</span>]-a[i])*now&lt;=left) left=left-(a[i+<span class="hljs-number">1</span>]-a[i])*now,now.p+=<span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                pos=a[i+<span class="hljs-number">1</span>]-left/now;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>       <span class="hljs-comment">// cout&lt;&lt;"left : "&lt;&lt;left.p&lt;&lt;" "&lt;&lt;left.q&lt;&lt;endl;</span><br>        <span class="hljs-comment">//cout&lt;&lt;now.p&lt;&lt;endl;</span><br>        <span class="hljs-keyword">if</span>(pos.p==<span class="hljs-number">0</span>&amp;&amp;pos.q==<span class="hljs-number">0</span>)<br>        &#123;<br>           <span class="hljs-comment">// assert(now.p==n);</span><br>           <span class="hljs-comment">//a[1]-left/now</span><br>            <span class="hljs-comment">//cout&lt;&lt;"ok"&lt;&lt;endl;</span><br>            pos=a[<span class="hljs-number">1</span>]-left/now;<br>            <span class="hljs-comment">//cout&lt;&lt;pos.p&lt;&lt;" "&lt;&lt;pos.q&lt;&lt;endl;</span><br>        &#125;<br>        <span class="hljs-function">frac <span class="hljs-title">ans</span><span class="hljs-params">(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i+now.p&lt;=n;++i) ans=ans+a[i]*a[i];<br>        ans=ans+now*pos*pos;<br>        <span class="hljs-keyword">if</span>(ans.p==<span class="hljs-number">0</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"0\n"</span>);<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(ans.q==<span class="hljs-number">1</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld\n"</span>,ans.p);<br>        <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%lld/%lld\n"</span>,ans.p,ans.q);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="F-Random-Point-in-Triangle"><a href="#F-Random-Point-in-Triangle" class="headerlink" title="F-Random Point in Triangle"></a>F-Random Point in Triangle</h2><h2 id="数学推导，期望"><a href="#数学推导，期望" class="headerlink" title="(数学推导，期望)"></a>(数学推导，期望)</h2><p>选三个中点，连接中线，利用中心的性质即可得出，具体推倒不算特别简单，还需要再画辅助线，代换等数学推导。</p>
 <p>其实最简单的方法就是猜性质，我们画一个特例的等边三角形来算，这样节省了许多不必要的计算。</p>
-<pre><code class="lang-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-
-#define int long long
-using namespace std;
-
-
-int32_t main() {
-
-    ios_base::sync_with_stdio(false);cin.tie(0);
-
-    int x1,x2,x3,y1,y2,y3;
-    while(cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2&gt;&gt;x3&gt;&gt;y3){
-        int s = (x1*y2+x2*y3+x3*y1-x1*y3-x2*y1-x3*y2)*11;
-        cout&lt;&lt;abs(s)&lt;&lt;endl;
-    }
-
-    return 0;
-}
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br> <br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br> <br> <br><span class="hljs-keyword">int32_t</span> main() &#123;<br> <br>    ios_base::sync_with_stdio(<span class="hljs-literal">false</span>);<span class="hljs-built_in">cin</span>.tie(<span class="hljs-number">0</span>);<br> <br>    <span class="hljs-keyword">int</span> x1,x2,x3,y1,y2,y3;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">cin</span>&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2&gt;&gt;x3&gt;&gt;y3)&#123;<br>        <span class="hljs-keyword">int</span> s = (x1*y2+x2*y3+x3*y1-x1*y3-x2*y1-x3*y2)*<span class="hljs-number">11</span>;<br>        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-built_in">abs</span>(s)&lt;&lt;<span class="hljs-built_in">endl</span>;<br>    &#125;<br> <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="J-Fraction-Comparision"><a href="#J-Fraction-Comparision" class="headerlink" title="J-Fraction Comparision"></a>J-Fraction Comparision</h2><h2 id="签到题"><a href="#签到题" class="headerlink" title="(签到题)"></a>(签到题)</h2><p>C++:</p>
-<pre><code class="lang-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int main()
-{
-    long long int x,a,y,b;
-    while(scanf(&quot;%lld%lld%lld%lld&quot;,&amp;x,&amp;a,&amp;y,&amp;b)!=EOF){
-        long long int i,o;
-        i=x/a;
-        o=y/b;
-        if(i&gt;o)printf(&quot;&gt;\n&quot;);
-        else if(i&lt;o) printf(&quot;&lt;\n&quot;);
-        else {
-            x=x%a*b;y=y%b*a;
-            if(x&gt;y)printf(&quot;&gt;\n&quot;);
-            else if(x&lt;y) printf(&quot;&lt;\n&quot;);
-            else printf(&quot;=\n&quot;);
-        }
-    }
-    return 0;
- }
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> x,a,y,b;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%lld%lld%lld%lld"</span>,&amp;x,&amp;a,&amp;y,&amp;b)!=EOF)&#123;<br>        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> i,o;<br>        i=x/a;<br>        o=y/b;<br>        <span class="hljs-keyword">if</span>(i&gt;o)<span class="hljs-built_in">printf</span>(<span class="hljs-string">"&gt;\n"</span>);<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i&lt;o) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"&lt;\n"</span>);<br>        <span class="hljs-keyword">else</span> &#123;<br>            x=x%a*b;y=y%b*a;<br>            <span class="hljs-keyword">if</span>(x&gt;y)<span class="hljs-built_in">printf</span>(<span class="hljs-string">"&gt;\n"</span>);<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x&lt;y) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"&lt;\n"</span>);<br>            <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">"=\n"</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br> &#125;<br></code></pre></div></td></tr></table></figure>
 <p>python：</p>
-<pre><code class="lang-python">import sys
-
-for line in sys.stdin:
-    a,b,c,d = map(int,line.split(&#39; &#39;))
-    if a*d&gt;b*c:
-        print(&#39;&gt;&#39;)
-    elif a*d==b*c:
-        print(&#39;=&#39;)
-    elif a*d&lt;b*c:
-        print(&#39;&lt;&#39;)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br> <br><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> sys.stdin:<br>    a,b,c,d = map(int,line.split(<span class="hljs-string">' '</span>))<br>    <span class="hljs-keyword">if</span> a*d&gt;b*c:<br>        print(<span class="hljs-string">'&gt;'</span>)<br>    <span class="hljs-keyword">elif</span> a*d==b*c:<br>        print(<span class="hljs-string">'='</span>)<br>    <span class="hljs-keyword">elif</span> a*d&lt;b*c:<br>        print(<span class="hljs-string">'&lt;'</span>)<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
