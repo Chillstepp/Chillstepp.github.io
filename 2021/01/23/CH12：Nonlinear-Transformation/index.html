@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石CH11：Linear Models for Classification - Chillstep</title>
+  <title>机器学习基石CH12：Nonlinear Transformation - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习基石CH11：Linear Models for Classification">
+            <span class="h2" id="subtitle" title="机器学习基石CH12：Nonlinear Transformation">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-21 13:52" pubdate>
-        2021年1月21日 下午
+      <time datetime="2021-01-23 19:02" pubdate>
+        2021年1月23日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      898 字
+      931 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      10
        分钟
     </span>
   
@@ -236,98 +236,66 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习基石CH11：Linear Models for Classification</h1>
+            <h1 style="display: none">机器学习基石CH12：Nonlinear Transformation</h1>
             
             <div class="markdown-body">
-              <h1 id="CH11：Linear-Models-for-Classification"><a href="#CH11：Linear-Models-for-Classification" class="headerlink" title="CH11：Linear Models for Classification"></a>CH11：Linear Models for Classification</h1><h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>我们回顾一下线性模型：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114057461.png" srcset="/img/loading.gif" alt="image-20210121114057461"></p>
-<p>我们看一下三个error function在做classification时的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114816534.png" srcset="/img/loading.gif" alt="image-20210121114816534"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115146949.png" srcset="/img/loading.gif" alt="image-20210121115146949"></p>
-<p>$ys$代表着正确的分数。</p>
-<p>下面我们画个图来看一下3个error function的图像：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115356316.png" srcset="/img/loading.gif" alt="image-20210121115356316"></p>
-<p>这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角处。</p>
-<p>此时我们称之为 <strong>scaled cross entropy</strong>：（把取ln改为取log2）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115838748.png" srcset="/img/loading.gif" alt="image-20210121115838748"></p>
-<p>这么做会让我们的推导容易一些。</p>
-<p>我们来证明一下这个事情，用换底公式不难得到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120115701.png" srcset="/img/loading.gif" alt="image-20210121120115701"></p>
-<p>我们从VC Bound不难得知：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120309197.png" srcset="/img/loading.gif" alt="image-20210121120309197"></p>
-<p>我们话可以用<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120424784.png" srcset="/img/loading.gif" alt="image-20210121120424784"></p>
-<p>直接得出：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120434073.png" srcset="/img/loading.gif" alt="image-20210121120434073"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120507857.png" srcset="/img/loading.gif" alt="image-20210121120507857"></p>
-<p><strong>注：</strong>上述式子的提出可能会有疑问，之前不是讲得是</p>
-<p><img src="https://i.loli.net/2021/01/15/e4IbzRNaWT5p6xB.png" srcset="/img/loading.gif" alt="image.png"></p>
-<p>单一的让$E_{in}$小并不合理,应该找一个合适的不是吗？但我们不难发现这里面说的是$d_{VC}$,而我们这里要调的是$w$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122259920.png" srcset="/img/loading.gif" alt="image-20210121122259920"></p>
-<p>所以这里我们做完逻辑回归或者线性回归后，传回去的值要加一个sign()即可。</p>
-<p>我们最后总结一下这三个方法的优劣：</p>
+              <h1 id="CH12：Nonlinear-Transformation"><a href="#CH12：Nonlinear-Transformation" class="headerlink" title="CH12：Nonlinear Transformation"></a>CH12：Nonlinear Transformation</h1><h2 id="Quadratic-Hypotheses（二次假设）"><a href="#Quadratic-Hypotheses（二次假设）" class="headerlink" title="Quadratic Hypotheses（二次假设）"></a>Quadratic Hypotheses（二次假设）</h2><p>Linear Hypothesis </p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123141912732.png" srcset="/img/loading.gif" alt="image-20210123141912732"></p>
+<p>线性模型可以算一个分数，它最大的好处是$d_{VC}$ 可以被控制，当然线性模型在某些数据上每条线都做不到效果很好。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142255944.png" srcset="/img/loading.gif" alt="image-20210123142255944"></p>
+<p>我们这里用一个圈就可以很好地进行分类。</p>
+<p>那么我们可以设一个圆形的PLA,可是图形是千变万化的，我们不可能每个都设计出来一个PLA，那么我们可以系统化的设计一个。</p>
+<p>我们可以把式子化为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142856750.png" srcset="/img/loading.gif" alt="image-20210123142856750"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142957261.png" srcset="/img/loading.gif" alt="image-20210123142957261"></p>
+<p>我们可以把$x_1$ 对应到右边的$x_1^2$,那么就想到于把以<strong>x为基地的左图</strong>转为<strong>以z为基底的右图</strong>。</p>
+<p>惊喜的发现，我们又把问题转化到了线性的问题。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143708871.png" srcset="/img/loading.gif" alt="image-20210123143708871"></p>
+<p>不同的w赋值可以代表不同的model，这是一个很好的系统性的总结。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143852910.png" srcset="/img/loading.gif" alt="image-20210123143852910"></p>
+<p>那么什么样的x图像都可以用z表示吗？</p>
+<p>当然不是，如果我们细心会发新$h(x)=sign(w_0+w_1x_1^2+w_2x_2^2)$ 没用关于x的一次项，也就是说这个圆形是不可以平移的。</p>
+<p>因此只有一部分特殊可以利用这个系统：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144112039.png" srcset="/img/loading.gif" alt="image-20210123144112039"></p>
+<p>我们想要扩展到任意图形：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144148424.png" srcset="/img/loading.gif" alt="image-20210123144148424"></p>
+<p>那我们就加上一次项。</p>
+<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145808828.png" srcset="/img/loading.gif" alt="image-20210123145808828"></p>
+<p>因此我们想这么做一个过程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145849255.png" srcset="/img/loading.gif" alt="image-20210123145849255"></p>
+<p>最后一个反运算$\phi ^{-1}$虽然不一定成立，但一般不会影响我们的结果，因为我们早早建立了每个点在新的以z为基地的坐标系下的映射坐标是什么，我们既然已经算出来了下图：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123150011588.png" srcset="/img/loading.gif" alt="image-20210123150011588"></p>
+<p>我们可以直接去找他对应的点是什么，无需做反变换。图中这么表示这是为了理解。</p>
+<p>这个转化做完所有学的线性模型都可以用了。</p>
+<p>但是这么做有没有什么代价呢？</p>
+<h2 id="Price-of-Nonlinear-Transform"><a href="#Price-of-Nonlinear-Transform" class="headerlink" title="Price of Nonlinear Transform"></a>Price of Nonlinear Transform</h2><p>如果是一个Q次的多项式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165350481.png" srcset="/img/loading.gif" alt="image-20210123165350481"></p>
+<p>那么我们需要多少项来表示呢？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165631087.png" srcset="/img/loading.gif" alt="image-20210123165631087"></p>
+<p>这个量级大概是$O（Q^d）$,即w大概要这么多项，这个w大概就是$d_{VC}$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170213343.png" srcset="/img/loading.gif" alt="image-20210123170213343"></p>
 <ul>
-<li>用PLA时，要线性可分，若不是线性可分，那就要跑pocket</li>
-<li>用linear regression时，因为有闭式解，很容易算出w，但是会lose bound（毕竟衡量错误不准确，比一般的0/1 error measure的值全都大）。</li>
-<li>logistic regression同理，gradient descent很容易找到一个最优解，但是也会lose bound</li>
+<li>所以Q很大时，即用了一个高次的函数来划分类别，$d_{VC}$就会很大，这样导致了$E_{in}$和$E_{out}$差距就很大了，但是这种效果往往在训练的数据集上表现得很好。</li>
+<li>反之，如果我们选一个很简单的低次函数来划分，$d_{VC}$小一些，虽然$E_{in}$和$E_{out}$比较接近了,当然这会使得我们的训练效果很差。</li>
 </ul>
-<p>我们可以通过组合的方法找出一个比较好用的解，比如：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122818625.png" srcset="/img/loading.gif" alt="image-20210121122818625"></p>
-<p>还有一点，logistic regression用得一般比pocket用的多，这是因为logistic regression的最优化性质比较好用一些。</p>
-<h2 id="Stochastic-Grad-Descent（随机梯度下降）"><a href="#Stochastic-Grad-Descent（随机梯度下降）" class="headerlink" title="Stochastic Grad. Descent（随机梯度下降）"></a>Stochastic Grad. Descent（随机梯度下降）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121123736533.png" srcset="/img/loading.gif" alt="image-20210121123736533"></p>
-<p>这两种方式每轮迭代的速度是不一样的一个时O(1)一个是O(N)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124041845.png" srcset="/img/loading.gif" alt="image-20210121124041845"></p>
-<p>我们想用一个随机平均代替连加，这样复杂度就会降下来。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124254571.png" srcset="/img/loading.gif" alt="image-20210121124254571"></p>
-<p>我们可以把这样一个随机梯度理解为，实际的梯度+平均为0的噪声</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124329250.png" srcset="/img/loading.gif" alt="image-20210121124329250"></p>
-<p>但是我们经理足够多轮的更新后，还是会非常接近真正的梯度的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121125406460.png" srcset="/img/loading.gif" alt="image-20210121125406460"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130038979.png" srcset="/img/loading.gif" alt="image-20210121130038979"></p>
-<p>我们来对比一下 ，SGD中是错了多少，而PLA中是有没有错误。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130140897.png" srcset="/img/loading.gif" alt="image-20210121130140897"></p>
-<p>因此我们一般说SGD logistic regression ≈ soft PLA</p>
-<p>但是问题是，SGD跑到什么时候结束呢？SGD跑到谷底是很难的</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130413560.png" srcset="/img/loading.gif" alt="image-20210121130413560"></p>
-<ul>
-<li>一般是跑足够多轮</li>
-<li>学习率一般选0.1，如果x的范围不是特别离谱</li>
-</ul>
-<h2 id="Multiclass-via-logistic"><a href="#Multiclass-via-logistic" class="headerlink" title="Multiclass via logistic"></a>Multiclass via logistic</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131742756.png" srcset="/img/loading.gif" alt="image-20210121131742756"></p>
-<p>我们可以一次只做一种：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131835446.png" srcset="/img/loading.gif" alt="image-20210121131835446"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131941507.png" srcset="/img/loading.gif" alt="image-20210121131941507"></p>
-<p>但是在</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132108920.png" srcset="/img/loading.gif" alt="image-20210121132108920"></p>
-<p>这几个地方会出现都不是四个类别或者属于多个类别的情况。</p>
-<p>那么我们可以作soft classification，告诉我是这个类的概率。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132316066.png" srcset="/img/loading.gif" alt="image-20210121132316066"></p>
-<p>明暗代表概率，我们取最高概率作为划分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132353785.png" srcset="/img/loading.gif" alt="image-20210121132353785"></p>
-<p>我们上面用的算法称为：</p>
-<p><strong>One-Versus-All(OVA) Decomposition:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132621679.png" srcset="/img/loading.gif" alt="image-20210121132621679"></p>
-<p>这个<strong>算法的特点：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132811971.png" srcset="/img/loading.gif" alt="image-20210121132811971"></p>
-<ul>
-<li>很高效</li>
-<li>当数据量特别大时，可能会造成不平等的问题，比如100类，我们做one versus all的时候就会有99类都当作叉叉，那么会导致分类器直接全当做叉叉就好了。</li>
-</ul>
-<h2 id="Multiclass-via-Binary"><a href="#Multiclass-via-Binary" class="headerlink" title="Multiclass via Binary"></a>Multiclass via Binary</h2><p>刚才说到了 one versus all的不平等问题，纳闷我们可以考虑一半一半的分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134125030.png" srcset="/img/loading.gif" alt="image-20210121134125030"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134257356.png" srcset="/img/loading.gif" alt="image-20210121134257356"></p>
-<p>我们选两种作为圈圈，有上面六种方式。</p>
-<p>我们发现包括方块的有前三个圈圈都包括方块</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134503676.png" srcset="/img/loading.gif" alt="image-20210121134503676"></p>
-<p>这样我们按比例就可以化作方块区域,其他同理即可以做出:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134540367.png" srcset="/img/loading.gif" alt="image-20210121134540367"></p>
-<p>这个算法称为：</p>
-<p><strong>one-versus-one（OVO） Decomposition：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134642325.png" srcset="/img/loading.gif" alt="image-20210121134642325"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134733980.png" srcset="/img/loading.gif" alt="image-20210121134733980"></p>
-<ul>
-<li>好处还是很快</li>
-<li>坏处就是 比起OVA 花的时间更多，需要的空间更多。</li>
-</ul>
+<p>这是一个机器学习中很重要的trade-off(权衡)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170857408.png" srcset="/img/loading.gif" alt="image-20210123170857408"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171118823.png" srcset="/img/loading.gif" alt="image-20210123171118823"></p>
+<p>我们看上图可以发现，我们最后甚至提出了一个$d_{VC}=1$的方法，真是太好了。</p>
+<p>但其实我们仔细想想，能提出这样一个想法，是因为你看到了这个数据图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171324613.png" srcset="/img/loading.gif" alt="image-20210123171324613"></p>
+<p>你看到长得像圆形，没有偏离原点，所以你说我们不需要<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171353444.png" srcset="/img/loading.gif" alt="image-20210123171353444"></p>
+<p>这种的变换。</p>
+<p>那如果是一个超高维的数据，你分类就不可能看到数据情况了，你也想象不到高维体的样子，所以你只能老老实实的用$d_{VC}$大一些的方法。而我们直接提出的<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171536529.png" srcset="/img/loading.gif" alt="image-20210123171536529"></p>
+<p>这种方式，是经过人human learning 学到的，不是machine leaning学到的。</p>
+<h2 id="Structed-Hypothesis-Sets"><a href="#Structed-Hypothesis-Sets" class="headerlink" title="Structed Hypothesis Sets"></a>Structed Hypothesis Sets</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172722949.png" srcset="/img/loading.gif" alt="image-20210123172722949"></p>
+<p>我们转换到新的坐标下，新坐标下的Hypothesis肯定是有包含关系的，如下图。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172842740.png" srcset="/img/loading.gif" alt="image-20210123172842740"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174003440.png" srcset="/img/loading.gif" alt="image-20210123174003440"></p>
+<p>同理我们不难推理到$E_{in}$</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174011453.png" srcset="/img/loading.gif" alt="image-20210123174011453"></p>
+<p>从上图我们可以看出转换到一个很大的$d_{VC}$，并不是很好。</p>
+<p><strong>比较安全的做法是：</strong>从$H_1$ 开始一个一个增加 ，直到$H_t$计算出的$E_{in}(g_t)$足够好</p>
 
             </div>
             <hr>
@@ -351,18 +319,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习基石CH12：Nonlinear Transformation</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">
-                        <span class="hidden-mobile">机器学习基石CH10：Logistic Regression</span>
+                      <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/">
+                        <span class="hidden-mobile">机器学习基石CH11：Linear Models for Classification</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -381,8 +343,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
-        this.page.identifier = '/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
+        this.page.url = 'https://chillstepp.github.io/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/';
+        this.page.identifier = '/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
