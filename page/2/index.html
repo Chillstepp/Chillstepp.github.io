@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -12,28 +12,37 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
   <title>Chillstep</title>
 
-  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
-<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
-<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
-<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
 
-  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+<!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="/css/main.css"  >
-
-
-  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
@@ -42,7 +51,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -56,55 +65,88 @@
         
           
           
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
         
           
           
-          <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
-          </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
         
           
           
-          <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
-          </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
         
           
           
-          <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
-          </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
         
           
           
-          <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
-          </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
     </div>
   </div>
-
-
 </nav>
 
-    <div class="view intro-2" id="background"
-         style="background: url('/img/vdysjx.webp')no-repeat center center;
-           background-size: cover;
-           background-attachment: fixed;">
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/vdysjx.webp') no-repeat center center;
+           background-size: cover;">
       <div class="full-bg-img">
-        <div class="mask rgba-black-light flex-center">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="An elegant Material-Design theme for Hexo">
               
             </span>
 
@@ -113,7 +155,7 @@
 
           
             <div class="scroll-down-bar">
-              <i class="fas fa-angle-down scroll-down-arrow"></i>
+              <i class="iconfont icon-arrowdown"></i>
             </div>
           
         </div>
@@ -123,8 +165,9 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
@@ -132,24 +175,28 @@
                 
 
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/" target="_self">
-          <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石CH3：Types of Learning" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH3：Types of Learning">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/">
-        <p class="h4 index-header">机器学习基石CH3：Types of Learning</p>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/">机器学习基石CH3：Types of Learning</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/11/26/CH3%EF%BC%9ATypes%20of%20Learning/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">CH3：Types of LearningLearning with Different Output Space二元分类我们成为Binary Classification 
+          
+            
+          
+          CH3：Types of LearningLearning with Different Output Space二元分类我们成为Binary Classification 
 多分类问题：
 
 回归预策分析问题：
@@ -162,198 +209,195 @@ Learning with Different Data Label监督学习/无监督学习：
 
 强化学习：
 
-Learning with Different ProtocolBatch Learning 批量学习：
+Learning with Di
+        </a>
+      </p>
 
-Online Learning 在线学习：
-
-线上学习是一种passive学习方式，而批量学习是一种填鸭式学习。
-Learning with Different Input Space对于这样一个问题，我们喂给机器什么样的数据？
-
-我们可以从以下方法来入手：
-
-比如 x=(对称性，多样性)  这样的数据，或者是是16*16像素点的256维向量。
-第二种方法看起来很好，但是对于机器来说，对于这么多维的数据，对于机器是很难训练的，同时需要大量数据来学习。
-自己抽取特征，也可以是机器自己发现的：
-
-总结：[](
-</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-26&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-26 10:54" pubdate>
+              2020-11-26
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/" target="_self">
-          <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石CH2：Learning to Answer Yes/No" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH2：Learning to Answer Yes/No">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/">
-        <p class="h4 index-header">机器学习基石CH2：Learning to Answer Yes/No</p>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/">机器学习基石CH2：Learning to Answer Yes/No</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/11/24/CH2%EF%BC%9ALearning%20to%20Answer%20Yes%20or%20No/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">CH2：Learning to Answer Yes/NoPerceptron Hypothesis Set
+          
+            
+          
+          CH2：Learning to Answer Yes/NoPerceptron Hypothesis Set
 $x$为 顾客的特征向量， $y$为是否发卡。
 $y$取值为${+1,-1}$。 最后我们得到一个假说Hypothesis  $h(x)$, $sign$函数是一个符号函数，在0，=0分别取-1，1，0。$threshold$为是否发卡的阈值。
 
-我们为了书写简单，把$threshold$收入$w_ix_i$，下标改为从0开始。
+我们为了书写简单，把$threshold$
+        </a>
+      </p>
 
-那么怎么直观的理解h(x)究竟是什么东西呢？
-我们把x看作一个只有两维的向量，那么它可以代表平面上的一个点，此时还有一个$w_1,w_2$来影响x向量，每个点 有一个label即圆圈还是叉叉。那么h就代表平面上的一条线。
-hypothesis可以看作一堆直线，我们选出一个可以很好划分不同label的直线作为最后的划分函数h(x)即可。h(x)感知机实际上就是一个线性的分类器，即回答yes or no。
-Perceptron Learning Algorithm (PLA)
-H是一个无限大的集合，因此我们的想法是找一个不是那么优秀的直线，然后对直线进行</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-24 13:02" pubdate>
+              2020-11-24
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/" target="_self">
-          <img src="/img/ml_twu.png" srcset="undefined" alt="机器学习基石Ch1：The Learning Problem" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石Ch1：The Learning Problem">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
-        <p class="h4 index-header">机器学习基石Ch1：The Learning Problem</p>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">机器学习基石Ch1：The Learning Problem</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/11/24/CH1%EF%BC%9AThe%20Learning%20Problem/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Ch1：The Learning Problem1.1 What is Machine Learning？
+          
+            
+          
+          Ch1：The Learning Problem1.1 What is Machine Learning？
 skill可以定义为 某一种表现的提升，例如 你通过股票的数据 进行机器学习使得你获得了更多的收益
 
 对于辨别一棵树，我们是通过见过无数棵树后总结出来的判断规律。这和机器学习是相似的，通过数据进行学习。
 是否适合使用机器学习的一些基本判别关键点？
-1.能够有某些效能指标或者目标希望机器可以达到
-2.不知道怎么有效的定义
-3.有data
+1.能够有某些效能指标或者目标希望机器可以达
+        </a>
+      </p>
 
-正确答案：3
-第一个小女孩哭没有规则可以预测，第二个图里的环可以有效的定义，不需要机器学习。最后一个地球被核能毁灭没有相关的数据。
-1.2 Applications of Machine Learning1.3Components of Machine Learning信用卡是否发卡的预测问题：
-下面是一个申请表：
-
-
-input：$x\in X$   顾客的申请信息
-output: $y\in Y$  同意发卡后的顾客表现的好坏
-目标方程（target function）: $f:X→ Y$
-data: 训练样本$D=\{(x_1,y_1),(</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-11-24&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-24 13:00" pubdate>
+              2020-11-24
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/31/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
-        <p class="h4 index-header">AHU汇编语言</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/31/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">AHU汇编语言</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/31/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU汇编语言写在前面：对AHU汇编课的一些笔记总结,我自认为总结的还算全面，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com 
+          
+            
+          
+          AHU汇编语言写在前面：对AHU汇编课的一些笔记总结,我自认为总结的还算全面，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com 
 Ch1-汇编语言基础知识进制转换二进制/十六进制数→十进制数：
 $N=101101.1B=12^5+12^3+12^2+12^0+1*2^{-1}=45.5D$
-$N=5F H=516^1+1516^0=95D$
-十进制数 → 二进制数：
-13/2=6 …….1
-6/2=3……….0
-3/2=1……….1
-1/2=0……….1
-$N=13D=1101B$
-十进制数→十六进制数：
-先转二进制，然后四个一组，整数部分高位补0凑4位，小数部分低位补0凑4位。
-进制计算43A5+5A34=9DD9
-2A34*0025=61984(H)   列竖式自己算一下即可
-补码负数取反加1，正数不变即可。
-例如用8位二进制表示-3的补码：
-$[-3]_补$:0000 0011取反加1，即1111 1101
-如果此时要用16位二进制表示-3的补码，我们只需要在前面加上8个1即可，这叫做符号扩展，对于负</div>
-        </div>
-      </a>
+$N=5F H=516^1+
+        </a>
+      </p>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-31&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-31 10:45" pubdate>
+              2020-07-31
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80">汇编语言</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">汇编语言</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh5-%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8C%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%96%91%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8CSIFT%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
-        <p class="h4 index-header">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh5-%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8C%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%96%91%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8CSIFT%E6%8F%8F%E8%BF%B0%E7%AC%A6/">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh5-%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8C%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%96%91%E7%82%B9%E6%A3%80%E6%B5%8B%EF%BC%8CSIFT%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符
+          
+            
+          
+          AHU计算机视觉课Ch5-角点检测，尺度空间，斑点检测，SIFT描述符
 角点用来检测特殊的对应点，可以利用角点进行全景拼接。
 角点检测
 我们可以看到，在平坦区域我们随便移动也不会有像素点变换，在边缘上时上下移动也不会出现大量变化，只有在角点，任何方向移动都会出现变化。
@@ -368,92 +412,91 @@ $[-3]_补$:0000 0011取反加1，即1111 1101
 
 
 我们可以看出：
-当两个$\lambda$都很小，说明在平坦的区域，各个方向变化时变化幅度小。
-当一个$\lambda$都很小，另一个$\lambda$很大，说明在某个方向上变化很大，属于在边缘位置。
-当两个$\lambda$都很大，说明在角点，各个方向上变化都很大。
+当两个$\lambda$
+        </a>
+      </p>
 
-最后我们定义一个R用来判断角点。
-
-由于像素范围较大不是一个点，因此进行非极大值抑制。
-
-
-图像的亮度变化一定程度会影响R值。
-
-图像旋转对角点的检测不影响。
-
-既然图像缩放大小会影响角点的检测，我们该如何确定尺度呢？
-
-大概的方法是找一个无关函数 f 随着取样框大小变化来寻找 f 最大的点，当两个点都在最大值，说明在同一点，这时候横坐标的就可以反映图像尺度大小的比例</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 10:46" pubdate>
+              2020-07-20
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
-        <p class="h4 index-header">What is submodular function(次模函数)</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">What is submodular function(次模函数)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
+          
+            
+          
+          次模函数 submodular functionIntroduction​    最近在读2003KDD《Maximizing the spread of influence through a social network》这篇文章中遇到了次模函数 submodular function这个东西，整理一下搜集到的东西。
 ​    submodular实际上就对“边际效用递减”这个说法的形式化。
-​    
-submodular function(次模函数)定义子模态是几何函数的一种性质。一个几何函数$f(x)$的定义要满足下面这个性质。
-$f:2^{Ω} → \R$
-也就是说：即f(x)的定义域为集合Ω的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个：
-(1)对于任何一个$X,Y\subset Ω$且$X\subset Y$,以及对任何一个$x\in Ω$，以下式子成立
-$f(X∪x)−f(X)≥f(Y∪x)−f(Y)$
-这个就是次模函数的本身定义。
-(2)对于任何一个$X,Y\subset Ω$，以下式子成立：
-$f(X)</div>
-        </div>
-      </a>
 
-      <div>
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 10:46" pubdate>
+              2020-07-20
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E5%BD%B1%E5%93%8D%E5%8A%9B%E6%9C%80%E5%A4%A7%E5%8C%96">影响力最大化</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BD%B1%E5%93%8D%E5%8A%9B%E6%9C%80%E5%A4%A7%E5%8C%96/">影响力最大化</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
-        <p class="h4 index-header">AHU计算机视觉课Ch4-模型拟合</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">AHU计算机视觉课Ch4-模型拟合</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/20/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh4-%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机视觉课Ch4-模型拟合
+          
+            
+          
+          AHU计算机视觉课Ch4-模型拟合
 数据(Data) 通过fitting 获得模型参数 称之为模型拟合(前提是已知模型的形式，比如知道圆的方程等等)
 最小二乘法(Least Squares)拟合方法
 
@@ -472,126 +515,134 @@ $f(X)</div>
 可以做误差控制，减少外点影响。
 
 
-对于去除外点，我想了想是否可以这样操作：
-我们对所有点进行二维排序(x为第一关键字，y为第二关键字)，排序后我们找出排序中相邻两者的距离差，那么对于正常的点来说两者距离肯定是十分相近的，但是对于外点来说，这两者的距离十分大(因为外点既然可以将直线拉偏移，说明距离肯定不小)，然后我们通过这样的方法来去除外点。当然对于一些正常点来说可能还会因为超过阈值被去除，但是对于大量的数据来说，即使去除一个这样的点也无所谓，不会影响直线的拟合的。因为少量正常的点被去除对正确的拟合结果影响是小的，而外点对拟合结果是影响大的。
-随机一致性采样算法（RANSAC）
+对于
+        </a>
+      </p>
 
-
-
-
-如何模拟圆呢？
-随机采样3个样本(三个点确定一</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-20&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 10:45" pubdate>
+              2020-07-20
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV">计算机视觉CV</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
-        <p class="h4 index-header">AHU计算机图形学笔记</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">AHU计算机图形学笔记</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">AHU计算机图形学写在前面：对AHU计算机图形学课的一些笔记总结,我自认为总结的还算全面，期末靠着这个复习也拿到了相对不错的分数，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com 
+          
+            
+          
+          AHU计算机图形学写在前面：对AHU计算机图形学课的一些笔记总结,我自认为总结的还算全面，期末靠着这个复习也拿到了相对不错的分数，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com 
 像素：绘图的最小单位。
 分辨率与像素的关系：若分辨率1024*768（每行有1024个像素，总共有768行）。
-第一章：绪论计算机图形学（Computer Graphics）是研究怎样利用计算机来显示、生成和处理图形的原理、方法和技术的一门学科。国际标准化组织（ISO）定义它为：计算机图形学是研究通过计算机将数据转换成图形，并在专门显示设备上显示的原理、方法和技术。
+第一章：绪论计算机图形学（
+        </a>
+      </p>
 
-​        计算机中表示带有颜色及形状信息的图和形常用两种方法：点阵法和参数法。点阵法是用具有灰度或颜色信息的点阵来表示图形的一种方法，它强调图形由哪些点组成，并且具有什么灰度或色彩。参数法是以计算机中所记录图形的形状参数与属性参数来表示图形的一种方法。形状参数可以是形状的方程系数、线段的起点和终点对等几何属性的描述；属性参数则描述灰度、色彩、线型等非几何属</div>
-        </div>
-      </a>
-
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-17 09:51" pubdate>
+              2020-07-17
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6">计算机图形学</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/17/SQL_tutorial/">
-        <p class="h4 index-header">AHU_SQL_Consise_Tutorial</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">SQL(Consise Tutorial)SQL_Consise_Tutorial写在前面：
-由于书上的SQL讲解太过于分散，因此我写了一个文档来总结这些知识点，以例子代替讲解，方便大家查漏补缺，由于开始时写这个文档是为了实验考试，但后来为了准备期末考试又添加了一些实验课上没有讲到的东西，如果有什么缺失的知识点，可以发邮件给我：howiewang.cs@gmail.com ，我会尽量补上缺失的内容。
-创建表创建STUDENT表
-CREATE TABLE STUDENT
-(SId INT IDENTITY(1,1),
- SNo CHAR (5) PRIMARY KEY,
- CLno CHAR(6),
- SName VARCHAR(8) NOT NULL，
- SSex CHAR(2) CHECK(SSex IN(&#39;男&#39;,&#39;女&#39;))，   //用CHECK短语指定列值该满足的条件
- SBir DATETIME
- SAge INT
-)
+        <a href="/2020/07/17/SQL_tutorial/">AHU_SQL_Consise_Tutorial</a>
+      </h1>
 
-创建表时，用CHECK短语指定列值该满足的条件
-CREATE TABLE STUDENT
-(
-Sno CHAR(9) PRIM</div>
-        </div>
-      </a>
+      <p class="index-excerpt">
+        <a href="/2020/07/17/SQL_tutorial/">
+          
+          
+            
+          
+          SQL(Consise Tutorial)SQL_Consise_Tutorial写在前面：
+由于书上的SQL讲解太过于分散，因此我写了一个文档来总结这些知识点，以例子代替讲解，方便大家查漏补缺，由于开始时写这个文档是为了实验考试，但后来为了准备期末考试又添加了一些实验课上没有讲到的东西，如果有什么缺失的知识点，可以发邮件给我：howiewang.cs@gmail.com ，我会尽量补上缺失的内容
+        </a>
+      </p>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-17 09:51" pubdate>
+              2020-07-17
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/SQL">SQL</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">
-        <p class="h4 index-header">2020牛客暑期多校训练营（第二场）</p>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        
+        <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">2020牛客暑期多校训练营（第二场）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/17/2020%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89/">
           
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">2020牛客暑期多校训练营（第二场）Chillstep个人补题记录：
+          
+            
+          
+          2020牛客暑期多校训练营（第二场）Chillstep个人补题记录：
 
 
 
@@ -639,43 +690,42 @@ K
 
 
 Problem AProblem B题意：给n个点(不包括原点)，问经过原点的圆最多可以和多少个点相交？
-思路：枚举两个点，与原点三点确定一个圆。求得每个点的圆心位置，计算圆心位置设圆方程，然后带入两个点列方程即可，然后解出来带分式的圆心的横纵坐标即可，用分数类维护，维护分数类的时候千万不要gcd约分，直接__int128类型乘就好，gcd约分会超时，这道题应该是有点卡常的。
-用数据结构或排序维护每个圆心的出现次数。
-code：//Chillstep ^_^
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-#define pii pair&lt;int,int&gt;
-#define pll pair&lt;ll,ll&gt;
-#define pdd pair&lt;double,double&gt;
-typedef long long l</div>
-        </div>
-      </a>
+思路：枚举两个点，与原点三点确定一个圆。求得每个点的圆心位置，计算圆心位置设圆方程，然后带入两个点
+        </a>
+      </p>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-17&nbsp;&nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-17 09:49" pubdate>
+              2020-07-17
+            </time>
+          </div>
         
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1">ACM-牛客多校</a>&nbsp;
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1/">ACM-牛客多校</a>
+            
+          </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
 
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-angle-double-right"></i></a>
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
   <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
       ele.href += '#board';
     }
   </script>
@@ -688,16 +738,15 @@ typedef long long l</div>
         </div>
       </div>
     
-  </main>
 
-  
-    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
-      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -718,176 +767,126 @@ typedef long long l</div>
     </div>
   </div>
 </div>
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
-    <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
-    <br>
-
-    
-  
-    <!-- 不蒜子统计PV -->
-    
-    &nbsp;<span id="busuanzi_container_site_pv">总访问量 2
-          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
-  
-  
-    <!-- 不蒜子统计UV -->
-    
-    &nbsp;<span id="busuanzi_container_site_uv">总访客数 2
-            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
-  
-  <br>
-
-
-
     
 
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
   </div>
+  
+
+  
+
+  
 </footer>
 
 <!-- SCRIPTS -->
-<script src="/lib/jquery/jquery.min.js" ></script>
-<script src="/lib/popper/popper.min.js" ></script>
-<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
-<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
-<script src="/js/main.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
-  <script src="/js/lazyload.js" ></script>
-
-
-
-
-
-  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
-
-
-
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
 
   
-
-  
-
-  
-
-  
-
+    <script  src="/js/lazyload.js" ></script>
   
 
 
 
+  
 
-  <script src="/lib/prettify/prettify.min.js" ></script>
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
   <script>
-    $(document).ready(function () {
-      $('pre').addClass('prettyprint  linenums');
-      prettyPrint();
-    })
-  </script>
-
-
-
-  <script src="/lib/typed/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "Reading enriches, thinking deepens, and conversation sobers.&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script src="/lib/anchor/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "false",
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
       
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
+      typing(title)
+      
+    })(window, document);
   </script>
 
 
 
-  <script src="/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
   <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      getSearchFile(path);
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
-  <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
       }
-    );
+    })()
   </script>
 
 
 
-  
-
-  
-    <!-- MathJax -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          tex2jax: {
-              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-              processEscapes: true,
-              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-          }
-      });
-
-      MathJax.Hub.Queue(function() {
-          var all = MathJax.Hub.getAllJax(), i;
-          for(i=0; i < all.length; i += 1) {
-              all[i].SourceElement().parentNode.className += ' has-jax';
-          }
-      });
-
-    </script>
-
-    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
-
-  
 
 
 
 
 
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
