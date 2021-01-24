@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石CH12：Nonlinear Transformation - Chillstep</title>
+  <title>《线性代数及其应用》CH3：行列式 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习基石CH12：Nonlinear Transformation">
+            <span class="h2" id="subtitle" title="《线性代数及其应用》CH3：行列式">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-23 19:02" pubdate>
-        2021年1月23日 晚上
+      <time datetime="2021-01-24 18:32" pubdate>
+        2021年1月24日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      931 字
+      287 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      3
        分钟
     </span>
   
@@ -236,66 +236,60 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习基石CH12：Nonlinear Transformation</h1>
+            <h1 style="display: none">《线性代数及其应用》CH3：行列式</h1>
             
             <div class="markdown-body">
-              <h1 id="CH12：Nonlinear-Transformation"><a href="#CH12：Nonlinear-Transformation" class="headerlink" title="CH12：Nonlinear Transformation"></a>CH12：Nonlinear Transformation</h1><h2 id="Quadratic-Hypotheses（二次假设）"><a href="#Quadratic-Hypotheses（二次假设）" class="headerlink" title="Quadratic Hypotheses（二次假设）"></a>Quadratic Hypotheses（二次假设）</h2><p>Linear Hypothesis </p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123141912732.png" srcset="/img/loading.gif" alt="image-20210123141912732"></p>
-<p>线性模型可以算一个分数，它最大的好处是$d_{VC}$ 可以被控制，当然线性模型在某些数据上每条线都做不到效果很好。</p>
-<hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142255944.png" srcset="/img/loading.gif" alt="image-20210123142255944"></p>
-<p>我们这里用一个圈就可以很好地进行分类。</p>
-<p>那么我们可以设一个圆形的PLA,可是图形是千变万化的，我们不可能每个都设计出来一个PLA，那么我们可以系统化的设计一个。</p>
-<p>我们可以把式子化为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142856750.png" srcset="/img/loading.gif" alt="image-20210123142856750"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142957261.png" srcset="/img/loading.gif" alt="image-20210123142957261"></p>
-<p>我们可以把$x_1$ 对应到右边的$x_1^2$,那么就想到于把以<strong>x为基地的左图</strong>转为<strong>以z为基底的右图</strong>。</p>
-<p>惊喜的发现，我们又把问题转化到了线性的问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143708871.png" srcset="/img/loading.gif" alt="image-20210123143708871"></p>
-<p>不同的w赋值可以代表不同的model，这是一个很好的系统性的总结。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143852910.png" srcset="/img/loading.gif" alt="image-20210123143852910"></p>
-<p>那么什么样的x图像都可以用z表示吗？</p>
-<p>当然不是，如果我们细心会发新$h(x)=sign(w_0+w_1x_1^2+w_2x_2^2)$ 没用关于x的一次项，也就是说这个圆形是不可以平移的。</p>
-<p>因此只有一部分特殊可以利用这个系统：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144112039.png" srcset="/img/loading.gif" alt="image-20210123144112039"></p>
-<p>我们想要扩展到任意图形：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144148424.png" srcset="/img/loading.gif" alt="image-20210123144148424"></p>
-<p>那我们就加上一次项。</p>
-<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145808828.png" srcset="/img/loading.gif" alt="image-20210123145808828"></p>
-<p>因此我们想这么做一个过程：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145849255.png" srcset="/img/loading.gif" alt="image-20210123145849255"></p>
-<p>最后一个反运算$\phi ^{-1}$虽然不一定成立，但一般不会影响我们的结果，因为我们早早建立了每个点在新的以z为基地的坐标系下的映射坐标是什么，我们既然已经算出来了下图：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123150011588.png" srcset="/img/loading.gif" alt="image-20210123150011588"></p>
-<p>我们可以直接去找他对应的点是什么，无需做反变换。图中这么表示这是为了理解。</p>
-<p>这个转化做完所有学的线性模型都可以用了。</p>
-<p>但是这么做有没有什么代价呢？</p>
-<h2 id="Price-of-Nonlinear-Transform"><a href="#Price-of-Nonlinear-Transform" class="headerlink" title="Price of Nonlinear Transform"></a>Price of Nonlinear Transform</h2><p>如果是一个Q次的多项式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165350481.png" srcset="/img/loading.gif" alt="image-20210123165350481"></p>
-<p>那么我们需要多少项来表示呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165631087.png" srcset="/img/loading.gif" alt="image-20210123165631087"></p>
-<p>这个量级大概是$O（Q^d）$,即w大概要这么多项，这个w大概就是$d_{VC}$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170213343.png" srcset="/img/loading.gif" alt="image-20210123170213343"></p>
-<ul>
-<li>所以Q很大时，即用了一个高次的函数来划分类别，$d_{VC}$就会很大，这样导致了$E_{in}$和$E_{out}$差距就很大了，但是这种效果往往在训练的数据集上表现得很好。</li>
-<li>反之，如果我们选一个很简单的低次函数来划分，$d_{VC}$小一些，虽然$E_{in}$和$E_{out}$比较接近了,当然这会使得我们的训练效果很差。</li>
-</ul>
-<p>这是一个机器学习中很重要的trade-off(权衡)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170857408.png" srcset="/img/loading.gif" alt="image-20210123170857408"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171118823.png" srcset="/img/loading.gif" alt="image-20210123171118823"></p>
-<p>我们看上图可以发现，我们最后甚至提出了一个$d_{VC}=1$的方法，真是太好了。</p>
-<p>但其实我们仔细想想，能提出这样一个想法，是因为你看到了这个数据图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171324613.png" srcset="/img/loading.gif" alt="image-20210123171324613"></p>
-<p>你看到长得像圆形，没有偏离原点，所以你说我们不需要<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171353444.png" srcset="/img/loading.gif" alt="image-20210123171353444"></p>
-<p>这种的变换。</p>
-<p>那如果是一个超高维的数据，你分类就不可能看到数据情况了，你也想象不到高维体的样子，所以你只能老老实实的用$d_{VC}$大一些的方法。而我们直接提出的<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171536529.png" srcset="/img/loading.gif" alt="image-20210123171536529"></p>
-<p>这种方式，是经过人human learning 学到的，不是machine leaning学到的。</p>
-<h2 id="Structed-Hypothesis-Sets"><a href="#Structed-Hypothesis-Sets" class="headerlink" title="Structed Hypothesis Sets"></a>Structed Hypothesis Sets</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172722949.png" srcset="/img/loading.gif" alt="image-20210123172722949"></p>
-<p>我们转换到新的坐标下，新坐标下的Hypothesis肯定是有包含关系的，如下图。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172842740.png" srcset="/img/loading.gif" alt="image-20210123172842740"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174003440.png" srcset="/img/loading.gif" alt="image-20210123174003440"></p>
-<p>同理我们不难推理到$E_{in}$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174011453.png" srcset="/img/loading.gif" alt="image-20210123174011453"></p>
-<p>从上图我们可以看出转换到一个很大的$d_{VC}$，并不是很好。</p>
-<p><strong>比较安全的做法是：</strong>从$H_1$ 开始一个一个增加 ，直到$H_t$计算出的$E_{in}(g_t)$足够好</p>
+              <h1 id="第三章-行列式"><a href="#第三章-行列式" class="headerlink" title="第三章 行列式"></a>第三章 行列式</h1><h2 id="3-1-行列式介绍"><a href="#3-1-行列式介绍" class="headerlink" title="3.1 行列式介绍"></a>3.1 行列式介绍</h2><p><strong>注: $det  A$ 代表行列式A的值</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123211012471.png" srcset="/img/loading.gif" alt="image-20210123211012471"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123211916674.png" srcset="/img/loading.gif" alt="image-20210123211916674"></p>
+<p><strong>一个矩阵展开成代数余子式可以按行或者列展开（即 定理1）</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123212024954.png" srcset="/img/loading.gif" alt="image-20210123212024954"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123212029018.png" srcset="/img/loading.gif" alt="image-20210123212029018"></p>
+<p><strong>定理2：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123212158330.png" srcset="/img/loading.gif" alt="image-20210123212158330"></p>
+<h2 id="3-2-行列式的性质"><a href="#3-2-行列式的性质" class="headerlink" title="3.2 行列式的性质"></a>3.2 行列式的性质</h2><p>行变换的性质：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123212455546.png" srcset="/img/loading.gif" alt="image-20210123212455546"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213023927.png" srcset="/img/loading.gif" alt="image-20210123213023927"></p>
+<p><strong>可逆与行列式的联系：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213048182.png" srcset="/img/loading.gif" alt="image-20210123213048182"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213125264.png" srcset="/img/loading.gif" alt="image-20210123213125264"></p>
+<p><strong>列变换：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213235115.png" srcset="/img/loading.gif" alt="image-20210123213235115"></p>
+<p>有了定理5我们不难想到，行列变换规则是一样的。</p>
+<p><strong>行列式乘积：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213402961.png" srcset="/img/loading.gif" alt="image-20210123213402961"></p>
+<p>例题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123213423075.png" srcset="/img/loading.gif" alt="image-20210123213423075"></p>
+<p><strong>行列式函数的一个有趣的线性性质：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123220005342.png" srcset="/img/loading.gif" alt="image-20210123220005342"></p>
+<p>证明：(2)这个其实就是列变换，显而易见  </p>
+<p>​           (3)我们可以按照$x$所在的列进行展开，就很好证了。</p>
+<h2 id="3-3-克拉默法则，体积和线性变换"><a href="#3-3-克拉默法则，体积和线性变换" class="headerlink" title="3.3 克拉默法则，体积和线性变换"></a>3.3 克拉默法则，体积和线性变换</h2><p><strong>克拉默法则：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123220738837.png" srcset="/img/loading.gif" alt="image-20210123220738837"></p>
+<p>证明：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123220905100.png" srcset="/img/loading.gif" alt="image-20210123220905100"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123221224871.png" srcset="/img/loading.gif" alt="image-20210123221224871"></p>
+<p>例题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123221417790.png" srcset="/img/loading.gif" alt="image-20210123221417790"></p>
+<p><strong>逆矩阵公式：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124152611196.png" srcset="/img/loading.gif" alt="image-20210124152611196"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124152604162.png" srcset="/img/loading.gif" alt="image-20210124152604162"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124152727431.png" srcset="/img/loading.gif" alt="image-20210124152727431"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124152739484.png" srcset="/img/loading.gif" alt="image-20210124152739484"></p>
+<p><strong>行列式表示面积/体积：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124165403715.png" srcset="/img/loading.gif" alt="image-20210124165403715"></p>
+<p>矩形很好证明这个问题，但是如果是平行四边形，我们化成对角矩阵计科。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124165828374.png" srcset="/img/loading.gif" alt="image-20210124165828374"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124165841321.png" srcset="/img/loading.gif" alt="image-20210124165841321"></p>
+<p>这个结合图也可以直观的理解，这是不会改变面积的。</p>
+<p>如果是3*3的矩阵：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124170411719.png" srcset="/img/loading.gif" alt="image-20210124170411719"></p>
+<p>这个也不难理解，我们可以通过行列变换把平行六面体变成正方体。</p>
+<p><strong>线性变换：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124182426337.png" srcset="/img/loading.gif" alt="image-20210124182426337"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124182612673.png" srcset="/img/loading.gif" alt="image-20210124182612673"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124182912856.png" srcset="/img/loading.gif" alt="image-20210124182912856"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124182922242.png" srcset="/img/loading.gif" alt="image-20210124182922242"></p>
 
             </div>
             <hr>
@@ -306,7 +300,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
                     
                   </div>
                 
@@ -319,9 +313,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/">
+                      <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">《线性代数及其应用》CH3：行列式</span>
+                        <span class="hidden-mobile">机器学习基石CH13：Hazard of Overfitting</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -329,8 +323,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/">
-                        <span class="hidden-mobile">机器学习基石CH11：Linear Models for Classification</span>
+                      <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">
+                        <span class="hidden-mobile">机器学习基石CH12：Nonlinear Transformation</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -349,8 +343,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/';
-        this.page.identifier = '/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/';
+        this.page.url = 'https://chillstepp.github.io/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/';
+        this.page.identifier = '/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
