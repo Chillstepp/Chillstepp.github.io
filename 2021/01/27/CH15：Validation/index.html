@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石CH11：Linear Models for Classification - Chillstep</title>
+  <title>机器学习基石CH15：Validation - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习基石CH11：Linear Models for Classification">
+            <span class="h2" id="subtitle" title="机器学习基石CH15：Validation">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-21 13:52" pubdate>
-        2021年1月21日 下午
+      <time datetime="2021-01-27 16:09" pubdate>
+        2021年1月27日 下午
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      898 字
+      1.1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      11
        分钟
     </span>
   
@@ -236,98 +236,84 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习基石CH11：Linear Models for Classification</h1>
+            <h1 style="display: none">机器学习基石CH15：Validation</h1>
             
             <div class="markdown-body">
-              <h1 id="CH11：Linear-Models-for-Classification"><a href="#CH11：Linear-Models-for-Classification" class="headerlink" title="CH11：Linear Models for Classification"></a>CH11：Linear Models for Classification</h1><h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>我们回顾一下线性模型：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114057461.png" srcset="/img/loading.gif" alt="image-20210121114057461"></p>
-<p>我们看一下三个error function在做classification时的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114816534.png" srcset="/img/loading.gif" alt="image-20210121114816534"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115146949.png" srcset="/img/loading.gif" alt="image-20210121115146949"></p>
-<p>$ys$代表着正确的分数。</p>
-<p>下面我们画个图来看一下3个error function的图像：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115356316.png" srcset="/img/loading.gif" alt="image-20210121115356316"></p>
-<p>这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角处。</p>
-<p>此时我们称之为 <strong>scaled cross entropy</strong>：（把取ln改为取log2）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115838748.png" srcset="/img/loading.gif" alt="image-20210121115838748"></p>
-<p>这么做会让我们的推导容易一些。</p>
-<p>我们来证明一下这个事情，用换底公式不难得到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120115701.png" srcset="/img/loading.gif" alt="image-20210121120115701"></p>
-<p>我们从VC Bound不难得知：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120309197.png" srcset="/img/loading.gif" alt="image-20210121120309197"></p>
-<p>我们话可以用<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120424784.png" srcset="/img/loading.gif" alt="image-20210121120424784"></p>
-<p>直接得出：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120434073.png" srcset="/img/loading.gif" alt="image-20210121120434073"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120507857.png" srcset="/img/loading.gif" alt="image-20210121120507857"></p>
-<p><strong>注：</strong>上述式子的提出可能会有疑问，之前不是讲得是</p>
-<p><img src="https://i.loli.net/2021/01/15/e4IbzRNaWT5p6xB.png" srcset="/img/loading.gif" alt="image.png"></p>
-<p>单一的让$E_{in}$小并不合理,应该找一个合适的不是吗？但我们不难发现这里面说的是$d_{VC}$,而我们这里要调的是$w$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122259920.png" srcset="/img/loading.gif" alt="image-20210121122259920"></p>
-<p>所以这里我们做完逻辑回归或者线性回归后，传回去的值要加一个sign()即可。</p>
-<p>我们最后总结一下这三个方法的优劣：</p>
+              <h2 id="CH15：Validation"><a href="#CH15：Validation" class="headerlink" title="CH15：Validation"></a>CH15：Validation</h2><h2 id="Model-Select-Problem"><a href="#Model-Select-Problem" class="headerlink" title="Model Select Problem"></a>Model Select Problem</h2><p><strong>选择的依据：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210126171516245.png" srcset="/img/loading.gif" alt="image-20210126171516245"></p>
 <ul>
-<li>用PLA时，要线性可分，若不是线性可分，那就要跑pocket</li>
-<li>用linear regression时，因为有闭式解，很容易算出w，但是会lose bound（毕竟衡量错误不准确，比一般的0/1 error measure的值全都大）。</li>
-<li>logistic regression同理，gradient descent很容易找到一个最优解，但是也会lose bound</li>
+<li>第一种：只做$E_{in}$ 做低一些，这样选模型肯定不是很好</li>
 </ul>
-<p>我们可以通过组合的方法找出一个比较好用的解，比如：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122818625.png" srcset="/img/loading.gif" alt="image-20210121122818625"></p>
-<p>还有一点，logistic regression用得一般比pocket用的多，这是因为logistic regression的最优化性质比较好用一些。</p>
-<h2 id="Stochastic-Grad-Descent（随机梯度下降）"><a href="#Stochastic-Grad-Descent（随机梯度下降）" class="headerlink" title="Stochastic Grad. Descent（随机梯度下降）"></a>Stochastic Grad. Descent（随机梯度下降）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121123736533.png" srcset="/img/loading.gif" alt="image-20210121123736533"></p>
-<p>这两种方式每轮迭代的速度是不一样的一个时O(1)一个是O(N)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124041845.png" srcset="/img/loading.gif" alt="image-20210121124041845"></p>
-<p>我们想用一个随机平均代替连加，这样复杂度就会降下来。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124254571.png" srcset="/img/loading.gif" alt="image-20210121124254571"></p>
-<p>我们可以把这样一个随机梯度理解为，实际的梯度+平均为0的噪声</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124329250.png" srcset="/img/loading.gif" alt="image-20210121124329250"></p>
-<p>但是我们经理足够多轮的更新后，还是会非常接近真正的梯度的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121125406460.png" srcset="/img/loading.gif" alt="image-20210121125406460"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130038979.png" srcset="/img/loading.gif" alt="image-20210121130038979"></p>
-<p>我们来对比一下 ，SGD中是错了多少，而PLA中是有没有错误。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130140897.png" srcset="/img/loading.gif" alt="image-20210121130140897"></p>
-<p>因此我们一般说SGD logistic regression ≈ soft PLA</p>
-<p>但是问题是，SGD跑到什么时候结束呢？SGD跑到谷底是很难的</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130413560.png" srcset="/img/loading.gif" alt="image-20210121130413560"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210126171533963.png" srcset="/img/loading.gif" alt="image-20210126171533963"></p>
 <ul>
-<li>一般是跑足够多轮</li>
-<li>学习率一般选0.1，如果x的范围不是特别离谱</li>
+<li><p>第二种：选择在最终测试集上的一部分数据，然后对每个模型进行测试，然后选取准确率最高的。<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127132326729.png" srcset="/img/loading.gif" alt="image-20210127132326729"></p>
+<p>由hoeffding不等式来看，这样的结果还不错：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127132602757.png" srcset="/img/loading.gif" alt="image-20210127132602757"></p>
+<p>但是现实中我们几乎不能拿到最终测试集的，这是一个自欺欺人的做法。</p>
+</li>
 </ul>
-<h2 id="Multiclass-via-logistic"><a href="#Multiclass-via-logistic" class="headerlink" title="Multiclass via logistic"></a>Multiclass via logistic</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131742756.png" srcset="/img/loading.gif" alt="image-20210121131742756"></p>
-<p>我们可以一次只做一种：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131835446.png" srcset="/img/loading.gif" alt="image-20210121131835446"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131941507.png" srcset="/img/loading.gif" alt="image-20210121131941507"></p>
-<p>但是在</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132108920.png" srcset="/img/loading.gif" alt="image-20210121132108920"></p>
-<p>这几个地方会出现都不是四个类别或者属于多个类别的情况。</p>
-<p>那么我们可以作soft classification，告诉我是这个类的概率。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132316066.png" srcset="/img/loading.gif" alt="image-20210121132316066"></p>
-<p>明暗代表概率，我们取最高概率作为划分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132353785.png" srcset="/img/loading.gif" alt="image-20210121132353785"></p>
-<p>我们上面用的算法称为：</p>
-<p><strong>One-Versus-All(OVA) Decomposition:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132621679.png" srcset="/img/loading.gif" alt="image-20210121132621679"></p>
-<p>这个<strong>算法的特点：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132811971.png" srcset="/img/loading.gif" alt="image-20210121132811971"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127132804528.png" srcset="/img/loading.gif" alt="image-20210127132804528"></p>
+<p>以上两种方法都不是很好，或许我们可以折中一下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127132905071.png" srcset="/img/loading.gif" alt="image-20210127132905071"></p>
+<p>​    我们留一部分资料，但是这一部分的资料不用于训练。然后我们用其他资料训练，然后训练完的模型再测试刚刚的资料。</p>
+<p>​    </p>
+<h2 id="Validation"><a href="#Validation" class="headerlink" title="Validation"></a>Validation</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127133357774.png" srcset="/img/loading.gif" alt="image-20210127133357774"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127133614744.png" srcset="/img/loading.gif" alt="image-20210127133614744"></p>
+<p>从霍夫定不等式不难得出这样的保证：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127133632974.png" srcset="/img/loading.gif" alt="image-20210127133632974"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127134225542.png" srcset="/img/loading.gif" alt="image-20210127134225542"></p>
+<p>​    我们选择错误率最小的即可，但是选择完后，比如第27个hypothesis的错误率最低，这个模型最好。那么我们直接27个hypothesis直接输出就OK了。</p>
+<p>​    但也许我们可以做的更好一些，反正已经知道这个模型做的最好了，为什么不训练的时候直接把测试集也扔进去训练呢？我们的learning curse告诉我们，当模型确定，资料越多准确率越高，反正我们已经确定了模型，那不如<strong>把模型重新用所有数据训练一次</strong>。</p>
+<p>​    数学语言来表示就是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127134833489.png" srcset="/img/loading.gif" alt="image-20210127134833489"></p>
+<p>这是我们validation的过程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127134859426.png" srcset="/img/loading.gif" alt="image-20210127134859426"></p>
+<p>我们观察不等式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127134833489.png" srcset="/img/loading.gif" alt="image-20210127134833489"></p>
+<p>其实就是两次的约等于：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127135347261.png" srcset="/img/loading.gif" alt="image-20210127135347261"></p>
+<p>但是左边是想要一个小的K的，而右边想要一个大的K。</p>
+<p>这就成为了一个有些矛盾的地方，经验之谈，一般K取数据量的五分之一：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127135524269.png" srcset="/img/loading.gif" alt="image-20210127135524269"></p>
+<h2 id="Leave-One-Out-Cross-Validation"><a href="#Leave-One-Out-Cross-Validation" class="headerlink" title="Leave-One-Out Cross Validation"></a>Leave-One-Out Cross Validation</h2><p>今天我们考虑一种比较极端的情形：</p>
+<p>K非常小，$K=1$：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127140135698.png" srcset="/img/loading.gif" alt="image-20210127140135698"></p>
+<p>$D_{val}^{(n)}$: 代表除去第n个资料的资料集。</p>
+<p>$E_{val}^{(n)}(g_n^-):$ 代表用$D_{val}^{(n)}$训练出来的model做validation的时候的错误率是多少，这个错误率由于只有一个测试数据，那么这个值要么是0要么是1。</p>
+<p>$E_{val}^{(n)}(g_n^-)$  要么是0要么是1，这样肯定是无法反映一个model的好坏的。那么如果我们有很多个$e_n$，即去掉不同的数据分别测试结果，就可以解决这个问题了。 </p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127140604510.png" srcset="/img/loading.gif" alt="image-20210127140604510"></p>
+<p>我们希望得到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127140703980.png" srcset="/img/loading.gif" alt="image-20210127140703980"></p>
+<p>举一个简单的例子：</p>
+<p>比如数据集一共三个数据，我们有两种model，分别是 线性模型和常数模型：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127140930385.png" srcset="/img/loading.gif" alt="image-20210127140930385"></p>
+<p>不难看出常数模型效果更好。</p>
+<p>我们想要说明一些$E_{loocv}(H,A)$和$E_{out}$的关系：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127141717364.png" srcset="/img/loading.gif" alt="image-20210127141717364"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127145719774.png" srcset="/img/loading.gif" alt="image-20210127145719774"></p>
+<p>我们可以发现<strong>cross validation所作出来的错误率和$E_{out}$很相近。</strong></p>
+<h2 id="V-Fold-Cross-Validation"><a href="#V-Fold-Cross-Validation" class="headerlink" title="V-Fold Cross Validation"></a>V-Fold Cross Validation</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127155434364.png" srcset="/img/loading.gif" alt="image-20210127155434364"></p>
+<p>​     上次提到的Leave-One-Out cross validation的方法复杂度有些高。每次都要送进去算一次，但是如果是线性回归的话，每次做都是有闭式解的还比较快一些。因此线性回归比较适合Leave-One-Out cross validation，但是有些模型我们是没有办法很快算出来的。</p>
+<p>​    </p>
+<p>Leave-One-Out cross validation还有一个缺点就是他的跳动比较大，因为每个的取值不是0就是1，这样就造成了得出来的错误率不太平滑，也不够稳定，如下图黑线上下跳动：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127155650378.png" srcset="/img/loading.gif" alt="image-20210127155650378"></p>
+<p>所以Leave-One-Out cross validation并不是很常用，只有某些特定情况下才会使用。</p>
+<hr>
+<p>那么怎么减少计算量呢？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127155955904.png" srcset="/img/loading.gif" alt="image-20210127155955904"></p>
+<p>比如1000个数据，我们不再切1000份去做Leave-One-Out cross validation，而是选择等量的分成10个部分。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127160109880.png" srcset="/img/loading.gif" alt="image-20210127160109880"></p>
+<p>然后用每份去做平均，而不是单单的一个一个的去做平均。这样一定程度会加速计算，减少计算量。</p>
+<p>我们一般分成10份：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127160215678.png" srcset="/img/loading.gif" alt="image-20210127160215678"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127160625904.png" srcset="/img/loading.gif" alt="image-20210127160625904"></p>
 <ul>
-<li>很高效</li>
-<li>当数据量特别大时，可能会造成不平等的问题，比如100类，我们做one versus all的时候就会有99类都当作叉叉，那么会导致分类器直接全当做叉叉就好了。</li>
+<li><p>我们先是选择一个好的model在所有的hypothesis</p>
+</li>
+<li><p>然后用cross validation的去训练我们的模型，并选出一个调成最好的参数。</p>
+</li>
+<li>然后去用这个训练好的模型测试真正的结果$E_{out}$效果如何</li>
 </ul>
-<h2 id="Multiclass-via-Binary"><a href="#Multiclass-via-Binary" class="headerlink" title="Multiclass via Binary"></a>Multiclass via Binary</h2><p>刚才说到了 one versus all的不平等问题，纳闷我们可以考虑一半一半的分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134125030.png" srcset="/img/loading.gif" alt="image-20210121134125030"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134257356.png" srcset="/img/loading.gif" alt="image-20210121134257356"></p>
-<p>我们选两种作为圈圈，有上面六种方式。</p>
-<p>我们发现包括方块的有前三个圈圈都包括方块</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134503676.png" srcset="/img/loading.gif" alt="image-20210121134503676"></p>
-<p>这样我们按比例就可以化作方块区域,其他同理即可以做出:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134540367.png" srcset="/img/loading.gif" alt="image-20210121134540367"></p>
-<p>这个算法称为：</p>
-<p><strong>one-versus-one（OVO） Decomposition：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134642325.png" srcset="/img/loading.gif" alt="image-20210121134642325"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134733980.png" srcset="/img/loading.gif" alt="image-20210121134733980"></p>
-<ul>
-<li>好处还是很快</li>
-<li>坏处就是 比起OVA 花的时间更多，需要的空间更多。</li>
-</ul>
+<p>我们要记住 我们选择去做validation只是因为他可以保证我们的模型做出来效果不会太差，但是模型真正的好与坏 只依据$ E_{out}$</p>
 
             </div>
             <hr>
@@ -351,9 +337,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">
+                      <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习基石CH12：Nonlinear Transformation</span>
+                        <span class="hidden-mobile">CH16：Three Learning Principle</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -361,8 +347,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">
-                        <span class="hidden-mobile">机器学习基石CH10：Logistic Regression</span>
+                      <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">
+                        <span class="hidden-mobile">机器学习基石CH14：Regularization</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -381,8 +367,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
-        this.page.identifier = '/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
+        this.page.url = 'https://chillstepp.github.io/2021/01/27/CH15%EF%BC%9AValidation/';
+        this.page.identifier = '/2021/01/27/CH15%EF%BC%9AValidation/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
