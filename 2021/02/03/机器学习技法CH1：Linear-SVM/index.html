@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石CH16：Three Learning Principle(完结) - Chillstep</title>
+  <title>机器学习技法CH1：Linear SVM - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习基石CH16：Three Learning Principle(完结)">
+            <span class="h2" id="subtitle" title="机器学习技法CH1：Linear SVM">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-27 17:03" pubdate>
-        2021年1月27日 下午
+      <time datetime="2021-02-03 22:27" pubdate>
+        2021年2月3日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      805 字
+      1.4k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      15
        分钟
     </span>
   
@@ -236,42 +236,123 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习基石CH16：Three Learning Principle(完结)</h1>
+            <h1 style="display: none">机器学习技法CH1：Linear SVM</h1>
             
             <div class="markdown-body">
-              <h2 id="CH16：Three-Learning-Principle"><a href="#CH16：Three-Learning-Principle" class="headerlink" title="CH16：Three Learning Principle"></a>CH16：Three Learning Principle</h2><h2 id="Occam’s-Razor-奥卡姆剃刀"><a href="#Occam’s-Razor-奥卡姆剃刀" class="headerlink" title="Occam’s Razor(奥卡姆剃刀)"></a>Occam’s Razor(奥卡姆剃刀)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127161602889.png" srcset="/img/loading.gif" alt="image-20210127161602889"></p>
-<p>对数据最简单的解释也是最有说服力的解释。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127161637606.png" srcset="/img/loading.gif" alt="image-20210127161637606"></p>
-<p>我们肯定认为左边的好一些。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127161802326.png" srcset="/img/loading.gif" alt="image-20210127161802326"></p>
-<p>什么叫做simple model，hypothesis很简单的model，hypothesis set里的hypothesis不是很多。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127162135611.png" srcset="/img/loading.gif" alt="image-20210127162135611"></p>
-<p>如果我们的资料很乱随机给出，毫无规律可循，那么我们可以完美的分开这些资料的概率是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127162447936.png" srcset="/img/loading.gif" alt="image-20210127162447936"></p>
-<p>但是如果我们今天通过机器学习分开了这些资料，这意味着大概率我们的资料是可分的，因此这样的机器学习是合理的(资料是可分的,而不是随机的)。</p>
-<h2 id="Sampling-Bias-（抽样偏差）"><a href="#Sampling-Bias-（抽样偏差）" class="headerlink" title="Sampling Bias （抽样偏差）"></a>Sampling Bias （抽样偏差）</h2><p>在美国总统竞选时，Dewey和Truman到了最后选举时，当时已经投完票了，所以进行电话民调，结果显示Dewey会战胜Truman。但最后结果确实相反。</p>
-<p>这不是因为bad luck，因为抽样次数还是很多的。也不是编辑部的搞错了的问题。</p>
-<p>而是当时电话很贵，富人支持Dewey的比较多，导致了<strong>抽样偏差</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127163150993.png" srcset="/img/loading.gif" alt="image-20210127163150993"></p>
-<p>因此我们的<strong>训练和测试集要来自同样的分布</strong>。</p>
-<p>​    同样我们之前说的信用卡发放问题，我们对这个人如果曾经有信用卡和还款情况等因素做了估计，但是我们其实放到实际应用会发现其实效果不是很好，因为我们一直在考虑对有信用卡的人的要求，而那些没有信用卡的人如果有了信用卡会不会还不上这样的问题没有做考虑。</p>
-<p>​    同样我们预策喜欢电影的类型给你10部电影，预策观众喜欢看什么，我们做validation的时候，前7部用来训练model，后3部用来test我们的model，但其实我们没有考虑到模型的时间问题，也就是说一个人看电影在前7部和后面3部电影对这个观众的影响是不同的。比如我们以前喜欢看言情剧，偶然解除了科幻，我们开始看科幻多一些，可是后面三部电影却和前面7部每一部的权重是相同的，这显然不合理，一个观众越后面看的电影应该在预策中影响的权重越大，而不应该是相同的，这也是一种sampling Bias。</p>
-<h2 id="Data-Snooping-数据窥测"><a href="#Data-Snooping-数据窥测" class="headerlink" title="Data Snooping(数据窥测)"></a>Data Snooping(数据窥测)</h2><p>不要让我们的大脑来做选择，不要偷看资料自己去选择。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127164553062.png" srcset="/img/loading.gif" alt="image-20210127164553062"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127164917669.png" srcset="/img/loading.gif" alt="image-20210127164917669"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165112869.png" srcset="/img/loading.gif" alt="image-20210127165112869"></p>
-<p>​       在写论文中同样存在这个问题，如果一个数据集不变，paper里的效果越来越好，但是这都是因为我们看到了前人的论文，看到了他们的模型，这个看到别人的模型也是一种Data Snooping，我们不断地修正这个模型，加了越来越多的东西，只会在某个数据集上做的很好，但是其实泛化能力已经非常差了，放到业界新的数据上，这个模型不一定work。</p>
-<p>​    </p>
-<h2 id="Power-of-Three"><a href="#Power-of-Three" class="headerlink" title="Power of Three"></a>Power of Three</h2><p><strong>机器学习所相关的三个领域：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165721868.png" srcset="/img/loading.gif" alt="image-20210127165721868"></p>
-<p><strong>三个Bound：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165745509.png" srcset="/img/loading.gif" alt="image-20210127165745509"></p>
-<p><strong>三个模型：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165810730.png" srcset="/img/loading.gif" alt="image-20210127165810730"></p>
-<p><strong>三个关键的工具：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165856142.png" srcset="/img/loading.gif" alt="image-20210127165856142"></p>
-<p><strong>三个机器学习原则：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210127165931680.png" srcset="/img/loading.gif" alt="image-20210127165931680"></p>
+              <h1 id="CH1：Linear-SVM"><a href="#CH1：Linear-SVM" class="headerlink" title="CH1：Linear SVM"></a>CH1：Linear SVM</h1><h2 id="Large-Margin-separating-Hyperplane"><a href="#Large-Margin-separating-Hyperplane" class="headerlink" title="Large-Margin separating Hyperplane"></a>Large-Margin separating Hyperplane</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203201812968.png" srcset="/img/loading.gif" alt="image-20210203201812968"></p>
+<p>这三种线都可以把这些点分开。</p>
+<ul>
+<li><p>PLA算法不一定会得出哪儿一种线</p>
+</li>
+<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202005352.png" srcset="/img/loading.gif" alt="image-20210203202005352"></p>
+<p>从我们的VC Bound来看，$E_{in}=0$都一样，$d_{VC}$=也一样，那么 VC Bound所带来的保证$E_{out}$都相同。</p>
+</li>
+</ul>
+<p>​    但其实我们的直觉告诉我们第三种好一点，因为他如果有一些数据有误差，那么也不会影响结果，因此我们一般认为第三条线对错误容忍度高一些。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202331691.png" srcset="/img/loading.gif" alt="image-20210203202331691"></p>
+<p>​    简单理解就是如果<strong>点距离分割面/分割线越远</strong>，那么他容忍noise的力度越大，我们在基石课中学到，noise是造成overfittng的原因，容忍noise能力越强则<strong>更不容易带来overfitting</strong>。</p>
+<hr>
+<p>因此我们想找健壮性更强一些的线，什么是健壮性更强的呢？就是<strong>点距离分割面/分割线越远</strong>。我们直观理解就是这条线可以有多<strong>胖</strong>。</p>
+<p>如下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203010157.png" srcset="/img/loading.gif" alt="image-20210203203010157"></p>
+<p>灰色就代表这条线有多胖，这条线越胖越说明我们的健壮性越强。</p>
+<p>那么我们现在可以给健壮性一个定义：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203149201.png" srcset="/img/loading.gif" alt="image-20210203203149201"></p>
+<p>健壮性就是点距离分割线/分割面 最近的距离。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203422827.png" srcset="/img/loading.gif" alt="image-20210203203422827"></p>
+<p>那么现在我们要做的就是<strong>最大化fatness(w)</strong>。</p>
+<p>但是这个”胖“的说法似乎不太专业，这里我们给出真正的名字margin</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203619396.png" srcset="/img/loading.gif" alt="image-20210203203619396"></p>
+<p>因此我们想要做到下面两点：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203704673.png" srcset="/img/loading.gif" alt="image-20210203203704673"></p>
+<ul>
+<li>Margin越大越好</li>
+<li>分类正确</li>
+</ul>
+<h2 id="Standard-Large-Margin-Problem"><a href="#Standard-Large-Margin-Problem" class="headerlink" title="Standard Large-Margin Problem"></a>Standard Large-Margin Problem</h2><p>我们要解决的问题是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203955323.png" srcset="/img/loading.gif" alt="image-20210203203955323"></p>
+<p>我们首先要知道距离怎么算。</p>
+<p>我们之前算的时候是需要在数据第一列加上一列1的，然后用$sign(w^Tx)$计算分类结果，但是这里我们不在加上第一列1了，把w的第一列拆出来，那么判断就变成了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203204800204.png" srcset="/img/loading.gif" alt="image-20210203204800204"></p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205335953.png" srcset="/img/loading.gif" alt="image-20210203205335953"></p>
+<p>这个图上的$x’$和$x’’$一定是符合 $w^Tx + b = 0$ 的</p>
+<p>因此:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205451314.png" srcset="/img/loading.gif" alt="image-20210203205451314"></p>
+<p>我们的这个权重向量一点是是分割面的法向量的。</p>
+<p>我们接下来算距离：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205558354.png" srcset="/img/loading.gif" alt="image-20210203205558354"></p>
+<p>首先$(x-x’)$代表着这个蓝色向量，然后让他做投影，投影到w的方向。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205706594.png" srcset="/img/loading.gif" alt="image-20210203205706594"></p>
+<p>投影后的距离就是<strong>距离分割面的距离：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205818953.png" srcset="/img/loading.gif" alt="image-20210203205818953"></p>
+<p>对于可分的平面来说：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205949602.png" srcset="/img/loading.gif" alt="image-20210203205949602"></p>
+<p>因此我们可以脱去绝对值：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210005363.png" srcset="/img/loading.gif" alt="image-20210203210005363"></p>
+<p>那么现在我们的问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210025215.png" srcset="/img/loading.gif" alt="image-20210203210025215"></p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210208708.png" srcset="/img/loading.gif" alt="image-20210203210208708"></p>
+<p>一条线是可以有多种表达方式的，我们这里只要保持$\frac{w^T}{||w||}$不变即可，因此我们放缩$w^T$,使其符合下面这个式子。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210424443.png" srcset="/img/loading.gif" alt="image-20210203210424443"></p>
+<p>那么此时我们的距离就变成了$\frac{1}{||w||}$。</p>
+<p>问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210545690.png" srcset="/img/loading.gif" alt="image-20210203210545690"></p>
+<p>我们这里发现 <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210608829.png" srcset="/img/loading.gif" alt="image-20210203210608829"></p>
+<p>下面这个条件包含上面的条件了，因此只需要下面的条件即可。</p>
+<p>现在问题转化为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210649123.png" srcset="/img/loading.gif" alt="image-20210203210649123"></p>
+<hr>
+<p>到现在位置问题中的min还是很难搞，我们如果可以放宽一些他的条件，但是结果还在当前条件的限制之下，那么我们的问题就好解决了。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211159268.png" srcset="/img/loading.gif" alt="image-20210203211159268"></p>
+<p>我们用蓝色的条件代替紫色的，但这样很可能会导致</p>
+<p>$y_n(w^T+b)$全部都大于1，导致最小的也不等于1了，那么这样放大了条件是没有什么意义的。</p>
+<p>我们考虑假如真的全部都大于1，比如都大于1.126.</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211345197.png" srcset="/img/loading.gif" alt="image-20210203211345197"></p>
+<p>我们可以调整$w$和$b$的大小使得其重新满足条件，那么这个条件放大一些是不影响结果的。</p>
+<p>那么此时问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211544842.png" srcset="/img/loading.gif" alt="image-20210203211544842"></p>
+<p>做一些小的数学变换，（这个$\frac{1}{2}$就是为了后面方便计算的常数，最大化最小化问题中常数不影响最优的结果）</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211652281.png" srcset="/img/loading.gif" alt="image-20210203211652281"></p>
+<h2 id="Support-Vector-Machine"><a href="#Support-Vector-Machine" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211851541.png" srcset="/img/loading.gif" alt="image-20210203211851541"></p>
+<p>我们以上图为例子：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212202907.png" srcset="/img/loading.gif" alt="image-20210203212202907"></p>
+<p>我们不难得出下面两个式子</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212247035.png" srcset="/img/loading.gif" alt="image-20210203212247035"></p>
+<p>所以$w_1^2+w_2^2\ge2$,即：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212331579.png" srcset="/img/loading.gif" alt="image-20210203212331579"></p>
+<p>因此我们就可以算出这个最胖的线：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212543635.png" srcset="/img/loading.gif" alt="image-20210203212543635"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212649585.png" srcset="/img/loading.gif" alt="image-20210203212649585"></p>
+<p>我们直观理解这个问题就是，我们通过支持向量(support vector)，也就是胖胖的线上边缘的那些点来算得这个胖胖的线。</p>
+<hr>
+<p>但是上面是4个点，比较简单，那么如果包含多个点我们怎么做呢？</p>
+<p>幸运的是，这是一种二次规划问题，我们有现成的工具可以解决，我们只需要把我们现在的公式转换为标准的二次规划问题表达形式即可。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213319550.png" srcset="/img/loading.gif" alt="image-20210203213319550"></p>
+<p>我们只要找到左边的参数即可。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213601556.png" srcset="/img/loading.gif" alt="image-20210203213601556"></p>
+<p>那么我们的Linear Hard-Margin SVM算法就搞定了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213818582.png" srcset="/img/loading.gif" alt="image-20210203213818582"></p>
+<p>怎么做非线性的呢？还记得基石里讲到的方法吗，做feature transform就好了。</p>
+<h2 id="Reasons-behind-Large-Margin-Hyperplane"><a href="#Reasons-behind-Large-Margin-Hyperplane" class="headerlink" title="Reasons behind Large-Margin Hyperplane"></a>Reasons behind Large-Margin Hyperplane</h2><p>有趣的事情是，我们发现：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214239916.png" srcset="/img/loading.gif" alt="image-20210203214239916"></p>
+<p>SVM怎么和regularization做的是相似的事情，都考虑了两个事情：</p>
+<p>原来regularization做的事情可以防止overfit的原因体现在了SVM里。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214819040.png" srcset="/img/loading.gif" alt="image-20210203214819040"></p>
+<p>我们在之前的线性分类模型中hypothesis的数量可能很多，但是在SVM中比如我们要求这个分割面足够的胖，那么有一些在线性分类模型中的hypothesis在SVM中是不成立的(如上图)，因此<strong>VC Dimension会小一些，因此他的泛化能力更好一些</strong>。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221636904.png" srcset="/img/loading.gif" alt="image-20210203221636904"></p>
+<p>对于上图三个点，如果不考虑胖瘦，那么$d_{vc}=3$，但是如果要求宽度大于某个常数，那么$d_{vc}&lt;3$.</p>
+<p>我们这里有一个现成的结果：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221816559.png" srcset="/img/loading.gif" alt="image-20210203221816559"></p>
+<p>$\rho$代表SVM中的线的宽度，$R$代表半径，因此我们多了一种控制复杂度的方式。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222213241.png" srcset="/img/loading.gif" alt="image-20210203222213241"></p>
+<p>我们有了large-margin hyperplane 我们可以同时做到 hypothesis set很小 并且 分界也更精细，即：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222433887.png" srcset="/img/loading.gif" alt="image-20210203222433887"></p>
 
             </div>
             <hr>
@@ -295,18 +376,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习技法CH1：Linear SVM</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/27/CH15%EF%BC%9AValidation/">
-                        <span class="hidden-mobile">机器学习基石CH15：Validation</span>
+                      <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">
+                        <span class="hidden-mobile">机器学习基石CH16：Three Learning Principle(完结)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -325,8 +400,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/';
-        this.page.identifier = '/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/';
+        this.page.url = 'https://chillstepp.github.io/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/';
+        this.page.identifier = '/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
