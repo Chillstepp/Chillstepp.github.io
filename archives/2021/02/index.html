@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -187,13 +187,19 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 60 篇文章</p>
+  <p class="h4">共计 61 篇文章</p>
   <hr>
   
   
     
       
       <p class="h5">2021</p>
+    
+    <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">机器学习技法CH10：Random Forest</span>
+      <time style="float: right;">02-25</time>
+    </a>
+  
     
     <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">机器学习技法CH9：Decision Tree</span>
@@ -248,14 +254,20 @@
       <time style="float: right;">02-05</time>
     </a>
   
-    
-    <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">机器学习技法CH1：Linear SVM</span>
-      <time style="float: right;">02-03</time>
-    </a>
-  
 </div>
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/archives/2021/02/page/2/">2</a><a class="extend next" rel="next" href="/archives/2021/02/page/2/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -427,20 +439,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
