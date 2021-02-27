@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,56 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/10/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh2-%E5%8D%B7%E7%A7%AF,%E6%A8%A1%E6%9D%BF%E5%8C%B9%E9%85%8D,%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/">AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/10/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BECh2-%E5%8D%B7%E7%A7%AF,%E6%A8%A1%E6%9D%BF%E5%8C%B9%E9%85%8D,%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94/">
+          
+          
+            
+          
+          AHU计算机视觉课Ch2-卷积,模板匹配,图像金字塔Ch1中所提到的均值滤波，高斯滤波等都用到了卷积，且是不同的卷积核。
+将图像与核做卷积得到的图象可以看作对图像进行了处理，例如均值滤波和高斯滤波
+
+
+1.一维卷积
+所以$R=P*Q=[R[0]，R[1] ，R[2]……..R[m+n]]$
+具体过程举个例子：
+
+一维卷积的长度为：$len(g)=len(f)+len(h)-1$
+卷积形象化过程如下
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-10 10:57" pubdate>
+              2020-07-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -572,67 +622,6 @@ Renaissance  n.文
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/15/Codeforces-Round-618-Div-2-%E5%85%A8%E9%A2%98%E8%A7%A3%EF%BC%88A-E%EF%BC%89/">Codeforces Round #618 (Div. 2)全题解（A-E）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/15/Codeforces-Round-618-Div-2-%E5%85%A8%E9%A2%98%E8%A7%A3%EF%BC%88A-E%EF%BC%89/">
-          
-          
-            
-          
-          Codeforces Round #618 (Div. 2)全题解（A-E）比赛题目地址：https://codeforces.com/contest/1300
-
-
-
-
-#
-Name
-
-
-
-
-
-
-A
-Non-zero    standard input/output1 s, 256 MB
- 
- x10972
-
-
-B
-Assigning to Classes   standard input/out
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-15 00:41" pubdate>
-              2020-02-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ACM-Codeforces/">ACM-Codeforces</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -816,5 +805,20 @@ Assigning to Classes   standard input/out
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
