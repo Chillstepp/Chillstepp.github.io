@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,7 +243,7 @@
 <p>我们在AdaBoost-DTree中的第二步的DTree算法中加入了权重$u^{(t)}$。</p>
 <p>如何实现这个呢 ？</p>
 <p>我们回想一下在bootstrap中，我们把$u_n$代表着每个数据被选到的数量。但是我们现在的DTree算法没有权重这一说，我们又想要加上权重这个概念，那怎么办呢？</p>
-<p>我们可以提前先对数据处理一下，比如原来有三个数据(1,1)(2,2)(3,3),权重是2，1，0，也就是2个(1,1),1个(2,2),没有(3,3),那么我们把数据先改变为(1,1)(1,1)(2,2),然后再去随机抽取，这样就用 <strong>抽到的概率</strong> 代替了 <strong>权重的概念</strong>。</p>
+<p>我们可以提前先对数据处理一下，比如原来有三个数据(1,1)(2,2) (3,3),权重是2，1，0，也就是2个(1,1),1个(2,2),没有(3,3),那么我们把数据先改变为(1,1)(1,1)(2,2),然后再去随机抽取，这样就用 <strong>抽到的概率</strong> 代替了 <strong>权重的概念</strong>。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225225234849.png" srcset="/img/loading.gif" alt="image-20210225225234849"></p>
 <p>我们现在用sampling 来代替权重概念，还没有魔改DTree。</p>
 <p>在AdaBoost中 $\alpha_t = ln(♦_t) = ln \sqrt{(1-\epsilon_t)/\epsilon_t}$,我们如果同样用到这里：</p>
@@ -653,20 +653,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
