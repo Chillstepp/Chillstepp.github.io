@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -208,12 +208,12 @@
           
             
           
-          CH14：Radial Basis Function NetworkRBF Network Hypothesis首先回忆一下Gaussian Kernel在SVM中的应用  
+          CH14：Radial Basis Function NetworkRBF Network Hypothesis首先回忆一下Gaussian Kernel在SVM中的应用
 
 
 我们在$x_n$处找$\alpha_n$ 来组合Gaussian Kernel，使得实现最大边界。
 
-高斯核也叫径向基(Radial Basis Function，RBF)核。其中radial代表我们今天算的和距离有关，
+高斯核也叫径向基(Radial Basis Function，RBF)核。其中radial代表我们今天算的和距离有关，也就
         </a>
       </p>
 
@@ -934,5 +934,20 @@ Decisi
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
