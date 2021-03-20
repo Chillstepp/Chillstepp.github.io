@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习技法CH14：Radial Basis Function Network - Chillstep</title>
+  <title>机器学习技法CH15：Matrix Factorization - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习技法CH14：Radial Basis Function Network">
+            <span class="h2" id="subtitle" title="机器学习技法CH15：Matrix Factorization">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-18 22:21" pubdate>
-        2021年3月18日 晚上
+      <time datetime="2021-03-20 16:45" pubdate>
+        2021年3月20日 下午
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.3k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      14
        分钟
     </span>
   
@@ -236,111 +236,78 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习技法CH14：Radial Basis Function Network</h1>
+            <h1 style="display: none">机器学习技法CH15：Matrix Factorization</h1>
             
             <div class="markdown-body">
-              <h2 id="CH14：Radial-Basis-Function-Network"><a href="#CH14：Radial-Basis-Function-Network" class="headerlink" title="CH14：Radial Basis Function Network"></a>CH14：Radial Basis Function Network</h2><h2 id="RBF-Network-Hypothesis"><a href="#RBF-Network-Hypothesis" class="headerlink" title="RBF Network Hypothesis"></a>RBF Network Hypothesis</h2><p>首先回忆一下Gaussian Kernel在SVM中的应用</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318202139040.png" srcset="/img/loading.gif" alt="image-20210318202139040"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318202221263.png" srcset="/img/loading.gif" alt="image-20210318202221263"></p>
-<p>我们在$x_n$处找$\alpha_n$ 来组合Gaussian Kernel，使得实现最大边界。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318202440114.png" srcset="/img/loading.gif" alt="image-20210318202440114"></p>
-<p>高斯核也叫径向基(<em>Radial</em> <em>Basis</em> Function，RBF)核。其中radial代表我们今天算的和距离有关，也就是$x$和中心$x_n$。</p>
-<p>我们今天就是要做radial hypothesis的linear aggregation。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318203052060.png" srcset="/img/loading.gif" alt="image-20210318203052060"></p>
-<p>RBF Network和Neural Network的区别是：Neural Network是先和$w$做内积然后tanh转化，而RBF Network是通过把输入看成centre，然后去做距离的RBF Function。</p>
-<p>这两者的输出反而没什么区别，都是linear aggregation</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318203454217.png" srcset="/img/loading.gif" alt="image-20210318203454217"></p>
-<p>那么我们应该关注的两个变量就是系数$\beta_m$和中心$\mu_m$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318203844216.png" srcset="/img/loading.gif" alt="image-20210318203844216"></p>
-<p>output采用的是sign(),也就是二分类，M就是support vector的数量。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318204013005.png" srcset="/img/loading.gif" alt="image-20210318204013005"></p>
-<p>我们在kernel中提到kernel通过把两个向量转换道z空间，找到他们的相似性。</p>
-<p>相似性是一个很好的定义特征转换的方法，RBF中通过距离的相似性做feature transform。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318204709887.png" srcset="/img/loading.gif" alt="image-20210318204709887"></p>
-<h2 id="RBF-Network-Learning"><a href="#RBF-Network-Learning" class="headerlink" title="RBF Network Learning"></a>RBF Network Learning</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318205105341.png" srcset="/img/loading.gif" alt="image-20210318205105341"></p>
-<p>我们定义一个Full RBF Network，他有N笔资料，那么就有N个中心，他的物理意义就是：我的每笔资料对会对周围资料有影响，影响力大小为$\beta_m$。</p>
-<p>比如Uniform的方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318205804822.png" srcset="/img/loading.gif" alt="image-20210318205804822"></p>
-<p>我们通过大家意见的相似度来整合每个人的意见，把所有点都当做中心点。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318210030932.png" srcset="/img/loading.gif" alt="image-20210318210030932"></p>
-<p>高斯函数是一个幂指数函数，他的下降非常快，因此那个最接近$x_m$的$x$掌握了主导权，那么我们是不是就不用考虑每个人了，找出主导权的来做决定就好了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318210227601.png" srcset="/img/loading.gif" alt="image-20210318210227601"></p>
-<p>我们考虑有主导权的那个$x$(最接近$x_m$的$x$), 用他的投票$y_m$代替所有的人。</p>
-<p>这应该叫做selection而不是aggregation了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318210400488.png" srcset="/img/loading.gif" alt="image-20210318210400488"></p>
-<p>这叫好比找中心$x_m$的最近的邻居，我们称之为最邻近模型。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318210648326.png" srcset="/img/loading.gif" alt="image-20210318210648326"></p>
-<p>我们可能一个来代表所有人还是有点太不合理了，那么我们考虑最有主导权的k个$x$, 也就是距离中心最近的k个邻居。</p>
-<p>那么我们考虑最佳化这个$\beta$就好了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318210842609.png" srcset="/img/loading.gif" alt="image-20210318210842609"></p>
-<p>我们先把他看作一个linear regression的问题，然后用square error去衡量错误。</p>
-<p>那么我们的资料就是这些 RBF Function组成的资料：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318211026966.png" srcset="/img/loading.gif" alt="image-20210318211026966"></p>
-<p>最优化$\beta$  ? linear regression很容易做到这个问题，这是有闭式解的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318211114417.png" srcset="/img/loading.gif" alt="image-20210318211114417"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318211439805.png" srcset="/img/loading.gif" alt="image-20210318211439805"></p>
-<p>$Z$矩阵的大小是一个N<em>N的，即每个点距离每个中心的RBF Function。那么这肯定是一个<em>*对称矩阵</em></em>，因为a到b和b到a的距离必然相同。</p>
-<p>有一个theoretical fact：如果$x_n$各不相同，那么$Z$就是一个可逆的。证明这个很容易，如果存在$x_1=x_2$,那么Z的第一二行会相同，第一二列也会相同，那么这明显就不是满秩的了，也就是说不可逆了。</p>
-<p>那么我们的$\beta$表达式可以写成：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318211753349.png" srcset="/img/loading.gif" alt="image-20210318211753349"></p>
-<p>full Gaussian RBF Network中的$\beta$做完回归后：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318212013590.png" srcset="/img/loading.gif" alt="image-20210318212013590"></p>
-<p>这里推到发现：$g_{RBF}(x_1) = \beta ^TZ^{-1}(Z的第一行)$，这就得到了一个很有趣的结果：</p>
-<p>$g_{RBF}(x_n) = y_n$,这就说明我们的$E_{in} =0$， 但这感觉有点怪怪的: 可能回有overfitting。</p>
-<p>那我们加上正则化：那么我们用ridge regression来做：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318213426783.png" srcset="/img/loading.gif" alt="image-20210318213426783"></p>
-<p>其中$\lambda$是一个正则量，代表着正则化的程度。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318213614043.png" srcset="/img/loading.gif" alt="image-20210318213614043"></p>
-<p>在kernel ridge regression中我们对无限多维的转换做regularization，在RBF Network中是对有限多维做regularization。</p>
-<p>我们考虑考虑不让所有数据来做中心，考虑一部分有代表性的来做中心即可，那么就可以减少overfitting了。</p>
-<h2 id="K-Means-Algorithm"><a href="#K-Means-Algorithm" class="headerlink" title="K-Means Algorithm"></a>K-Means Algorithm</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318214441732.png" srcset="/img/loading.gif" alt="image-20210318214441732"></p>
-<p>如果$x_1$和$x_2$相近，那么就没必要搞两个中心，聚类时选一个看作中心即可。</p>
-<p>现在先做一个聚类，分成M个集合，我们希望每个集合中的中心和这个集合中的数据是相似的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318214654383.png" srcset="/img/loading.gif" alt="image-20210318214654383"></p>
-<p>我们还是先做一个error measure function：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318214819648.png" srcset="/img/loading.gif" alt="image-20210318214819648"></p>
-<p>采用square error，对每个集合来说，找出这个集合中的每个点和中心点的距离差。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318215058615.png" srcset="/img/loading.gif" alt="image-20210318215058615"></p>
-<p>但这个貌似并不好做最优化，因为有两个优化要做：一个是排列组合问题：怎么分开不同的集合，另一个是中心点怎么选择的数值优化问题。</p>
-<p>如果中心点确定了，那么我们选择距离某个中心点最近的中心点即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318215636262.png" srcset="/img/loading.gif" alt="image-20210318215636262"></p>
-<p>那么没了分组的问题 ，我们可以直接做数值优化的问题了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318215746338.png" srcset="/img/loading.gif" alt="image-20210318215746338"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318215803024.png" srcset="/img/loading.gif" alt="image-20210318215803024"></p>
-<p>那么最佳的$\mu_m$就是每个集合内$x$的平均。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318215905314.png" srcset="/img/loading.gif" alt="image-20210318215905314"></p>
-<p>那么<code>K-Means</code>算法就可以提出：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318220021734.png" srcset="/img/loading.gif" alt="image-20210318220021734"></p>
+              <h1 id="CH15：Matrix-Factorization"><a href="#CH15：Matrix-Factorization" class="headerlink" title="CH15：Matrix Factorization"></a>CH15：Matrix Factorization</h1><h2 id="Linear-Network-Hypothesis"><a href="#Linear-Network-Hypothesis" class="headerlink" title="Linear Network Hypothesis"></a>Linear Network Hypothesis</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320134129803.png" srcset="/img/loading.gif" alt="image-20210320134129803"></p>
+<p>还记得Netflix推荐系统那个问题吗，他给出的数据$D$ 有两个东西，一个是$\tilde x$，代表着用户的ID,例如：1126，5566，6211</p>
+<p>另一个是ID为$n$的人，对电影$m$的评分，我们记为$r_{nm}$。</p>
+<p> 类似于ID,血型，编程语言 这种feature都是categorical features，也就是<strong>类别特征</strong>。没有什么具体大小的意义，只是代表某一类。</p>
+<p>许多的机器学习模型只能处理数值特征：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320134931324.png" srcset="/img/loading.gif" alt="image-20210320134931324"></p>
+<p>但是decision tree可以很好的处理类别特征。</p>
+<p>如果我们想要用在数值特征的机器学习模型上，就要对类别特征通过encoding进行feature transform，转换到数值特征。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320135152589.png" srcset="/img/loading.gif" alt="image-20210320135152589"></p>
+<p>这里提供一种编码的方式，我们有四个类型，那么就用一个四维的向量来表示每个血型。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320135821019.png" srcset="/img/loading.gif" alt="image-20210320135821019"></p>
+<p>再来看看训练资料：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320140059982.png" srcset="/img/loading.gif" alt="image-20210320140059982"></p>
+<p>对于每个user他有一串的评分，’?’表示没看过/没评分，我们想从这样的资料里来学到user的喜好。那么下面要做的就是对每个user进行特征精炼，很自然想到的方法就是NNet。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320140340640.png" srcset="/img/loading.gif" alt="image-20210320140340640"></p>
+<p>这样的网络的训练输入是：user编码后的id的每一位，输入就是这个user的喜好，这个网络训练完成后，每个$x_i$被赋值为1时，网络就会 输出ID为00…0100…0的喜好(其中的1在第$i$个)。</p>
+<p>这样就把复杂的资料存入了这个NNet中。</p>
+<p>中间的这个tanh转换是必要的吗？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320140900315.png" srcset="/img/loading.gif" alt="image-20210320140900315"></p>
+<p>因为我们每次只有一个$x$会等于1，如上图，假设是第二个，经过转换得到就是 $tanh(w_{21}^{(1)})$和$tanh(w_{22}^{(1)})$，这两个值去组合得到不同的y和$w_{21}^{(1)}$,$w_{22}^{(1)}$去组合没什么区别，</p>
+<p>所以我们可以改成：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320141556147.png" srcset="/img/loading.gif" alt="image-20210320141556147"></p>
+<p>我们对上面的转换矩阵重新命名一下:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320141710045.png" srcset="/img/loading.gif" alt="image-20210320141710045"></p>
+<p>那么我们的网络的函数就可以写成：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320141748050.png" srcset="/img/loading.gif" alt="image-20210320141748050"></p>
+<p>最后得到的结果就是一个$N*1$的矩阵，也就代表了$x$的打分情况。</p>
+<p>对一个具体的用户$x_n$来看，式子可以写为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320141944533.png" srcset="/img/loading.gif" alt="image-20210320141944533"></p>
+<h2 id="Basic-Matrix-Factorization"><a href="#Basic-Matrix-Factorization" class="headerlink" title="Basic Matrix Factorization"></a>Basic Matrix Factorization</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320142805776.png" srcset="/img/loading.gif" alt="image-20210320142805776"></p>
+<p>做到这一步，可以把$Vx$看作是对$x$的一种转换，转换为$\phi(x)$,然后再和一个$W^T$相乘。这样就相当于我们把一个user很抽象的特征(ID)转换为了一种对user的具体描述，这个具体描述和$W^T$做一个相乘后就反映了user的电影喜好。</p>
+<p>那么我们就可以写出error measure：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320143541248.png" srcset="/img/loading.gif" alt="image-20210320143541248"></p>
+<p>我们的评分总表如下，我们可以拆成两个部分，一个是user自带的特征($v$) 和 电影的特征($w$) 进行计算后就会得到这个人对这个电影的得分。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320143827014.png" srcset="/img/loading.gif" alt="image-20210320143827014"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320143835358.png" srcset="/img/loading.gif" alt="image-20210320143835358"></p>
+<p>当然这一步是在神经网络上做到的，他提取精炼到的特征信息可能如下，比如$v$ 代表着 [喜不喜欢戏剧，喜不喜欢武打片，……],而movie中提取到的信息就是[包含戏剧内容吗，包含武打内容吗 …….],那么此时我们就学到了这种特征。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320143949777.png" srcset="/img/loading.gif" alt="image-20210320143949777"></p>
+<p>下面我们最小化$E_{in}$:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320144446101.png" srcset="/img/loading.gif" alt="image-20210320144446101"></p>
+<p>有位有两个变数$V$和$W$,因此我们考虑分别做最优化：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320145004222.png" srcset="/img/loading.gif" alt="image-20210320145004222"></p>
 <ul>
-<li><p>初始的$\mu$怎么选：一般来说从$x_n$中随便选取k个即可</p>
+<li><p>当$v_n$确定，也就是确定了哪儿个人的时候，我们就最优化每部电影的$w_m$即可，因为我们已知$r_{nm}$,$v_n$，而且还是square error，那么我们就可以对每部电影做一个linear regression，这个在insight上的理解就是，确定了某个人，又给了你这个人对每个电影的评分，那么我们就要通过这些数据调整电影的特点，类似于下图，调整一下每个圈的权重，这样就知道电影的风格了。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320145756509.png" srcset="/img/loading.gif" alt="image-20210320145756509"></p>
 </li>
-<li><p>怎么停止？会停止吗？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318220146215.png" srcset="/img/loading.gif" alt="image-20210318220146215"></p>
-<p>当然会，集合不变化后，$E_{in}$是逐渐变小的。</p>
+<li><p>当$w_m$确定时，同理，确定了哪儿个电影，有不同的人对他的评分，那么我们就可以对这些人的口味进行训练，得到下图的效果：</p>
 </li>
 </ul>
-<p>同时也可以提出<code>RBF Network Using K-Means</code>算法了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318220334263.png" srcset="/img/loading.gif" alt="image-20210318220334263"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318220435045.png" srcset="/img/loading.gif" alt="image-20210318220435045"></p>
-<ul>
-<li>用非监督的方法K-Means来帮助我们精炼到了feature transform，就像autoencoder一样。</li>
-</ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318220603445.png" srcset="/img/loading.gif" alt="image-20210318220603445"></p>
-<ul>
-<li>参数选择：怎么选择M，$\gamma$ ?  还是Validation   : )  </li>
-</ul>
-<p>老实说，RBF Network是一种old-fashion的model，他和Gauss SVM，Neural Network可能表现没什么区别，但是它可以帮我们连接一些我们已知的算法，建立一个完整的算法体系。</p>
-<h2 id="K-Means-and-RBFNet-in-ACTION"><a href="#K-Means-and-RBFNet-in-ACTION" class="headerlink" title="K-Means and RBFNet in ACTION"></a>K-Means and RBFNet in ACTION</h2><p>一个K-Means的Demo：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318221028859.png" srcset="/img/loading.gif" alt="image-20210318221028859"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318221124016.png" srcset="/img/loading.gif" alt="image-20210318221124016"></p>
-<p>不同的k的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318221149315.png" srcset="/img/loading.gif" alt="image-20210318221149315"></p>
-<p>我们可以用这些K-means做的结果，用RBF Network using k-means去做binary classification：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318221314786.png" srcset="/img/loading.gif" alt="image-20210318221314786"></p>
-<p>如果我们第一层的K-Means做的比较合理，那么RBF Network来做也是很轻松的，随着K的变大,RBF Network的feature transform的维度也更大，边界会更精准一些，但是要小心overfitting哦。</p>
-<p>我们最后来看Full RBF Network：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210318221759620.png" srcset="/img/loading.gif" alt="image-20210318221759620"></p>
-<p>值得一提的是:Full RBF Network因为要考虑所有的点，因此计算量很大，比如nearest neighbour这种方法，他很依赖于一些几何上的算法，来计算的快一些</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320145928467.png" srcset="/img/loading.gif" alt="image-20210320145928467"></p>
+<p>这个也可以用linear regression来做。</p>
+<p>这种方法叫做：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320150050247.png" srcset="/img/loading.gif" alt="image-20210320150050247"></p>
+<p>那么我们提出这种算法<code>Alternating Least Squares(交替最小二乘法)</code>：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320150136161.png" srcset="/img/loading.gif" alt="image-20210320150136161"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320150436898.png" srcset="/img/loading.gif" alt="image-20210320150436898"></p>
+<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><p><strong>SGD介绍</strong>：机器学习基石/CH11：Linear-Models-for-Classification/Stochastic-Grad-Descent（随机梯度下降）</p>
+<p>比如现在我们对具体的一个观众来求偏微分，那么$err()$求出来的结果 除了当n=1126都是0。</p>
+<p>同理我们就可以写出对第n个观众的偏微分和对第m个电影的偏微分。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320152817247.png" srcset="/img/loading.gif" alt="image-20210320152817247"></p>
+<p>那么我也可以用SGD的方式来做：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320153538452.png" srcset="/img/loading.gif" alt="image-20210320153538452"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320153754857.png" srcset="/img/loading.gif" alt="image-20210320153754857"></p>
+<p>在基石中最后一节课讲到的的Sampling Bias(抽样偏差)，即我们今年喜欢看的电影和去年喜欢看的电影可能并不是从同一个分布出来的，这有着时间的变化，同时我们今年看的电影更有可能影响我们今年的观影喜好，因此在SGD训练的时候，我们可以选择在SGD最后几百次梯度下降的时候多选择更晚一些的观影评价进行更新。</p>
+<h2 id="Summary-of-Extraction-Models（提取模型总结）"><a href="#Summary-of-Extraction-Models（提取模型总结）" class="headerlink" title="Summary of Extraction Models（提取模型总结）"></a>Summary of Extraction Models（提取模型总结）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320161229648.png" srcset="/img/loading.gif" alt="image-20210320161229648"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320155215684.png" srcset="/img/loading.gif" alt="image-20210320155215684"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320161630327.png" srcset="/img/loading.gif" alt="image-20210320161630327"></p>
+<p>Extraction Models的好处/劣处：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210320161747616.png" srcset="/img/loading.gif" alt="image-20210320161747616"></p>
 
             </div>
             <hr>
@@ -364,18 +331,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习技法CH15：Matrix Factorization</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH13%EF%BC%9ADeep-Learning/">
-                        <span class="hidden-mobile">机器学习技法CH13：Deep Learning</span>
+                      <a href="/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/">
+                        <span class="hidden-mobile">机器学习技法CH14：Radial Basis Function Network</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -394,8 +355,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/';
-        this.page.identifier = '/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/';
+        this.page.url = 'https://chillstepp.github.io/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/';
+        this.page.identifier = '/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
