@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,13 +243,13 @@
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407202647510.png" srcset="/img/loading.gif" alt="image-20210407202647510"></p>
 <p>​    我们这里使用了multiclass SVM loss(hinge loss function)，如果属于$y_i$类别的图像在$y_i$类得到的分数比在$j$类中得到的分数多1(这个1可以看作两类差距的一个阈值margin，毕竟如果两类如果差距不大，说明分类还是有些问题的，此时loss也不该为0)，那么说明没有损失，也就是$L_i = 0$此时。</p>
 <p>​    反之，属于$y_i$类别的图像在$y_i$类得到的分数比在$j$类中得到的分数低了一些的时候，说明了预测不准确，loss我们直接设置两个类别得到的分数的差值。</p>
-<p>如果想知道更多有关hinge loss和SVM的关系,可以查看：</p>
+<p>如果想知道更多有关hinge loss和SVM的关系,可以查看 ：</p>
 <p><a href="https://www.zhihu.com/question/62881491/answer/500947075" target="_blank" rel="noopener">如何把SVM的推导和损失函数联系起来？</a></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407204303622.png" srcset="/img/loading.gif" alt="image-20210407204303622"></p>
 <p>一个具体计算SVM loss的例子：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407204525977.png" srcset="/img/loading.gif" alt="image-20210407204525977"></p>
 <p>这里的car所得到的4.9分上下稍微浮动并不会影响到loss function的大小，因为在hinge loss中它一直是等于0的。</p>
-<p>在我们最小化L(W)时要小心overfitting</p>
+<p>在我们最小化L(W)时要小心overfitting.</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407212700503.png" srcset="/img/loading.gif" alt="image-20210407212700503"></p>
 <p>所以加上正则项：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407212800144.png" srcset="/img/loading.gif" alt="image-20210407212800144"></p>
@@ -573,20 +573,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
