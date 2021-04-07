@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -249,7 +249,7 @@
 <p>一个具体计算SVM loss的例子：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407204525977.png" srcset="/img/loading.gif" alt="image-20210407204525977"></p>
 <p>这里的car所得到的4.9分上下稍微浮动并不会影响到loss function的大小，因为在hinge loss中它一直是等于0的。</p>
-<p>在我们最小化L(W)时要小心overfitting.</p>
+<p>在我们最小化L(W)时要小心overfitting</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407212700503.png" srcset="/img/loading.gif" alt="image-20210407212700503"></p>
 <p>所以加上正则项：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210407212800144.png" srcset="/img/loading.gif" alt="image-20210407212800144"></p>
@@ -573,5 +573,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
