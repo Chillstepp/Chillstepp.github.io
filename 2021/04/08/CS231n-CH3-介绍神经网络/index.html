@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      455 字
+      434 字
     </span>
   
 
@@ -264,7 +264,6 @@
 <h2 id="神经网络-Neural-Network"><a href="#神经网络-Neural-Network" class="headerlink" title="神经网络(Neural Network)"></a>神经网络(Neural Network)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408205641681.png" srcset="/img/loading.gif" alt="image-20210408205641681"></p>
 <p>$f=Wx$是一种最简单的线性的网络。</p>
 <p>我们可以组成一个两层的网络，其中一层是$W_2$，另一层是$max(0,W_1x)$，这一层将网络变成了非线性的，这是因为$max(0,W_1x)$本身不是一个线性的函数。</p>
-<p>我们直观上可以理解为：比如一直头朝向左边的马，</p>
 <p>扩展到多层网络：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408210850595.png" srcset="/img/loading.gif" alt="image-20210408210850595"></p>
 <p>一些激活函数：</p>
@@ -562,20 +561,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
