@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -239,7 +239,7 @@
             <h1 style="display: none">CS231n-CH3-介绍神经网络</h1>
             
             <div class="markdown-body">
-              <h1 id="介绍神经网络"><a href="#介绍神经网络" class="headerlink" title="介绍神经网络"></a>介绍神经网络</h1><h2 id="反向传播-backpropagation"><a href="#反向传播-backpropagation" class="headerlink" title="反向传播(backpropagation)"></a>反向传播(backpropagation)</h2><p>梯度的计算是通过计算图：</p>
+              <h1 id="介绍神经网络"><a href="#介绍神经网络" class="headerlink" title="介绍神经网络"></a>介绍神经网络</h1><h2 id="反向传播-backpropagation"><a href="#反向传播-backpropagation" class="headerlink" title="反向传播(backpropagation)"></a>反向传播(backpropagation)</h2><p>梯度的计算是通过计算图 ：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408173032210.png" srcset="/img/loading.gif" alt="image-20210408173032210"></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408173201444.png" srcset="/img/loading.gif" alt="image-20210408173201444"></p>
 <p>链式法则告诉我们，我们只需要把计算图上的每一段相邻的梯度算出来，我们连乘上他们就是最后一个变量对最前面一个变量的梯度。</p>
@@ -561,5 +561,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
