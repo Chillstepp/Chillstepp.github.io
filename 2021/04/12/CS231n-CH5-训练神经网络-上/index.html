@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>机器学习基石CH11：Linear Models for Classification - Chillstep</title>
+  <title>CS231n-CH5-训练神经网络(上) - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="机器学习基石CH11：Linear Models for Classification">
+            <span class="h2" id="subtitle" title="CS231n-CH5-训练神经网络(上)">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-21 13:52" pubdate>
-        2021年1月21日 下午
+      <time datetime="2021-04-12 14:34" pubdate>
+        2021年4月12日 下午
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      898 字
+      1.4k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      15
        分钟
     </span>
   
@@ -236,98 +236,86 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器学习基石CH11：Linear Models for Classification</h1>
+            <h1 style="display: none">CS231n-CH5-训练神经网络(上)</h1>
             
             <div class="markdown-body">
-              <h1 id="CH11：Linear-Models-for-Classification"><a href="#CH11：Linear-Models-for-Classification" class="headerlink" title="CH11：Linear Models for Classification"></a>CH11：Linear Models for Classification</h1><h2 id="Binary-Classification"><a href="#Binary-Classification" class="headerlink" title="Binary Classification"></a>Binary Classification</h2><p>我们回顾一下线性模型：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114057461.png" srcset="/img/loading.gif" alt="image-20210121114057461"></p>
-<p>我们看一下三个error function在做classification时的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121114816534.png" srcset="/img/loading.gif" alt="image-20210121114816534"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115146949.png" srcset="/img/loading.gif" alt="image-20210121115146949"></p>
-<p>$ys$代表着正确的分数。</p>
-<p>下面我们画个图来看一下3个error function的图像：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115356316.png" srcset="/img/loading.gif" alt="image-20210121115356316"></p>
-<p>这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角处。</p>
-<p>此时我们称之为 <strong>scaled cross entropy</strong>：（把取ln改为取log2）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121115838748.png" srcset="/img/loading.gif" alt="image-20210121115838748"></p>
-<p>这么做会让我们的推导容易一些。</p>
-<p>我们来证明一下这个事情，用换底公式不难得到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120115701.png" srcset="/img/loading.gif" alt="image-20210121120115701"></p>
-<p>我们从VC Bound不难得知：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120309197.png" srcset="/img/loading.gif" alt="image-20210121120309197"></p>
-<p>我们话可以用<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120424784.png" srcset="/img/loading.gif" alt="image-20210121120424784"></p>
-<p>直接得出：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120434073.png" srcset="/img/loading.gif" alt="image-20210121120434073"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121120507857.png" srcset="/img/loading.gif" alt="image-20210121120507857"></p>
-<p><strong>注：</strong>上述式子的提出可能会有疑问，之前不是讲得是</p>
-<p><img src="https://i.loli.net/2021/01/15/e4IbzRNaWT5p6xB.png" srcset="/img/loading.gif" alt="image.png"></p>
-<p>单一的让$E_{in}$小并不合理,应该找一个合适的不是吗？但我们不难发现这里面说的是$d_{VC}$,而我们这里要调的是$w$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122259920.png" srcset="/img/loading.gif" alt="image-20210121122259920"></p>
-<p>所以这里我们做完逻辑回归或者线性回归后，传回去的值要加一个sign()即可。</p>
-<p>我们最后总结一下这三个方法的优劣：</p>
+              <h1 id="训练神经网络-上"><a href="#训练神经网络-上" class="headerlink" title="训练神经网络(上)"></a>训练神经网络(上)</h1><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p> <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210410232705398.png" srcset="/img/loading.gif" alt="image-20210410232705398"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210410233025296.png" srcset="/img/loading.gif" alt="image-20210410233025296"></p>
+<p>问题：</p>
 <ul>
-<li>用PLA时，要线性可分，若不是线性可分，那就要跑pocket</li>
-<li>用linear regression时，因为有闭式解，很容易算出w，但是会lose bound（毕竟衡量错误不准确，比一般的0/1 error measure的值全都大）。</li>
-<li>logistic regression同理，gradient descent很容易找到一个最优解，但是也会lose bound</li>
+<li><p>当x是一个很大/很小的区域时，梯度是一个十分接近0的数值，这会导致upstream如果是0，那么返回值就会十分小。这会使得梯度逐渐消失。</p>
+</li>
+<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411002045387.png" srcset="/img/loading.gif" alt="image-20210411002045387"></p>
+<p>比如这个方程的对$x$的梯度是一堆$w$,我们假设数据的x要么都是大于0/要么都是小于0的，那么$\Sigma w_ix_i+b$这个式子对$w$求梯度是一堆$x$,我们上面假设了这里都是大于0，那么这个梯度也都大于0，同时$f$对$\Sigma w_ix_i+b$求导，由于f在各个点导数倒是正的，所以梯度恒大于0，这就导致了$f$对$w$求导是恒正的。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411003604753.png" srcset="/img/loading.gif" alt="image-20210411003604753"></p>
+<p>而这样会导致无法想着正确的梯度去走，w增加的永远是正值/负值，这样会导致收敛缓慢。无法向着正确的方向去走，我们仔细想想就会发现数据x中全正/全负是我们无法改变的，真正原因是因为sigmoid函数梯度恒大于0，这样就导致了梯度方向的局限。因此这也是sigmoid的缺点。当然，如果我们的数据是zero-mean的，也就是说有正有负的那种数据，sigmoid是不会影响什么的。总之，两个限制(数据全正全负，sigmoid梯度恒大于0)，有一个被解决就可以快速地梯度下降。</p>
+</li>
+<li><p>exp()计算比较费时。</p>
+</li>
 </ul>
-<p>我们可以通过组合的方法找出一个比较好用的解，比如：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121122818625.png" srcset="/img/loading.gif" alt="image-20210121122818625"></p>
-<p>还有一点，logistic regression用得一般比pocket用的多，这是因为logistic regression的最优化性质比较好用一些。</p>
-<h2 id="Stochastic-Grad-Descent（随机梯度下降）"><a href="#Stochastic-Grad-Descent（随机梯度下降）" class="headerlink" title="Stochastic Grad. Descent（随机梯度下降）"></a>Stochastic Grad. Descent（随机梯度下降）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121123736533.png" srcset="/img/loading.gif" alt="image-20210121123736533"></p>
-<p>这两种方式每轮迭代的速度是不一样的一个时O(1)一个是O(N)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124041845.png" srcset="/img/loading.gif" alt="image-20210121124041845"></p>
-<p>我们想用一个随机平均代替连加，这样复杂度就会降下来。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124254571.png" srcset="/img/loading.gif" alt="image-20210121124254571"></p>
-<p>我们可以把这样一个随机梯度理解为，实际的梯度+平均为0的噪声</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121124329250.png" srcset="/img/loading.gif" alt="image-20210121124329250"></p>
-<p>但是我们经理足够多轮的更新后，还是会非常接近真正的梯度的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121125406460.png" srcset="/img/loading.gif" alt="image-20210121125406460"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130038979.png" srcset="/img/loading.gif" alt="image-20210121130038979"></p>
-<p>我们来对比一下 ，SGD中是错了多少，而PLA中是有没有错误。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130140897.png" srcset="/img/loading.gif" alt="image-20210121130140897"></p>
-<p>因此我们一般说SGD logistic regression ≈ soft PLA</p>
-<p>但是问题是，SGD跑到什么时候结束呢？SGD跑到谷底是很难的</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121130413560.png" srcset="/img/loading.gif" alt="image-20210121130413560"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215745708.png" srcset="/img/loading.gif" alt="image-20210411215745708"></p>
 <ul>
-<li>一般是跑足够多轮</li>
-<li>学习率一般选0.1，如果x的范围不是特别离谱</li>
+<li>$tanh$和$sigmiod$一样在x很大/很小的时候梯度几乎为0，这会导致upstream是0，那么返回值就会十分小。这会使得梯度逐渐消失。</li>
 </ul>
-<h2 id="Multiclass-via-logistic"><a href="#Multiclass-via-logistic" class="headerlink" title="Multiclass via logistic"></a>Multiclass via logistic</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131742756.png" srcset="/img/loading.gif" alt="image-20210121131742756"></p>
-<p>我们可以一次只做一种：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131835446.png" srcset="/img/loading.gif" alt="image-20210121131835446"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121131941507.png" srcset="/img/loading.gif" alt="image-20210121131941507"></p>
-<p>但是在</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132108920.png" srcset="/img/loading.gif" alt="image-20210121132108920"></p>
-<p>这几个地方会出现都不是四个类别或者属于多个类别的情况。</p>
-<p>那么我们可以作soft classification，告诉我是这个类的概率。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132316066.png" srcset="/img/loading.gif" alt="image-20210121132316066"></p>
-<p>明暗代表概率，我们取最高概率作为划分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132353785.png" srcset="/img/loading.gif" alt="image-20210121132353785"></p>
-<p>我们上面用的算法称为：</p>
-<p><strong>One-Versus-All(OVA) Decomposition:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132621679.png" srcset="/img/loading.gif" alt="image-20210121132621679"></p>
-<p>这个<strong>算法的特点：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121132811971.png" srcset="/img/loading.gif" alt="image-20210121132811971"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215952528.png" srcset="/img/loading.gif" alt="image-20210411215952528"></p>
 <ul>
-<li>很高效</li>
-<li>当数据量特别大时，可能会造成不平等的问题，比如100类，我们做one versus all的时候就会有99类都当作叉叉，那么会导致分类器直接全当做叉叉就好了。</li>
+<li>ReLU梯度不会消失</li>
+<li>计算高效(不包含exp())</li>
+<li>收敛快</li>
+<li>更符合生物上的特点</li>
 </ul>
-<h2 id="Multiclass-via-Binary"><a href="#Multiclass-via-Binary" class="headerlink" title="Multiclass via Binary"></a>Multiclass via Binary</h2><p>刚才说到了 one versus all的不平等问题，纳闷我们可以考虑一半一半的分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134125030.png" srcset="/img/loading.gif" alt="image-20210121134125030"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134257356.png" srcset="/img/loading.gif" alt="image-20210121134257356"></p>
-<p>我们选两种作为圈圈，有上面六种方式。</p>
-<p>我们发现包括方块的有前三个圈圈都包括方块</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134503676.png" srcset="/img/loading.gif" alt="image-20210121134503676"></p>
-<p>这样我们按比例就可以化作方块区域,其他同理即可以做出:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134540367.png" srcset="/img/loading.gif" alt="image-20210121134540367"></p>
-<p>这个算法称为：</p>
-<p><strong>one-versus-one（OVO） Decomposition：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134642325.png" srcset="/img/loading.gif" alt="image-20210121134642325"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210121134733980.png" srcset="/img/loading.gif" alt="image-20210121134733980"></p>
+<p>缺点</p>
 <ul>
-<li>好处还是很快</li>
-<li>坏处就是 比起OVA 花的时间更多，需要的空间更多。</li>
+<li><p>缺点是0点处不可导</p>
+</li>
+<li><p><strong>Dead ReLU Problem(神经元坏死现象)</strong>：ReLU在负数区域被kill的现象叫做dead relu。ReLU在训练的时很“脆弱”。在x&lt;0时，梯度为0。这个神经元及之后的神经元梯度永远为0，不再对任何数据有所响应，导致相应参数永远不会被更新。</p>
+<p><strong>产生</strong>这种现象的两个<strong>原因</strong>：参数初始化问题；learning rate太高导致在训练过程中参数更新太大。</p>
+<p><strong>解决方法</strong>：采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。</p>
+</li>
 </ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411221752359.png" srcset="/img/loading.gif" alt="image-20210411221752359"></p>
+<p>和ReLU比，在负坐标上梯度不是0了。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222029682.png" srcset="/img/loading.gif" alt="image-20210411222029682"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222541954.png" srcset="/img/loading.gif" alt="image-20210411222541954"></p>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>我们一般会对<strong>数据做中心化（零均值化zero-mean）</strong>，原因就是上面提到的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222827272.png" srcset="/img/loading.gif" alt="image-20210411222827272"></p>
+<p>对训练的图像求个平均，然后让每张图像都减去这个平均图像。</p>
+<p><strong>权重的初始化问题：</strong></p>
+<p>深度前馈网络与Xavier初始化原理 - 知乎 <a href="https://zhuanlan.zhihu.com/p/27919794" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27919794</a></p>
+<h2 id="批量归一化-Batch-Normalization"><a href="#批量归一化-Batch-Normalization" class="headerlink" title="批量归一化(Batch Normalization)"></a>批量归一化(Batch Normalization)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412114711250.png" srcset="/img/loading.gif" alt="image-20210412114711250"></p>
+<p>这个式子可以推一推，就是把x的分布变成了均值为0，方差为1的一个分布。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115256170.png" srcset="/img/loading.gif" alt="image-20210412115256170"></p>
+<p>我们通常会那一个batch的数据，然后对每一维度求期望，方差，然后归一化这些数据。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115507181.png" srcset="/img/loading.gif" alt="image-20210412115507181"></p>
+<p>Batch Normalization通常放在全连接层后，卷积层后，非线性层前。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115942446.png" srcset="/img/loading.gif" alt="image-20210412115942446"></p>
+<p>我们可以对Batch Nomalization后的$x$进行缩放，$y = \gamma x+\beta$,其中如果我们的$\gamma=\sqrt{Var[x]},\beta=E[x]$时，就相当于我们没做Batch normaliazation，因此我们的$\gamma,\beta$在学习中也可以恢复到不做normalization的情况，这样加入batch normalization的效果不好时也可以保证恢复回来。</p>
+<p>总体来说，<code>Batch Normalization</code>的过程是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412121031927.png" srcset="/img/loading.gif" alt="image-20210412121031927"></p>
+<p>BN的优点：</p>
+<ul>
+<li><p>可以使用更高的学习率</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412130421433.png" srcset="/img/loading.gif" alt="image-20210412130421433"></p>
+<p>原因大概解释一下就是：首先我们要知道高学习率通常会导致梯度爆炸/梯度消失，这是因为底层的网络对高层的网络会有叠加的影响。而BN由于对层进行归一化，因此这组织了某层输出的值会变得过大或者过小，因此这直接的解绝了梯度爆炸/梯度消失的问题。 因此我们此时就可以用更高的学习率。</p>
+<p>同时下面这个数学上的解释也是work的：</p>
+<p>深度学习中 Batch Normalization为什么效果好？ - Juliuszh的回答 - 知乎 <a href="https://www.zhihu.com/question/38102762/answer/302841181" target="_blank" rel="noopener">https://www.zhihu.com/question/38102762/answer/302841181</a></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412131651757.png" srcset="/img/loading.gif" alt="image-20210412131651757"></p>
+</li>
+<li><p>可以防止过拟合，当然作者在原文章中并没拿出什么有力的论证，所以只是含糊的说有了BN就可以不要dropout层了。</p>
+</li>
+</ul>
+<p>对于训练，学习率的一般通过在[1e-5,1e-3]做validation来选择。</p>
+<p>超参数的除了grid search(即一组一组的参数一个一个去做validation，哪儿个好用哪儿个)。也可以random  search(给每个超参数设定一个分布，然后去对每个参数从他所属的分布中抽样，用这样的方法获得一组超参数，然后再去validation)。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142559169.png" srcset="/img/loading.gif" alt="image-20210412142559169"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142757950.png" srcset="/img/loading.gif" alt="image-20210412142757950"></p>
+<p>黄色：过高的学习率会导致梯度爆炸</p>
+<p>蓝色：低的学习率导致loss下降缓慢</p>
+<p>绿色：高的学习率也会导致无法陷入局部最优解</p>
+<p>红色：好的学习率，loss下降快。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142959585.png" srcset="/img/loading.gif" alt="image-20210412142959585"></p>
+<p>一般这样开始loss不下降，在某一个节点突然下降，说明<strong>初始化做的不好</strong>。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412143103173.png" srcset="/img/loading.gif" alt="image-20210412143103173"></p>
+<p>如果validation和train的差别太大，说明是overfitting了，可以试着做一些正则化。如果差别不大且两者准确率都不高，那就应该去找模型的问题了。</p>
 
             </div>
             <hr>
@@ -338,7 +326,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
                     
                   </div>
                 
@@ -351,18 +339,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习基石CH12：Nonlinear Transformation</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">
-                        <span class="hidden-mobile">机器学习基石CH10：Logistic Regression</span>
+                      <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                        <span class="hidden-mobile">CS231n-CH4-卷积神经网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -381,8 +363,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
-        this.page.identifier = '/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/';
+        this.page.url = 'https://chillstepp.github.io/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/';
+        this.page.identifier = '/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
