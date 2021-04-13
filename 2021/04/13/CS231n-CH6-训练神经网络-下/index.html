@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>CS231n-CH5-训练神经网络-下 - Chillstep</title>
+  <title>CS231n-CH6-训练神经网络-下 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="CS231n-CH5-训练神经网络-下">
+            <span class="h2" id="subtitle" title="CS231n-CH6-训练神经网络-下">
               
             </span>
 
@@ -236,11 +236,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CS231n-CH5-训练神经网络-下</h1>
+            <h1 style="display: none">CS231n-CH6-训练神经网络-下</h1>
             
             <div class="markdown-body">
               <h1 id="训练神经网络-下"><a href="#训练神经网络-下" class="headerlink" title="训练神经网络(下)"></a>训练神经网络(下)</h1><h2 id="更好的优化"><a href="#更好的优化" class="headerlink" title="更好的优化"></a>更好的优化</h2><h3 id="SGD的缺点："><a href="#SGD的缺点：" class="headerlink" title="SGD的缺点："></a>SGD的缺点：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412155433357.png" srcset="/img/loading.gif" alt="image-20210412155433357"></p>
-<p>SGD在某些情况下效果并不会很好，比如loss在竖直方向上下降的很快，在另两个维度上loss下降的很慢，这就会导致得到上下剧烈波动的线。在三维空间如此，在高维空间上更容易出现这个问题。最优化过程会变得很慢.</p>
+<p>SGD在某些情况下效果并不会很好，比如loss在竖直方向上下降的很快，在另两个维度上loss下降的很慢，这就会导致得到上下剧烈波动的线。在三维空间如此，在高维空间上更容易出现这个问题。最优化过程会变得很慢。</p>
 <p>SGD还有一个缺点就是无法处理鞍点：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412160642413.png" srcset="/img/loading.gif" alt="image-20210412160642413"></p>
 <p>即梯度=0，但是却不是极大值/极小值。</p>
@@ -367,8 +367,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/04/13/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/';
-        this.page.identifier = '/2021/04/13/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/';
+        this.page.url = 'https://chillstepp.github.io/2021/04/13/CS231n-CH6-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/';
+        this.page.identifier = '/2021/04/13/CS231n-CH6-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
