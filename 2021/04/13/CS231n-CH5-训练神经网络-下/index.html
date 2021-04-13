@@ -240,7 +240,7 @@
             
             <div class="markdown-body">
               <h1 id="训练神经网络-下"><a href="#训练神经网络-下" class="headerlink" title="训练神经网络(下)"></a>训练神经网络(下)</h1><h2 id="更好的优化"><a href="#更好的优化" class="headerlink" title="更好的优化"></a>更好的优化</h2><h3 id="SGD的缺点："><a href="#SGD的缺点：" class="headerlink" title="SGD的缺点："></a>SGD的缺点：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412155433357.png" srcset="/img/loading.gif" alt="image-20210412155433357"></p>
-<p>SGD在某些情况下效果并不会很好，比如loss在竖直方向上下降的很快，在另两个维度上loss下降的很慢，这就会导致得到上下剧烈波动的线。在三维空间如此，在高维空间上更容易出现这个问题。最优化过程会变得很慢。</p>
+<p>SGD在某些情况下效果并不会很好，比如loss在竖直方向上下降的很快，在另两个维度上loss下降的很慢，这就会导致得到上下剧烈波动的线。在三维空间如此，在高维空间上更容易出现这个问题。最优化过程会变得很慢.</p>
 <p>SGD还有一个缺点就是无法处理鞍点：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412160642413.png" srcset="/img/loading.gif" alt="image-20210412160642413"></p>
 <p>即梯度=0，但是却不是极大值/极小值。</p>
