@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>CS231n-CH7-CNN框架 - Chillstep</title>
+  <title>CS231n-CH8-循环神经网络 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="CS231n-CH7-CNN框架">
+            <span class="h2" id="subtitle" title="CS231n-CH8-循环神经网络">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-17 17:47" pubdate>
-        2021年4月17日 下午
+      <time datetime="2021-04-19 15:24" pubdate>
+        2021年4月19日 下午
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      1.1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      12
        分钟
     </span>
   
@@ -236,109 +236,73 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CS231n-CH7-CNN框架</h1>
+            <h1 style="display: none">CS231n-CH8-循环神经网络</h1>
             
             <div class="markdown-body">
-              <h1 id="CNN框架"><a href="#CNN框架" class="headerlink" title="CNN框架"></a>CNN框架</h1><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415173026774.png" srcset="/img/loading.gif" alt="image-20210415173026774"></p>
-<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>AlexNet结构如下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415173124918.png" srcset="/img/loading.gif" alt="image-20210415173124918"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415173358095.png" srcset="/img/loading.gif" alt="image-20210415173358095"></p>
-<p>网络结构：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415174601793.png" srcset="/img/loading.gif" alt="image-20210415174601793"></p>
-<p>第一层有96个卷积核，每个卷积核的大小是11*11*3,所以第一层输出的大小是: 55*55*96。</p>
-<p>那么第一层的参数有：(11*11*3)*96 = 35K.</p>
-<p>第二层，即POOL1，这层在做Max pooling输出的结果大小是27*27*96。</p>
-<p>这一层没有参数，因为是在做Max Pooling，取最大值即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415175146259.png" srcset="/img/loading.gif" alt="image-20210415175146259"></p>
-<p>AlexNet的一些细节：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415175307835.png" srcset="/img/loading.gif" alt="image-20210415175307835"></p>
-<p>第一次使用ReLu损失函数，做了Normalizaiton，有很多数据增强的数据，dropout的概率是0.5，batchsize为128，梯度下降使用的是SGD Momentum,学习率1e-2开始训练，weight decay设置为5e-4，还用了模型集成，训练多个模型对他们取平均…</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416163734112.png" srcset="/img/loading.gif" alt="image-20210416163734112"></p>
-<p>我们之前算第二层的大小是55*55*96 ，而上图红色框种的深度是48，这是由于当时最好的GPU也只是GTX580，显存只有3G，所以不得不采用分开的训练方式。</p>
-<h2 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h2><p><strong>这篇文章写的很好：</strong></p>
-<p>一文读懂VGG网络 - Amusi的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/41423739" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41423739</a></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416165807394.png" srcset="/img/loading.gif" alt="image-20210416165807394"></p>
-<p>VGGNet一般16-19层，它只包含3*3的卷积(pad 1),Max Pooling是2*2的。</p>
+              <h1 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h1><p>后面补一个专题梳理一下这一节：to do…</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418220507728.png" srcset="/img/loading.gif" alt="image-20210418220507728"></p>
+<p>原来的CNN是1对1的模型，即输入是固定的大小，输出也是固定的大小。</p>
+<p>而RNN可以是：</p>
+<p>1对多：输入一张图片，输出对图片的理解。</p>
+<p>多对1：输入一段文字，输出情感。或者输入一段视频，输出视频中所作的决策。</p>
+<p>多对多：翻译中输入可变，输出可变。</p>
+<p><strong>RNN主要用于处理大小可变的有序数据。</strong></p>
+<p>但实际上RNN也可以处理一些输入大小固定，输出大小固定的问题。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418221500352.png" srcset="/img/loading.gif" alt="image-20210418221500352"></p>
+<p>比如手写数字识别，他不是单纯的做一个前向传递然后把识别结果返回出来。而是观察一组图片，看看这些图片的各种不同部分，在完成这样的一组观察后再得出识别结果。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418222055571.png" srcset="/img/loading.gif" alt="image-20210418222055571"></p>
+<p>这个$f_W$相当于途中的绿色模块，他对old state$h_{t-1}$和当前输入的状态$x_t$做运算得到下一个隐藏态$h_t$</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418222647581.png" srcset="/img/loading.gif" alt="image-20210418222647581"></p>
+<p>比如：上例就是$h_t$首先不断更新，最后得到$h_t$,然后做一个全连接层得到的$y_t$</p>
+<p>我们把这个计算过程展开会更好的理解RNN是如何处理序列的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223037106.png" srcset="/img/loading.gif" alt="image-20210418223037106"></p>
+<p>这样我们就可以预策每个时刻的$y$了。</p>
+<p>同时我们可以把每个时刻的loss和总共的loss加上去：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223223212.png" srcset="/img/loading.gif" alt="image-20210418223223212"></p>
+<p>当然如果哦我们在做多对一的任务，比如给出一段文字/视频，输出表达的情感，那么只需要最后的输出即可：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223316380.png" srcset="/img/loading.gif" alt="image-20210418223316380"></p>
+<p>当然还有1对多问题的结构：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223343273.png" srcset="/img/loading.gif" alt="image-20210418223343273"></p>
+<p>Sequence to Sequence结构是一个<strong>多对一</strong> 和 <strong>一对多</strong>组合的情况：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223453678.png" srcset="/img/loading.gif" alt="image-20210418223453678"></p>
+<p>可以理解为输入一段文字得到一个表达，然后表达在转化为一段文字，多用于翻译中。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418224225774.png" srcset="/img/loading.gif" alt="image-20210418224225774"></p>
+<p>一个预策hello的例子，上图是训练阶段：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418224853371.png" srcset="/img/loading.gif" alt="image-20210418224853371"></p>
+<p>测试阶段，我们需要把softmax的得分变成一个概率分布，然后再抽取字母。</p>
+<p>​    这样做的好处是，想象prepare,prescent这两个单词的前缀 都是pre，如果我们只选择得分最多的作为结果，那么结果就会过于单一，如果采用概率来抽样，那么prepare和prescent都有机会被学习到。这使得我们的输出结果更加多样化。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418225848525.png" srcset="/img/loading.gif" alt="image-20210418225848525"></p>
+<p>上图这种训练方法是很难训练的，因为我们需要把所有的loss算一遍返回总的loss，然后算梯度再更新，这样迭代一次却需要把整个全部计算一次，同时这也会导致内存不够。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418230004344.png" srcset="/img/loading.gif" alt="image-20210418230004344"></p>
+<p>一种Truncated Backpropagation through time(TBPTT)的方法把很长的序列分解为每几十个一组。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419131435574.png" srcset="/img/loading.gif" alt="image-20210419131435574"></p>
+<p>对于RNN这样的网络，是很容易出现梯度爆炸/梯度弥散的：</p>
+<p>对于梯度爆炸可以用梯度阶段(Gradient clipping)来解绝：</p>
+<p>如果梯度的L2范数大于某一个阈值，就把他截断并做一个缩小的除法。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419131624732.png" srcset="/img/loading.gif" alt="image-20210419131624732"></p>
+<p>而对于梯度消失，一般我们会选择一个换一个更好的RNN结构来做，这也是LSTM出现的原因。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419132234399.png" srcset="/img/loading.gif" alt="image-20210419132234399"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419132608763.png" srcset="/img/loading.gif" alt="image-20210419132608763"></p>
+<p>LSTM中有两个hidden state(隐藏状态)，一个是和vanilla RNN一样的$h_{t-1}$，另一个是$c_t$称为cell state。这个cell state类似于保留在LSTM内部的隐藏状态。</p>
+<p>计算时首先我们可以计算出$i,f,o,g$ 的值，然后用这些值去更新$c_t$, 然后再用$c_t$计算处next step的$h_t$.</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419133541096.png" srcset="/img/loading.gif" alt="image-20210419133541096"></p>
+<p>$i$：input gate，输入门，表示神经元要接受多少新的输入信息</p>
+<p>$f$：forget gate，遗忘门，我们要以往多少之前的神经元记忆</p>
+<p>$o$：output gate，输出门，表示我们要输出多少信息给外部</p>
+<p>$g$: Gate gate，表示我们想让input神经元有多少信息</p>
+<p>$i,f,o$的范围由于sigmoid导致范围是0-1，而$g$的范围由于tanh的作用是-1到1.</p>
+<p>其中$f$ 为0说明我们想要忘记上一个cell state的值，是1说明要记住。</p>
+<p>一个具体的结构图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419135020028.png" srcset="/img/loading.gif" alt="image-20210419135020028"></p>
+<p>LSTM有两个好处：</p>
 <ul>
-<li><p><strong>为什么用小的卷积核？</strong></p>
-<p><strong>reference：</strong><a href="https://zhuanlan.zhihu.com/p/41423739" target="_blank" rel="noopener">知乎：一文读懂VGG网络</a></p>
-<p>​    VGG16相比AlexNet的一个改进是<strong>采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</strong>。对于给定的感受野（与输出有关的输入图片的局部大小），采用堆积的小卷积核是优于采用大的卷积核，因为多层非线性层可以增加网络深度来保证学习更复杂的模式，而且代价还比较小（参数更少）。</p>
-<p>​    简单来说，在VGG中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5*5卷积核，这样做的主要目的是在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
-<p>​    比如，3个步长为1的3x3卷积核的一层层叠加作用可看成一个大小为7的感受野（其实就表示3个3x3连续卷积相当于一个7x7卷积），其参数总量为 $3\times(9\times C^2)$ ，如果直接使用7x7卷积核，其参数总量为 $49\times C^2$ ，这里 C 指的是输入和输出的通道数。很明显，$27\times C^2\le 49\times C^2$，即<strong>减少了参数</strong>；而且3x3卷积核有利于更好地保持图像性质。</p>
+<li><p>LSTM做bp时通过forget gate时是逐元素相乘，这比矩阵乘法快很多</p>
 </li>
-<li><p><strong>怎么使用2个3x3卷积核可以来代替5*5卷积核</strong></p>
-</li>
-</ul>
-<p>想做到2个3*3卷积核可以来代替5*5卷积核,也就是对于同样一个单位的感受野，2个3*3的卷积核也可以看到5*5的感受野：</p>
-<p>可以这样来做，通过两层的3*3卷积使得第三层的一个单位可以看到第一层5*5的视野：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416180456519.png" srcset="/img/loading.gif" alt="image-20210416180456519"></p>
-<h2 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416184736509.png" srcset="/img/loading.gif" alt="image-20210416184736509"></p>
-<p>视频讲的有带点乱,找了些资料梳理了下。</p>
-<p>reference：</p>
-<p><a href="https://zhuanlan.zhihu.com/p/73857137" target="_blank" rel="noopener">深度学习|经典网络 GoogLeNet（一）</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/32702031" target="_blank" rel="noopener">深入理解GoogLeNet结构（原创）</a></p>
-<ul>
-<li><strong>网络结构：</strong></li>
-</ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/v2-766c3f59d3791da39ad805606d6445f6_r.jpg" srcset="/img/loading.gif" alt="v2-766c3f59d3791da39ad805606d6445f6_r"></p>
-<ul>
-<li><p>GoogleNet新提出了Inception，这是什么？</p>
-<p>Inception就是把多个卷积或池化操作，放在一起组装成一个网络模块，设计神经网络时以模块为单位去组装整个网络结构。模块如下图所示</p>
-</li>
-</ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416193845211.png" srcset="/img/loading.gif" alt="image-20210416193845211"></p>
-<p>​        在未使用这种方式的网络里，我们一层往往只使用一种操作，比如卷积或者池化，而且卷积操作的卷积核尺寸也是固定大小的。但是，<strong>在实际情况下，在不同尺度的图片里，需要不同大小的卷积核，这样才能使性能最好，或者或，对于同一张图片，不同尺寸的卷积核的表现效果是不一样的，因为他们的感受野不同</strong>。所以，<strong>我们希望让网络自己去选择，Inception便能够满足这样的需求</strong>，一个Inception模块中并列提供多种卷积核的操作，网络在训练的过程中通过调节参数自己去选择使用，同时，<strong>由于网络中都需要池化操作，所以此处也把池化层并列加入网络中</strong>。</p>
-<ul>
-<li><p><strong>为什么要提出Inception？</strong></p>
-<p>一般来说，提升网络性能最直接的办法就是增加网络深度和宽度，但一味地增加，会带来诸多问题：<br>1）参数太多，如果训练数据集有限，很容易产生过拟合；<br>2）网络越大、参数越多，计算复杂度越大，难以应用；<br>3）网络越深，容易出现梯度弥散问题（梯度越往后穿越容易消失），难以优化模型。<br>我们希望在增加网络深度和宽度的同时减少参数，为了减少参数，自然就想到将全连接变成稀疏连接。但是在实现上，全连接变成稀疏连接后实际计算量并不会有质的提升，因为大部分硬件是针对密集矩阵计算优化的，稀疏矩阵虽然数据量少，但是计算所消耗的时间却很难减少。在这种需求和形势下，Google研究人员提出了Inception的方法：<strong>能更高效的利用计算资源，在相同的计算量下能提取到更多的特征，从而提升训练结果</strong>。</p>
-</li>
-<li><p><strong>实际中需要什么样的Inception？</strong></p>
-<p>我们在上面提供了一种Inception的结构，但是这个结构存在很多问题，是不能够直接使用的。首要问题就是参数太多，导致特征图厚度太大。为了解决这个问题，作者在其中加入了1X1的卷积核，改进后的Inception结构如下图</p>
-</li>
-</ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194145863.png" srcset="/img/loading.gif" alt="image-20210416194145863"></p>
-<p>​    这样做有两个好处，首先是大大<strong>减少了参数量</strong>，其次，<strong>增加的1X1卷积后面也会跟着有非线性激励，这样同时也能够提升网络的表达能力</strong>。</p>
-<ul>
-<li><p><strong>1*1卷积有什么用？</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121105534.png" srcset="/img/loading.gif" alt="image-20210417121105534"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417123543710.png" srcset="/img/loading.gif" alt="image-20210417123543710"></p>
-<p>如果不加1*1的卷积，那么对于上图的计算量高达8.54亿次计算。因此加上一个1*1的卷积的原因就是降低feature map的深度，如下图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121347102.png" srcset="/img/loading.gif" alt="image-20210417121347102"></p>
-<p>因此做完1*1卷积后，结果为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121552106.png" srcset="/img/loading.gif" alt="image-20210417121552106"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121724855.png" srcset="/img/loading.gif" alt="image-20210417121724855"></p>
-<p>现在的操作降低到了3.58亿次操作。</p>
+<li><p>LSTM会在不同的时间乘以不同的forget gate，而在vanilla RNN我们只会不断乘一个不变的$W$，这就很容易导致梯度爆炸/弥散。</p>
 </li>
 </ul>
-<p>  <strong>知乎上的解释：</strong></p>
-<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416195129813.png" srcset="/img/loading.gif" alt="image-20210416195129813"></p>
-<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194913131.png" srcset="/img/loading.gif" alt="image-20210416194913131"></p>
-<p>  这里要注意：题目中所说的1*1是对深度做操作的，1*1卷积就是把feature map上的每个位置的c个channel做了一次重新组合,一般用来提高或者降低channel数。</p>
-<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194932237.png" srcset="/img/loading.gif" alt="image-20210416194932237"></p>
-<ul>
-<li><p><strong>多个尺寸上进行卷积再聚合的原因？</strong></p>
-<p>可以看到对输入做了4个分支，分别用不同尺寸的filter进行卷积或池化，最后再在特征维度上拼接到一起。这种全新的结构有什么好处呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417151459105.png" srcset="/img/loading.gif" alt="image-20210417151459105"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417155307211.png" srcset="/img/loading.gif" alt="image-20210417155307211"></p>
-</li>
-</ul>
-<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h2><p><strong>Reference：</strong></p>
-<p>Resnet到底在解决一个什么问题呢？ - 薰风初入弦的回答 - 知乎 <a href="https://www.zhihu.com/question/64494691/answer/786270699" target="_blank" rel="noopener">https://www.zhihu.com/question/64494691/answer/786270699</a></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417124340194.png" srcset="/img/loading.gif" alt="image-20210417124340194"></p>
-<p>152层…</p>
-<p>起因是有人做了实验，发现56层不仅在训练集上效果好(当然这是应该的，人们认为这是过拟合的原因)，可是在测试集上依然比20层的网络错误率低，这就说明56层的网络并没有过拟合。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417124603813.png" srcset="/img/loading.gif" alt="image-20210417124603813"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417125452353.png" srcset="/img/loading.gif" alt="image-20210417125452353"></p>
-<p>​    当我们堆叠一个模型时，理所当然的会认为效果会越堆越好。因为，假设一个比较浅的网络已经可以达到不错的效果，<strong>那么即使之后堆上去的网络什么也不做，模型的效果也不会变差</strong>。然而深度学习很难做到这一点：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417160620669.png" srcset="/img/loading.gif" alt="image-20210417160620669"></p>
-<p>​    这样层层的向前传播使得开始的信息还能被完整的保留的可能性太小。</p>
-<p>​    ResNet的出现就是为了<strong>让模型的内部结构至少有恒等映射的能力</strong>。以保证在堆叠网络的过程中，网络至少不会因为继续堆叠而产生退化。所以这也是ResNet敢用152层的原因。</p>
-<ul>
-<li><strong>ResNet做是如何做到恒等映射的呢？</strong></li>
-</ul>
-<p>前面提到了学习一个恒等映射很难，但是学习一个全为0的函数很简单，因此ResNet把网络设计为$H(x) = F(x) + x$,即把恒等映射作为网络的一部分。由于我们的学习目标是$F(x)$，就可以把问题转化为学习残差函数$F(x) = H(x) -x$.  </p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417162541557.png" srcset="/img/loading.gif" alt="image-20210417162541557"></p>
-<p>这样当$F(x)=0$（这个是易学的）时即说明这是一个恒等映射($H(x) = x$)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419151524591.png" srcset="/img/loading.gif" alt="image-20210419151524591"></p>
+<p>和ResNet类似，LSTM也为网络提供了一个快速进行反向传播的通道。</p>
 
             </div>
             <hr>
@@ -362,18 +326,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/19/CS231n-CH8-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CS231n-CH8-循环神经网络</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/04/13/CS231n-CH6-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/">
-                        <span class="hidden-mobile">CS231n-CH6-训练神经网络-下</span>
+                      <a href="/2021/04/17/CS231n-CH7-CNN%E6%A1%86%E6%9E%B6/">
+                        <span class="hidden-mobile">CS231n-CH7-CNN框架</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -392,8 +350,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/04/17/CS231n-CH7-CNN%E6%A1%86%E6%9E%B6/';
-        this.page.identifier = '/2021/04/17/CS231n-CH7-CNN%E6%A1%86%E6%9E%B6/';
+        this.page.url = 'https://chillstepp.github.io/2021/04/19/CS231n-CH8-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/';
+        this.page.identifier = '/2021/04/19/CS231n-CH8-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
