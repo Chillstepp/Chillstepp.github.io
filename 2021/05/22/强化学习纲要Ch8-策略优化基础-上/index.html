@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>CS231n-CH4-卷积神经网络 - Chillstep</title>
+  <title>强化学习纲要Ch8-策略优化基础-上 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="CS231n-CH4-卷积神经网络">
+            <span class="h2" id="subtitle" title="强化学习纲要Ch8-策略优化基础-上">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-09 18:35" pubdate>
-        2021年4月9日 晚上
+      <time datetime="2021-05-22 23:19" pubdate>
+        2021年5月22日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      462 字
+      1.7k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      18
        分钟
     </span>
   
@@ -236,48 +236,146 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CS231n-CH4-卷积神经网络</h1>
+            <h1 style="display: none">强化学习纲要Ch8-策略优化基础-上</h1>
             
             <div class="markdown-body">
-              <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>全连接层：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409162420380.png" srcset="/img/loading.gif" alt="image-20210409162420380"></p>
-<p>卷积层(convolution Layer):</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409162546045.png" srcset="/img/loading.gif" alt="image-20210409162546045"></p>
-<p>卷积网络就是一系列的卷积层的叠加，并加上各种各样的激活函数。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409163643703.png" srcset="/img/loading.gif" alt="image-20210409163643703"></p>
-<p>随着层数的增加，所包含的信息越来越多。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409163844238.png" srcset="/img/loading.gif" alt="image-20210409163844238"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164331727.png" srcset="/img/loading.gif" alt="image-20210409164331727"></p>
-<p>卷积计算过程：</p>
-<p>我们可以一步一步的来走，那么得到的就是 5*5的结果</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164505656.png" srcset="/img/loading.gif" alt="image-20210409164505656"></p>
-<p>但是步长调整到2时：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164739985.png" srcset="/img/loading.gif" alt="image-20210409164739985"></p>
-<p>那么得到的就是一个3*3的结果。</p>
-<p>步长为3时：(7-3)/3+1 = 2.33 所以这样会导致不平衡的结果，所以步长为3不可取。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164831571.png" srcset="/img/loading.gif" alt="image-20210409164831571"></p>
-<p>我们也可以在周围添上0，这样就可以在边缘上做卷积：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409165253842.png" srcset="/img/loading.gif" alt="image-20210409165253842"></p>
-<p>例如：一个32*32*3的输入，用10个5*5*3的卷积核去做卷积，边缘填充为2,步长为1。那么最后得到的就是32*32*10的输出，首先是32怎么得出来的呢：</p>
-<p>(32+2*2-5)/1 + 1 = 32。</p>
-<p>由于有10个卷积核，那么就是10层。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409170501645.png" srcset="/img/loading.gif" alt="image-20210409170501645"></p>
-<p>那么这个例子中包含多少参数呢：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409171108179.png" srcset="/img/loading.gif" alt="image-20210409171108179"></p>
-<p>首先是每kernel的大小是5*5*3 = 75,还有一个bias项，所以一共是76，由于有10层，那么就是760个参数。</p>
-<p>1*1的卷积也有意义：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409171525184.png" srcset="/img/loading.gif" alt="image-20210409171525184"></p>
-<p>可以对深度进行操作。</p>
-<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409172416207.png" srcset="/img/loading.gif" alt="image-20210409172416207"></p>
-<p>感受野(neuron view)：一个神经元所看到的视野，如上图蓝色面上的一个神经元是由卷积核和input做卷积得到的，他们操作的范围是5*5的范围。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173042186.png" srcset="/img/loading.gif" alt="image-20210409173042186"></p>
-<p>池化层(pooling layer)做的是降采样(downsampling)：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173144211.png" srcset="/img/loading.gif" alt="image-20210409173144211"></p>
-<p>我们一般不会做深度方向的池化，只对平面做。所以我们池化后的深度是不会变的。</p>
-<p>一种常用的池化方法是Max Pooling。</p>
-<p>Max Pooling：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173511648.png" srcset="/img/loading.gif" alt="image-20210409173511648"></p>
-<p>除了pooling可以降采样，我们调整卷积时的步长也可以做到降采样。</p>
+              <h1 id="策略优化基础——上"><a href="#策略优化基础——上" class="headerlink" title="策略优化基础——上"></a>策略优化基础——上</h1><h3 id="Plan-list"><a href="#Plan-list" class="headerlink" title="Plan list"></a>Plan list</h3><ul>
+<li><p>基于策略的强化学习：前面讲的都是基于价值的强化学习，这次讲基于策略函数去优化的强化学习</p>
+</li>
+<li><p>蒙特卡罗策略梯度</p>
+</li>
+<li><p>如何降低策略梯度的方差</p>
+</li>
+<li><p>Actor-Critic：同时学习策略函数和价值函数</p>
+</li>
+</ul>
+<h3 id="Value-based-RL-vs-Policy-based-RL"><a href="#Value-based-RL-vs-Policy-based-RL" class="headerlink" title="Value-based RL vs. Policy-based RL"></a>Value-based RL vs. Policy-based RL</h3><p>Value-based RL vs. Policy-based RL:</p>
+<ul>
+<li>Value-based RL</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522163333480.png" srcset="/img/loading.gif" alt="image-20210522163333480"></p>
+<p>Value-based Policy是默认策略是determinsitic的，也就是说我们的策略选择并且只选择能使得$Q(a,s_t)$价值函数最大的那个action。</p>
+<ul>
+<li>Policy-based RL</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522163701352.png" srcset="/img/loading.gif" alt="image-20210522163701352"></p>
+<p>基于策略的强化学习不同于基于价值的强化学习，他的策略选择是通过$\pi_\theta(a|s)$这个动作概率分布来采样决定当前的动作是什么，其中$\theta$是一个要通过数据学习的参数。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522164441367.png" srcset="/img/loading.gif" alt="image-20210522164441367"></p>
+<p>Policy-based RL 的好处：</p>
+<ul>
+<li><p>不管数据有多么的少，我们还是可以训练出一个策略函数，虽然可能并不是很好，当数据变多，效果就会变好。而在Value-Based RL中价值函数的估计是需要整个的table，这个对数据的要求远大于Policy-based RL 。</p>
+</li>
+<li><p>Policy gradient在高维空间中更有效。</p>
+</li>
+<li>Policy gradient学到的是一个概率分布。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>可能会收敛到局部最优解</li>
+<li>计算一个策略时，他的方差很大，每次训练得出的效果差别较大。</li>
+</ul>
+<p>下面先来介绍一下策略：</p>
+<p>策略有两种类型，一种是Deterministic的，另一种为stochastic的。</p>
+<ul>
+<li>deterministic：给定一个状态，策略返回一个确定的action。</li>
+<li>stochastic： 给定一个状态，策略返回一个动作的概率分布（比如40%往左走，60%向右走）。</li>
+</ul>
+<p>比如在石头剪刀布中: 一个确定性的策略很多容易被打败，而用概率分布比如每个动作各33%的概率出手，就会好很多。</p>
+<p>再举一个例子说明stochastic policy的好处，如下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522170743542.png" srcset="/img/loading.gif" alt="image-20210522170743542"></p>
+<p>比如这样的一个游戏，深色方块是一个魔幻的地方，进去的玩家不知道这是左边的深色格子还是右边的深色格子，换句话说在这两个格子时环境的状态一摸一样，因此在deterministic policy下我们会得到一摸一样且唯一的action。 那么我们经过学习后就会发现，在白色区域时，下面的格子是骷髅头，那么就会往边上走，而在金币处会向下走，在深色格子处无论向哪儿边走都会导致一边被困住，如下图。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522175431495.png" srcset="/img/loading.gif" alt="image-20210522175431495"></p>
+<p>而如果利用stochastic policy：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522175420245.png" srcset="/img/loading.gif" alt="image-20210522175420245"></p>
+<h3 id="策略函数的优化"><a href="#策略函数的优化" class="headerlink" title="策略函数的优化"></a>策略函数的优化</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522180855605.png" srcset="/img/loading.gif" alt="image-20210522180855605"></p>
+<p>我们优化的目标是优化策略参数$\theta$</p>
+<p>首先的问题是怎么衡量$\pi_\theta$的好坏呢？</p>
+<ul>
+<li>如果在一个<strong>有终止的环境(episodic environment)</strong>中，我们可以用开始状态$s_1$的价值的期望来表示：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522181302812.png" srcset="/img/loading.gif" alt="image-20210522181302812"></p>
+<ul>
+<li>如果是在一个<strong>连续无终止的环境下(continuing environment)</strong>，我们可以用状态的平均价值：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522181450742.png" srcset="/img/loading.gif" alt="image-20210522181450742"></p>
+<div class="hljs code-wrapper"><pre><code> 也可以用每一步的平均回报：
+</code></pre></div><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522181539766.png" srcset="/img/loading.gif" alt="image-20210522181539766"></p>
+<p>策略的价值也可以从轨迹中来看:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522184802516.png" srcset="/img/loading.gif" alt="image-20210522184802516"></p>
+<p>我们这里假设$\gamma$ 是一个轨迹，这个轨迹从策略$\pi_\theta$中来进行采样，然后去计算采样的轨迹所得到奖励的期望。数学表达就是采样$m$条轨迹，计算这些轨迹的平均奖励。</p>
+<p>而我们的优化目标就是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522185317228.png" srcset="/img/loading.gif" alt="image-20210522185317228"></p>
+<p>Policy-based RL的优化目标是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522190047107.png" srcset="/img/loading.gif" alt="image-20210522190047107"></p>
+<p>优化方法为：</p>
+<ul>
+<li>如果$J(\theta)$是可导的：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522190212720.png" srcset="/img/loading.gif" alt="image-20210522190212720"></p>
+<p>可以用梯度上升(梯度下降反着走)，共轭梯度法，或者拟牛顿法。</p>
+<ul>
+<li><p>如果$J(\theta)$不可导：可以用黑盒优化相关的算法</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522190650197.png" srcset="/img/loading.gif" alt="image-20210522190650197"></p>
+</li>
+</ul>
+<p>比如 交叉熵方法，爬山算法 (Hill climbing)，进化算法。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522191051096.png" srcset="/img/loading.gif" alt="image-20210522191051096"></p>
+<p>迭代N次，对于每次迭代：</p>
+<p>首先假设我们参数的分布函数$P_{\mu^{(i)}}(\theta)$，这个分布函数初始化可以是一个高斯分布，然后从这个参数的分布函数进行抽样，抽取出m组参数。</p>
+<p>然后对这m组参数，分别计算在每组参数$\theta$下的$J(\theta)$ 并存于$C$这个集合中。</p>
+<p>接着，我们在$C$中挑选出集合$J(\theta)$前10%大的的$\theta$, 然后再用这些$\theta$来优化分布函数中的参数，从而使得参数分布进行了更新。</p>
+<p>还有一种方法是用差值来代替梯度：</p>
+<p>他算出每个维度的梯度</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522211055225.png" srcset="/img/loading.gif" alt="image-20210522211055225"></p>
+<p>计算策略梯度：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522212120497.png" srcset="/img/loading.gif" alt="image-20210522212120497"></p>
+<p>第三部中用了一个小技巧：把 $\nabla\pi_\theta/\pi_\theta$换为了score function$\nabla ln\pi$。</p>
+<h3 id="策略函数的形式"><a href="#策略函数的形式" class="headerlink" title="策略函数的形式"></a>策略函数的形式</h3><ul>
+<li><p>第一种是Softmax Policy：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522214244793.png" srcset="/img/loading.gif" alt="image-20210522214244793"></p>
+<p>在某个状态$s$下，首先把$\phi(s,a)^T$这个对原特征做完feature transform后再做一个线性组合得到：$\phi(s,a)^T\theta$。</p>
+<p>最后转换成概率，得到$\pi_\theta$：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522214439812.png" srcset="/img/loading.gif" alt="image-20210522214439812"></p>
+</li>
+<li><p>另一种策略函数的形式是Gaussian Policy：</p>
+<p>有些时候策略是连续的，比如机器人控制问题，<strong>动作空间是个连续的过程，需要连续控制变量</strong>。对于连续策略变量，高斯是一个比较好的定义方式。</p>
+<p>首先把状态特征量的线性组合作为高斯函数的均值，方差Variance既可以把它参数化也可以把它设为固定的$\sigma^2$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522215430409.png" srcset="/img/loading.gif" alt="image-20210522215430409"></p>
+<p>所以当我们要得到一个动作时，就直接对高斯函数进行采样，这样我们就可以得到连续的值：：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522215437969.png" srcset="/img/loading.gif" alt="image-20210522215437969"></p>
+<p>这里的score function是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522215553267.png" srcset="/img/loading.gif" alt="image-20210522215553267"></p>
+</li>
+</ul>
+<h3 id="Monte-Carlo-policy-gradient"><a href="#Monte-Carlo-policy-gradient" class="headerlink" title="Monte-Carlo policy gradient"></a>Monte-Carlo policy gradient</h3><p>Policy Gradient是策略优化的一个经典算法，先说MDP最简单的形式——只走一步</p>
+<p><strong>Policy Gradient for one-step MDPs：</strong></p>
+<p>这个方法只走一步，用一步的reward来进行计算：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522221406855.png" srcset="/img/loading.gif" alt="image-20210522221406855"></p>
+<p>然后写出$J(\theta)$的表示函数：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522221836779.png" srcset="/img/loading.gif" alt="image-20210522221836779"></p>
+<p>计算梯度，这里计算梯度用到了上面提到的score function的技巧：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522221919474.png" srcset="/img/loading.gif" alt="image-20210522221919474"></p>
+<ul>
+<li><p>Policy Gradient for Multi-step MDPs</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522224214917.png" srcset="/img/loading.gif" alt="image-20210522224214917"></p>
+</li>
+</ul>
+<p>首先从策略中抽样出很多轨迹</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522224352536.png" srcset="/img/loading.gif" alt="image-20210522224352536"></p>
+<p>然后计算轨迹的期望作为$J(\theta)$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522224455240.png" srcset="/img/loading.gif" alt="image-20210522224455240"></p>
+<p>此时我们的需要优化的参数$\theta$已经被包含到了关于轨迹的概率函数，现在我们的目标就是优化这个$\theta$使得$J(\theta)$最大。</p>
+<p>Multi-step MDPs的策略梯度是什么？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522224850718.png" srcset="/img/loading.gif" alt="image-20210522224850718"></p>
+<p>那么现在就得到了策略梯度：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522225044983.png" srcset="/img/loading.gif" alt="image-20210522225044983"></p>
+<p>因为我们实际上并不知道这个轨迹$\tau$的分布，所以我们一般会用蒙特卡罗的方法来代替：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522225307159.png" srcset="/img/loading.gif" alt="image-20210522225307159"></p>
+<p>下面要对$logP(\tau_i;\theta)$分解：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522225809736.png" srcset="/img/loading.gif" alt="image-20210522225809736"></p>
+<p>这里也体现了我们写成log这种技巧的好处到底是什么，他将一些没用的量扔了出去，并变成了score funciton的加和。</p>
+<p>那么现在我们可以把</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210522230244717.png" srcset="/img/loading.gif" alt="image-20210522230244717"></p>
 
             </div>
             <hr>
@@ -288,7 +386,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
                     
                   </div>
                 
@@ -301,18 +399,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CS231n-CH5-训练神经网络(上)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/04/08/CS231n-CH3-%E4%BB%8B%E7%BB%8D%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="hidden-mobile">CS231n-CH3-介绍神经网络</span>
+                      <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch7-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8B/">
+                        <span class="hidden-mobile">强化学习纲要Ch7-价值函数近似-下</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -331,8 +423,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/';
-        this.page.identifier = '/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/';
+        this.page.url = 'https://chillstepp.github.io/2021/05/22/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch8-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80-%E4%B8%8A/';
+        this.page.identifier = '/2021/05/22/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch8-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80-%E4%B8%8A/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');
