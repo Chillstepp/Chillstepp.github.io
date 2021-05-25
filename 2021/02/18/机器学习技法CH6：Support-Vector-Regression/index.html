@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      752 字
+      763 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      9
        分钟
     </span>
   
@@ -272,7 +272,7 @@
 <p>在margin里的说明没有错误，在margin外的错误就是$|s-y|$是到tube中心的长度，$\epsilon$是边界到tube中心的长度，那么错误就是$|s-y|-\epsilon$</p>
 <p>我们对比一下这种error measure和squred error measure的区别：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218205948947.png" srcset="/img/loading.gif" alt="image-20210218205948947"></p>
-<p>我们发现在$S=y$附近, 两者并无太大的区别，远离$s$我们就会发现tube这种错误率增长速度慢于squred 。</p>
+<p>我们发现在$S=y$附近, 两者并无太大的区别，远离$s$我们就会发现tube这种错误率增长速度慢于squred。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218210624355.png" srcset="/img/loading.gif" alt="image-20210218210624355"></p>
 <p>因此我们想用standard SVM的方法来解决这个问题：</p>
 <p>我们首先考虑转化成standard SVM的形式</p>
@@ -286,8 +286,9 @@
 <p>和Lecture 4一样 写出KKT:</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218220211505.png" srcset="/img/loading.gif" alt="image-20210218220211505"></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218220603387.png" srcset="/img/loading.gif" alt="image-20210218220603387"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210525202611489.png" srcset="/img/loading.gif" alt="image-20210525202611489"></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218221322480.png" srcset="/img/loading.gif" alt="image-20210218221322480"></p>
-<p>我们来观察tube里的情况推到最后发现$\beta = 0$ ,那么说明这些不会对$w$有贡献,也就是说support vector只包括在tube上或者在tube外的点。</p>
+<p>我们来观察tube里的情况推到最后发现$\beta = 0$ ,那么说明这些不会对$w$有贡献,也就是说support vector只包括在tube上或者在tube外的点，因此这样的SVR是稀疏的(sparse)。</p>
 <h2 id="Summary-of-Kernel-Model"><a href="#Summary-of-Kernel-Model" class="headerlink" title="Summary of Kernel Model"></a>Summary of Kernel Model</h2><p>首先是<strong>Linear Models的总结：</strong></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210218221802181.png" srcset="/img/loading.gif" alt="image-20210218221802181"></p>
 <p>橙色是我们在基石中学到的问题。</p>
