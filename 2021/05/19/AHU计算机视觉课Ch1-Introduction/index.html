@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.1k 字
+      2.4k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      25
        分钟
     </span>
   
@@ -248,6 +248,17 @@
 <p><strong>彩色图象有三个图象通道，分别是r,g,b。</strong></p>
 <p><strong>由此可以得出三通道图像的灰度值是三个单通道的灰度值的组合。灰度值为0-255，每个通道都是0-255，值越大图像看起来越亮，值越小图像越暗。</strong></p>
 <p>比如我们看到狗的舌头，它是红色的，所以在r通道上舌头处显示的十分明亮。</p>
+<p>除了RGB颜色空间，还有一些其他的颜色空间，比如：</p>
+<ul>
+<li><p>HSV/HSB： 色相（Hue）/ 饱和度（Saturation）/ 明度（Brightness）</p>
+<p>S 控制纯色中混入<strong>白色</strong>的量，值越大，白色越少，颜色<strong>越纯</strong></p>
+<p>B /V控制纯色中混入<strong>黑色</strong>的量，值越大，黑色越少，明度<strong>越高</strong></p>
+</li>
+<li><p>HSL：</p>
+</li>
+</ul>
+<p>S 和黑白没有关系，饱和度不控制颜色中混入黑白的多寡；</p>
+<p>L 控制纯色中的混入的<strong>黑白两种颜色</strong>。</p>
 <h2 id="灰度处理"><a href="#灰度处理" class="headerlink" title="灰度处理"></a>灰度处理</h2><h3 id="对数变换，指数变换，反转变换"><a href="#对数变换，指数变换，反转变换" class="headerlink" title="对数变换，指数变换，反转变换"></a>对数变换，指数变换，反转变换</h3><p><a href="https://imgchr.com/i/8LlJxA" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/24/8LlJxA.md.png" srcset="/img/loading.gif" alt="8LlJxA.md.png"></a></p>
 <p><strong>灰度变换就是要对每个像素点的灰度值进行改变，$T(r)$为一个关于输入灰度值和输出灰度值之间的函数关系，横坐标为输入灰度值，纵坐标为经过灰度变换的灰度值。</strong></p>
 <p><strong>上图也展示了几个常见的灰度变换函数$T(r ) $</strong></p>
@@ -292,6 +303,12 @@
 <p>这种全局的直方图有一定的缺陷，因此我们引入新的均衡化的方式。</p>
 <h3 id="局部直方图处理"><a href="#局部直方图处理" class="headerlink" title="局部直方图处理"></a>局部直方图处理</h3><p><img src="https://s1.ax1x.com/2020/07/10/UuwTPI.png" srcset="/img/loading.gif" alt="UuwTPI.png"></p>
 <h3 id="自适应直方图均衡"><a href="#自适应直方图均衡" class="headerlink" title="自适应直方图均衡"></a>自适应直方图均衡</h3><p><a href="https://imgchr.com/i/UuwOsS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/07/10/UuwOsS.png" srcset="/img/loading.gif" alt="UuwOsS.png"></a></p>
+<p>自适应直方图分为三步：</p>
+<ul>
+<li>首先把图像划分为8*8的网格</li>
+<li>对每一个窗口网格计算 T(r)函数，即计算灰度变化函数。</li>
+<li>然后双线性插值计算变化后的灰度。</li>
+</ul>
 <h3 id="对比度受限的自适应直方图均衡（CLAHE）"><a href="#对比度受限的自适应直方图均衡（CLAHE）" class="headerlink" title="对比度受限的自适应直方图均衡（CLAHE）"></a>对比度受限的自适应直方图均衡（CLAHE）</h3><p><strong>为了避免由于AHE产生的图像不连续和过度增强的结果，引入一种限制直方图分布的办法，即限制对比度自适应直方图均衡化(Contrast Limited Adaptive Hitogram Equalization)。CLAHE来自文章<em>Adaptive Histogram Equalization and Its Variations，</em>是1987年 一篇论文，相对于AHE，提出了两个改进的地方。</strong></p>
 <p><strong>第一，提出一种限制直方图分布的方法。考虑图像A的直方图，设定一个阈值，假定直方图某个灰度级超过了阈值，就对 之进行裁剪，然后将超出阈值的部分平均分配到各个灰度级，这个过程可以用下图来进行解释。图中左上图是原来的直方图分布，可以看出有一处峰值，其对应的CDF为左下图，可以看出有两段梯度比较大，变化剧烈。对于之前频率超过了阈值的灰度级，那么就把这些超过阈值的部分裁剪掉平均分配到各个灰度级上，如右上图，那么这会使得CDF变得较为平缓，如右下图。通常阈值的设定可以直接设定灰度级出现频数，也可以设定为占总像素比例，后者更容易使用。由于右下图所示的CDF不会有太大的剧烈变化，所以可以避免过度增强噪声点。</strong></p>
 <p><strong>第二，提出了一种插值的方法，加速直方图均衡化。</strong></p>
@@ -301,7 +318,7 @@
 <p><img src="https://s1.ax1x.com/2020/03/24/8LbknO.png" srcset="/img/loading.gif" alt="8LbknO.png"></p>
 <p><strong>不同的阈值，图像的处理效果不同：阈值越大，就越接近直方图均衡化的效果</strong></p>
 <p><a href="https://imgchr.com/i/8LbK3t" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/24/8LbK3t.png" srcset="/img/loading.gif" alt="8LbK3t.png"></a></p>
-<h2 id="平滑滤波（模糊，去噪）"><a href="#平滑滤波（模糊，去噪）" class="headerlink" title="平滑滤波（模糊，去噪）"></a>平滑滤波（模糊，去噪）</h2><h3 id="线性滤波"><a href="#线性滤波" class="headerlink" title="线性滤波"></a>线性滤波</h3><p><img src="https://s1.ax1x.com/2020/03/24/8LzzNT.png" srcset="/img/loading.gif" alt="8LzzNT.png"></p>
+<h2 id="平滑滤波（模糊，去噪）"><a href="#平滑滤波（模糊，去噪）" class="headerlink" title="平滑滤波（模糊，去噪）"></a>平滑滤波（模糊，去噪）</h2><p><img src="https://s1.ax1x.com/2020/03/24/8LzzNT.png" srcset="/img/loading.gif" alt="8LzzNT.png"></p>
 <p><strong>相当于做一个卷积，这种操作可以去噪点，具体可参阅这篇文章中的4.图像处理的应用：<a href="https://blog.csdn.net/ccnt_2012/article/details/81127432" target="_blank" rel="noopener">https://blog.csdn.net/ccnt_2012/article/details/81127432</a></strong></p>
 <h3 id="均值滤波"><a href="#均值滤波" class="headerlink" title="均值滤波"></a>均值滤波</h3><p>模糊，去噪</p>
 <p><a href="https://imgchr.com/i/8LzH3Q" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/24/8LzH3Q.png" srcset="/img/loading.gif" alt="8LzH3Q.png"></a></p>
@@ -309,6 +326,16 @@
 <h3 id="高斯滤波"><a href="#高斯滤波" class="headerlink" title="高斯滤波"></a>高斯滤波</h3><p>高斯滤波使得目标点的作用占比较大，周围像素点作用占比较小，如下图中高斯滤波的三维图可以观测到这样的属性特点。</p>
 <p><img src="https://bkimg.cdn.bcebos.com/formula/9fb3bfee07ddf83294e454ac12e09cec.svg" srcset="/img/loading.gif" alt="img"></p>
 <p><img src="https://s1.ax1x.com/2020/03/24/8LzIN8.png" srcset="/img/loading.gif" alt="8LzIN8.png"></p>
+<p><strong>如何求一个高斯滤波呢？</strong></p>
+<ul>
+<li>首先要用上述$h(i,j)$式来算滤波矩阵的各处的值，矩阵中心处视作为(0,0)</li>
+<li>取整</li>
+<li>归一化</li>
+</ul>
+<p>例如：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210531204402432.png" srcset="/img/loading.gif" alt="image-20210531204402432"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210531204407134.png" srcset="/img/loading.gif" alt="image-20210531204407134"></p>
+<p>下面是不同大小滤波模板的示例图：</p>
 <p><img src="https://s1.ax1x.com/2020/03/24/8LzhHP.png" srcset="/img/loading.gif" alt="8LzhHP.png"></p>
 <p><strong>一般参数合适的范围如下图：</strong></p>
 <p>σ越大，越扁平。</p>
@@ -638,5 +665,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

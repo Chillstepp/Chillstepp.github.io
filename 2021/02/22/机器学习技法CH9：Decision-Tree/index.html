@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      897 字
+      1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      11
        分钟
     </span>
   
@@ -243,16 +243,28 @@
 <p>一个decision tree的例子：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222202359077.png" srcset="/img/loading.gif" alt="image-20210222202359077"></p>
 <ul>
-<li>$g_t(x)$：叶子节点，一个常数，代表路径$t$的终点的常量</li>
-<li>$q_t(x)$:   $x$是否在路径$t$上。</li>
+<li>$g_t(x)$：称为base hypothesis，叶子节点，一个常数，代表路径$t$的终点的常量，也就是最后做的决定。</li>
+<li>$q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。</li>
 </ul>
-<p>还可以用递归的定义来定义：</p>
+<p>我们可以把一棵树看成如下的样式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210529122441024.png" srcset="/img/loading.gif" alt="image-20210529122441024"></p>
+<p>那么上图这种一个节点对应着三个子树，然后在子树中可以接着递归找子树。因此我们还可以用递归的来定义这个决策树：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222202917934.png" srcset="/img/loading.gif" alt="image-20210222202917934"></p>
+<ul>
+<li>$G(x)$ 一个树</li>
+<li>$b(x)$分支条件</li>
+<li>$G_c(c)$:第c个分支条件通向的子树</li>
+</ul>
 <p><strong>decision tree的优点：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222203127186.png" srcset="/img/loading.gif" alt="image-20210222203127186"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222203127186.png" srcset="/img/loading.gif" alt="image-20210222203127186" style="zoom:50%;" /></p>
+<ul>
+<li>可解释性强，常用在医学等模型上。</li>
+<li>简单，只是一个树递归</li>
+<li>高效，判断的复杂度是log级别的</li>
+</ul>
 <p><strong>缺点：</strong></p>
 <ul>
-<li>没有很强的理论解释</li>
+<li>没有很强的理论解释/理论支持</li>
 <li>实际应用中依赖启发式的选择，需要灵感。</li>
 </ul>
 <h2 id="Decision-Tree-Algorithm"><a href="#Decision-Tree-Algorithm" class="headerlink" title="Decision Tree Algorithm"></a>Decision Tree Algorithm</h2><p>这个算法很容易写出一个basic的版本。</p>
@@ -271,7 +283,7 @@
 </li>
 <li><p>对于叶子节点的值怎么设定呢？</p>
 <ul>
-<li>对于classification任务(0/1 error)：我们用一组已经知道label的资料放进去跑decision tree，落在叶子节点后计数，看看每个叶子节点里1多还是0多，取多者为叶子节点的constant</li>
+<li>对于classification任务(0/1 error)：我们用一组已经知道label的资料放进去跑decision tree，落在叶子节点后计数，看看每个叶子节点里1多还是0多，取多者为叶子节点的constant，即取最多的$y_n$。</li>
 <li>对于regression任务(squared error)：取$y_n$的平均即可。</li>
 </ul>
 </li>
@@ -280,8 +292,8 @@
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222205355159.png" srcset="/img/loading.gif" alt="image-20210222205355159"></p>
 <p><code>C&amp;RT</code>的划分方法：</p>
 <ul>
-<li>用<code>Decision Stump</code>来划分,对feature的每个维度划分，那么一共可以有$d$个binary decision。</li>
-<li>依靠purifying(纯度)来决定分支：</li>
+<li><strong>用<code>Decision Stump</code>来划分：</strong>对feature的每个维度划分，那么一共可以有$d$个binary decision。</li>
+<li><strong>依靠purifying(纯度)来决定分支：</strong></li>
 </ul>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222210524103.png" srcset="/img/loading.gif" alt="image-20210222210524103"></p>
 <p>对于每个binary decision，也就是一个$h$ ,我们考量他的得分$b(x)$，思路很简单，就是对于$h$分割开的两份我们分别去算各自那一份的不纯度，然后乘上那一份的大小，这个做法很符合直觉。</p>
@@ -631,5 +643,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
