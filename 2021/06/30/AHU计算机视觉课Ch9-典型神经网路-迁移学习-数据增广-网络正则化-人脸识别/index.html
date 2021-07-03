@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      4.5k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      48
        分钟
     </span>
   
@@ -239,12 +239,262 @@
             <h1 style="display: none">AHU计算机视觉课Ch9-典型神经网路/迁移学习/数据增广/网络正则化/人脸识别</h1>
             
             <div class="markdown-body">
-              
+              <h1 id="几种典型的卷积网"><a href="#几种典型的卷积网" class="headerlink" title="几种典型的卷积网"></a>几种典型的卷积网</h1><h2 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701234242561.png" srcset="/img/loading.gif" alt="image-20210701234242561"></p>
+<p>在1998年并没现在计算这么快的GPU，所以当时采用了<strong>稀疏连接</strong>，从而为了加快训练速度。</p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>AlexNet结构如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415173124918.png" srcset="/img/loading.gif" alt="image-20210415173124918"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415173358095.png" srcset="/img/loading.gif" alt="image-20210415173358095"></p>
+<p>网络结构：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415174601793.png" srcset="/img/loading.gif" alt="image-20210415174601793"></p>
+<p>第一层有96个卷积核，每个卷积核的大小是11*11*3,所以第一层输出的大小是: 55*55*96。</p>
+<p>那么第一层的参数有：(11*11*3)*96 = 35K.</p>
+<p>第二层，即POOL1，这层在做Max pooling输出的结果大小是27*27*96。</p>
+<p>这一层没有参数，因为是在做Max Pooling，取最大值即可。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415175146259.png" srcset="/img/loading.gif" alt="image-20210415175146259"></p>
+<p>AlexNet的一些细节：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210415175307835.png" srcset="/img/loading.gif" alt="image-20210415175307835"></p>
+<p>第一次使用ReLu损失函数，做了Normalizaiton，有很多数据增强的数据，dropout的概率是0.5，batchsize为128，梯度下降使用的是SGD Momentum,学习率1e-2开始训练，weight decay设置为5e-4，还用了模型集成，训练多个模型对他们取平均…</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416163734112.png" srcset="/img/loading.gif" alt="image-20210416163734112"></p>
+<p>我们之前算第二层的大小是55*55*96 ，而上图红色框种的深度是48，这是由于当时最好的GPU也只是GTX580，显存只有3G，所以不得不采用分开的训练方式。</p>
+<h2 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h2><p><strong>这篇文章写的很好：</strong></p>
+<p>一文读懂VGG网络 - Amusi的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/41423739" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41423739</a></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416165807394.png" srcset="/img/loading.gif" alt="image-20210416165807394"></p>
+<p>VGGNet一般16-19层，它只包含3*3的卷积(pad 1),Max Pooling是2*2的。</p>
+<ul>
+<li><p><strong>为什么用小的卷积核？</strong></p>
+<p><strong>reference：</strong><a href="https://zhuanlan.zhihu.com/p/41423739" target="_blank" rel="noopener">知乎：一文读懂VGG网络</a></p>
+<p>​    VGG16相比AlexNet的一个改进是<strong>采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</strong>。对于给定的感受野（与输出有关的输入图片的局部大小），采用堆积的小卷积核是优于采用大的卷积核，因为多层非线性层可以增加网络深度来保证学习更复杂的模式，而且代价还比较小（参数更少）。</p>
+<p>​    简单来说，在VGG中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5*5卷积核，这样做的主要目的是在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
+<p>​    比如，3个步长为1的3x3卷积核的一层层叠加作用可看成一个大小为7的感受野（其实就表示3个3x3连续卷积相当于一个7x7卷积），其参数总量为 $3\times(9\times C^2)$ ，如果直接使用7x7卷积核，其参数总量为 $49\times C^2$ ，这里 C 指的是输入和输出的通道数。很明显，$27\times C^2\le 49\times C^2$，即<strong>减少了参数</strong>；而且3x3卷积核有利于更好地保持图像性质。</p>
+</li>
+<li><p><strong>怎么使用2个3x3卷积核可以来代替5*5卷积核</strong></p>
+</li>
+</ul>
+<p>想做到2个3*3卷积核可以来代替5*5卷积核,也就是对于同样一个单位的感受野，2个3*3的卷积核也可以看到5*5的感受野：</p>
+<p>可以这样来做，通过两层的3*3卷积使得第三层的一个单位可以看到第一层5*5的视野：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416180456519.png" srcset="/img/loading.gif" alt="image-20210416180456519"></p>
+<h2 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416184736509.png" srcset="/img/loading.gif" alt="image-20210416184736509"></p>
+<p>视频讲的有带点乱,找了些资料梳理了下。</p>
+<p>reference：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/73857137" target="_blank" rel="noopener">深度学习|经典网络 GoogLeNet（一）</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/32702031" target="_blank" rel="noopener">深入理解GoogLeNet结构（原创）</a></p>
+<ul>
+<li><strong>网络结构：</strong></li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/v2-766c3f59d3791da39ad805606d6445f6_r.jpg" srcset="/img/loading.gif" alt="v2-766c3f59d3791da39ad805606d6445f6_r"></p>
+<ul>
+<li><p>GoogleNet新提出了Inception，这是什么？</p>
+<p>Inception就是把多个卷积或池化操作，放在一起组装成一个网络模块，设计神经网络时以模块为单位去组装整个网络结构。模块如下图所示</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416193845211.png" srcset="/img/loading.gif" alt="image-20210416193845211"></p>
+<p>​        在未使用这种方式的网络里，我们一层往往只使用一种操作，比如卷积或者池化，而且卷积操作的卷积核尺寸也是固定大小的。但是，<strong>在实际情况下，在不同尺度的图片里，需要不同大小的卷积核，这样才能使性能最好，或者或，对于同一张图片，不同尺寸的卷积核的表现效果是不一样的，因为他们的感受野不同</strong>。所以，<strong>我们希望让网络自己去选择，Inception便能够满足这样的需求</strong>，一个Inception模块中并列提供多种卷积核的操作，网络在训练的过程中通过调节参数自己去选择使用，同时，<strong>由于网络中都需要池化操作，所以此处也把池化层并列加入网络中</strong>。</p>
+<ul>
+<li><p><strong>为什么要提出Inception？</strong></p>
+<p>一般来说，提升网络性能最直接的办法就是增加网络深度和宽度，但一味地增加，会带来诸多问题：<br>1）参数太多，如果训练数据集有限，很容易产生过拟合；<br>2）网络越大、参数越多，计算复杂度越大，难以应用；<br>3）网络越深，容易出现梯度弥散问题（梯度越往后穿越容易消失），难以优化模型。<br>我们希望在增加网络深度和宽度的同时减少参数，为了减少参数，自然就想到将全连接变成稀疏连接。但是在实现上，全连接变成稀疏连接后实际计算量并不会有质的提升，因为大部分硬件是针对密集矩阵计算优化的，稀疏矩阵虽然数据量少，但是计算所消耗的时间却很难减少。在这种需求和形势下，Google研究人员提出了Inception的方法：<strong>能更高效的利用计算资源，在相同的计算量下能提取到更多的特征，从而提升训练结果</strong>。</p>
+</li>
+<li><p><strong>实际中需要什么样的Inception？</strong></p>
+<p>我们在上面提供了一种Inception的结构，但是这个结构存在很多问题，是不能够直接使用的。首要问题就是参数太多，导致特征图厚度太大。为了解决这个问题，作者在其中加入了1X1的卷积核，改进后的Inception结构如下图</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194145863.png" srcset="/img/loading.gif" alt="image-20210416194145863"></p>
+<p>​    这样做有两个好处，首先是大大<strong>减少了参数量</strong>，其次，<strong>增加的1X1卷积后面也会跟着有非线性激励，这样同时也能够提升网络的表达能力</strong>。</p>
+<ul>
+<li><p><strong>1*1卷积有什么用？</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121105534.png" srcset="/img/loading.gif" alt="image-20210417121105534"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417123543710.png" srcset="/img/loading.gif" alt="image-20210417123543710"></p>
+<p>如果不加1*1的卷积，那么对于上图的计算量高达8.54亿次计算。因此加上一个1*1的卷积的原因就是降低feature map的深度，如下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121347102.png" srcset="/img/loading.gif" alt="image-20210417121347102"></p>
+<p>因此做完1*1卷积后，结果为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121552106.png" srcset="/img/loading.gif" alt="image-20210417121552106"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417121724855.png" srcset="/img/loading.gif" alt="image-20210417121724855"></p>
+<p>现在的操作降低到了3.58亿次操作。</p>
+</li>
+</ul>
+<p>  <strong>知乎上的解释：</strong></p>
+<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416195129813.png" srcset="/img/loading.gif" alt="image-20210416195129813"></p>
+<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194913131.png" srcset="/img/loading.gif" alt="image-20210416194913131"></p>
+<p>  这里要注意：题目中所说的1*1是对深度做操作的，1*1卷积就是把feature map上的每个位置的c个channel做了一次重新组合,一般用来提高或者降低channel数。</p>
+<p>  <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210416194932237.png" srcset="/img/loading.gif" alt="image-20210416194932237"></p>
+<ul>
+<li><p><strong>多个尺寸上进行卷积再聚合的原因？</strong></p>
+<p>可以看到对输入做了4个分支，分别用不同尺寸的filter进行卷积或池化，最后再在特征维度上拼接到一起。这种全新的结构有什么好处呢？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417151459105.png" srcset="/img/loading.gif" alt="image-20210417151459105"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417155307211.png" srcset="/img/loading.gif" alt="image-20210417155307211"></p>
+</li>
+</ul>
+<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h2><p><strong>Reference：</strong></p>
+<p>Resnet到底在解决一个什么问题呢？ - 薰风初入弦的回答 - 知乎 <a href="https://www.zhihu.com/question/64494691/answer/786270699" target="_blank" rel="noopener">https://www.zhihu.com/question/64494691/answer/786270699</a></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417124340194.png" srcset="/img/loading.gif" alt="image-20210417124340194"></p>
+<p>152层…</p>
+<p>起因是有人做了实验，发现56层不仅在训练集上效果好(当然这是应该的，人们认为这是过拟合的原因)，可是在测试集上依然比20层的网络错误率低，这就说明56层的网络并没有过拟合。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417124603813.png" srcset="/img/loading.gif" alt="image-20210417124603813"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417125452353.png" srcset="/img/loading.gif" alt="image-20210417125452353"></p>
+<p>​    当我们堆叠一个模型时，理所当然的会认为效果会越堆越好。因为，假设一个比较浅的网络已经可以达到不错的效果，<strong>那么即使之后堆上去的网络什么也不做，模型的效果也不会变差</strong>。然而深度学习很难做到这一点：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417160620669.png" srcset="/img/loading.gif" alt="image-20210417160620669"></p>
+<p>​    这样层层的向前传播使得开始的信息还能被完整的保留的可能性太小。</p>
+<p>​    ResNet的出现就是为了<strong>让模型的内部结构至少有恒等映射的能力</strong>。以保证在堆叠网络的过程中，网络至少不会因为继续堆叠而产生退化。所以这也是ResNet敢用152层的原因。</p>
+<ul>
+<li><strong>ResNet做是如何做到恒等映射的呢？</strong></li>
+</ul>
+<p>前面提到了学习一个恒等映射很难，但是学习一个全为0的函数很简单，因此ResNet把网络设计为$H(x) = F(x) + x$,即把恒等映射作为网络的一部分。由于我们的学习目标是$F(x)$，就可以把问题转化为学习残差函数$F(x) = H(x) -x$.  </p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210417162541557.png" srcset="/img/loading.gif" alt="image-20210417162541557"></p>
+<p>这样当$F(x)=0$（这个是易学的）时即说明这是一个恒等映射($H(x) = x$)</p>
+<h1 id="网络训练"><a href="#网络训练" class="headerlink" title="网络训练"></a>网络训练</h1><h3 id="训练集-验证机-测试集"><a href="#训练集-验证机-测试集" class="headerlink" title="训练集/验证机/测试集"></a>训练集/验证机/测试集</h3><ul>
+<li>训练集：学习模型参数</li>
+<li>验证集：选择模型/优化超参数</li>
+<li>测试集：测试模型的泛化能力  </li>
+</ul>
+<p>其实训练集和测试集没什么好说的，但是验证集可以单独拿出来说一说里面有趣的内容：</p>
+<p>验证集(Validation Set)一般就是把我们的数据拿出来一部分选择模型/优化超参数,他后面衍生出了很多新的东西：</p>
+<p>Leave-One-Out Cross Validation和V-Fold Cross Validation，具体可以参考：<a href="https://chillstepp.github.io/2021/01/27/CH15%EF%BC%9AValidation/#V-Fold-Cross-Validation">机器学习基石CH15：Validation </a></p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化在神经网络中大致下面几种：</p>
+<ul>
+<li>权值衰减(Weight Decay)  </li>
+</ul>
+<p>权重衰减等价于$L_2$范数正则化（regularization）。正则化通过为模型损失函数添加惩罚项使学出的模型参数值较小，是应对过拟合的常用手段。</p>
+<p>从使学出的模型参数值较小这个角度看，不论你用L1正则化还是L2正则化，亦或是其他的正则化方法，只要是削减了权重，那都可以称为weight dacay。</p>
+<ul>
+<li><p>Dropout  </p>
+<p>在每次前向传播时，随机的把一些神经元的值 置为0，即无法向下一层传播。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702154809278.png" srcset="/img/loading.gif" alt="image-20210702154809278"></p>
+<ul>
+<li>Early Stopping  </li>
+</ul>
+<p>防止过拟合，虽然我们的误差在训练集上会随着epoch增多而下降，但同时也会导致过拟合，测试集上的误差反而会增加。</p>
+<p>因此观察验证集的表现，在误差最低处提前停止训练。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702154949242.png" srcset="/img/loading.gif" alt="image-20210702154949242"></p>
+<ul>
+<li>Data Augmentation  </li>
+</ul>
+<p>左右翻转，上下翻转，随机裁剪，投影变换，错切变换，颜色变化，添加噪声。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702164802493.png" srcset="/img/loading.gif" alt="image-20210702164802493"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702164932919.png" srcset="/img/loading.gif" alt="image-20210702164932919"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702164817664.png" srcset="/img/loading.gif" alt="image-20210702164817664"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702164831801.png" srcset="/img/loading.gif" alt="image-20210702164831801"></p>
+<p>图像增广也要结合所做的具体任务来看：</p>
+<p>比如车牌识别，翻转操作就最好不要做，因为9翻转完就是6，意义完全不同。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702165059681.png" srcset="/img/loading.gif" alt="image-20210702165059681"></p>
+<h1 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h1><p>迁移学习(Transfer learning) 顾名思义就是把已训练好的模型（预训练模型）参数迁移到新的模型来帮助新模型训练。考虑到大部分数据或任务都是存在相关性的，所以通过迁移学习我们可以将已经学到的模型参数（也可理解为模型学到的知识）通过某种方式来分享给新模型从而加快并优化模型的学习效率不用像大多数网络那样从零学习。</p>
+<p>其中，实现迁移学习有以下三种手段：</p>
+<ul>
+<li><strong>Transfer Learning</strong>：冻结预训练模型的全部卷积层，只训练自己定制的全连接层。</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702170259441.png" srcset="/img/loading.gif" alt="image-20210702170259441"></p>
+<ul>
+<li><strong>Fine-tuning</strong>：冻结预训练模型的部分卷积层（通常是靠近输入的多数卷积层，因为这些层保留了大量底层信息）甚至不冻结任何网络层，训练剩下的卷积层（通常是靠近输出的部分卷积层）和全连接层。</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702170333895.png" srcset="/img/loading.gif" alt="image-20210702170333895"></p>
+<ul>
+<li><p><strong>Extract Feature Vector</strong>：先计算出预训练模型的卷积层对所有训练和测试数据的特征向量，然后抛开预训练模型，只训练自己定制的简配版全连接网络。</p>
+<p>提取特征向量方法也是迁移学习的一种，具体方法是把训练数据用已经训练好的网络先进行特征向量提取，然后定制自己的全连接网络，输入为数据之前提取到的特征向量。</p>
+</li>
+</ul>
+<h1 id="人脸识别-人脸验证："><a href="#人脸识别-人脸验证：" class="headerlink" title="人脸识别/人脸验证："></a>人脸识别/人脸验证：</h1><h2 id="人脸识别-Versus-人脸验证"><a href="#人脸识别-Versus-人脸验证" class="headerlink" title="人脸识别 Versus. 人脸验证"></a>人脸识别 Versus. 人脸验证</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702170908110.png" srcset="/img/loading.gif" alt="image-20210702170908110"></p>
+<p>人脸识别解决的是<strong>分类问题</strong>，解决的问题是who are you？</p>
+<p>人脸验证解决的是<strong>图像相似度度量问题</strong>，解决的问题是：Is this you？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702171746438.png" srcset="/img/loading.gif" alt="image-20210702171746438"></p>
+<p>我觉得最后一个支付宝刷脸支付其实有些歧义：</p>
+<p>在我们买东西时，商家先扫了我们的二维码，支付宝定位到我们的信息，我们再刷脸，支付宝识别和我们信息是不是同一个人，这显然是人脸验证。而我们在自动售货机买饮料根本无需扫码，直接扫脸，那么支付宝就没有拿到我们的信息，而是看到我们的脸直接做分类，识别是谁，然后直接付款，这就是人脸识别问题。所以要看具体的常经</p>
+<h2 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702185353251.png" srcset="/img/loading.gif" alt="image-20210702185353251"></p>
+<h2 id="人脸验证"><a href="#人脸验证" class="headerlink" title="人脸验证"></a>人脸验证</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210702190938589.png" srcset="/img/loading.gif" alt="image-20210702190938589"></p>
+<p>人脸验证首先要<strong>把人脸用特征向量表示出来：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703023845840.png" srcset="/img/loading.gif" alt="image-20210703023845840"></p>
+<p>提取特征还是通过CNN来提取，只不过我们这里并不需要分类，而是需要分类前的所提取到的特征向量，因此我们要去掉分类层(Softmax)，而使用全连接层输出作为特征，好比一个特征提取网络。 我们可以称之为提取图像特征/对图像编码/或者embedding</p>
+<blockquote>
+<p>照现在深度学习界通用的理解：Embedding就是从原始数据提取出来的Feature，也就是那个通过神经网络映射之后的低维向量。</p>
+</blockquote>
+<p>但毕竟是迁移学习而来的，最后话需要用人脸验证任务来微调(fine-tune)模型参数</p>
+<h3 id="Siamese-Network孪生网络"><a href="#Siamese-Network孪生网络" class="headerlink" title="Siamese Network孪生网络"></a>Siamese Network孪生网络</h3><p><strong>人脸验证常用的Siamese Network孪生网络：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703024259365.png" srcset="/img/loading.gif" alt="image-20210703024259365"></p>
+<p>这两个CNN网络是共享参数的，参数完全一样，最后看提取特征后是否相同，如果相同则可以认为是同一个人。</p>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><strong>主流上孪生网络有两种训练方法 pair classification/Distance Metric Learning：</strong></p>
+<ul>
+<li><p><strong>Pair Classification—交叉熵</strong></p>
+<p>pair classification就是按照类别错误来改正，损失函数选用交叉熵</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703031938939.png" srcset="/img/loading.gif" alt="image-20210703031938939"></p>
+<ul>
+<li><p><strong>Distance Metric Learning—对比损失(Contrastive Loss）</strong></p>
+<p>对比损失(Contrastive Loss）是一种分类损失，它是通过<strong>距离度量</strong>来计算分类损失的，它希望：</p>
+<ol>
+<li>近似样本之间的距离越小越好</li>
+<li>不似样本之间的距离越大越好</li>
+</ol>
+<p>式子为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703033012167.png" srcset="/img/loading.gif" alt="image-20210703033012167"></p>
+<p>具体解释就是：</p>
+<p>当$x_1$与$x_2$属于同一类,即Y=1：损失就是两者之间的距离；</p>
+<p>当$x_1$与$x_2$不属于同一类,即Y=0：如果$x_1$与$x_2$之间距离大于$m$，则不做优化（省时省力）；如果 X1 与 X2 之间的距离小于 m, 则增大两者距离到m。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703032030140.png" srcset="/img/loading.gif" alt="image-20210703032030140"></p>
+<ul>
+<li><p><strong>Distance Metric Learning—Triplet-Loss</strong>  </p>
+<p>Triplet loss也是一种Distance Metric Learning，使用这种损失函数的训练数据是一个三元组$(x_1,x_2,x_3)$，其中$x_1,x_2$都是正样本，而$x_3$是负样本，我们希望$x_1$靠近$x_2$，同时要区别出$x_3$即要远离$x_3$。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703033456778.png" srcset="/img/loading.gif" alt="image-20210703033456778"></p>
+<p>Triplet loss希望：</p>
+<p>1.使具有相同标签的样本在embedding空间尽量接近。</p>
+<p>2.使具有不同标签的样本在embedding空间尽量远离。</p>
+<p>如果只遵循以上两点，最后embedding空间中相同类别的样本间距离很小，不同类别的样本之间距离也会偏小。</p>
+<p>如果不加margin，设计的函数就是这样：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703034305421.png" srcset="/img/loading.gif" alt="image-20210703034305421"></p>
+<p>很显然这个函数有很大的问题，最后可能学到的是，$d(a,p;\theta)$很小，但$d(a,n;\theta)$也很小，但是这样得出的loss却很小</p>
+<p>因此，需要加入<strong>margin</strong>。：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703034521032.png" srcset="/img/loading.gif" alt="image-20210703034521032"></p>
+<p>这样在上述$d(a,p;\theta)$很小，但$d(a,n;\theta)$也很小的情况时，loss就是margin的大小，而不是接近0，此时loss会向着更好的方向去优化。</p>
+<p><strong>Triplets的数据是怎么构造的呢?</strong></p>
+<p>大致两种主流方法：</p>
+<ul>
+<li>一种是FaceNet所使用的方法Semi-hard Negative：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703150556970.png" srcset="/img/loading.gif" alt="image-20210703150556970"></p>
+<p>这种方法知识单纯地希望同一类的距离小于不同类的距离。</p>
+<ul>
+<li><p>另一种是在VGG Face Recognition中的Hard Negative：</p>
+<p>这种方法选择数据时严格遵守Ttiplet loss的限制，同一类的距离不仅要小于不同类的距离，还要小出一个marigin(即$\alpha$)的大小。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703151611292.png" srcset="/img/loading.gif" alt="image-20210703151611292"></p>
+<p>Yandong Wen et al: A Discriminative Feature Learning Approach for Deep Face Recognition (ECCV16) 的一篇文章提出了一种新的loss叫做Center loss，用以辅助Softmax Loss进行人脸的训练。</p>
+<p>主要目的是<strong>利用softmax loss来分开不同类别</strong>，<strong>利用center loss来压缩同一类别</strong>。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703152609993.png" srcset="/img/loading.gif" alt="image-20210703152609993"></p>
+<h3 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h3><p>首先人脸验证的结果情况可大致分为四种：</p>
+<ul>
+<li>TP: 正确的识别出了是同一个人的，即客观事实上是同一个人的，模型给出的结果也是同一个人。</li>
+<li>FN: 错误的认为不是同一个人，即客观事实上是同一个人的，模型却认为不是同一个人。</li>
+<li>FP：错误的认为是同一个人，即客观事实上不是同一个人的，模型却认为是同一个人。</li>
+<li>TN:  正确的识别出了不是同一个人，即客观事实上不是同一个人的，模型给出的结果也不是同一个人。</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703153508223.png" srcset="/img/loading.gif" alt="image-20210703153508223"></p>
+<p><strong>ROC是FPR与TPR关系的曲线，曲线下方所包围的面积称为AUC。</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703154828106.png" srcset="/img/loading.gif" alt="image-20210703154828106"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703154759165.png" srcset="/img/loading.gif" alt="image-20210703154759165"></p>
+<p>上图帮助我们理解了ROC的含义：</p>
+<ul>
+<li>首先是当ROC曲线想第一张图一样，此时FPR很低，TPR很高，效果很好。此时模型已经很好的区分了正负样本。</li>
+<li>AUC面积越大越好！</li>
+<li>ROC曲线最差也只会ROC成为斜率为1的直线，即正确区分，错误区分的概率为50%，也就是瞎猜。</li>
+<li>如果你的ROC曲线甚至低于了50%，说明你的模型大概率写错了。</li>
+</ul>
+
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+                    
+                  </div>
                 
               </div>
               

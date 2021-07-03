@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      2.1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      22
        分钟
     </span>
   
@@ -239,12 +239,124 @@
             <h1 style="display: none">AHU计算机视觉课Ch11-目标检测</h1>
             
             <div class="markdown-body">
-              
+              <p>如何进行目标检测呢？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703211200395.png" srcset="/img/loading.gif" alt="image-20210703211200395"></p>
+<p>比如将猫框出来，首先最直观的一种方法就是滑动窗口，下面就首先介绍滑动窗口。</p>
+<h1 id="滑动窗方法"><a href="#滑动窗方法" class="headerlink" title="滑动窗方法"></a>滑动窗方法</h1><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703211259096.png" srcset="/img/loading.gif" alt="image-20210703211259096"></p>
+<p>把图片用一个固定大小的窗口进行滑动，检查每张图是否存在目标物体。</p>
+<p>当然这里存在一个尺度问题，我们的窗口相对于要检测的物体可能太大或者太小，因此可以对原图做图像金字塔，就转换成多尺度目标检测。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703211516387.png" srcset="/img/loading.gif" alt="image-20210703211516387"></p>
+<p>滑动窗口很容易理解，但也存在很明显的缺点就是：<strong>窗口太多了，每个窗口都要识别是否存在目标物体，这是十分浪费时间的。</strong></p>
+<p>举下图所示的例子：一个1000*1000的图像仅仅在一个尺度就需要检测80万的窗口。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703211644159.png" srcset="/img/loading.gif" alt="image-20210703211644159"></p>
+<p><strong>如何加速这个计算过程呢？</strong></p>
+<p>我们发现绝大多数窗口都不包含目标，并且和目标长得样子差距也很大，这些背景窗口大大增加了计算量，增加了误检概率，如何有效地减少对这些从窗口进行特征提取和分类。</p>
+<p><strong>Viola-Jones人脸检测 </strong>提供了一种思想来解决这个问题：</p>
+<p>他设计了一种<strong>Haar特征</strong>：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703212053555.png" srcset="/img/loading.gif" alt="image-20210703212053555"></p>
+<p>特征模板内有白色和黑色两种矩形，并定义该模板的特征值为白色矩形像素和减去黑色矩形像素和，但是他可以做到$O(1)$的时间计算出来（积分图，二位前缀和），而仅仅需要提前对每个尺度的图片做一次$O(n^2)$的预处理。</p>
+<p><strong>Haar利用简单的一些特征来做初步筛选：</strong></p>
+<p>比如下图，首先抽一部分数据求Haar特征模板的特征值，然后按照大小排列在横轴上：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703212153897.png" srcset="/img/loading.gif" alt="image-20210703212153897"></p>
+<p>发现前六个脸部有五个被识别出来了，并且都在左侧，右侧大部分为非面部的窗口图片，因此我们可以根据数据找出一个合适的阈值(即上图的黑色椭圆点)作为这个Haar特征模板的特征值分界线。</p>
+<p>对每个特征模板都找出相应的分界，当然我们要聪明一些，对于那些很难找出分界的特征模板直接扔掉不用就好。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703213547655.png" srcset="/img/loading.gif" alt="image-20210703213547655"></p>
+<p>设分界线为$t_1,t_2,…$</p>
+<p>利用级联地合并在一起成为级联分类器。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703213648484.png" srcset="/img/loading.gif" alt="image-20210703213648484"></p>
+<p>如何级联在一起？Viola-Jones人脸检测选用的是 <strong>Adaboost</strong></p>
+<p>Adaboost大致原理与细节我有写过文章：<a href="https://chillstepp.github.io/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH8%EF%BC%9AAdaptive-Boosting/">机器学习技法CH8：Adaptive Boosting</a></p>
+<p>这种方法就是放大犯过错误的数据，缩小做对的数据，不断地迭代，具体方法如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703214850186.png" srcset="/img/loading.gif" alt="image-20210703214850186"></p>
+<p>到此我们训练出了一个基于Harr特征的级联分类器，它可以帮助我们快速的筛选掉大量非人脸的窗口图片。</p>
+<p>然后我们此时筛选得就剩少部分窗口图片了，此时就可以一个一个慢慢地检测，最后会得到一个不错的准确率。</p>
+<h1 id="非极大值抑制NMS"><a href="#非极大值抑制NMS" class="headerlink" title="非极大值抑制NMS"></a>非极大值抑制NMS</h1><p>我们检测目标时可能会出现多个检测窗口，因此要窗口去重：</p>
+<p>一种常用的方法是NMS：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703220118489.png" srcset="/img/loading.gif" alt="image-20210703220118489"></p>
+<p><strong>首先要介绍一下交并比(IOU)的概念：</strong></p>
+<p>就是两个锚定框的<strong>交集面积/并集面积</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703220329550.png" srcset="/img/loading.gif" alt="image-20210703220329550"></p>
+<p><strong>怎么利用NMS和IOU进行锚定框去重呢？</strong></p>
+<ul>
+<li>首先要对检测出的所有框按照响应值排序</li>
+<li>初始化所有的SELECT[1..N]=true</li>
+<li>按照下图step3进行选择：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703234449638.png" srcset="/img/loading.gif" alt="image-20210703234449638"></p>
+<p><strong>最终效果：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703235202005.png" srcset="/img/loading.gif" alt="image-20210703235202005"></p>
+<h1 id="目标检测的性能评价"><a href="#目标检测的性能评价" class="headerlink" title="目标检测的性能评价"></a>目标检测的性能评价</h1><p><strong>交并比IOU的阈值选择：</strong> 通常选择$\gamma=0.5$</p>
+<p>交并比越大，两个框重叠的越多。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703235246671.png" srcset="/img/loading.gif" alt="image-20210703235246671"></p>
+<p><strong>性能指标：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703235349390.png" srcset="/img/loading.gif" alt="image-20210703235349390"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210703235752694.png" srcset="/img/loading.gif" alt="image-20210703235752694"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704000052480.png" srcset="/img/loading.gif" alt="image-20210704000052480"></p>
+<p><strong>P-R曲线：</strong></p>
+<p>精度和召回率的关系：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704000244800.png" srcset="/img/loading.gif" alt="image-20210704000244800"></p>
+<p><strong>如何根据P-R曲线判别检测器好坏呢？</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704000448938.png" srcset="/img/loading.gif" alt="image-20210704000448938"></p>
+<p>同样的精度，红线召回率最高；同样的召回率，红线的精度最高，因此红线更好；</p>
+<p>黑色仅次于红线；</p>
+<p>那么蓝线和绿线呢？这俩其实并没有严格谁比谁更好，视场景而定：</p>
+<p>比如抓罪犯这种不放过一个的严格场景，高的召回率才是最重要的，在这个场景下你的精度可能做不到太高，那么绿线更好一些，在低精度下也可以有很出色的召回率。</p>
+<p>反之，如果是一个不严格的场景，只需要保证高精度的场景，比如面部识别来进行付款，要保证识别的一定是对的，不然钱就被别人盗去了。那么蓝色的线更好一些。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704001313411.png" srcset="/img/loading.gif" alt="image-20210704001313411"></p>
+<p><strong>当然还是有一些定量的指标的来决定P-R曲线的好坏： $F1-Score /F_\beta-score$</strong></p>
+<p>这个指标就是对两个指标的一个综合，从他延伸出来了$F_\beta-score$,多了一个$\beta$超参数，根据我们自己的需求来设置，设置方法如下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704001252073.png" srcset="/img/loading.gif" alt="image-20210704001252073"></p>
+<p>如果我们想单纯评价一个算法到底怎么样，没有他的具体应用场景：<strong>平均精度(AP)</strong>是一个很好的评价指标</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704001700771.png" srcset="/img/loading.gif" alt="image-20210704001700771"></p>
+<p>对于多类别目标检测的性能评价：<strong>平均精度均值(mAP)</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704001810244.png" srcset="/img/loading.gif" alt="image-20210704001810244"></p>
+<h1 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h1><p>在滑动窗口方法中，虽然可以通过Harr特征模板快速的去除大部分的候选框，但是窗口还是太多了，候选框算法这一种新的流派出现,即选择性搜索，根据相似程度（颜色，纹理，大小，形状等）来提出包含目标对象可能性更大的候选区域，候选框从数十万(滑动窗口法)降到几千(R-CNN中两千左右），从而极大的降低了计算量，提高了检测速度：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704005608246.png" srcset="/img/loading.gif" alt="image-20210704005608246"></p>
+<p>首先一个最经典的work：R-CNN，将CNN引入目标检测的开山之作</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704014308142.png" srcset="/img/loading.gif" alt="image-20210704014308142"></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23006190" target="_blank" rel="noopener">推荐文章：RCNN- 将CNN引入目标检测的开山之作</a></p>
+<p>RCNN方法的第二步(extract region proposals)并不是选择的是滑动窗口而是<strong>Selective Search(选择性搜索)</strong>，根据相似程度（颜色，纹理，大小，形状等）来提出包含目标对象可能性更大的候选区域，候选框从数十万(滑动窗口法)降到几千(R-CNN中两千左右），从而极大的降低了计算量，提高了检测速度，具有很高的召回率。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/39927488" target="_blank" rel="noopener">推荐/参考文章: 理解Selective Search</a></p>
+<p>Selective Search算法主要包含两个内容：<strong>Hierarchical Grouping Algorithm(分层分组算法)、Diversification Strategies(多样化策略)</strong>。</p>
+<ul>
+<li><strong>Hierarchical Grouping Algorithm(分层分组算法)</strong></li>
+</ul>
+<p>图像中区域特征比像素更具代表性，作者使用<strong>Felzenszwalb and Huttenlocher</strong>的方法产生图像初始区域，使用贪心算法对区域进行迭代分组:</p>
+<ol>
+<li>计算所有邻近区域之间的相似性；</li>
+<li>两个最相似的区域被组合在一起；</li>
+<li>计算合并区域和相邻区域的相似度；</li>
+<li>重复2、3过程，直到整个图像变为一个地区。</li>
+</ol>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704013707960.png" srcset="/img/loading.gif" alt="image-20210704013707960"></p>
+<ul>
+<li><p><strong>Diversification Strategies(多样性策略)</strong></p>
+<p>(1)利用各种不同不变性的色彩空间；</p>
+<p>(2)采用不同的相似性度量；</p>
+<p>(3)通过改变起始区域。此部分比较简单，不详细介绍，作者对比了一些初始化区域的方法，发现<strong>Felzenszwalb and Huttenlocher</strong>的方法产生图像初始区域效果最好。</p>
+<blockquote>
+<p>[1] Felzenszwalb P F, Huttenlocher D P. Efficient Graph-Based Image Segmentation[J]. International Journal of Computer Vision, 2004, 59(2):167-181.</p>
+</blockquote>
+</li>
+</ul>
+<p>至此，候选框选择完成。</p>
+<p>寻找完待选的框然后把图像拉伸为统一的大小，做CNN特征提取，然后分类。</p>
+<h1 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h1><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210704015816715.png" srcset="/img/loading.gif" alt="image-20210704015816715"></p>
+<p>Faser R-CNN中候选框的选择则是通过RPN(区域候选网络)</p>
+<p>RPN(Region proposal network)，2015年，很多学者意识到 Most algorithms can benefit from end-to-end training. 其实这是很好理解的，深度学习本身就是基于数据驱动完成了算法的性能提升。如果算法框架是End-to-End的，那么各组分（诸如区域候选提取、特征提取、边界框回归等）应该耦合的更紧密。Faster RCNN提出了一种方法，在网络中设计一个模块来提取候选框(region proposal networks)，在提取特征的过程中完成候选框提取的操作，大大加快了物体检测的速度。</p>
+<h1 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h1><h1 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h1><h1 id="一些扩展检测方法"><a href="#一些扩展检测方法" class="headerlink" title="一些扩展检测方法"></a>一些扩展检测方法</h1><h2 id="Oriented-SSD"><a href="#Oriented-SSD" class="headerlink" title="Oriented-SSD"></a>Oriented-SSD</h2><h2 id="级联CNN"><a href="#级联CNN" class="headerlink" title="级联CNN"></a>级联CNN</h2>
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+                    
+                  </div>
                 
               </div>
               

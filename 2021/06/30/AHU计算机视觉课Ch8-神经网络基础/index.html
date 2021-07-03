@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      1.8k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      22
        分钟
     </span>
   
@@ -239,7 +239,116 @@
             <h1 style="display: none">AHU计算机视觉课Ch8-神经网络基础</h1>
             
             <div class="markdown-body">
-              
+              <h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><h3 id="相应函数："><a href="#相应函数：" class="headerlink" title="相应函数："></a>相应函数：</h3><ul>
+<li><p>阶梯相应</p>
+</li>
+<li><p>Sigmoid</p>
+</li>
+<li>tanh</li>
+<li>relu</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701202410271.png" srcset="/img/loading.gif" alt="image-20210701202410271"></p>
+<p>下面介绍一些一下这些激活函数的特点：</p>
+<p><strong>1.Sigmoid</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210410232705398.png" srcset="/img/loading.gif" alt="image-20210410232705398"></p>
+<p>问题：</p>
+<ul>
+<li>当x是一个很大/很小的区域时，梯度是一个十分接近0的数值，这会导致upstream如果是0，那么返回值就会十分小。这会使得梯度逐渐消失。</li>
+<li></li>
+</ul>
+<script type="math/tex; mode=display">
+f\left(\sum_{i} w_{i} x_{i}+b\right)</script><p>​    比如上式方程的对$x$的梯度是一堆$w$,我们假设数据的$x$要么都是大于0要么都是小于0的情况：</p>
+<p>​    那么此时$\Sigma w_ix_i+b$这个式子对$w$求梯度是一堆$x$,我们上面假设了这里都是大于0，那么这个梯度也都大于0。</p>
+<p>​    同时$f$对$\Sigma w_ix_i+b$求导，由于f在各个点导数倒是正的，所以梯度恒大于0，这就导致了$f$对$w$求导是恒正的。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411003604753.png" srcset="/img/loading.gif" alt="image-20210411003604753"></p>
+<p>​    而这样会导致无法向着正确的梯度去走，w增加的永远是正值/负值，这样会导致收敛缓慢。无法向着正确的方向去走，我们仔细想想就会发现数据x中全正/全负是我们无法改变的，真正原因是因为sigmoid函数梯度恒大于0，这样就导致了梯度方向的局限。因此这也是sigmoid的缺点。</p>
+<p>​    当然，如果我们的数据是zero-mean的，也就是说有正有负的那种数据，sigmoid是不会影响什么的。总之，两个限制(数据全正全负，sigmoid梯度恒大于0)，有一个被解决就可以快速地梯度下降。</p>
+<ul>
+<li>exp()计算很费时间</li>
+</ul>
+<p><strong>2.tanh(x)</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215745708.png" srcset="/img/loading.gif" alt="image-20210411215745708"></p>
+<p>$tanh$和$sigmiod$一样在x很大/很小的时候梯度几乎为0，这会导致upstream是0，那么返回值就会十分小。这会使得梯度逐渐消失。</p>
+<p><strong>3.ReLu</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215952528.png" srcset="/img/loading.gif" alt="image-20210411215952528"></p>
+<ul>
+<li>ReLU梯度不会消失</li>
+<li>计算高效(不包含exp())</li>
+<li>收敛快</li>
+<li>更符合生物上的特点</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li><p>缺点是0点处不可导</p>
+</li>
+<li><p><strong>Dead ReLU Problem(神经元坏死现象)</strong>：ReLU在负数区域被kill的现象叫做dead relu。ReLU在训练的时很“脆弱”。在x&lt;0时，梯度为0。这个神经元及之后的神经元梯度永远为0，不再对任何数据有所响应，导致相应参数永远不会被更新。</p>
+<p><strong>产生</strong>这种现象的两个<strong>原因</strong>：</p>
+<p>1.参数初始化问题；</p>
+<p>2.learning rate太高导致在训练过程中参数更新太大。</p>
+<p><strong>解决方法</strong>：</p>
+<p>1.采用<strong>Xavier初始化</strong>方法；</p>
+<p>2.避免将learning rate设置太大，或者使用adagrad等自动调节learning rate的算法。</p>
+</li>
+</ul>
+<p><strong>4.Leaky ReLu</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411221752359.png" srcset="/img/loading.gif" alt="image-20210411221752359"></p>
+<p>和ReLU比，在负坐标上梯度不是0了。</p>
+<p><strong>总结：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222541954.png" srcset="/img/loading.gif" alt="image-20210411222541954"></p>
+<h3 id="前馈神经网络"><a href="#前馈神经网络" class="headerlink" title="前馈神经网络"></a>前馈神经网络</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701210749082.png" srcset="/img/loading.gif" alt="image-20210701210749082"></p>
+<p>其实就是一个前向传播的模型，需要训练的参数就是权重$w$和偏置项$b$。</p>
+<h3 id="BP算法"><a href="#BP算法" class="headerlink" title="BP算法"></a>BP算法</h3><p>不知道为什么面试都喜欢考反向传播推导，个人觉得推导+链式法则有什么好考的，考计算吗？:)</p>
+<p>但是网上的BP推导的内容确实比较乱，该换向量/矩阵简洁表示的不换，带着一大堆式子算来算去很容易就晕了。</p>
+<p>BP算法推荐《Neural Networks and Deep Learning》Michael Nielsen写的这本书所给出的推导过程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701214417392.png" srcset="/img/loading.gif" alt="image-20210701214417392"></p>
+<p>我们以上图的一个简单三层网络为例，说明BP的推导过程，首先声明一下参数的定义：</p>
+<p>$w_{jk}^l$  表示第$l-1$层的第$k$个神经元连接第$l$层的第$j$个神经元的权重；</p>
+<p>$b_j^l$ 表示第$l$层第$j$个神经元的偏置；</p>
+<p>$z_j^l$表示第$l$层的第$j$个神经元的输入，即：$z_j^l = \Sigma_kw_{jk}^la_k^{l-1}+b_j^l$</p>
+<p>$a_j^l$表示第$l$层的第$j$个神经元的输出，即：$a_j^l = \sigma( \Sigma_kw_{jk}^la_k^{l-1}+b_j^l) = \sigma(z_j^l)$,其中$\sigma()$是激活函数</p>
+<p>损失函数我们这里随便选一个均方误差作为例子:</p>
+<script type="math/tex; mode=display">
+C = \frac{1}{2 n} \sum_{x}\left\|y(x)-a^{L}(x)\right\|^{2}</script><p>其中,$x$表示输入的样本，$y$表示实际的分类，$a^L$表示预测的输出，$L$表示神经网络的最大层数。</p>
+<p><strong>计算最后一层神经网络产生的错误：</strong></p>
+<script type="math/tex; mode=display">
+\delta_{j}^{L}=\frac{\partial C}{\partial z_{j}^{L}}=\frac{\partial C}{\partial a_{j}^{L}} \cdot \frac{\partial a_{j}^{L}}{\partial z_{j}^{L}}</script><script type="math/tex; mode=display">
+\delta^{L}=\frac{\partial C}{\partial a^{L}} \odot \frac{\partial a^{L}}{\partial z^{L}}=\nabla_{a} C \odot \sigma^{\prime}\left(z^{L}\right)</script><p>第二个式子中的$\odot$是Hadamard乘积，用于矩阵或向量之间点对点的乘法运算。</p>
+<p><strong>由后往前，计算每一层神经网络产生的错误：</strong></p>
+<script type="math/tex; mode=display">
+\delta^{l}=\left(\left(w^{l+1}\right)^{T} \delta^{l+1}\right) \odot \sigma^{\prime}\left(z^{l}\right)</script><p>推导过程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\delta_{j}^{l}=\frac{\partial C}{\partial z_{j}^{l}}=\sum_{k} \frac{\partial C}{\partial z_{k}^{l+1}} \cdot \frac{\partial z_{k}^{l+1}}{\partial a_{j}^{l}} \cdot \frac{\partial a_{j}^{l}}{\partial z_{j}^{l}} \\
+\quad=\sum_{k} \delta_{k}^{l+1} \cdot \frac{\partial\left(w_{k j}^{l+1} a_{j}^{l}+b_{k}^{l+1}\right)}{\partial a_{j}^{l}} \cdot \sigma^{\prime}\left(z_{j}^{l}\right) \\
+=\sum_{k} \delta_{k}^{l+1} \cdot w_{k j}^{l+1} \cdot \sigma^{\prime}\left(z_{j}^{l}\right)
+\end{array}</script><p><strong>计算权重的梯度:</strong></p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w_{j k}^{l}}=\frac{\partial C}{\partial z_{j}^{l}} \cdot \frac{\partial z_{j}^{l}}{\partial w_{j k}^{l}}=\delta_{j}^{l} \cdot \frac{\partial\left(w_{j k}^{l} a_{k}^{l-1}+b_{j}^{l}\right)}{\partial w_{j k}^{l}}=a_{k}^{l-1} \delta_{j}^{l}</script><p><strong>计算偏置的梯度:</strong></p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b_{j}^{l}}=\frac{\partial C}{\partial z_{j}^{l}} \cdot \frac{\partial z_{j}^{l}}{\partial b_{j}^{l}}=\delta_{j}^{l} \cdot \frac{\partial\left(w_{j k}^{l} a_{k}^{l-1}+b_{j}^{l}\right)}{\partial b_{j}^{l}}=\delta_{j}^{l}</script><p>反向传播的过程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701224458717.png" srcset="/img/loading.gif" alt="image-20210701224458717"></p>
+<h3 id="权值初始化"><a href="#权值初始化" class="headerlink" title="权值初始化"></a>权值初始化</h3><p>Xavier初始化可以有效地防止Dead ReLU Problem(神经元坏死现象)，还可以防止梯度消失/梯度弥散。</p>
+<p>还有一种Kaiming He提出的初始化方法：He初始化，现在还不太了解，以后补坑…</p>
+<h3 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h3><p><a href="https://chillstepp.github.io/2021/04/13/CS231n-CH6-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8B/#%E6%9B%B4%E5%A5%BD%E7%9A%84%E4%BC%98%E5%8C%96">CS231n-CH6-训练神经网络-下-更好的优化</a></p>
+<h2 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h2><p>我们可以选择自己设计卷积信息：</p>
+<p>比如猫脸的识别可以按照不同组件分别识别，这其实是一种<strong>Part-based models(组件模型)</strong>方法。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701232713059.png" srcset="/img/loading.gif" alt="image-20210701232713059"></p>
+<p>那么我们可以设计不同的卷积信息，比如眼睛，耳朵，鼻子，嘴巴，然后分别作为样本特征组合在一起，进行识别。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701232921883.png" srcset="/img/loading.gif" alt="image-20210701232921883"></p>
+<p>再举一个直观一些的例子：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701233127102.png" srcset="/img/loading.gif" alt="image-20210701233127102"></p>
+<ul>
+<li><p>从上图我们可以看出，首先是三个卷积核将图像中的特征提取了出来。</p>
+</li>
+<li><p>通过池化激活函数得到更显著的特征，也称为feature map，因为我们有三个卷积核，那么就是三个feature map。</p>
+</li>
+<li><p>随后通过三个卷积核分别对三个feature map做卷积，当三个卷积核在feature map的某一处响应都很大时，我们可以认为这里就是要识别的字母A。</p>
+</li>
+</ul>
+<p>当然我们也可以不通过自己设计卷积核，而是把卷积核当成参数去学习，这也是当今更主流的方式。</p>
+<p>大量的实验都表明卷积网络确实可以提取出一些图像的特征：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210701233843356.png" srcset="/img/loading.gif" alt="image-20210701233843356"></p>
+
             </div>
             <hr>
             <div>
@@ -249,7 +358,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
                     
                   </div>
                 
