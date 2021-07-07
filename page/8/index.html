@@ -193,21 +193,16 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/04/10/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">后缀数组(SA)+拓展应用</a>
+        <a href="/2020/02/02/%E5%8C%BA%E9%97%B4DP+%E5%B9%B3%E8%A1%8C%E5%9B%9B%E8%BE%B9%E5%BD%A2%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">区间DP+平行四边形优化总结</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/04/10/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">
+        <a href="/2020/02/02/%E5%8C%BA%E9%97%B4DP+%E5%B9%B3%E8%A1%8C%E5%9B%9B%E8%BE%B9%E5%BD%A2%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/">
           
           
             
           
-          后缀数组（SA）+拓展应用什么是后缀数组？后缀后缀就是从字符串的某个位置i到字符串末尾的子串，我们定义以s的第i个字符为第一个元素的后缀为suff(i)
-后缀数组把s的每个后缀按照字典序排序
-后缀数组$sa[i]$就表示排名为i的后缀的起始位置的下标
-而它的映射数组$rk[i]$就表示起始位置的下标为i的后缀的排名
-简单来说，$sa$表示排名为i的是啥，$rk$表示第$i$个的排名是啥
-怎么求后缀
+          区间DP+平行四边形优化总结区间DP形式模板：12345678910111213//n是区间长度，dp[i][j]存从i 到 j 区间合并的最优值//w[i][j]表示从i 到 j的花费for(i = 1;i &lt;= n;i++)    dp[i][i] = 初始值；for(len = 2;len &lt;= n;len++)&#123;//len选择区间长度    for(i = 1;i &
         </a>
       </p>
 
@@ -215,8 +210,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-10 22:57" pubdate>
-              2020-04-10
+            <time datetime="2020-02-02 17:51" pubdate>
+              2020-02-02
             </time>
           </div>
         
@@ -225,7 +220,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ACM-%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">ACM-后缀数组</a>
+              <a href="/tags/ACM-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">ACM-动态规划</a>
             
           </div>
         
@@ -239,16 +234,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/03/24/OpenCV/">OpenCv with Python for Image and Video Analysis(3/20)</a>
+        <a href="/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/">Educational Codeforces Round 81 (Rated for Div. 2)ABCD题解</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/03/24/OpenCV/">
+        <a href="/2020/01/27/Educational%20Codeforces%20Round%2081%20(Rated%20for%20Div.%202)ABCD%E9%A2%98%E8%A7%A3/">
           
           
             
           
-          OpenCv with Python for Image and Video AnalysisP1 intro and loading Images1.利用cv2显示图像123456789101112import numpy as npimport matplotlib.pyplot as pltimport cv2img = cv2.imread('cat.jpg',cv2.IMREAD_GRA
+          Educational Codeforces Round 81 (Rated for Div. 2)A,B,C,D题解比赛链接：https://codeforces.com/contest/1295
+A.Display The Number（思维+构造）题意：
+思路：如果想让构造一个最大的数，我们要使它的位数越多越好，而且使用最少的线段的数字是1（需要两根线段）。当线段的数量为偶数时我们把所有线段
         </a>
       </p>
 
@@ -256,319 +253,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-03-24 22:57" pubdate>
-              2020-03-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">Numpy数据分析基础</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
-          
-          
-            
-          
-          Numpy模块学习numpy的基本属性12345678910import numpy as nparray = np.array([[1,2,3],                  [2,3,4]])print(array)  # [[1 2 3]              #  [2 3 4]]print('number of dim:',array.ndim)  #维数  number of
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-28 20:40" pubdate>
-              2020-02-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Python-%E5%9F%BA%E7%A1%80/">Python-基础</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">Pandas数据分析基础</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
-          
-          
-            
-          
-          Pandas模块学习Pandas基本介绍123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172import numpy as npimport pandas as pds = pd.S
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-28 20:40" pubdate>
-              2020-02-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Python-%E5%9F%BA%E7%A1%80/">Python-基础</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">《Hands-On-Machine-Learning》PART I</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/28/Hands-On-Machine-Learning-PART-I/">
-          
-          
-            
-          
-          PART 1：The Fundamentals of Machine LearningCHAPTER 1 ：The Machine Learning Landscape （机器学习领域）什么是机器学习？例如，垃圾邮件过滤器是一个机器学习过程，可以学习标记垃圾邮件。系统用于学习的示例称为训练集。每个训练示例称为一个训练样本。在这种情况下，任务T是为新邮件标记垃圾邮件，E是训练数据，定义性能度量为P（
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-28 01:37" pubdate>
-              2020-02-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">Machine Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/22/Python-Notebook/">Python Notebook</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/22/Python-Notebook/">
-          
-          
-            
-          
-          Python Notebookprint()123456789101112131415print(1)print("we're the best")print('we are the best')print('we\'re the best') print("apple"+"car")print('apple'+'tree')print('apple'+'4')print('apple'+str(
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-22 22:26" pubdate>
-              2020-02-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Python-%E5%9F%BA%E7%A1%80/">Python-基础</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/21/EnglishNotebook-2020%E5%AF%92%E5%81%87/">EnglishNotebook(2020寒假)</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/21/EnglishNotebook-2020%E5%AF%92%E5%81%87/">
-          
-          
-            
-          
-          English Notebook（2020年寒假）Stanford University Opening speechweb address:https://www.bilibili.com/video/av68269911?p=1
-incoming student  即将到来的学生
-speak to the spirit of  宣扬
-biography  传记
-Renaissance  n.文
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-21 17:18" pubdate>
-              2020-02-21
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/English/">English</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/19/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95-%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">算法竞赛进阶指南(第一章-基本算法)做题记录</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/19/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95-%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">
-          
-          
-            
-          
-          《算法竞赛进阶指南》第一章-基础算法位运算⋙89.a^b（快速幂）12345678910111213141516171819202122232425262728//Chillstep#include&lt;bits/stdc++.h&gt;using namespace std;#define pii pair&lt;int,int&gt;typedef long long ll;const in
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-19 22:35" pubdate>
-              2020-02-19
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ACM-%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97/">ACM-算法竞赛进阶指南</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/15/Codeforces-Round-618-Div-2-%E5%85%A8%E9%A2%98%E8%A7%A3%EF%BC%88A-E%EF%BC%89/">Codeforces Round #618 (Div. 2)全题解（A-E）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/15/Codeforces-Round-618-Div-2-%E5%85%A8%E9%A2%98%E8%A7%A3%EF%BC%88A-E%EF%BC%89/">
-          
-          
-            
-          
-          Codeforces Round #618 (Div. 2)全题解（A-E）比赛题目地址：https://codeforces.com/contest/1300
-
-
-
-
-#
-Name
-
-
-
-
-
-
-A
-Non-zero    standard input/output1 s, 256 MB
- 
- x10972
-
-
-B
-Assigning to Classes   standard input/out
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-15 00:41" pubdate>
-              2020-02-15
+            <time datetime="2020-01-27 18:31" pubdate>
+              2020-01-27
             </time>
           </div>
         
@@ -591,20 +277,21 @@ Assigning to Classes   standard input/out
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/06/Codeforces-Round-617-Div-3-%E5%85%A8%E9%A2%98%E8%A7%A3-A-F/">Codeforces Round #617 (Div. 3)全题解(A-F)</a>
+        <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities%EF%BC%88SPFA%E4%BC%98%E5%8C%96%EF%BC%89/">Codeforces 449B Jzzhu and Cities（SPFA优化）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/06/Codeforces-Round-617-Div-3-%E5%85%A8%E9%A2%98%E8%A7%A3-A-F/">
+        <a href="/2020/01/26/Codeforces-449B-Jzzhu-and-Cities%EF%BC%88SPFA%E4%BC%98%E5%8C%96%EF%BC%89/">
           
           
             
           
-          Codeforces Round #617 (Div. 3)全题解(A-F)题目地址：https://codeforces.com/contest/1296
-A.Array with Odd Sum题目：
-题意：判断数组中是否存在奇数即可，可以用奇数替换掉其中的偶数，这样能保证数组之和肯定为奇数。
-但是要注意一点如果是偶数个奇数，也是无解的。
-Code：1234567891011121314151
+          Codeforces 449B Jzzhu and Cities（SPFA优化）题意：
+
+前置知识：SPFA讲解：https://blog.csdn.net/qq_35644234/article/details/61614581
+code：建图方法很细节（mark一手
+题是spfa裸题，最后判断一下跑出来的最短路和铁路哪个近并且计数就过了。
+123456789101112131415161718
         </a>
       </p>
 
@@ -612,8 +299,8 @@ Code：1234567891011121314151
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-06 21:11" pubdate>
-              2020-02-06
+            <time datetime="2020-01-26 15:58" pubdate>
+              2020-01-26
             </time>
           </div>
         
@@ -622,7 +309,223 @@ Code：1234567891011121314151
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ACM-Codeforces/">ACM-Codeforces</a>
+              <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA/">ACM-图论</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/01/23/Codeforces#606-B-Two-Fairs(DFS%E9%81%8D%E5%8E%86%E5%9B%BE%EF%BC%8C%E9%93%BE%E5%BC%8F%E5%89%8D%E5%90%91%E6%98%9F%EF%BC%8C%E6%80%9D%E7%BB%B4)/">Codeforces#606,B-Two_Fairs(DFS遍历图，链式前向星，思维)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/01/23/Codeforces#606-B-Two-Fairs(DFS%E9%81%8D%E5%8E%86%E5%9B%BE%EF%BC%8C%E9%93%BE%E5%BC%8F%E5%89%8D%E5%90%91%E6%98%9F%EF%BC%8C%E6%80%9D%E7%BB%B4)/">
+          
+          
+            
+          
+          Codeforces #606 B-Two Fairs题意：https://codeforces.com/contest/1276/problem/b
+给出一个连通图（图中每个点都和任意其他点相通），现在给出n个点，m条边，和两个点a，b。求有多少点对一定要经过a，b点。
+思路：通过a点出发进行dfs，设置b点为禁止点（不能访问）,由于这个图是连通图，任意2点都是可达的，那么从a点出发发不通过a的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-01-23 22:43" pubdate>
+              2020-01-23
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E5%9B%BE%E8%AE%BA/">ACM-图论</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/01/19/POJ-1077-Eight-%E5%BA%B7%E6%89%98%E5%B1%95%E5%BC%80-BFS/">POJ-1077 Eight(康托展开+BFS)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/01/19/POJ-1077-Eight-%E5%BA%B7%E6%89%98%E5%B1%95%E5%BC%80-BFS/">
+          
+          
+            
+          
+          POJ-1077 康托展开+BFS前置知识康托展开：https://blog.csdn.net/qq_38701476/article/details/81003290
+code（注释详解）：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-01-19 20:25" pubdate>
+              2020-01-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E6%90%9C%E7%B4%A2/">ACM-搜索</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/01/ACM-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%9F%BA%E7%A1%80/">ACM-树状数组基础</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/01/ACM-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%9F%BA%E7%A1%80/">
+          
+          
+            
+          
+          ACM- 树状数组我们约定：把上图中参差不齐的白色方格称为 数组$C$，没个$C$都支配着几个数字。
+同时，最下面一行的数字所构成的数组为数组$a$.
+例如：C[2]管理的是 a[1],a[2].
+C[4]管理的是a[1],a[2],a[3],a[4].
+C[6]管理的是a[5],a[6].
+C[8]管理的是a[1],a[2],a[3],a[4],a[5]……a[8].
+操作函数1.lowbit(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-01 21:32" pubdate>
+              2019-11-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">ACM-数据结构</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/09/16/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E5%81%87%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%EF%BC%88%E7%AC%AC%E4%B8%80%E5%9C%BA%EF%BC%89%E9%A2%98%E8%A7%A3/">2019牛客暑假多校训练（第一场）题解</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/09/16/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E5%81%87%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%EF%BC%88%E7%AC%AC%E4%B8%80%E5%9C%BA%EF%BC%89%E9%A2%98%E8%A7%A3/">
+          
+          
+            
+          
+          2019牛客暑期多校训练营（第一场）A-Equivalent Prefixes（单调栈，思维，笛卡尔树）123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include&lt;bits/stdc++.h&gt;using namespace std;const int ma
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-09-16 11:40" pubdate>
+              2019-09-16
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1/">ACM-牛客多校</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/09/16/ACM-%E6%80%9D%E7%BB%B4%E6%9E%84%E9%80%A0%E9%A2%98%EF%BC%882019%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%AD%EF%BC%89/">ACM-思维构造题（2019暑假集训）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/09/16/ACM-%E6%80%9D%E7%BB%B4%E6%9E%84%E9%80%A0%E9%A2%98%EF%BC%882019%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%AD%EF%BC%89/">
+          
+          
+            
+          
+          HDU-1214    圆桌会议题目链接
+Problem DescriptionHDU ACM集训队的队员在暑假集训时经常要讨论自己在做题中遇到的问题.每当面临自己解决不了的问题时,他们就会围坐在一张圆形的桌子旁进行交流,经过大家的讨论后一般没有解决不了的问题,这也只有HDU ACM集训队特有的圆桌会议,有一天你也可以进来体会一下哦:),在一天在讨论的时候,Eddy想出了一个极为古怪的想法,如果他
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-09-16 11:39" pubdate>
+              2019-09-16
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ACM-%E6%9E%84%E9%80%A0/">ACM-构造</a>
             
           </div>
         
@@ -634,7 +537,7 @@ Code：1234567891011121314151
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/7/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/7/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
     </span>
   </nav>
   

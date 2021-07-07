@@ -191,26 +191,30 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH5%EF%BC%9AKernel-Logistic-Regression/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH5：Kernel Logistic Regression">
+        <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH12：Nonlinear Transformation">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH5%EF%BC%9AKernel-Logistic-Regression/">机器学习技法CH5：Kernel Logistic Regression</a>
+        <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">机器学习基石CH12：Nonlinear Transformation</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH5%EF%BC%9AKernel-Logistic-Regression/">
+        <a href="/2021/01/23/CH12%EF%BC%9ANonlinear-Transformation/">
           
           
             
           
-          CH5：Kernel Logistic RegressionSoft-Margin SVM as Regularzied
-当$(x_n,y_n)$越过边界时，错误就是$1-y_n(w^Tz_n+b)$,当$(x_n,y_n)$没有越过边界时，说明他是正确的没有错误，即$\xi=0$,那么我们综上所述：可以把$\xi$换成另一种写法：$max(1-y_n(w^Tz_n+b),0)$
-此时我们的SVM
+          CH12：Nonlinear TransformationQuadratic Hypotheses（二次假设）Linear Hypothesis 
+
+线性模型可以算一个分数，它最大的好处是$d_{VC}$ 可以被控制，当然线性模型在某些数据上每条线都做不到效果很好。
+
+
+我们这里用一个圈就可以很好地进行分类。
+那么我们可以设一个圆形的PLA,可是图形是千变万化的，我们不可能每个都设计出来一个PLA
         </a>
       </p>
 
@@ -218,8 +222,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-17 23:46" pubdate>
-              2021-02-17
+            <time datetime="2021-01-23 19:02" pubdate>
+              2021-01-23
             </time>
           </div>
         
@@ -240,26 +244,32 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法Quiz1(homework+code)">
+        <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH11：Linear Models for Classification">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/">机器学习技法Quiz1(homework+code)</a>
+        <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/">机器学习基石CH11：Linear Models for Classification</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/">
+        <a href="/2021/01/21/CH11%EF%BC%9ALinear-Models-for-Classification/">
           
           
             
           
-          QUIZ 1:Q1
-Q2
-12345678910111213141516171819202122from cvxopt import solvers, matriximport numpy as npimport matplotlib.pyplot as pltdef z1(x1,x2):    return x2**2 - 2*x1 + 3def z2(x1,x2):    return x1*
+          CH11：Linear Models for ClassificationBinary Classification我们回顾一下线性模型：
+
+我们看一下三个error function在做classification时的区别：
+
+
+$ys$代表着正确的分数。
+下面我们画个图来看一下3个error function的图像：
+
+这个cross-entropy可以稍微移动下，移动到ys=0的那个阶梯直角
         </a>
       </p>
 
@@ -267,8 +277,8 @@ Q2
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-10 01:06" pubdate>
-              2021-02-10
+            <time datetime="2021-01-21 13:52" pubdate>
+              2021-01-21
             </time>
           </div>
         
@@ -289,29 +299,30 @@ Q2
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH4：Soft-Margin Support Vector Machine">
+        <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH10：Logistic Regression">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/">机器学习技法CH4：Soft-Margin Support Vector Machine</a>
+        <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">机器学习基石CH10：Logistic Regression</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/">
+        <a href="/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">
           
           
             
           
-          CH4：Soft-Margin Support Vector MachineMotivation and Primal
-我们不能一直追求全部正确，数据也不一定可分。
-在pocket中我们选择容忍一些错误：
+          CH10：Logistic RegressionLogistic Regression Problem(逻辑回归)我先我们看两个例子，看一看 他们的不同：
 
+根据一些指标来预策是否会有心脏病, 很明显是一个分类的问题，我们关心的是错误率为多少。
 
-​    因此我们让SVM上min的目标不仅包含$\frac{1}{2}w^Tw$ ,也包括错误的数量，这个C代表着这两者的权衡，如果你不在意多错一点，想要使得$\frac{1}{2}w^T
+再看看看这个问题，求心脏病出现的可能性。
+这不在是一个简单的二元分类问题，而是需要给出概率，我们称之为：
+soft binary classificat
         </a>
       </p>
 
@@ -319,8 +330,8 @@ Q2
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-07 00:24" pubdate>
-              2021-02-07
+            <time datetime="2021-01-20 14:11" pubdate>
+              2021-01-20
             </time>
           </div>
         
@@ -341,29 +352,33 @@ Q2
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH3：Kernel-Support-Vector-Machine">
+        <a href="/2021/01/18/CH9%EF%BC%9ALinear-Regression/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH9：Linear Regression">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/">机器学习技法CH3：Kernel-Support-Vector-Machine</a>
+        <a href="/2021/01/18/CH9%EF%BC%9ALinear-Regression/">机器学习基石CH9：Linear Regression</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/">
+        <a href="/2021/01/18/CH9%EF%BC%9ALinear-Regression/">
           
           
             
           
-          CH3：Kernel Support Vector MachineKernel Trick回顾上节的内容：
+          CH9: Linear RegressionLinear Regression Problem(线性回归)首先我们要知道线性回归要反映在一个具体的实数上才可以做回归，因此我们要把数据通过某种方式整合成实数。
 
-我们看似Dual SVM已经与$\tilde{d}$无关了，可是在计算时我们会发现$q_{n,m}=y_my_mz_n^Tz_m$这个式子中的$z$却包含了$\tilde{d}$, 如果这个$\tilde{d}$非常大，我们算的还是非常慢。
-我们想做的是这一步，做得快一点：
+加权计算一个分数是一种方法：
 
-$\phi$
+$W^T$ 是权重 ，$x$是顾客的信息，这样算出来一个加权的分数。
+
+
+所以：
+
+我们的hypothesis对于二维时，即我们找了一个$f(x)$,作为计算
         </a>
       </p>
 
@@ -371,8 +386,8 @@ $\phi$
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-05 22:27" pubdate>
-              2021-02-05
+            <time datetime="2021-01-18 17:26" pubdate>
+              2021-01-18
             </time>
           </div>
         
@@ -393,29 +408,52 @@ $\phi$
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH2：Dual Support Vector Machine">
+        <a href="/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/" target="_self">
+          <img src="/img/linear.png" srcset="/img/loading.gif" alt="《线性代数及其应用》CH2：矩阵代数">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/">机器学习技法CH2：Dual Support Vector Machine</a>
+        <a href="/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/">《线性代数及其应用》CH2：矩阵代数</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/">
+        <a href="/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/">
           
           
             
           
-          CH2：Dual Support Vector MachineMotivation of Dual SVM我们上节提到过，如果想让SVM来做非线性的分类，那么我们是需要feature transform的，此时的问题变为了：
+          [toc]
+第二章  矩阵代数2.1 矩阵运算对角矩阵，零矩阵定义：
 
-这个$\phi(x_n)$就是对原来的$x_n$做了feature transform。
-我们的二次规划问题也变为了:
+矩阵与标量的乘法：
 
-​    为什么想到用SVM来做这件事情呢，因为在
+一些矩阵乘法的相关性质：
+
+矩阵转置：
+
+转置的相关性质：
+
+前三个很简单，最后一个证明从定义入手：
+
+2.2 矩阵的逆矩阵可逆：
+
+
+不可逆矩阵 = 奇异矩阵
+可逆矩阵 = 废弃及矩阵
+
+判断矩阵是否可逆：
+
+方程唯一解 与 矩阵可逆：
+
+
+
+c.证明：
+
+初等变换 的等价:
+对于一个单位矩阵$I$, 
         </a>
       </p>
 
@@ -423,8 +461,69 @@ $\phi$
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-05 22:25" pubdate>
-              2021-02-05
+            <time datetime="2021-01-17 20:20" pubdate>
+              2021-01-17
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH8%EF%BC%9ANoise%20and%20Error/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH8：Noise and Error">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH8%EF%BC%9ANoise%20and%20Error/">机器学习基石CH8：Noise and Error</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH8%EF%BC%9ANoise%20and%20Error/">
+          
+          
+            
+          
+          CH8: Noise and Error[toc]
+Noise and Probabilistic Target我们之前对于机器学习的流程如下图：
+那么在加上noise后是否会影响机器学习呢？
+
+原来的瓶子里抽弹珠是确定的，即输入x，出来就是f(x) ：
+
+现在出来可能有一些不是f(x)了，即出现了噪声：
+
+但是这并不影响我们估计一个。
+那么：
+
+VC Bound依然适用。
+
+
+我们以前的机器学习
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-16 12:58" pubdate>
+              2021-01-16
             </time>
           </div>
         
@@ -445,33 +544,33 @@ $\phi$
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH1：Linear SVM">
+        <a href="/2021/01/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH7%EF%BC%9AThe%20VC%20Dimension/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH7:The VC Dimension">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/">机器学习技法CH1：Linear SVM</a>
+        <a href="/2021/01/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH7%EF%BC%9AThe%20VC%20Dimension/">机器学习基石CH7:The VC Dimension</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/">
+        <a href="/2021/01/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH7%EF%BC%9AThe%20VC%20Dimension/">
           
           
             
           
-          CH1：Linear SVMLarge-Margin separating Hyperplane
-这三种线都可以把这些点分开。
+          CH7: The VC DimensionDefinition of VC Dimension
 
-PLA算法不一定会得出哪儿一种线
+上述推导就是VC bound带入了$m_H(N)$的范围。
 
+因此我们需要什么可以使得$E_{out}$和$E_{in}$近似呢？
 
-从我们的VC Bound来看，$E_{in}=0$都一样，$d_{VC}$=也一样，那么 VC Bound所带来的保证$E_{out}$都相同。
+一个好的$H$,也就是growth function要有break point ，即$m_H(N)$在k处break
+一个好的$D$, 也就是说N要足够大
 
-
-​    但其实我们的直觉告诉我们第三种好一点，因为他如果有一些数据有误差，那么也
+要想可以机
         </a>
       </p>
 
@@ -479,8 +578,8 @@ PLA算法不一定会得出哪儿一种线
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-03 22:27" pubdate>
-              2021-02-03
+            <time datetime="2021-01-15 16:54" pubdate>
+              2021-01-15
             </time>
           </div>
         
@@ -501,33 +600,32 @@ PLA算法不一定会得出哪儿一种线
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/" target="_self">
-          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH16：Three Learning Principle(完结)">
+        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH6:Theory of Generalization">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">机器学习基石CH16：Three Learning Principle(完结)</a>
+        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/">机器学习基石CH6:Theory of Generalization</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">
+        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/">
           
           
             
           
-          CH16：Three Learning PrincipleOccam’s Razor(奥卡姆剃刀)
-对数据最简单的解释也是最有说服力的解释。
+          CH6: Theory of GeneralizationRestriction of break point还是回到上节，我们做出了以下的猜想：
 
-我们肯定认为左边的好一些。
-
-什么叫做simple model，hypothesis很简单的model，hypothesis set里的hypothesis不是很多。
-
-如果我们的资料很乱随机给出，毫无规律可循，那么我们可以完美的分开这些资料的概率是：
+我们做出了以下的猜想：
 
 
+我们思考,当$break  point = 2$的时候：
+
+那么 N=1的时候小于break point，所以还是符合$2^N$的规律。
+N=2 ,也就是break point，此时 $m_H(N)&lt;2^N$,也就是
         </a>
       </p>
 
@@ -535,8 +633,8 @@ PLA算法不一定会得出哪儿一种线
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-27 17:03" pubdate>
-              2021-01-27
+            <time datetime="2021-01-14 16:44" pubdate>
+              2021-01-14
             </time>
           </div>
         
@@ -557,37 +655,39 @@ PLA算法不一定会得出哪儿一种线
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/27/CH15%EF%BC%9AValidation/" target="_self">
-          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH15：Validation">
+        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" target="_self">
+          <img src="/img/linear.png" srcset="/img/loading.gif" alt="《线性代数及其应用》CH1：线性代数中的线性方程组">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/27/CH15%EF%BC%9AValidation/">机器学习基石CH15：Validation</a>
+        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">《线性代数及其应用》CH1：线性代数中的线性方程组</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/27/CH15%EF%BC%9AValidation/">
+        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
           
           
             
           
-          CH15：ValidationModel Select Problem选择的依据：
+          [TOC]
+第1章 线性代数中的线性方程组1.1 线性方程组
+线性方程的解有三种情况
+
+无解
+唯一解
+无穷多解
+
+当方程组有解，我们称线性方程组是相容的。反之无解称之为不相容的。
+
+我们称 为系数矩阵，称为增广矩阵。
+解方程的方法：我们可以通过变换先变成
+然后通过第三行消去第二行的$x_3$，然后用只包含$x_2$的第二行和只包含$x_3$的第三行消去第一行的$x_2$和$x_3$
+最后得到：
 
 
-第一种：只做$E_{in}$ 做低一些，这样选模型肯定不是很好
-
-
-
-第二种：选择在最终测试集上的一部分数据，然后对每个模型进行测试，然后选取准确率最高的。
-由hoeffding不等式来看，这样的结果还不错：
-但是现实中我们几乎不能拿到最终测试集的，这是一个自欺欺人的做法。
-
-
-
-以上两种方法都不是很好，或许我
         </a>
       </p>
 
@@ -595,8 +695,8 @@ PLA算法不一定会得出哪儿一种线
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-27 16:09" pubdate>
-              2021-01-27
+            <time datetime="2021-01-13 13:00" pubdate>
+              2021-01-13
             </time>
           </div>
         
@@ -605,7 +705,7 @@ PLA算法不一定会得出哪儿一种线
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
             
           </div>
         
@@ -617,29 +717,36 @@ PLA算法不一定会得出哪儿一种线
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/" target="_self">
-          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH14：Regularization">
+        <a href="/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石Ch5：Training VS Testing">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">机器学习基石CH14：Regularization</a>
+        <a href="/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/">机器学习基石Ch5：Training VS Testing</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">
+        <a href="/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/">
           
           
             
           
-          CH14：RegularizationRegularized Hypothesis  Set
-我们之前由于overfit造成了右边图所示的状况，我们今天要把右图转化为左图通过：Regularization
-因此我们要从高次的hypothesis走回到低次的hypothesis，因此我们想找一种方法可以提供一种指标使得高次走回到低次。
+          Ch5：Training VS TestingRecap and preview 回顾
+上图是我们所希望做到的。
+
+回到第四章问题：如果$M$变为无限大，怎么办呢？
+我们所想做到的：
 
 
-因此我们可以看出：低次多项式其实就是高次多项式 加上了一些限
+建立一种有限的量替代M
+证明M为无限时学习的可行性
+这个$m_H$的选择会帮助我们更好的学习hypothesis的选择
+
+Effective Number Of Lines
+我们在以上不等式 用了union bo
         </a>
       </p>
 
@@ -647,61 +754,8 @@ PLA算法不一定会得出哪儿一种线
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-25 22:29" pubdate>
-              2021-01-25
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/" target="_self">
-          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH13：Hazard of Overfitting">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">机器学习基石CH13：Hazard of Overfitting</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">
-          
-          
-            
-          
-          CH13：Hazard of OverfittingWhat is overfitting
-比如我们现在的数据是通过一个二次曲线+noise 造出来的数据，然后我们用这个数据进行机器学习，假如你用了5次曲线（即一定可以经过上述的五个点），那么我们就会画出图中红色的曲线(且$E_{in}=0$)
-但是她和我们的target function蓝色线差距很大。
-
-一个overfitting的例子：
-
-o
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-24 22:28" pubdate>
-              2021-01-24
+            <time datetime="2021-01-12 10:54" pubdate>
+              2021-01-12
             </time>
           </div>
         
@@ -722,7 +776,7 @@ o
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/4/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/4/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

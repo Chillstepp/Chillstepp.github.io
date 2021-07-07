@@ -191,27 +191,26 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH15：Matrix Factorization">
+        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/" target="_self">
+          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法Quiz1(homework+code)">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/">机器学习技法CH15：Matrix Factorization</a>
+        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/">机器学习技法Quiz1(homework+code)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH15%EF%BC%9AMatrix-Factorization/">
+        <a href="/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/">
           
           
             
           
-          CH15：Matrix FactorizationLinear Network Hypothesis
-还记得Netflix推荐系统那个问题吗，他给出的数据$D$ 有两个东西，一个是$\tilde x$，代表着用户的ID,例如：1126，5566，6211
-另一个是ID为$n$的人，对电影$m$的评分，我们记为$r_{nm}$。
- 类似于ID,血型，编程语言 这种feature都是categoric
+          QUIZ 1:Q1
+Q2
+12345678910111213141516171819202122from cvxopt import solvers, matriximport numpy as npimport matplotlib.pyplot as pltdef z1(x1,x2):    return x2**2 - 2*x1 + 3def z2(x1,x2):    return x1*
         </a>
       </p>
 
@@ -219,8 +218,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-20 16:45" pubdate>
-              2021-03-20
+            <time datetime="2021-02-10 01:06" pubdate>
+              2021-02-10
             </time>
           </div>
         
@@ -241,29 +240,29 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH14：Radial Basis Function Network">
+        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/" target="_self">
+          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH4：Soft-Margin Support Vector Machine">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/">机器学习技法CH14：Radial Basis Function Network</a>
+        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/">机器学习技法CH4：Soft-Margin Support Vector Machine</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH14%EF%BC%9ARadial-Basis-Function-Network/">
+        <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/">
           
           
             
           
-          CH14：Radial Basis Function NetworkRBF Network Hypothesis首先回忆一下Gaussian Kernel在SVM中的应用
+          CH4：Soft-Margin Support Vector MachineMotivation and Primal
+我们不能一直追求全部正确，数据也不一定可分。
+在pocket中我们选择容忍一些错误：
 
 
-我们在$x_n$处找$\alpha_n$ 来组合Gaussian Kernel，使得实现最大边界。
-
-高斯核也叫径向基(Radial Basis Function，RBF)核。其中radial代表我们今天算的和距离有关，也就
+​    因此我们让SVM上min的目标不仅包含$\frac{1}{2}w^Tw$ ,也包括错误的数量，这个C代表着这两者的权衡，如果你不在意多错一点，想要使得$\frac{1}{2}w^T
         </a>
       </p>
 
@@ -271,8 +270,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-18 22:21" pubdate>
-              2021-03-18
+            <time datetime="2021-02-07 00:24" pubdate>
+              2021-02-07
             </time>
           </div>
         
@@ -293,44 +292,29 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH13%EF%BC%9ADeep-Learning/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH13：Deep Learning">
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/" target="_self">
+          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH3：Kernel-Support-Vector-Machine">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH13%EF%BC%9ADeep-Learning/">机器学习技法CH13：Deep Learning</a>
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/">机器学习技法CH3：Kernel-Support-Vector-Machine</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH13%EF%BC%9ADeep-Learning/">
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH3%EF%BC%9AKernel-Support-Vector-Machine/">
           
           
             
           
-          CH13：Deep LearningDeep Neural Network
-Deep NNet特点 ：
+          CH3：Kernel Support Vector MachineKernel Trick回顾上节的内容：
 
-训练很难
+我们看似Dual SVM已经与$\tilde{d}$无关了，可是在计算时我们会发现$q_{n,m}=y_my_mz_n^Tz_m$这个式子中的$z$却包含了$\tilde{d}$, 如果这个$\tilde{d}$非常大，我们算的还是非常慢。
+我们想做的是这一步，做得快一点：
 
-结构复杂，很多层很难决定结构
-
-模型效果很好
-
-层数变多可以获得更多的实际物理意义
-
-
-实际物理意义举个例子，如下 ：
-
-每一层的神经元都有他自己的物理意义，向着从简单到复杂feature的转换。
-一些Deep Learning的chllenges和keys：
-
-结构复杂
-
-
-比如
+$\phi$
         </a>
       </p>
 
@@ -338,8 +322,8 @@ Deep NNet特点 ：
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-17 22:52" pubdate>
-              2021-03-17
+            <time datetime="2021-02-05 22:27" pubdate>
+              2021-02-05
             </time>
           </div>
         
@@ -360,32 +344,29 @@ Deep NNet特点 ：
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH12%EF%BC%9ANeural-Network/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH12：Neural Network">
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/" target="_self">
+          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH2：Dual Support Vector Machine">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH12%EF%BC%9ANeural-Network/">机器学习技法CH12：Neural Network</a>
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/">机器学习技法CH2：Dual Support Vector Machine</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH12%EF%BC%9ANeural-Network/">
+        <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/">
           
           
             
           
-          CH12：Neural NetworkMotivation
+          CH2：Dual Support Vector MachineMotivation of Dual SVM我们上节提到过，如果想让SVM来做非线性的分类，那么我们是需要feature transform的，此时的问题变为了：
 
-我们可以自由决定$w$和$\alpha$ . 
-首先这种aggregation操作可以做到logic operation(逻辑运算)：
-AND运算：
+这个$\phi(x_n)$就是对原来的$x_n$做了feature transform。
+我们的二次规划问题也变为了:
 
-我们的这种aggregation of Perceptron是很复杂度 ：
-
-上图发现，我们用足够多的perceptron就可以得到一个近似于target boundary的结果，因此它
+​    为什么想到用SVM来做这件事情呢，因为在
         </a>
       </p>
 
@@ -393,8 +374,8 @@ AND运算：
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-16 22:44" pubdate>
-              2021-03-16
+            <time datetime="2021-02-05 22:25" pubdate>
+              2021-02-05
             </time>
           </div>
         
@@ -415,28 +396,33 @@ AND运算：
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH11%EF%BC%9AGradient-Boosted-Decision-Tree/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH11：Gradient-Boosted-Decision-Tree">
+        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/" target="_self">
+          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH1：Linear SVM">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH11%EF%BC%9AGradient-Boosted-Decision-Tree/">机器学习技法CH11：Gradient-Boosted-Decision-Tree</a>
+        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/">机器学习技法CH1：Linear SVM</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH11%EF%BC%9AGradient-Boosted-Decision-Tree/">
+        <a href="/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/">
           
           
             
           
-          CH11：Gradient Boosted Decision TreeAdaBoost Decision Tree
-我们在AdaBoost-DTree中的第二步的DTree算法中加入了权重$u^{(t)}$。
-如何实现这个呢 ？
-我们回想一下在bootstrap中，我们把$u_n$代表着每个数据被选到的数量。但是我们现在的DTree算法没有权重这一说，我们又想要加上权重这个概念，那怎么办呢？
-我们
+          CH1：Linear SVMLarge-Margin separating Hyperplane
+这三种线都可以把这些点分开。
+
+PLA算法不一定会得出哪儿一种线
+
+
+从我们的VC Bound来看，$E_{in}=0$都一样，$d_{VC}$=也一样，那么 VC Bound所带来的保证$E_{out}$都相同。
+
+
+​    但其实我们的直觉告诉我们第三种好一点，因为他如果有一些数据有误差，那么也
         </a>
       </p>
 
@@ -444,8 +430,8 @@ AND运算：
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-28 17:47" pubdate>
-              2021-02-28
+            <time datetime="2021-02-03 22:27" pubdate>
+              2021-02-03
             </time>
           </div>
         
@@ -466,37 +452,33 @@ AND运算：
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH10：Random Forest">
+        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH16：Three Learning Principle(完结)">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/">机器学习技法CH10：Random Forest</a>
+        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">机器学习基石CH16：Three Learning Principle(完结)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/">
+        <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">
           
           
             
           
-          CH10：Random ForestRandom Forest Algorithm首先回顾：
+          CH16：Three Learning PrincipleOccam’s Razor(奥卡姆剃刀)
+对数据最简单的解释也是最有说服力的解释。
 
-random forest是两部分组成：
+我们肯定认为左边的好一些。
+
+什么叫做simple model，hypothesis很简单的model，hypothesis set里的hypothesis不是很多。
+
+如果我们的资料很乱随机给出，毫无规律可循，那么我们可以完美的分开这些资料的概率是：
 
 
-流程是：
-
-首先对数据做bootstrap，处理数据
-然后用处理完的数据去跑decision tree，获得很多个$g_t$
-最后uniform的合并这些树，也就是uniform的合并$g_t$
-
-这个算法的特点：
-
-我们可以看到用decision tree
         </a>
       </p>
 
@@ -504,8 +486,8 @@ random forest是两部分组成：
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-25 22:04" pubdate>
-              2021-02-25
+            <time datetime="2021-01-27 17:03" pubdate>
+              2021-01-27
             </time>
           </div>
         
@@ -526,33 +508,37 @@ random forest是两部分组成：
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH9：Decision Tree">
+        <a href="/2021/01/27/CH15%EF%BC%9AValidation/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH15：Validation">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/">机器学习技法CH9：Decision Tree</a>
+        <a href="/2021/01/27/CH15%EF%BC%9AValidation/">机器学习基石CH15：Validation</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/">
+        <a href="/2021/01/27/CH15%EF%BC%9AValidation/">
           
           
             
           
-          CH9：Decision TreeDecision Tree Hypothesis
-一个decision tree的例子：
+          CH15：ValidationModel Select Problem选择的依据：
 
 
-$g_t(x)$：称为base hypothesis，叶子节点，一个常数，代表路径$t$的终点的常量，也就是最后做的决定。
-$q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
+第一种：只做$E_{in}$ 做低一些，这样选模型肯定不是很好
 
-我们可以把一棵树看成如下的样式：
 
-那么上图这种一个节点对应着三
+
+第二种：选择在最终测试集上的一部分数据，然后对每个模型进行测试，然后选取准确率最高的。
+由hoeffding不等式来看，这样的结果还不错：
+但是现实中我们几乎不能拿到最终测试集的，这是一个自欺欺人的做法。
+
+
+
+以上两种方法都不是很好，或许我
         </a>
       </p>
 
@@ -560,8 +546,8 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-22 23:35" pubdate>
-              2021-02-22
+            <time datetime="2021-01-27 16:09" pubdate>
+              2021-01-27
             </time>
           </div>
         
@@ -582,32 +568,29 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH8%EF%BC%9AAdaptive-Boosting/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH8：Adaptive Boosting">
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH14：Regularization">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH8%EF%BC%9AAdaptive-Boosting/">机器学习技法CH8：Adaptive Boosting</a>
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">机器学习基石CH14：Regularization</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH8%EF%BC%9AAdaptive-Boosting/">
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">
           
           
             
           
-          CH8：Adaptive BoostingMotivation of Boosting我们假设一个老师教学生认苹果的场景：
+          CH14：RegularizationRegularized Hypothesis  Set
+我们之前由于overfit造成了右边图所示的状况，我们今天要把右图转化为左图通过：Regularization
+因此我们要从高次的hypothesis走回到低次的hypothesis，因此我们想找一种方法可以提供一种指标使得高次走回到低次。
 
-其中上半部分是苹果，下半部分是其他水果。
-1.首先A提出按照形状判别苹果：
 
-那么A做对了一部分，但是蓝色方块的水果里判别犯了错误。
-2.我们为了减少这些错误，我们可以把已经做对的变得小一些(表示我们减轻一些对这些图片的注意力，着重看我们犯错的地方)
-
-我们又提出一种判别的
+因此我们可以看出：低次多项式其实就是高次多项式 加上了一些限
         </a>
       </p>
 
@@ -615,8 +598,8 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-22 01:57" pubdate>
-              2021-02-22
+            <time datetime="2021-01-25 22:29" pubdate>
+              2021-01-25
             </time>
           </div>
         
@@ -637,34 +620,30 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH7%EF%BC%9ABlending-and-Bagging/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH7：Blending and Bagging">
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH13：Hazard of Overfitting">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH7%EF%BC%9ABlending-and-Bagging/">机器学习技法CH7：Blending and Bagging</a>
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">机器学习基石CH13：Hazard of Overfitting</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH7%EF%BC%9ABlending-and-Bagging/">
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">
           
           
             
           
-          CH7：Blending and BaggingMotivation of Aggregation现在有这样一个问题：有15个人来指导我买股票，我怎么选则是否买呢？
+          CH13：Hazard of OverfittingWhat is overfitting
+比如我们现在的数据是通过一个二次曲线+noise 造出来的数据，然后我们用这个数据进行机器学习，假如你用了5次曲线（即一定可以经过上述的五个点），那么我们就会画出图中红色的曲线(且$E_{in}=0$)
+但是她和我们的target function蓝色线差距很大。
 
+一个overfitting的例子：
 
-首先是最直观的 ：选择一个以前买股票表现最好的的，也就是在做validation时最好的那一个：
-
-让他们投票说明股票是否会涨，每个人一票：
-
-
-由于一些人水平会高一些，每个人的票数不应该一样：
-
-这里面是包含了以上两种的选择方式
+o
         </a>
       </p>
 
@@ -672,8 +651,8 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-20 01:50" pubdate>
-              2021-02-20
+            <time datetime="2021-01-24 22:28" pubdate>
+              2021-01-24
             </time>
           </div>
         
@@ -694,32 +673,48 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH6：Support Vector Regression">
+        <a href="/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/" target="_self">
+          <img src="/img/linear.png" srcset="/img/loading.gif" alt="《线性代数及其应用》CH3：行列式">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/">机器学习技法CH6：Support Vector Regression</a>
+        <a href="/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/">《线性代数及其应用》CH3：行列式</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/">
+        <a href="/2021/01/24/CH3%EF%BC%9A%E8%A1%8C%E5%88%97%E5%BC%8F/">
           
           
             
           
-          CH6：Support Vector RegressionKernel Ridge Regression
-如上一节所说，我们可以把最优解的$w_*$看作$z_n$的线性组合
+          第三章 行列式3.1 行列式介绍注: $det  A$ 代表行列式A的值
 
-因此我们可以解最优的$\beta$即可求出$w_*$.
 
-这部分我们怎么求来的呢？
-首先第一部分：
+一个矩阵展开成代数余子式可以按行或者列展开（即 定理1）
 
-我们可以化为矩阵的形式来表达这个式子：$\beta K\beta$, 其中$\beta$是一个$1N$矩阵，$K$是一个$
+
+定理2：
+
+3.2 行列式的性质行变换的性质：
+
+
+可逆与行列式的联系：
+
+
+列变换：
+
+有了定理5我们不难想到，行列变换规则是一样的。
+行列式乘积：
+
+例题：
+
+行列式函数的一个有趣的线性性质：
+
+证明：(2)这个其实就是列变换，显而易见  
+​      
         </a>
       </p>
 
@@ -727,8 +722,8 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-18 22:29" pubdate>
-              2021-02-18
+            <time datetime="2021-01-24 18:32" pubdate>
+              2021-01-24
             </time>
           </div>
         
@@ -737,7 +732,7 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
             
           </div>
         
@@ -749,7 +744,7 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
