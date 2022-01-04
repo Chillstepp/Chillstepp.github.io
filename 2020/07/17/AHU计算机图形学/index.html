@@ -1,0 +1,1062 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>AHU计算机图形学笔记 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="AHU计算机图形学笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-07-17 09:51" pubdate>
+        2020年7月17日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      103
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">AHU计算机图形学笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AHU计算机图形学"><a href="#AHU计算机图形学" class="headerlink" title="AHU计算机图形学"></a>AHU计算机图形学</h1><h2 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h2><p>对AHU计算机图形学课的一些笔记总结,我自认为总结的还算全面，期末靠着这个复习也拿到了相对不错的分数，但受限于个人水平，有些地方可能会出现错误，如果有什么遗漏或者错误之处，可以发邮件到：howiewang.cs@gmail.com </p>
+<p>像素：绘图的最小单位。</p>
+<p>分辨率与像素的关系：若分辨率1024*768（每行有1024个像素，总共有768行）。</p>
+<h2 id="第一章：绪论"><a href="#第一章：绪论" class="headerlink" title="第一章：绪论"></a>第一章：绪论</h2><p><strong>计算机图形学（Computer Graphics）</strong>是研究怎样利用计算机来显示、生成和处理图形的原理、方法和技术的一门学科。国际标准化组织（ISO）定义它为：计算机图形学是研究通过计算机将数据转换成图形，并在专门显示设备上显示的原理、方法和技术。</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/Gxe7xP.png" srcset="/img/loading.gif" alt="Gxe7xP.png"></p>
+<p>​        计算机中表示带有颜色及形状信息的图和形常用两种方法：<strong>点阵法和参数法</strong>。点阵法是用具有灰度或颜色信息的点阵来表示图形的一种方法，它强调图形由哪些点组成，并且具有什么灰度或色彩。参数法是以计算机中所记录图形的形状参数与属性参数来表示图形的一种方法。形状参数可以是形状的方程系数、线段的起点和终点对等几何属性的描述；属性参数则描述灰度、色彩、线型等非几何属性。这样，可以进一步细分：把参数法描述的图形叫做图形（Graphics），而把点阵法描述的图形叫做图像（Image）。</p>
+<p><strong>图形学的发展：</strong></p>
+<ol>
+<li><strong>酝酿期（20世纪50年代）</strong><br>1950年，美国麻省理工学院（MIT）的旋风1号（Whirlwind I）计算机配备了阴极射线管（CRT）来显示一些简单的图形。<br>1958年，美国CALCOMP公司将联机的数字记录仪发展成滚筒式绘图仪，GERBER公司则把数控机床发展成平板式绘图仪。<br>整个50年代，计算机图形学处于准备和酝酿时期，称之为“被动”的图形学。</li>
+<li><strong>萌芽期（20世纪60年代）</strong><br>60年代初，美国麻省理工学院林肯实验室中基于旋风计算机开发的北美空中防御系统SAGE具有了指挥和控制图形对象的功能。<br>1962年，<strong>美国麻省理工学院林肯实验室的Ivan.E.Sutherland</strong>发表了一篇题为”Sketchpad：一个人——机通信的图形系统”的博士论文，其中<strong>首次使用了“Computer Graphics”这个术语</strong>，从而<strong>确立了计算机图形学的学科地位</strong>。 </li>
+<li><strong>发展期（20世纪70年代）</strong><br>70年代，美国洛克希德飞机公司完成了一个用于飞机设计的交互式图形处理系统，即CADAM。<br>计算机图形处理技术进入实用化阶段，但由于图形设备昂贵、功能简单、基于图形的应用软件缺乏等原因，计算机图形学还是一个较小的学科领域。</li>
+<li><strong>普及期（20世纪80年代）</strong><br>由于出现了带有光栅图形显示器的个人计算机和工作站，以及大量简单易用、价格便宜的基于图形的应用软件，计算机图形学进入了社会生活的各个领域。 </li>
+<li><strong>提高增强期（20世纪90年代）</strong><br>计算机图形学向着标准化、集成化和智能化方向发展。</li>
+</ol>
+<h2 id="第二章：计算机图形系统及硬件"><a href="#第二章：计算机图形系统及硬件" class="headerlink" title="第二章：计算机图形系统及硬件"></a>第二章：计算机图形系统及硬件</h2><h3 id="计算机图形系统概述"><a href="#计算机图形系统概述" class="headerlink" title="计算机图形系统概述"></a>计算机图形系统概述</h3><p>  一个<strong>交互式计算机图形系统</strong>应具有<strong>计算、存储、交互（对话）、输入和输出</strong>等<strong>五个方面的功能</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/14/GxN4II.png" srcset="/img/loading.gif" alt="GxN4II.png"></p>
+<p><strong>计算机图形系统结构：</strong></p>
+<p><strong>图形应用数据结构</strong>：对应一组图形数据文件，保存着图形对象的全部描述信息。<br><strong>图形应用软件</strong>：是图形系统的核心部分，包括了各种图形生成和处理技术，是图形技术在各种不同应用中的抽象。</p>
+<p><strong>图形支撑软件</strong>：由一组公用的图形子程序所组成，它扩展了系统中原有高级语言和操作系统的图形处理功能。</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/GxNrPx.png" srcset="/img/loading.gif" alt="GxNrPx.png"></p>
+<p><strong>图形应用数据结构对应一组图形数据文件，存放将要生成的图形对象的全部描述信息（位置、大小、属性、…….)</strong></p>
+<p><strong>图形应用软件是解决某种应用问题的图形软件.它从图形应用数据结构中取得物体的几何模型和属性等,按照应用要求进行各种处理(裁剪、消隐、变换、填充等），然后使用图形支撑软件所提供的各种功能，生成该对象的图形并在图形输出设备上输出。</strong></p>
+<p><strong>图形支撑软件一般由一组公用的图形子程序组成。</strong></p>
+<h3 id="图形输入设备"><a href="#图形输入设备" class="headerlink" title="图形输入设备"></a>图形输入设备</h3><p><strong>1.键盘</strong></p>
+<p><strong>2.鼠标</strong></p>
+<p><strong>3.光笔</strong></p>
+<p><strong>4.操纵杆</strong></p>
+<p><strong>5.触摸屏</strong></p>
+<p><strong>6.跟踪球/空间球：</strong></p>
+<p>跟踪球是一个球，可用手指或掌心旋转以使屏幕光标移动，常用作二维定位设备。空间球与跟踪球不同的是它可以提供6个自由度，常用作三维定位和选择设备。</p>
+<p><strong>7.数字化仪：</strong></p>
+<p> 数字化仪用来输入一组坐标位置，相互以直线段连接，以逼近曲线或表面形状。</p>
+<p><strong>8.扫描仪</strong></p>
+<h3 id="什么是-阴极射线管-CRT-？"><a href="#什么是-阴极射线管-CRT-？" class="headerlink" title="什么是  阴极射线管(CRT)？"></a>什么是  阴极射线管(CRT)？</h3><p>阴极射线管（CRT，Cathode Ray Tube）利用电磁场产生高速的、经过聚焦的电子束，偏转到屏幕的不同位置轰击屏幕表面的荧光材料而产生可见图形。</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/GxBbQ0.png" srcset="/img/loading.gif" alt="GxBbQ0.png"></p>
+<p>（1）电子枪：</p>
+<p><strong>控制栅</strong>：控制电子的数量</p>
+<p><strong>加速极</strong>：控制电子的速度</p>
+<p><strong>聚焦极</strong>：把电子聚集成一束电子</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/Gxf9Et.png" srcset="/img/loading.gif" alt="Gxf9Et.png"></p>
+<p>（2）偏转系统：</p>
+<p>分为<strong>电偏转</strong>和<strong>磁偏转</strong>两种，电偏转有两组电极板，水平偏转板和垂直偏转板。</p>
+<p><strong>电偏转：</strong><img src="https://s1.ax1x.com/2020/04/14/GxfUV1.png" srcset="/img/loading.gif" alt="GxfUV1.png"></p>
+<p><strong>磁偏转：</strong><img src="https://s1.ax1x.com/2020/04/14/Gxf18U.png" srcset="/img/loading.gif" alt="Gxf18U.png"></p>
+<p>（3）荧光屏：</p>
+<p>主要结构：<strong>三色荧光屏、三支电子枪、荫罩板。</strong><br><strong>三色荧光屏</strong>：在整个荧光屏上密密麻麻交错布满了能发R、G、B光的荧光小点，这些荧光点按次序整齐的排列，并相互错开，如下图所示。</p>
+<p><strong>三支电子枪</strong>：荫罩管的尾部装有三支电子枪，它们安装成“品”字形，互成120度角，并略向管轴倾斜，以保证三支电子枪能同时击中一组荧光小点。</p>
+<p>每只电子枪只能控制开或者关(2种强度)：2<em>2\</em>2=8种颜色</p>
+<p>每只电子枪可控制8种强度：8<em>8\</em>8=256种颜色</p>
+<p>每只电子枪能控制256种强度：256*256*256种颜色</p>
+<p><strong>荫罩板</strong>：在离开荧光屏1cm处安装了一块薄钢板制成的网板，像一个罩子将屏幕罩起来，故称荫罩板。荫罩板上有许多小孔，每个小孔准确地和一组三色荧光小点对应。这样，三支电子枪正好交汇在荫罩的小孔上，然后再各自打在相应的荧光小点。</p>
+<h3 id="CRT图形显示器"><a href="#CRT图形显示器" class="headerlink" title="CRT图形显示器"></a>CRT图形显示器</h3><p><strong>1.随机扫描的图形显示器</strong></p>
+<p>​       随机扫描的图形显示器又称向量显示器或笔划显示器，电子束的定位和偏转具有随机性，即电子束的扫描轨迹随显示内容而变化，<strong>只在需要的地方扫描，而不必全屏扫描（可局部扫描）</strong>。</p>
+<p>​       荧光粉余晖时间短，荧光粉发光后马上消失，然后再重复这样的过程，刷新频率低画面会一闪一闪，刷新频率过高会高频度打击屏幕，可能会击穿或者烧毁。</p>
+<p> <strong>随机扫描显示器的特点</strong><br>(1)无冗余扫描、速度快、图像清晰、比光栅系统具有更高的分辨率，生成光滑线条。<br>(2)不能显示逼真场景，和电视标准不一致，驱动系统也较复杂。</p>
+<p><strong>2.直视存储管图形显示器</strong></p>
+<p>直视存储管（DVST，direct-view storage tube） 从表面上看直视存储管的特性极象一个有长余辉的荧光屏，一条线一旦画在屏幕上，在一小时之内都将是可见的。</p>
+<p><strong>不能局部修改，不能显示彩色。</strong></p>
+<p><strong>3.光栅扫描的图形显示器</strong></p>
+<p><strong>扫描过程</strong>：如下图所示，在光栅扫描系统中，电子束横向扫描屏幕，<strong>一次一行</strong>，<strong>从顶到底顺次进行</strong>，当电子束横向沿每一行移动时，由电子束的强度不断变化来建立亮点的图案。</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/Gx7FdH.png" srcset="/img/loading.gif" alt="Gx7FdH.png"></p>
+<p><strong>刷新速率</strong>：每秒扫描的帧数。<br><strong>水平回扫</strong>：每条扫描线扫过后，电子束返回到屏幕左端，称为电子束的水平回扫。<br><strong>垂直回扫</strong>：在每一帧的终了，电子束返回的屏幕左上角，称为电子束的垂直回扫。<br><strong>逐行扫描和隔行扫描</strong>：逐行扫描是扫描线从屏幕顶端开始，从0行光栅开始，逐行下扫，直到屏幕底部；隔行扫描将每帧显示分为两趟，采用隔行刷新方式。第一趟，电子束从顶到底，一行隔一行扫描偶数扫描线，垂直回扫后，电子束则进行第二趟扫描奇数扫描线。隔行扫描使在逐行扫描所需时间的一半时就能看到整个屏幕显示。</p>
+<p>在光栅扫描的图形显示器中，被显示的线段、字符、图形及其背景色都存储在<strong>刷新缓冲存储器</strong>（Refresh Buffer）<strong>或称 帧缓冲存储器</strong>（Frame Buffer，FB）中，刷新缓冲存储器保存的每一组信息对应屏幕上的一个点。</p>
+<p><strong>像素（pixel或pel，是picture element的简写）</strong>：每个屏幕点称为一个像素。像素信息从应用程序转换并放入帧缓冲区的过程称之为扫描转换过程。<br><strong>走样</strong>：光栅扫描的图形显示器是画点设备，绘制图形时只能用尽可能靠近图形的像素点集来近似表示图形，因而会产生失真。这种失真称为走样。</p>
+<p>如下图就是<strong>走样现象</strong>：原因就是像素点是离散的，只能近似表示图形。</p>
+<p><img src="https://s1.ax1x.com/2020/04/14/GxXSSA.png" srcset="/img/loading.gif" alt="GxXSSA.png"></p>
+<h3 id="平板显示器"><a href="#平板显示器" class="headerlink" title="平板显示器"></a>平板显示器</h3><p><strong>平板显示器（flat-panel display）</strong> 是一种<strong>低电压、轻小型、数字化</strong>显示器件，它可以<strong>分为发射显示器和非发射显示器两类</strong>。<br>    <strong>发射显示器（emissive display）</strong>：将电能转换为光能，如等离子体显示器。<br>    <strong>非发射显示器（none-emissive display）</strong>：利用光学效应，将太阳光或来自其他光源的光转换为图形图案，典型设备是液晶显示器。</p>
+<p>1.<strong>液晶显示器(LCD)：</strong>液晶是一类有机化合物，在一定的温度范围内不但有像液体那样的流动性，而且具有像晶体那样的各项异性。<br>    <strong>液晶的电光效应</strong>：由于<strong>液晶具有各项异性</strong>以及在外来电场、磁场、应力、温度等作用下容易改变其分子排列的特性，等液晶分子的某种排列状态在电场作用下变为另一种排列状态时，液晶的光学性质随之改变，这种产生光被电场调制的现象称为液晶的电光效应。</p>
+<p>​    <strong>液晶显示的机理</strong>：液晶显示器就是利用液晶的电光效应，通过施加电压改变液晶的光学特性，从而造成对入射光的调制，使通过液晶的透射光或反射光受所加电压的控制，达到显示的目的。</p>
+<p><strong>2.等离子体显示板</strong></p>
+<p><strong>等离子体显示器也称气体放电显示器(gas-discharge display)</strong>，其结构如下图所示。通常用包括氖气在内的混合气体充入两块玻璃板之间的区域，两块玻璃板上分别放置垂直、水平导电带，在成对的水平和垂直导电带上施以点火电压，导致两导电带交叉点处的气体进入辉光放电的电子和离子等离子区，从而显示图形。</p>
+<p><strong>3.发光二极管(LED)</strong></p>
+<h3 id="图形显示子系统"><a href="#图形显示子系统" class="headerlink" title="图形显示子系统"></a>图形显示子系统</h3><p>现在常用的PC图形显示子系统包括哪儿三个结构？  <strong>帧缓冲存储器 ，显示控制器 ，ROM BIOS</strong></p>
+<p><strong>帧缓冲存储器：</strong>存储屏幕上像素的颜色值，简称<strong>帧缓冲器</strong>，俗称<strong>显存</strong>。</p>
+<p><strong>显示控制器：</strong> 主要功能是不断地读取帧缓存中的图像点阵，并转换成RGB三色信号并配备同步信号送至显示器，即可刷新屏幕。</p>
+<p><strong>显示处理器：</strong> 把CPU从图形显示处理的事务中解脱出来。</p>
+<p><strong>1.早期的光栅图形显示子系统</strong><br>早期的光栅图形显示子系统如下图所示，帧缓冲存储器可以位于系统主存的任意位置，显示控制器<strong>通过系统总线访问</strong>帧缓冲存储器，以刷新屏幕。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3UI1g.png" srcset="/img/loading.gif" alt="J3UI1g.png"></p>
+<p> <strong>2.目前常用的光栅图形显示子系统</strong><br>在目前常用的光栅图形显示子系统中，<strong>帧缓冲存储器由显示控制器直接访问</strong>，它<strong>既可以使用系统内存的固定区域，又可以是专用的显示内存</strong>。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3UTXj.png" srcset="/img/loading.gif" alt="J3UTXj.png"></p>
+<p> 在如上图所示的显示子系统中，<strong>显示图形时所需的扫描转换工作直接由CPU来完成</strong>，即由<strong>CPU计算出表示图形的每个像素的坐标并将其属性值写入相应的帧缓存单元</strong>。</p>
+<p><strong>3.发展的光栅图形显示子系统</strong><br>发展的光栅图形显示子系统的结构如下图所示，除了帧缓存和显示控制器外，还包含<strong>显示处理器</strong>和独立的显示处理器存储区域。显示处理器，又叫图形控制器或显示协处理器，它的主要任务是扫描转换待显示的图形。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3UOA0.png" srcset="/img/loading.gif" alt="J3UOA0.png"></p>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p><strong>1.分辨率</strong><br><strong>光点</strong>是指电子束打在显示器的荧光屏上，<strong>显示器能够显示的最小的发光点</strong>，一般用其<strong>直径</strong>来标明光点的大小。<br>像素点是指图形显示在屏幕上时候，按当前的图形显示分辨率所能提供的最小元素点。像素点可以看作是光点的集合。 </p>
+<p>图形显示技术中有<strong>三种分辨率</strong>：<br>     <strong>(1)屏幕分辨率(光点数×光点数)</strong>：也称光栅分辨率或物理分辨率，它决定了显示系统最大可能的分辨率，通常<strong>用水平方向上的光点数与垂直方向上的光点数的乘积来表示</strong>。<br>     <strong>(2)显示分辨率（字符数×字符数）</strong>：是计算机显示控制器所能够提供的显示模式分辨率，实际应用中简称为显示模式。对于文本显示方式，<strong>显示分辨率用水平和垂直方向上所能显示的字符总数的乘积表示</strong>；对于图形显示方式，则用水平和垂直方向上所能显示的像素点总数的乘积表示。<br>     <strong>(3)图形的存储分辨率（帧缓冲区大小）：</strong>是<strong>指帧缓冲区的大小</strong>，一般用缓冲区的字节数表示。由于帧缓冲存储器的大小不仅与显示分辨率有关，还与像素点的颜色数有关。</p>
+<p><strong>帧缓存大小的计算为：</strong></p>
+<p><a href="https://imgchr.com/i/J3ae3D" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3ae3D.png" srcset="/img/loading.gif" alt="J3ae3D.png"></a></p>
+<p>​        其中：x、y分别为表示当前显示分辨率下x、y方向上的像素点总数，n为颜色数或灰度等级数。 </p>
+<p> <strong>2.像素与帧缓存</strong><br>    屏幕上一个像素点就对应帧缓存中的一组信息。对应的方式有以下两种：<br>    <strong>(1) 组合像素法（Packed Pixel Method）</strong><br>    在组合像素法中，一个图形像素点的全部信息被编码成一个数据字节，按照一定方式存储到帧缓存中，<strong>编码字节的长度</strong>与<strong>点的属性</strong>（如颜色、灰度）<strong>有关</strong>。</p>
+<p>​    <a href="https://imgchr.com/i/J3aMDA" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3aMDA.png" srcset="/img/loading.gif" alt="J3aMDA.png"></a></p>
+<p>​    <strong>(2)颜色位面法（Color Plane Method）</strong><br>​    在颜色位面法中，帧缓存被分成若干独立的存储区域，每一个区域称为一个位面（BitPlane），如下图所示，<strong>每个位面控制一种颜色或者灰度</strong>，每一个图形像素点在每个位面中占一位，通过几个位面中的同一位组合成一个像素。</p>
+<p><strong>帧缓存大小的计算为：</strong><a href="https://imgchr.com/i/J3ae3D" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3ae3D.png" srcset="/img/loading.gif" alt="J3ae3D.png"></a></p>
+<p><strong>3位面帧缓存的容量计算：8种颜色</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3awbn.png" srcset="/img/loading.gif" alt="J3awbn.png"></p>
+<p><strong>24位面帧缓存：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J30NvD.png" srcset="/img/loading.gif" alt="J30NvD.png"></p>
+<p> <strong>3.颜色查找表(Color Lookup Data)</strong><br>    颜色查找表也称调色板，是由高速的随机存储器组成，用来储存表达像素色彩的代码。此时帧缓冲存储器中每一像素对应单元的代码不再代表该像素的色彩值，而是作为查色表的地址索引，如下图所示的具有<strong>24位面彩色帧缓存和10位颜色查找表</strong>的光栅显示器。<br>    <strong>采用颜色查找表后可以提高总的光强等级，即总的颜色数</strong>，但每屏可显示的颜色数还是受帧缓存中单个像素点所占用的位数决定。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J30r5t.png" srcset="/img/loading.gif" alt="J30r5t.png"></p>
+<p>比如原来有2^24种颜色，加上颜色查找表后，可以达到 2^30种颜色</p>
+<p> <strong>4.显示长宽比</strong><br>    显示长宽比，即水平点数与垂直点数之比。当屏幕显像管的长宽比等于4:3，为了使屏幕两个方向上相同像素点数产生同样长度的线段，以使图形不至发生畸变，水平方向上的像素点数与垂直方向上的像素点数之比大约也是4:3。</p>
+<p><strong>5.屏幕坐标系</strong><br>    常用的<strong>屏幕坐标系</strong>有如下图所示的两种。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3D3p6.png" srcset="/img/loading.gif" alt="J3D3p6.png"></p>
+<h2 id="第四章：图形的表示与数据结构"><a href="#第四章：图形的表示与数据结构" class="headerlink" title="第四章：图形的表示与数据结构"></a>第四章：图形的表示与数据结构</h2><p> <strong>1.图素和体素</strong><br>    在二维图形系统中将基本图形元素称为<strong>图素</strong>或图元，而在三维图形系统中称为<strong>体素</strong>。<br>    <strong>图素是指可以用一定的几何参数和属性参数描述的最基本的图形输出元素</strong>，包括点、线、圆、圆弧、椭圆、二次曲线等。<strong>体素的定义相对复杂一些，是三维空间中可以用有限个尺寸参数定位和定形的体</strong>。</p>
+<p><strong>2.刚体运动和拓扑运动</strong></p>
+<p><strong>刚体运动：</strong>不该百年图形上任意两点间的距离，也不改变图形的几何性质的运动。</p>
+<p><strong>拓扑运动：</strong>允许形体做弹性运动，即在拓扑关系中，对图形可随意地伸张扭曲。但<strong>不允许把不同的点合并成一个点。</strong></p>
+<p><strong>3.坐标系</strong></p>
+<p>建模坐标系，用户坐标系，观察坐标系，规格化设备坐标系，设备坐标系</p>
+<p><strong>4.欧拉公式</strong></p>
+<p>对于简单多面体来说：V-E+F=2   顶点数-边数+面数=2</p>
+<p>若不满足欧拉公式肯定不是有效形体，若满足欧拉公式也不一定是有效形体。</p>
+<p><strong>5.数据结构</strong></p>
+<p>三维形体的信息：几何信息，拓扑信息，属性信息</p>
+<p>几何信息的数据结构： 比如定点表，面表，边表</p>
+<p>拓扑信息的数据结构：比如 边表扩充成包括指向面表和顶点表的指针。</p>
+<p>属性信息：物体透明度，反射度，纹理 等。</p>
+<h3 id="三维形体的表示"><a href="#三维形体的表示" class="headerlink" title="三维形体的表示"></a>三维形体的表示</h3><p>分为线框模型和实体模型。</p>
+<h3 id="线框模型"><a href="#线框模型" class="headerlink" title="线框模型"></a>线框模型</h3><p>线框模型存在着几个缺陷。<br>    (1)用三维线框模型表示三维形体常具有二义性，如下图所示的图形可以有多种理解方式。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3TiqA.png" srcset="/img/loading.gif" alt="J3TiqA.png"></p>
+<p>​                                                    图4-12 线框模型的二义性</p>
+<p> (2)由于不存在面的信息，三维线框容易构造出无效形体，如下图所示。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3TmRS.png" srcset="/img/loading.gif" alt="J3TmRS.png"></p>
+<p>(3)由于不能表示出曲面的轮廓线，所以不能正确表示曲面信息。</p>
+<p>(4)无法进行图形的线面消隐。<br>(5)生成复杂形体时，线框模型要求输入大量的数据，加重用户的输入负担。<br>(6)难以保证数据的统一性和有效性。</p>
+<h3 id="实体模型：多边形表面模型"><a href="#实体模型：多边形表面模型" class="headerlink" title="实体模型：多边形表面模型"></a>实体模型：多边形表面模型</h3><p><strong>1.多边形表</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3Wmn0.png" srcset="/img/loading.gif" alt="J3Wmn0.png"></p>
+<p>数据结构： 几何信息：定点表，边表，面表这一类的表。</p>
+<p>​                    拓扑信息：如将边表扩充成包括指向面表和顶点表的指针，由此可构造出如下图所示的翼边结构                    表示（Winged Edges Structure）。 </p>
+<p>​                        <img src="https://s1.ax1x.com/2020/04/21/J3fib6.png" srcset="/img/loading.gif" alt="J3fib6.png"></p>
+<p>​                    属性信息：颜色，纹理，质感</p>
+<p><strong>2.平面方程：</strong></p>
+<p>可以利用平面方程：<br>    (1)求得平面的法向量。<br>    (2)鉴别空间上的点与物体平面的位置关系。<br>    (3)判别点在面的内部或外部。</p>
+<ol>
+<li><strong>多边形网格（polygon mesh）</strong> </li>
+</ol>
+<p>三维形体的曲面边界通常用多边形网格（polygon mesh）的拼接来模拟。常用的是如下图所示的三角形带和四边形网格。</p>
+<p><img src="https://s1.ax1x.com/2020/06/20/NlQk36.png" srcset="/img/loading.gif" alt="NlQk36.png"></p>
+<h3 id="实体模型：扫描表示法"><a href="#实体模型：扫描表示法" class="headerlink" title="实体模型：扫描表示法"></a>实体模型：扫描表示法</h3><p><strong>扫描表示法（sweep representation）</strong>可以<strong>利用简单的运动规则生成有效实体</strong>。扫描表示包含两个要素：作扫描运动的基本图形以及扫描运动的方式。<br>    常见扫描运动的方式有：<br>    (1)旋转扫描：沿图形路径从0到360度的角度范围内移动。<br>    (2)非圆形路径扫描：给定描述路径的曲线函数和沿路径移动的距离。<br>    (3)广义扫描法：沿扫描路径变化剖面的形状和大小，或者当移动该形状通过某空间区间时，可以变化剖面相对于扫描路径的方向。</p>
+<h3 id="实体模型：构造实体几何法"><a href="#实体模型：构造实体几何法" class="headerlink" title="实体模型：构造实体几何法"></a>实体模型：构造实体几何法</h3><p><strong>构造实体几何法（CSG，Constructive Solid Geometry）</strong>由两个实体间的并、交或差操作生成新的实体。 </p>
+<p><a href="https://imgchr.com/i/J3oSns" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3oSns.png" srcset="/img/loading.gif" alt="J3oSns.png"></a></p>
+<p><strong>GSG树：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3hYTK.png" srcset="/img/loading.gif" alt="J3hYTK.png"></p>
+<h3 id="实体模型：空间位置枚举表示法"><a href="#实体模型：空间位置枚举表示法" class="headerlink" title="实体模型：空间位置枚举表示法"></a>实体模型：空间位置枚举表示法</h3><p><strong>八叉树（octrees）</strong>又称为分层树结构，它对空间进行自适应划分，采用具有层次结构的八叉树来表示实体。</p>
+<p>1.四叉树：  看准象限的位置，这个和一般坐标系不太一样，总左上开始第一象限，顺时针旋转。</p>
+<p><a href="https://imgchr.com/i/J35pvj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J35pvj.png" srcset="/img/loading.gif" alt="J35pvj.png"></a></p>
+<p>2.八叉树<br>    八叉树方法与四叉树类似，用一个空间的长方体来包围一个三维实体，每次把它分为8个卦限来进行判断。</p>
+<p><a href="https://imgchr.com/i/J3IpFK" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3IpFK.png" srcset="/img/loading.gif" alt="J3IpFK.png"></a></p>
+<p><strong>二叉空间分割树（binary space partitioning，BSP）</strong>方法每次将一实体用任一位置和任一方向的平面分为二部分。这种方法可将分割平面的位置和方向按适合于实体的空间属性来确定，更为有效。</p>
+<p><strong>如何绘制BSP树？</strong>      <a href="https://blog.csdn.net/pleasecallmewhy/article/details/8426183" target="_blank" rel="noopener">https://blog.csdn.net/pleasecallmewhy/article/details/8426183</a></p>
+<p>下图为面的俯视图，A面两边为B,C.    B的两面为D和E。  C的两面为F和G</p>
+<p><a href="https://imgchr.com/i/J3IuY8" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3IuY8.png" srcset="/img/loading.gif" alt="J3IuY8.png"></a></p>
+<h3 id="非规则对象的表示"><a href="#非规则对象的表示" class="headerlink" title="非规则对象的表示"></a>非规则对象的表示</h3><p>基于分数维理论的随机模型：由A.Fournier等人基于分数维理论提出来的一种过程式模拟，它能够有效地模拟海岸线和山脉等自然景物。<br><strong>基于文法的模型：</strong> 由A.R.Smith用正规文法来构造植物等结构性较强的自然景物，是一个并行重写系统，由一组产生式规则组成。<br><strong>粒子系统模型：</strong>由随着时间变化的一组粒子组成的，此模型可以用来模拟火、烟、雾等，也可以用来模拟被风吹动的草和灌木等。</p>
+<h2 id="第五章：基本图形生成算法"><a href="#第五章：基本图形生成算法" class="headerlink" title="第五章：基本图形生成算法"></a>第五章：基本图形生成算法</h2><h3 id="直线的扫描转换"><a href="#直线的扫描转换" class="headerlink" title="直线的扫描转换"></a>直线的扫描转换</h3><p><strong>直线的绘制要求</strong>：<br>    (1)直线要直；<br>    (2)直线的端点要准确；<br>    (3)亮度、色泽均匀；<br>    (4)画线速度快；<br>    (5)具有不同的色泽、亮度、线型等。</p>
+<p><strong>1.数值微分法（DDA）</strong></p>
+<p>数值微分法(DDA法，Digital Differential Analyzer)是一种直接从直线的微分方程生成直线的方法。给定直线的两端点P0(x0, y0)和P1(x1, y1)，得到直线的微分方程如下：</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3q01K.png" srcset="/img/loading.gif" alt="J3q01K.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3q5jS.png" srcset="/img/loading.gif" alt="J3q5jS.png"></p>
+<p><a href="https://imgchr.com/i/J3LI8x" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3LI8x.png" srcset="/img/loading.gif" alt="J3LI8x.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3Lr80.png" srcset="/img/loading.gif" alt="J3Lr80.png"></p>
+<p>求出来可能是小数，然后要四舍五入取整。</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3Orod.png" srcset="/img/loading.gif" alt="J3Orod.png"></p>
+<p><strong>（上图黄色框中漏了一个（2，1）！！！）</strong></p>
+<p><strong>2.中点Bresenham算法</strong></p>
+<p>在增量大的方向变化一个步长，从当前点（红色）考虑变化大方向的下两个点（蓝色，绿色点），然后看蓝色和绿色哪个点和直线距离最近下一个点就选谁（图中选择蓝色点）。</p>
+<p>然后把蓝色点看成p~i~接着去找p~u~, p~d~    .</p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3X674.png" srcset="/img/loading.gif" alt="J3X674.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/21/J3jbrT.png" srcset="/img/loading.gif" alt="J3jbrT.png"></p>
+<p><a href="https://imgchr.com/i/J3jxi9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/21/J3vCM6.png" srcset="/img/loading.gif" alt="J3vCM6.png"></a></p>
+<p>计算递推式（加快运行效率）</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J49oEF.png" srcset="/img/loading.gif" alt="J49oEF.png"></p>
+<p>进一步增加运行效率(去掉k中的除法) </p>
+<p><a href="https://imgchr.com/i/J49bC9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/28/J49bC9.png" srcset="/img/loading.gif" alt="J49bC9.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4CEKP.png" srcset="/img/loading.gif" alt="J4CEKP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4CVDf.png" srcset="/img/loading.gif" alt="J4CVDf.png"></p>
+<p><strong>3.改进的Bresenham算法</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4C1vq.png" srcset="/img/loading.gif" alt="J4C1vq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4C4xI.png" srcset="/img/loading.gif" alt="J4C4xI.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4CTqf.png" srcset="/img/loading.gif" alt="J4CTqf.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4PJSA.png" srcset="/img/loading.gif" alt="J4PJSA.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4Pdw8.png" srcset="/img/loading.gif" alt="J4Pdw8.png"></p>
+<h3 id="圆的扫描转换"><a href="#圆的扫描转换" class="headerlink" title="圆的扫描转换"></a>圆的扫描转换</h3><p><strong>1.中点bresenham画圆算法</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4ACc9.png" srcset="/img/loading.gif" alt="J4ACc9.png"></p>
+<p><a href="https://imgchr.com/i/J4ENa6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/28/J4ENa6.png" srcset="/img/loading.gif" alt="J4ENa6.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4VSy9.png" srcset="/img/loading.gif" alt="J4VSy9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4VTpD.png" srcset="/img/loading.gif" alt="J4VTpD.png"></p>
+<h3 id="椭圆的扫描转换"><a href="#椭圆的扫描转换" class="headerlink" title="椭圆的扫描转换"></a>椭圆的扫描转换</h3><p><strong>中点bresenham算法</strong></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4efJK.png" srcset="/img/loading.gif" alt="J4efJK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4mTpT.png" srcset="/img/loading.gif" alt="J4mTpT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4mvA1.png" srcset="/img/loading.gif" alt="J4mvA1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4nOxS.png" srcset="/img/loading.gif" alt="J4nOxS.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4uF2T.png" srcset="/img/loading.gif" alt="J4uF2T.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4uuI1.png" srcset="/img/loading.gif" alt="J4uuI1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4QgdH.png" srcset="/img/loading.gif" alt="J4QgdH.png"></p>
+<h3 id="多边形的扫描转换与区域填充"><a href="#多边形的扫描转换与区域填充" class="headerlink" title="多边形的扫描转换与区域填充"></a>多边形的扫描转换与区域填充</h3><p><img src="https://s1.ax1x.com/2020/04/28/J48JpR.png" srcset="/img/loading.gif" alt="J48JpR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4GCg1.png" srcset="/img/loading.gif" alt="J4GCg1.png"></p>
+<h4 id="1-X-扫描线算法"><a href="#1-X-扫描线算法" class="headerlink" title="1.X-扫描线算法"></a><strong>1.X-扫描线算法</strong></h4><p><img src="https://s1.ax1x.com/2020/04/28/J4JteK.png" srcset="/img/loading.gif" alt="J4JteK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4YKnP.png" srcset="/img/loading.gif" alt="J4YKnP.png"></p>
+<p><strong>基本思想：</strong>如下图所示，按扫描线顺序，计算扫描线与多边形的相交区间，再用要求的颜色显示这些区间的所有像素。 </p>
+<p><strong>算法步骤：</strong><br>    (1)确定多边形所占有的最大扫描线数，得到多边形顶点的最小和最大y值（ymin和ymax）。</p>
+<p>​                         <img src="https://s1.ax1x.com/2020/04/28/J40Pv4.png" srcset="/img/loading.gif" alt="J40Pv4.png">          </p>
+<p>​    (2)从y=ymin到y=ymax，每次用一条扫描线进行填充。填充过程可分为四个步骤：<br>​      a.求交：计算扫描线与多边形各边的交点；<br>​      b.排序：把所有交点按照递增顺序进行排序；<br>​      c.交点配对：交点两两配对，表示扫描线与多边形的一个相交区间；<br>​      d.区间填色：将相交区间内的像素置成不同于背景色的填充色。<br>​    存在问题：当扫描线与多边形顶点相交时，交点的取舍问题。如下图所示，在扫描线y=1，y=5和y=7时，扫描线过多边形的顶点，若不加以处理，交点配对时会发生错误。</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4wNjJ.png" srcset="/img/loading.gif" alt="J4wNjJ.png"></p>
+<p>​    解决方法：当扫描线与多边形的顶点相交时，<strong>若共享顶点的两条边分别落在扫描线的两边，交点只算一个</strong>；若<strong>共享顶点的两条边在扫描线的同一边，这时交点作为零个或两个</strong>。实际处理时，只要检查顶点的两条边的另外两个端点的Y值，两个Y值中大于交点Y值的个数是0，1，2，来决定取0，1，2个交点</p>
+<h4 id="2-改进的有效边算法-y的连贯性算法"><a href="#2-改进的有效边算法-y的连贯性算法" class="headerlink" title="2.改进的有效边算法(y的连贯性算法)"></a><strong>2.改进的有效边算法(y的连贯性算法)</strong></h4><p>由于x-扫描线算法在处理每条扫描线时，需要与多边形所有的边求交，效率很低，因此需要加以改进，形成改进的有效边表算法。</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4Bnwn.png" srcset="/img/loading.gif" alt="J4Bnwn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4DpX4.png" srcset="/img/loading.gif" alt="J4DpX4.png"></p>
+<p> 边表：为了方便有效边表的建立与更新，需要构造一个边表（Edge Table）。<br>     (1)首先构造一个纵向链表，链表的长度为多边形所占有的最大扫描线数，链表的每个结点，称为一个桶，则对应多边形覆盖的每一条扫描线。<br>     (2)将每条边的信息链入与该边最小y坐标（ymin）相对应的桶处。也就是说，若某边的较低端点为ymin，则该边就放在相应的扫描线桶中。<br>     (3)每条边的数据形成一个结点，内容包括：该扫描线与该边的初始交点x（即较低端点的x值），1/k，以及该边的最大y值ymax。 </p>
+<p>x|ymin   ymax  1/k   NEXT</p>
+<p>​    (4)同一桶中若干条边按X|ymin由小到大排序，若x|ymin 相等，则按照1/k由小到大排序。</p>
+<p>​    为了解决顶点交点计为1时的情形，可将多边形的某些边缩短以分离那些应计为1个交点的顶点，如下图所示。</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4rAbj.png" srcset="/img/loading.gif" alt="J4rAbj.png"></p>
+<p>根据建立的边表，改进有效边表（活化边表）的算法步骤如下：<br>    (1)初始化：构造边表，AET表置空；<br>    (2)将第一个不空的ET表中的边与AET表合并；<br>    (3)由AET表中取出交点对进行填充。填充之后删除y=ymax的边；<br>    (4)yi+1=yi+1,根据xi+1=xi+1/k计算并修改AET表，同时合并ET表中y=yi+1桶中的边，按次序插入到AET表中，形成新的AET表；<br>    (5)AET表不为空则转(3)，否则结束。</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4sz1f.png" srcset="/img/loading.gif" alt="J4sz1f.png"></p>
+<h4 id="3-边缘填充算法"><a href="#3-边缘填充算法" class="headerlink" title="3.边缘填充算法"></a><strong>3.边缘填充算法</strong></h4><p>基本思想：按任意顺序处理多边形的每条边。处理时，先求出该边与扫描线的交点，再对扫描线上交点右方的所有像素取反。<br>特点：算法简单，但对于复杂图型，每一像素可能被访问多次。</p>
+<h4 id="4-栅栏填充算法"><a href="#4-栅栏填充算法" class="headerlink" title="4.栅栏填充算法"></a><strong>4.栅栏填充算法</strong></h4><p>​    栅栏指的是一条过多边形顶点且与扫描线垂直的直线。它把多边形分为两半。<br>​    基本思想：按任意顺序处理多边形的每一条边，但处理每条边与扫描线的交点时，将交点与栅栏之间的像素取反。<br>​    特点：这种算法尽管减少了被重复访问像素的数目，但仍有一些像素被重复访问。</p>
+<p><img src="https://s1.ax1x.com/2020/04/28/J4gI5d.png" srcset="/img/loading.gif" alt="J4gI5d.png"></p>
+<h4 id="5-边标志算法"><a href="#5-边标志算法" class="headerlink" title="5.边标志算法"></a>5.边标志算法</h4><p>​     基本思想：先用特殊的颜色在帧缓存中将多边形的边界勾画出来，然后将着色的像素点依x坐标递增的顺序配对，再把每一对像素构成的区间置为填充色。<br>​     操作分为两个步骤：<br>​     (1)打标记：对多边形的每条边进行直线扫描转换。<br>​     (2)填充：对每条与多边形相交的扫描线，依从左到右的顺序，按“左闭右开”的原则对扫描线上的像素点进行填色。<br>​     特点：当用软件实现本算法时，速度与改进的有效边表算法相当，但本算法用硬件实现后速度会有很大提高。</p>
+<h4 id="6-区域填充算法"><a href="#6-区域填充算法" class="headerlink" title="6.区域填充算法"></a><strong>6.区域填充算法</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMaNlV.png" srcset="/img/loading.gif" alt="YMaNlV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMacSx.png" srcset="/img/loading.gif" alt="YMacSx.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMdFXT.png" srcset="/img/loading.gif" alt="YMdFXT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMdEBF.png" srcset="/img/loading.gif" alt="YMdEBF.png"></p>
+<h4 id="7-简单的种子填充算法"><a href="#7-简单的种子填充算法" class="headerlink" title="7.简单的种子填充算法"></a><strong>7.简单的种子填充算法</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMdK91.png" srcset="/img/loading.gif" alt="YMdK91.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMdN4A.png" srcset="/img/loading.gif" alt="YMdN4A.png"></p>
+<p>这其实就是个BFS，但是他是不带标记的（出栈的会标记上），所以很多像素会重复入栈。</p>
+<h4 id="8-扫描线种子填充算法"><a href="#8-扫描线种子填充算法" class="headerlink" title="8.扫描线种子填充算法"></a><strong>8.扫描线种子填充算法</strong></h4><p>详细解释：<a href="https://blog.csdn.net/orbit/article/details/7343236" target="_blank" rel="noopener">https://blog.csdn.net/orbit/article/details/7343236</a></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMwWIH.png" srcset="/img/loading.gif" alt="YMwWIH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMwOoQ.png" srcset="/img/loading.gif" alt="YMwOoQ.png"></p>
+<h4 id="9-泛填充算法"><a href="#9-泛填充算法" class="headerlink" title="9.泛填充算法"></a><strong>9.泛填充算法</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMwxWn.png" srcset="/img/loading.gif" alt="YMwxWn.png"></p>
+<h3 id="其他相关概念："><a href="#其他相关概念：" class="headerlink" title="其他相关概念："></a>其他相关概念：</h3><p><img src="https://s1.ax1x.com/2020/05/09/YMDCaF.png" srcset="/img/loading.gif" alt="YMDCaF.png"></p>
+<p><strong>非零环绕数规则：</strong><a href="https://www.jianshu.com/p/f1590d4fb5c5" target="_blank" rel="noopener">https://www.jianshu.com/p/f1590d4fb5c5</a></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMD5W9.png" srcset="/img/loading.gif" alt="YMD5W9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMDIzR.png" srcset="/img/loading.gif" alt="YMDIzR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMsN4g.png" srcset="/img/loading.gif" alt="YMsN4g.png"></p>
+<h3 id="字符处理"><a href="#字符处理" class="headerlink" title="字符处理"></a>字符处理</h3><p><img src="https://s1.ax1x.com/2020/05/09/YMsd3j.png" srcset="/img/loading.gif" alt="YMsd3j.png"></p>
+<h3 id="属性处理"><a href="#属性处理" class="headerlink" title="属性处理"></a>属性处理</h3><p>刷子 改变 线条的颜色，线宽。</p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMcmNT.png" srcset="/img/loading.gif" alt="YMcmNT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMcwgH.png" srcset="/img/loading.gif" alt="YMcwgH.png"></p>
+<p>上下各扩展一个，宽度为1就变为宽度为3了。</p>
+<p><img src="C:\Users\49815\AppData\Roaming\Typora\typora-user-images\1588988297063.png" srcset="/img/loading.gif" alt="1588988297063"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMWPI0.png" srcset="/img/loading.gif" alt="YMWPI0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMW3RO.png" srcset="/img/loading.gif" alt="YMW3RO.png"></p>
+<p><strong>利用 像素模板 改变线形</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMhIr4.png" srcset="/img/loading.gif" alt="YMhIr4.png"></p>
+<p><strong>填充属性：</strong></p>
+<p><strong>走样现象：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YM4xf0.png" srcset="/img/loading.gif" alt="YM4xf0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YM5Jht.png" srcset="/img/loading.gif" alt="YM5Jht.png"></p>
+<p><strong>反走样技术：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMHEzq.png" srcset="/img/loading.gif" alt="YMHEzq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMb2g1.png" srcset="/img/loading.gif" alt="YMb2g1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMqLi4.png" srcset="/img/loading.gif" alt="YMqLi4.png"></p>
+<h2 id="第六章：二维变换"><a href="#第六章：二维变换" class="headerlink" title="第六章：二维变换"></a>第六章：二维变换</h2><p><img src="https://s1.ax1x.com/2020/05/09/YMLtO0.png" srcset="/img/loading.gif" alt="YMLtO0.png"></p>
+<h3 id="基本几何变换"><a href="#基本几何变换" class="headerlink" title="基本几何变换"></a>基本几何变换</h3><h4 id="1-平移变换"><a href="#1-平移变换" class="headerlink" title="1.平移变换"></a><strong>1.平移变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMLqnP.png" srcset="/img/loading.gif" alt="YMLqnP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMOFBV.png" srcset="/img/loading.gif" alt="YMOFBV.png"></p>
+<h4 id="2-比例变换"><a href="#2-比例变换" class="headerlink" title="2.比例变换"></a><strong>2.比例变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMO1HK.png" srcset="/img/loading.gif" alt="YMO1HK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMORvn.png" srcset="/img/loading.gif" alt="YMORvn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMX8rq.png" srcset="/img/loading.gif" alt="YMX8rq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMXNIU.png" srcset="/img/loading.gif" alt="YMXNIU.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMXwRJ.png" srcset="/img/loading.gif" alt="YMXwRJ.png"></p>
+<p>Sx=Sy=2，x和y都扩大2倍</p>
+<p>Sx=2，Sy=1，x扩大两倍，y不变。</p>
+<h4 id="3-旋转变换"><a href="#3-旋转变换" class="headerlink" title="3.旋转变换"></a><strong>3.旋转变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMj0k8.png" srcset="/img/loading.gif" alt="YMj0k8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMjxhD.png" srcset="/img/loading.gif" alt="YMjxhD.png"></p>
+<h4 id="4-对称变换"><a href="#4-对称变换" class="headerlink" title="4.对称变换"></a><strong>4.对称变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMvZ4S.png" srcset="/img/loading.gif" alt="YMvZ4S.png"></p>
+<p>其他的关于什么对称可以先写出坐标,然后对应着找矩阵，就不一一列举了。</p>
+<h4 id="5-错切变换"><a href="#5-错切变换" class="headerlink" title="5.错切变换"></a><strong>5.错切变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/09/YMvav9.png" srcset="/img/loading.gif" alt="YMvav9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YMvrE6.png" srcset="/img/loading.gif" alt="YMvrE6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YQpboq.png" srcset="/img/loading.gif" alt="YQpboq.png"></p>
+<h4 id="6-复合变换"><a href="#6-复合变换" class="headerlink" title="6.复合变换"></a><strong>6.复合变换</strong></h4><p>上面的变换矩阵多个乘在一起就是多个变换的叠加。</p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YQiHjU.png" srcset="/img/loading.gif" alt="YQiHjU.png"></p>
+<p>先平移到原点，然后缩放，再平移回去。</p>
+<p>如何实现任意参照点的旋转变换？  先平移到原点，然后旋转，再平移回去。</p>
+<p><img src="https://s1.ax1x.com/2020/05/09/YQFfKO.png" srcset="/img/loading.gif" alt="YQFfKO.png"></p>
+<p>先向右平移，然后旋转theta角，关于y对称过去成p’，然后反转回来theta角，最后左平移回去。</p>
+<h3 id="二维观察变换"><a href="#二维观察变换" class="headerlink" title="二维观察变换"></a>二维观察变换</h3><p>有关 <strong>窗口</strong> 的几个定义：<strong>用户域</strong>和<strong>窗口区</strong></p>
+<p><strong>窗口用来定义下显示什么</strong>。比如框住一棵树，那么窗口就要显示树。</p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYHvuQ.png" srcset="/img/loading.gif" alt="YYHvuQ.png"></p>
+<p>有关 <strong>视区</strong> 的几个定义：<strong>屏幕域</strong>和<strong>视图区</strong></p>
+<p><strong>视区定义图象显示在何处</strong>，比如上面说到的那棵树在屏幕的哪儿就是视区定义的。</p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYbAvF.png" srcset="/img/loading.gif" alt="YYbAvF.png"></p>
+<h4 id="窗口和视图区"><a href="#窗口和视图区" class="headerlink" title="窗口和视图区"></a><strong>窗口和视图区</strong></h4><p><img src="https://s1.ax1x.com/2020/05/12/YYbeb9.png" srcset="/img/loading.gif" alt="YYbeb9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYLkm4.png" srcset="/img/loading.gif" alt="YYLkm4.png"></p>
+<p>解得(<strong>这个解没必要背，理解上面两个公式，直接分别把$X_s,Y_s$移动到一边即可</strong>)：</p>
+<p><img src="https://s1.ax1x.com/2020/05/18/YhrKMR.png" srcset="/img/loading.gif" alt="YhrKMR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYLwjS.png" srcset="/img/loading.gif" alt="YYLwjS.png"></p>
+<h4 id="观察变换"><a href="#观察变换" class="headerlink" title="观察变换"></a><strong>观察变换</strong></h4><p><img src="https://s1.ax1x.com/2020/05/12/YYLIHJ.png" srcset="/img/loading.gif" alt="YYLIHJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYOC4I.png" srcset="/img/loading.gif" alt="YYOC4I.png"></p>
+<h3 id="裁剪"><a href="#裁剪" class="headerlink" title="裁剪"></a>裁剪</h3><p><img src="https://s1.ax1x.com/2020/05/12/YYOfPI.png" srcset="/img/loading.gif" alt="YYOfPI.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYO5xf.png" srcset="/img/loading.gif" alt="YYO5xf.png"></p>
+<p><strong><img src="https://s1.ax1x.com/2020/05/12/YYObZQ.png" srcset="/img/loading.gif" alt="YYObZQ.png"></strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYXuLD.png" srcset="/img/loading.gif" alt="YYXuLD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYX3FA.png" srcset="/img/loading.gif" alt="YYX3FA.png"></p>
+<h4 id="Cihen-Sutherland裁剪算法"><a href="#Cihen-Sutherland裁剪算法" class="headerlink" title="Cihen-Sutherland裁剪算法"></a><strong>Cihen-Sutherland裁剪算法</strong></h4><p><img src="https://s1.ax1x.com/2020/05/12/YYXrYn.png" srcset="/img/loading.gif" alt="YYXrYn.png"></p>
+<p><strong>落在窗口内就是0000.</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYjc4A.png" srcset="/img/loading.gif" alt="YYjc4A.png"></p>
+<p><strong>如果是立方体：那么需要6位编码（立方体六个面）</strong></p>
+<p>具体算法：<a href="https://blog.csdn.net/soulmeetliang/article/details/79179350" target="_blank" rel="noopener">https://blog.csdn.net/soulmeetliang/article/details/79179350</a></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YYjH4s.png" srcset="/img/loading.gif" alt="YYjH4s.png"></p>
+<p>用Cohen-Sutherland编码最多求4次交点。</p>
+<h4 id="中点分割算法-对分法"><a href="#中点分割算法-对分法" class="headerlink" title="中点分割算法(对分法)"></a><strong>中点分割算法(对分法)</strong></h4><p><img src="https://s1.ax1x.com/2020/05/12/YYzTED.png" srcset="/img/loading.gif" alt="YYzTED.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/Yt9vK1.png" srcset="/img/loading.gif" alt="Yt9vK1.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtPiwV.png" srcset="/img/loading.gif" alt="YtPiwV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtiK3Q.png" srcset="/img/loading.gif" alt="YtiK3Q.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtiMcj.png" srcset="/img/loading.gif" alt="YtiMcj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/Ytia34.png" srcset="/img/loading.gif" alt="Ytia34.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtiDD1.png" srcset="/img/loading.gif" alt="YtiDD1.png"></p>
+<h4 id="参数裁剪算法-Cyrus-Beck"><a href="#参数裁剪算法-Cyrus-Beck" class="headerlink" title="参数裁剪算法(Cyrus-Beck)"></a><strong>参数裁剪算法(Cyrus-Beck)</strong></h4><p><img src="https://s1.ax1x.com/2020/05/12/YtFpV0.png" srcset="/img/loading.gif" alt="YtFpV0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtkOns.png" srcset="/img/loading.gif" alt="YtkOns.png"></p>
+<p>下面的两个交点和P1一共3个点 要<strong>求最大值</strong>，上面的 三个点和P2一共四个点 <strong>求最小值</strong>，即可求出相交线段。可是如何知道哪个点算作上部分，哪个点算作下部分呢？我们先看边的法向量和向量P1P2的夹角，如果夹角小于90，算下部分；大于90算上部分。</p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtVeSO.png" srcset="/img/loading.gif" alt="YtVeSO.png"></p>
+<h4 id="Liang-Barsky算法"><a href="#Liang-Barsky算法" class="headerlink" title="Liang-Barsky算法"></a><strong>Liang-Barsky算法</strong></h4><p>详细介绍：<a href="https://blog.csdn.net/keneyr/article/details/83871170" target="_blank" rel="noopener">https://blog.csdn.net/keneyr/article/details/83871170</a></p>
+<p>​                    <a href="https://blog.csdn.net/soulmeetliang/article/details/79185603" target="_blank" rel="noopener">https://blog.csdn.net/soulmeetliang/article/details/79185603</a></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtVoh6.png" srcset="/img/loading.gif" alt="YtVoh6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtVbcD.png" srcset="/img/loading.gif" alt="YtVbcD.png"></p>
+<p><a href="https://imgchr.com/i/Y497Sf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/05/19/Y497Sf.png" srcset="/img/loading.gif" alt="Y497Sf.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtZrbd.png" srcset="/img/loading.gif" alt="YtZrbd.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/12/YtZ2PP.png" srcset="/img/loading.gif" alt="YtZ2PP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4P9UA.png" srcset="/img/loading.gif" alt="Y4P9UA.png"></p>
+<h4 id="Weiler-Atherton多边形裁剪算法："><a href="#Weiler-Atherton多边形裁剪算法：" class="headerlink" title="Weiler-Atherton多边形裁剪算法："></a><strong>Weiler-Atherton多边形裁剪算法：</strong></h4><p><a href="https://blog.csdn.net/yangxi_pekin/article/details/37738219" target="_blank" rel="noopener">https://blog.csdn.net/yangxi_pekin/article/details/37738219</a></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4uUCF.png" srcset="/img/loading.gif" alt="Y4uUCF.png"></p>
+<p><a href="https://imgchr.com/i/Y4u6UK" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/05/19/Y4u6UK.png" srcset="/img/loading.gif" alt="Y4u6UK.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4u7Uf.png" srcset="/img/loading.gif" alt="Y4u7Uf.png"></p>
+<p><strong>$I_1,I_3,I_5,I_7$是进点</strong></p>
+<p><strong>内裁剪：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4KFGF.png" srcset="/img/loading.gif" alt="Y4KFGF.png"></p>
+<p><strong>外裁剪：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4Miwt.png" srcset="/img/loading.gif" alt="Y4Miwt.png"></p>
+<h4 id="Sutherland-Hodgeman多边形裁剪"><a href="#Sutherland-Hodgeman多边形裁剪" class="headerlink" title="Sutherland-Hodgeman多边形裁剪"></a><strong>Sutherland-Hodgeman多边形裁剪</strong></h4><h4 id="字符裁剪"><a href="#字符裁剪" class="headerlink" title="字符裁剪"></a>字符裁剪</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y43S4P.png" srcset="/img/loading.gif" alt="Y43S4P.png"></p>
+<h2 id="第七章：三维变换及三维观察"><a href="#第七章：三维变换及三维观察" class="headerlink" title="第七章：三维变换及三维观察"></a>第七章：三维变换及三维观察</h2><h3 id="三维上-的裁剪"><a href="#三维上-的裁剪" class="headerlink" title="三维上 的裁剪"></a>三维上 的裁剪</h3><h3 id="三维上的几何变换"><a href="#三维上的几何变换" class="headerlink" title="三维上的几何变换"></a>三维上的几何变换</h3><h4 id="比例变换"><a href="#比例变换" class="headerlink" title="比例变换"></a>比例变换</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y48RoR.png" srcset="/img/loading.gif" alt="Y48RoR.png"></p>
+<p><strong>逆变换</strong>：a，e，j变为原来的倒数</p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4G9Og.png" srcset="/img/loading.gif" alt="Y4G9Og.png"></p>
+<p>解:</p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4GUXD.png" srcset="/img/loading.gif" alt="Y4GUXD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4GfBQ.png" srcset="/img/loading.gif" alt="Y4GfBQ.png"></p>
+<h4 id="旋转变换："><a href="#旋转变换：" class="headerlink" title="旋转变换："></a>旋转变换：</h4><p>规定用<strong>右手坐标系</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4JwvT.png" srcset="/img/loading.gif" alt="Y4JwvT.png"></p>
+<p>按照X’ Y’ Z’的顺序对应着找，就可以写出下面的旋转矩阵，不用死记。</p>
+<p>$[X’，Y’，Z’，1]  ·T_{RX}=[x，y<em>cosθ-z</em>sinθ，y<em>sinθ+z</em>cosθ]$</p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4J6a9.png" srcset="/img/loading.gif" alt="Y4J6a9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4J5rD.png" srcset="/img/loading.gif" alt="Y4J5rD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4YpZQ.png" srcset="/img/loading.gif" alt="Y4YpZQ.png"></p>
+<h4 id="对称变换："><a href="#对称变换：" class="headerlink" title="对称变换："></a>对称变换：</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y4YnZ4.png" srcset="/img/loading.gif" alt="Y4YnZ4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4YQiR.png" srcset="/img/loading.gif" alt="Y4YQiR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4Y1Rx.png" srcset="/img/loading.gif" alt="Y4Y1Rx.png"></p>
+<p><strong>关于平面的变换和比例变换一个道理，相当于变成原来的-1倍</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4Yaod.png" srcset="/img/loading.gif" alt="Y4Yaod.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4YrSP.png" srcset="/img/loading.gif" alt="Y4YrSP.png"></p>
+<h4 id="错切变换："><a href="#错切变换：" class="headerlink" title="错切变换："></a>错切变换：</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y4Ygeg.png" srcset="/img/loading.gif" alt="Y4Ygeg.png"></p>
+<p>c=f=0时，不难看出z’=z 。b=0，h=0则y’=y  。x’=x+dy+gz。</p>
+<p>后面两个同理。</p>
+<h4 id="平移变换："><a href="#平移变换：" class="headerlink" title="平移变换："></a>平移变换：</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y4YbmF.png" srcset="/img/loading.gif" alt="Y4YbmF.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4NS4s.png" srcset="/img/loading.gif" alt="Y4NS4s.png"></p>
+<p><strong>绕空间轴三维旋转变换：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4N7a4.png" srcset="/img/loading.gif" alt="Y4N7a4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4U9de.png" srcset="/img/loading.gif" alt="Y4U9de.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YILcDA.png" srcset="/img/loading.gif" alt="YILcDA.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y405E8.png" srcset="/img/loading.gif" alt="Y405E8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIOCr9.png" srcset="/img/loading.gif" alt="YIOCr9.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIOPbR.png" srcset="/img/loading.gif" alt="YIOPbR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIOarj.png" srcset="/img/loading.gif" alt="YIOarj.png"></p>
+<h3 id="三维上的投影"><a href="#三维上的投影" class="headerlink" title="三维上的投影"></a>三维上的投影</h3><p><img src="https://s1.ax1x.com/2020/05/19/Y4Dbmq.png" srcset="/img/loading.gif" alt="Y4Dbmq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4rMnI.png" srcset="/img/loading.gif" alt="Y4rMnI.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4r5E6.png" srcset="/img/loading.gif" alt="Y4r5E6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4rbgH.png" srcset="/img/loading.gif" alt="Y4rbgH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4sDsA.png" srcset="/img/loading.gif" alt="Y4sDsA.png"></p>
+<h4 id="正投影"><a href="#正投影" class="headerlink" title="正投影"></a>正投影</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y4s4Mj.png" srcset="/img/loading.gif" alt="Y4s4Mj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y46ujJ.png" srcset="/img/loading.gif" alt="Y46ujJ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4gpes.png" srcset="/img/loading.gif" alt="Y4gpes.png"></p>
+<p>为了在一个面上，可以做如下处理：</p>
+<p>俯视图即： 先投影到XOY面上，然后绕着x轴旋转-90°。</p>
+<p>侧视图：先投影到YOZ面上，然后绕着Z轴转90°。</p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4fhb4.png" srcset="/img/loading.gif" alt="Y4fhb4.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIXtFx.png" srcset="/img/loading.gif" alt="YIXtFx.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIXs0A.png" srcset="/img/loading.gif" alt="YIXs0A.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4hAsS.png" srcset="/img/loading.gif" alt="Y4hAsS.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4hKGq.png" srcset="/img/loading.gif" alt="Y4hKGq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/YIvuMF.png" srcset="/img/loading.gif" alt="YIvuMF.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y44z9I.png" srcset="/img/loading.gif" alt="Y44z9I.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y45pgP.png" srcset="/img/loading.gif" alt="Y45pgP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y45AEQ.png" srcset="/img/loading.gif" alt="Y45AEQ.png"></p>
+<h4 id="斜投影"><a href="#斜投影" class="headerlink" title="斜投影"></a>斜投影</h4><p><img src="https://s1.ax1x.com/2020/05/19/Y4IkM6.png" srcset="/img/loading.gif" alt="Y4IkM6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/19/Y4I5y6.png" srcset="/img/loading.gif" alt="Y4I5y6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxbRld.png" srcset="/img/loading.gif" alt="YxbRld.png"></p>
+<p>斜等测的投影和原来物体长度相等，而斜二测不相等，斜二测是op=2op’，变为原来的1/2。</p>
+<h4 id="透视投影："><a href="#透视投影：" class="headerlink" title="透视投影："></a><strong>透视投影：</strong></h4><p><img src="https://s1.ax1x.com/2020/05/24/YxqChF.png" srcset="/img/loading.gif" alt="YxqChF.png"></p>
+<p>投影平面上的是投影，后面的是物体。当后面的物体往后移，投影变小。透视投影可以产生近大远小的特点。</p>
+<p><img src="https://s1.ax1x.com/2020/05/24/Yxqa4S.png" srcset="/img/loading.gif" alt="Yxqa4S.png"></p>
+<p>由相似关系可得变换矩阵：</p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxqBcj.png" srcset="/img/loading.gif" alt="YxqBcj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxL9bt.png" srcset="/img/loading.gif" alt="YxL9bt.png"></p>
+<p>在上图中，投影平面为XOY，正方体中和投影面不平行的只有侧着的四个边，他们相交于一点，即为灭点，又因为这四个侧边是作汴州方向的平行线，所以这个灭点还是个主灭点。</p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxqvgH.png" srcset="/img/loading.gif" alt="YxqvgH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxL5i8.png" srcset="/img/loading.gif" alt="YxL5i8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxOrT0.png" srcset="/img/loading.gif" alt="YxOrT0.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxO7tK.png" srcset="/img/loading.gif" alt="YxO7tK.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YxzzJx.png" srcset="/img/loading.gif" alt="YxzzJx.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzSeYt.png" srcset="/img/loading.gif" alt="YzSeYt.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzSQOg.png" srcset="/img/loading.gif" alt="YzSQOg.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzPAjf.png" srcset="/img/loading.gif" alt="YzPAjf.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzPGuT.png" srcset="/img/loading.gif" alt="YzPGuT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzPh8I.png" srcset="/img/loading.gif" alt="YzPh8I.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YziSMV.png" srcset="/img/loading.gif" alt="YziSMV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/Yziia4.png" srcset="/img/loading.gif" alt="Yziia4.png"></p>
+<h2 id="第八章：曲线和曲面"><a href="#第八章：曲线和曲面" class="headerlink" title="第八章：曲线和曲面"></a>第八章：曲线和曲面</h2><p><img src="https://s1.ax1x.com/2020/06/09/tIk74I.png" srcset="/img/loading.gif" alt="tIk74I.png"></p>
+<p>我们称：将连接有一定次序的控制点的直线序列称之为<strong>控制多边形</strong> 或者 <strong>特征多边形</strong></p>
+<p>曲线可以用单个参数来表示，例如：</p>
+<p><img src="https://s1.ax1x.com/2020/06/09/tIAjRx.png" srcset="/img/loading.gif" alt="tIAjRx.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzFClt.png" srcset="/img/loading.gif" alt="YzFClt.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzFeYj.png" srcset="/img/loading.gif" alt="YzFeYj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzFupn.png" srcset="/img/loading.gif" alt="YzFupn.png"></p>
+<p>比如线性插值： 是指两个不同点x1，x2，用一个线性函数y=ax+b近似代替，称为线性插值函数</p>
+<p>抛物线插值：三个不同的点x1，x2，x3的函数值分别为y1,y2,y3，要求构造一个函数 $f(x)=ax^2+bx+c$,使得抛物线f(x)在x=x1,x2,x3时与y1,y2,y3的值相等。(其实就是要求抛物线经过这三个点)</p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzFr7D.png" srcset="/img/loading.gif" alt="YzFr7D.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzkgVU.png" srcset="/img/loading.gif" alt="YzkgVU.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/24/YzkGKP.png" srcset="/img/loading.gif" alt="YzkGKP.png"></p>
+<p><strong>参数连续性：</strong>一阶参数连续性中的α为1时，即交点处一阶导数相等，此时即为一阶参数连续性，α为n，代表n阶导数相等（0阶参数连续性就是指连接点处的函数数值相同）。记为$C^n$</p>
+<p><strong>n阶几何连续性：</strong> 1.2.3…n阶交点处导数都成比例,且比例相等。 (0阶几何连续就是交点处函数值相同)</p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPuxkd.png" srcset="/img/loading.gif" alt="tPuxkd.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPKiX8.png" srcset="/img/loading.gif" alt="tPKiX8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPMpE4.png" srcset="/img/loading.gif" alt="tPMpE4.png"></p>
+<p><strong>记住下图的矩阵：</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPMebD.png" srcset="/img/loading.gif" alt="tPMebD.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPMgZF.png" srcset="/img/loading.gif" alt="tPMgZF.png"></p>
+<p><strong>n+1</strong>个控制点可以构造<strong>n</strong>次的贝塞尔曲线</p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPQ8Y9.png" srcset="/img/loading.gif" alt="tPQ8Y9.png"></p>
+<p>首尾相连的曲线，p0和pn重合</p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPlQjP.png" srcset="/img/loading.gif" alt="tPlQjP.png"></p>
+<p><strong>一次贝塞尔曲线是一条直线段  $p(t)=(1-t)p_0+tp_1$</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPlfjx.png" srcset="/img/loading.gif" alt="tPlfjx.png"></p>
+<p><strong>是一条抛物线，记住上述矩阵</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tP1fiQ.png" srcset="/img/loading.gif" alt="tP1fiQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/09/tIMuIU.png" srcset="/img/loading.gif" alt="tIMuIU.png"></p>
+<p><strong>是一条三次曲线，记住上述矩阵</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPtDzQ.png" srcset="/img/loading.gif" alt="tPtDzQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPNEY8.png" srcset="/img/loading.gif" alt="tPNEY8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPUW2F.png" srcset="/img/loading.gif" alt="tPUW2F.png"></p>
+<p>虚线的变化幅度明显大于实现，所以<strong>缩减性变差</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPaKI0.png" srcset="/img/loading.gif" alt="tPaKI0.png"></p>
+<p>bezier的缺点就是一个整体逼近的方案，<strong>很难实现局部的修改</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tP0sQU.png" srcset="/img/loading.gif" alt="tP0sQU.png"></p>
+<p><a href="https://imgchr.com/i/tPBN6O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/05/26/tPBN6O.png" srcset="/img/loading.gif" alt="tPBN6O.png"></a></p>
+<p><img src="https://s1.ax1x.com/2020/05/26/tPgTZ8.png" srcset="/img/loading.gif" alt="tPgTZ8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tllDBV.png" srcset="/img/loading.gif" alt="tllDBV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tllyAU.png" srcset="/img/loading.gif" alt="tllyAU.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tl1C4g.png" srcset="/img/loading.gif" alt="tl1C4g.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tl1nET.png" srcset="/img/loading.gif" alt="tl1nET.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tl8YtO.png" srcset="/img/loading.gif" alt="tl8YtO.png"></p>
+<h2 id="第九章：消隐"><a href="#第九章：消隐" class="headerlink" title="第九章：消隐"></a>第九章：消隐</h2><p><img src="https://s1.ax1x.com/2020/05/31/tlJdeI.png" srcset="/img/loading.gif" alt="tlJdeI.png"></p>
+<p>消隐的对象是三维物体</p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlYSfO.png" srcset="/img/loading.gif" alt="tlYSfO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlYC1e.png" srcset="/img/loading.gif" alt="tlYC1e.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlYP6H.png" srcset="/img/loading.gif" alt="tlYP6H.png"></p>
+<h3 id="深度排序算法-画家算法"><a href="#深度排序算法-画家算法" class="headerlink" title="深度排序算法(画家算法)"></a>深度排序算法(画家算法)</h3><p><img src="https://s1.ax1x.com/2020/05/31/tlYZAP.png" srcset="/img/loading.gif" alt="tlYZAP.png"></p>
+<p><strong>先远后进</strong></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlY6N6.png" srcset="/img/loading.gif" alt="tlY6N6.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlt3xe.png" srcset="/img/loading.gif" alt="tlt3xe.png"></p>
+<h3 id="深度缓存算法-z-buffer"><a href="#深度缓存算法-z-buffer" class="headerlink" title="深度缓存算法(z-buffer)"></a>深度缓存算法(z-buffer)</h3><p><img src="https://s1.ax1x.com/2020/05/31/tlt6qs.png" srcset="/img/loading.gif" alt="tlt6qs.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlNSQe.png" srcset="/img/loading.gif" alt="tlNSQe.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlN8YV.png" srcset="/img/loading.gif" alt="tlN8YV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlNYSU.png" srcset="/img/loading.gif" alt="tlNYSU.png"></p>
+<p><img src="https://s1.ax1x.com/2020/05/31/tlyABT.png" srcset="/img/loading.gif" alt="tlyABT.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NRX4ns.png" srcset="/img/loading.gif" alt="NRX4ns.png"></p>
+<p>z(x,y) z(x+1,y) z(x,y+1)互相差一个常数，因此可以已知一个点后去递推其他的点。这样就减少了z值得计算量。</p>
+<p>z-buffer算法缺点还有：在实现反走样，透明和半透明等效果方面有困难。</p>
+<p><strong>总结一下z-buffer method：</strong></p>
+<p>他用了两个数组，FB颜色数组和ZB深度数组，对于每一个图形的像素点，首先看这个像素点的深度Z(X,Y)是否大于当前点的ZB(X,Y)，如果大于则更新该点的颜色数组和深度数组：FB(x,y)=该图形上这个像素的颜色，ZB(X,Y)=Z(X,Y)</p>
+<h3 id="区间扫描线算法"><a href="#区间扫描线算法" class="headerlink" title="区间扫描线算法"></a>区间扫描线算法</h3><p><img src="https://s1.ax1x.com/2020/05/31/tl6VMt.png" srcset="/img/loading.gif" alt="tl6VMt.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NRjTrd.png" srcset="/img/loading.gif" alt="NRjTrd.png"></p>
+<p>这个算法主要是为了加速Z-buffer算法的，因为z-buffer本来要一个一个像素来计算的，现在它通过边表找到一段区间都是同一个颜色，且深度都一样，因此大大加速了相似点的计算。</p>
+<h3 id="区域细分算法"><a href="#区域细分算法" class="headerlink" title="区域细分算法"></a>区域细分算法</h3><p>这算法也是为了加速，分成多种情况分别处理。</p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWSZz8.png" srcset="/img/loading.gif" alt="NWSZz8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWSuLQ.png" srcset="/img/loading.gif" alt="NWSuLQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWStQU.png" srcset="/img/loading.gif" alt="NWStQU.png"></p>
+<h3 id="光线投射算法-了解"><a href="#光线投射算法-了解" class="headerlink" title="光线投射算法(了解)"></a>光线投射算法(了解)</h3><p><img src="https://s1.ax1x.com/2020/06/29/NWSxkn.png" srcset="/img/loading.gif" alt="NWSxkn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWSzYq.png" srcset="/img/loading.gif" alt="NWSzYq.png"></p>
+<p>感觉和上面z-buffer没什么区别，就是变成了三维的了。</p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWpP6U.png" srcset="/img/loading.gif" alt="NWpP6U.png"></p>
+<h3 id="BSP树算法-不考，懒得写了。。"><a href="#BSP树算法-不考，懒得写了。。" class="headerlink" title="BSP树算法(不考，懒得写了。。)"></a>BSP树算法(不考，懒得写了。。)</h3><h2 id="第十章：真实感图形绘制"><a href="#第十章：真实感图形绘制" class="headerlink" title="第十章：真实感图形绘制"></a>第十章：真实感图形绘制</h2><h3 id="简单的光照模型"><a href="#简单的光照模型" class="headerlink" title="简单的光照模型"></a>简单的光照模型</h3><p><strong>简单的光照模型</strong>中<strong>只考虑反射光</strong>的作用。</p>
+<p>反射光由<strong>环境光</strong>，<strong>漫反射光</strong>和<strong>镜面反射光</strong>三部分组成。</p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWpzHH.png" srcset="/img/loading.gif" alt="NWpzHH.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NW9F8P.png" srcset="/img/loading.gif" alt="NW9F8P.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NW9kgf.png" srcset="/img/loading.gif" alt="NW9kgf.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NW9Av8.png" srcset="/img/loading.gif" alt="NW9Av8.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NW9uUs.png" srcset="/img/loading.gif" alt="NW9uUs.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWC8JI.png" srcset="/img/loading.gif" alt="NWC8JI.png"></p>
+<p>以上都是理想情况，实际中：光在传播中能量会衰减，因此我们要考虑模型中光强的衰减。</p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWbpmq.png" srcset="/img/loading.gif" alt="NWbpmq.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWbs3Q.png" srcset="/img/loading.gif" alt="NWbs3Q.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWbo34.png" srcset="/img/loading.gif" alt="NWbo34.png"></p>
+<p>RGB颜色模型就是在原来的计算公式中，将rgb三色拆开来算。</p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWbzCD.png" srcset="/img/loading.gif" alt="NWbzCD.png"></p>
+<h3 id="基于简单光照模型的多边形绘制"><a href="#基于简单光照模型的多边形绘制" class="headerlink" title="基于简单光照模型的多边形绘制"></a>基于简单光照模型的多边形绘制</h3><h4 id="恒定光强："><a href="#恒定光强：" class="headerlink" title="恒定光强："></a><strong>恒定光强：</strong></h4><p><img src="https://s1.ax1x.com/2020/06/29/NWqN24.png" srcset="/img/loading.gif" alt="NWqN24.png"></p>
+<h4 id="Gouraud敏感处理："><a href="#Gouraud敏感处理：" class="headerlink" title="Gouraud敏感处理："></a>Gouraud敏感处理：</h4><p><img src="https://s1.ax1x.com/2020/06/29/NWLkQJ.png" srcset="/img/loading.gif" alt="NWLkQJ.png"></p>
+<p><strong>缺点：</strong>双线性光强插值<strong>解决了相邻多边形之间的颜色突变问题</strong>，<strong>镜面反射效果不太理想</strong>，<strong>相邻多边形的边界处的马赫带效应不能完全消除</strong></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NWvwEn.png" srcset="/img/loading.gif" alt="NWvwEn.png"></p>
+<h4 id="Phong明暗处理"><a href="#Phong明暗处理" class="headerlink" title="Phong明暗处理"></a>Phong明暗处理</h4><p><img src="https://s1.ax1x.com/2020/06/29/NWx0qH.png" srcset="/img/loading.gif" alt="NWx0qH.png"></p>
+<p>和gouraud的区别是，phong先对多边形内部通过双线性插值确定矢量，然后再用光照模型确定内部光强。</p>
+<h3 id="透明处理："><a href="#透明处理：" class="headerlink" title="透明处理："></a>透明处理：</h3><p>简单的透明处理是不考虑折射的。</p>
+<p>但实际上透明表面的光强包括反射光和折射光。</p>
+<h3 id="产生阴影："><a href="#产生阴影：" class="headerlink" title="产生阴影："></a>产生阴影：</h3><p><img src="https://s1.ax1x.com/2020/06/29/NfpYin.png" srcset="/img/loading.gif" alt="NfpYin.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/NfptGq.png" srcset="/img/loading.gif" alt="NfptGq.png"></p>
+<h3 id="模拟景物表面细节"><a href="#模拟景物表面细节" class="headerlink" title="模拟景物表面细节"></a>模拟景物表面细节</h3><p><img src="https://s1.ax1x.com/2020/06/29/Nf9ZmF.png" srcset="/img/loading.gif" alt="Nf9ZmF.png"></p>
+<h3 id="整体光照模型和光线追踪"><a href="#整体光照模型和光线追踪" class="headerlink" title="整体光照模型和光线追踪"></a>整体光照模型和光线追踪</h3><p><img src="https://s1.ax1x.com/2020/06/29/Nf960g.png" srcset="/img/loading.gif" alt="Nf960g.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/Nf92kj.png" srcset="/img/loading.gif" alt="Nf92kj.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/Nf9Whn.png" srcset="/img/loading.gif" alt="Nf9Whn.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/Nf95cV.png" srcset="/img/loading.gif" alt="Nf95cV.png"></p>
+<p><img src="https://s1.ax1x.com/2020/06/29/Nf9IXT.png" srcset="/img/loading.gif" alt="Nf9IXT.png"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/20/What%20is%20submodular%20function(%E6%AC%A1%E6%A8%A1%E5%87%BD%E6%95%B0)/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">What is submodular function(次模函数)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/17/SQL_tutorial/">
+                        <span class="hidden-mobile">AHU_SQL_Consise_Tutorial</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/';
+        this.page.identifier = '/2020/07/17/AHU%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

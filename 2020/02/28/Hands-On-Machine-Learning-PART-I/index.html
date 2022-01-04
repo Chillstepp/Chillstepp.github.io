@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>《Hands-On-Machine-Learning》PART I - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《Hands-On-Machine-Learning》PART I">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-28 01:37" pubdate>
+        2020年2月28日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      65
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《Hands-On-Machine-Learning》PART I</h1>
+            
+            <div class="markdown-body">
+              <h1 id="PART-1：The-Fundamentals-of-Machine-Learning"><a href="#PART-1：The-Fundamentals-of-Machine-Learning" class="headerlink" title="PART 1：The Fundamentals of Machine Learning"></a>PART 1：The Fundamentals of Machine Learning</h1><h2 id="CHAPTER-1-：The-Machine-Learning-Landscape-（机器学习领域）"><a href="#CHAPTER-1-：The-Machine-Learning-Landscape-（机器学习领域）" class="headerlink" title="CHAPTER 1 ：The Machine Learning Landscape （机器学习领域）"></a>CHAPTER 1 ：The Machine Learning Landscape （机器学习领域）</h2><h3 id="什么是机器学习？"><a href="#什么是机器学习？" class="headerlink" title="什么是机器学习？"></a><strong>什么是机器学习？</strong></h3><p>例如，垃圾邮件过滤器是一个机器学习过程，可以学习标记垃圾邮件。系统用于学习的示例称为<strong>训练集</strong>。每个训练示例称为一个<strong>训练样本</strong>。在这种情况下，任务T是为新邮件标记垃圾邮件，E是训练数据，定义性能度量为P（比如p可以为是否正确区分出垃圾邮件），这种特殊的性能度量称为<strong>准确性</strong>，通常用于分类任务。</p>
+<h3 id="为什么要使用机器学习？"><a href="#为什么要使用机器学习？" class="headerlink" title="为什么要使用机器学习？"></a><strong>为什么要使用机器学习？</strong></h3><p>从上面的例子接着来看：</p>
+<p>1.首先你要关注的是典型的垃圾邮件长什么样，比如会有免费，信用卡等字眼</p>
+<p>2.您可以为您注意到的每个部分编写一个检测算法，如果检测到许多这样的部分，程序将把电子邮件标记为垃圾邮件。</p>
+<p>3.测试程序，并重复步骤1和步骤2，直到足够好为止。</p>
+<p>这是一种传统解决方法，如下图</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/3w59SA.png" srcset="/img/loading.gif" alt="3w59SA.png"></p>
+<p>这样循环下来，你的程序很可能会变成一长串复杂的规则，也就是说它很难维护。</p>
+<p>相比之下，一个基于机器学习技术的垃圾邮件过滤器通过检测垃圾邮件示例中与非垃圾邮件示例相比单词的异常频率模式，自动学习哪些单词和短语是垃圾邮件的标志</p>
+<p>程序要短得多，易于维护，而且很可能更准确。如下图：</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/3w5iOP.png" srcset="/img/loading.gif" alt="3w5iOP.png"></p>
+<p>更深一步来看，如果垃圾邮件的发送者发现他们的“4U”被屏蔽了，那么他们很有可能再次使用‘“FOR U”来代替。然而一个基于机器学习的垃圾邮件过滤器会自动识别用户标记的垃圾邮件中出现的异常频繁的“For U”，它会在没有用户干预的情况下标记它们。下图是一个<strong>自动适应</strong>的例子：</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/3wLhoq.png" srcset="/img/loading.gif" alt="3wLhoq.png"></p>
+<p>机器学习的另一个亮眼的表现是解决传统方法难以解决的问题，或者没有已知的算法。例如，考虑语音识别:假设你想从简单的开始，然后编写一个能够分辨“一”和“二”的程序。你可能会注意到，“two”这个词是以一个高音调的声音(“T”)开头的，所以你可以硬编码一个算法来测量高音调的声音强度，并用它来区分1和2。很明显，这种方法不能扩展到成千上万不同的人说的成千上万个单词。</p>
+<p>机器学习可以帮助人类学习，可以检查ML算法，看看它们学到了什么，就像垃圾邮件过滤器对足够多的垃圾邮件进行了训练，就可以很容易地检查出它认为是垃圾邮件最佳预测器的单词列表和单词组合。有时，这将揭示意想不到的关系或新趋势，从而导致更好地理解问题。</p>
+<p>应用ML技术挖掘大量数据可以帮助发现没有立即显现的模式，这叫做<strong>数据挖掘</strong>。</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30i5kD.png" srcset="/img/loading.gif" alt="30i5kD.png"></p>
+<p>总结机器学习的好处是:<br>•现有解决方案需要大量手工调整或大量规则列表的问题:一个机器学习算法通常可以简化代码并更好的执行。</p>
+<p>•使用传统方法根本没有好的解决方案的复杂问题:最好的机器学习技术可以找到解决方案。 </p>
+<p>•环境波动:机器学习系统可以适应新数据。</p>
+<p>•获得关于复杂问题和大量数据的见解。</p>
+<h3 id="机器学习系统的类型"><a href="#机器学习系统的类型" class="headerlink" title="机器学习系统的类型"></a><strong>机器学习系统的类型</strong></h3><p>•是否在人力监督下训练(监督、非监督、半监督和强化学习)</p>
+<p>•是否可以随时学习(在线学习与批量学习)</p>
+<p>•工作方式是简单地将新数据点与已知数据点进行比较，还是检测训练数据中的模式并建立预测模型(基于实例与基于模型的学习)</p>
+<p>这些标准并不互斥;你可以任意组合它们。例如，一个最先进的垃圾邮件过滤器可能使用深度神经网络从垃圾邮件和非垃圾邮件种学习，使得它成为一个<strong>在线的、基于模型的、有监督的学习系统</strong>。</p>
+<h4 id="监督学习和非监督学习（Supervised-Unsupervised-Learning）"><a href="#监督学习和非监督学习（Supervised-Unsupervised-Learning）" class="headerlink" title="监督学习和非监督学习（Supervised/Unsupervised Learning）"></a><strong>监督学习和非监督学习（Supervised/Unsupervised Learning）</strong></h4><p>机器学习系统可以根据它们在训练中得到的监督的数量和类型来分类。有四大类:监督学习、非监督学习、半监督学习和强化学习。</p>
+<p><strong>监督学习(supervised learning)：</strong></p>
+<p>在监督学习中，您提供给算法的训练数据包括所需的答案，称为标记(label)。</p>
+<p> <strong>注：监督学习的input是{data,label}，无监督学习的input是{data}，feature是从data中归纳出来的低维度的表征信息不是直接给你的，是你的算法自己探索的</strong></p>
+<p>例如下图是一个用来训练监督学习的label数据集。</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30KAxO.png" srcset="/img/loading.gif" alt="30KAxO.png"></p>
+<p><strong>典型的监督学习任务是分类</strong>。垃圾邮件过滤器就是一个很好的例子:它使用许多示例邮件及其类(垃圾邮件或普通邮件)进行训练，并且必须学习如何对新邮件进行分类。</p>
+<p><strong>另一个典型的任务是预测一个目标数值</strong>，例如汽车的价格，给定一组称为预测器的特性(里程、年龄、品牌等)。</p>
+<p>这类任务称为<strong>回归</strong>。要训练系统，你需要给它很多汽车的例子，包括它们的预测器和标签(例如他们的价格)。</p>
+<p>下图为回归：</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30Mw0H.png" srcset="/img/loading.gif" alt="30Mw0H.png"></p>
+<p>注意，一些回归算法也可以用于分类，反之亦然。例如，逻辑回归通常用于分类，因为它可以输出与属于给定类的概率相对应的值，例如：百分之二十的概率为垃圾邮件</p>
+<p>以下是一些最重要的监督学习算法：</p>
+<p>•K -近邻算法  k-Nearest Neighbors </p>
+<p>•线性回归   Linear Regression </p>
+<p>•逻辑回归  Logistic Regression </p>
+<p>•支持向量机(SVMs)  Support Vector Machines (SVMs) </p>
+<p>•决策树和随机森林   Decision Trees and Random Forests </p>
+<p>•神经网络  Neural networks </p>
+<p><strong>非监督学习 （Unsupervised learning）</strong>：</p>
+<p>在无监督学习中，训练数据是没有标记的。</p>
+<p>下面是一些最重要的无监督学习算法：</p>
+<p>• 聚类分析</p>
+<p>​       ——k均值聚类算法  k-Means</p>
+<p>​       ——层次聚类分析(HCA)   Hierarchical Cluster Analysis </p>
+<p>​       ——期望最大化   Expectation Maximization </p>
+<p>• 可视化和降维</p>
+<p> ——主成分分析(PCA)     Principal Component Analysis (PCA) </p>
+<p> —— 核主成分分析        Kernel PCA </p>
+<p> ——局部线性嵌入(LLE)   Locally-Linear Embedding (LLE) </p>
+<p> —— t分布随机近邻嵌入(t-SNE)   t-distributed Stochastic Neighbor Embedding (t-SNE) </p>
+<p>• 关联规则学习</p>
+<p> —— 关联分析算法  Apriori </p>
+<p> —— eclat算法        Eclat </p>
+<p>聚类算法：</p>
+<p>例如，假设您有关于博客访问者的大量数据。您可能想要运行一个聚类算法来尝试检测相似访问者的组。在任何情况下，你都不能告诉算法一个访问者属于哪个组:它在<strong>没有你的帮助下</strong>找到这些连接。例如，它可能会注意到40%的访问者是喜欢漫画书的男性，他们通常在晚上阅读你的博客<br>20%是年轻的科幻爱好者，他们会在周末去看科幻电影，等等。如果使用<strong>层次聚类算法</strong>，也可以将每个组细分为更小的组。</p>
+<p>下图是一个聚类算法：</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/303LGR.png" srcset="/img/loading.gif" alt="303LGR.png"></p>
+<p>拓展一下不难发现，当坐标的位维数增加，也就是feature增加，此时聚类算法根据不同的feature特征进行详细的分类。</p>
+<p>可视化算法:</p>
+<p>可视化算法也是无监督学习算法的好例子:你给它们输入大量复杂的、未标记（无监督学习中的数据是未标记的，这个是指label未标记，但是feature是包含的）的数据，它们输出2D或3D的数据表示，这些数据很容易绘制:</p>
+<p>下图是一个利用 <strong>t分布随机近邻嵌入(t-SNE)</strong> 进行语义聚类</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30YneK.png" srcset="/img/loading.gif" alt="30YneK.png"></p>
+<p>注意上图中 <strong>动物是如何与车辆很好地分离，马是如何接近鹿而远离鸟</strong>，等等。</p>
+<p><strong>降维</strong>其目标是在不丢失太多信息的情况下<strong>简化数据（dimensionality reduction, ）</strong>。一种方法是<strong>将几个相关的特性合并成一个</strong>。例如，一辆汽车的行驶里程可能与它的使用年限密切相关，因此降维算法会将它们合并成一个特征，以反映汽车的磨损情况。这叫做<strong>特征提取</strong>。</p>
+<p>另一个重要的非监督任务是<strong>异常检测（anomaly detection ）</strong>——例如，检测不寻常的信用卡交易以防止欺诈，捕捉制造缺陷，或在将数据集中的异常值提供给另一个学习算法之前自动删除异常值。系统使用普通实例进行训练，当它看到一个新实例时，它可以判断它看起来是否像一个普通实例或者是否是一个异常的实例，如下图：</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30Nfz9.png" srcset="/img/loading.gif" alt="30Nfz9.png"></p>
+<p>最后，另一个常见的非监督任务是<strong>关联规则学习（association rule learning ）</strong>，其目标是挖掘大量数据并发现属性之间有趣的关系。例如，假设你拥有一家超市。在你的销售记录上运行一个关联规则，可能会发现购买烧烤酱和薯片的人也倾向于购买牛排。因此，您可能希望将这些项放在彼此靠近的位置。</p>
+<p><strong>半监督学习（Semisupervised learning）</strong>：</p>
+<p>一些算法<strong>可以处理部分标记的训练数据</strong>，<strong>通常是大量的未标记数据和少量标记数据</strong>。这被称为半监督学习</p>
+<p>一些照片托管服务，比如谷歌Photos，就是很好的例子。一旦你将所有的家庭照片上传至该服务，它会自动识别出同一个人A出现在照片1、5和11中，而另一个人B出现在照片2、5和7中。我们可以这样理解：我们给照片a标注为妈妈，这显然是一个监督学习，在接下来大量无标记的照片加入后，通过非监督学习中的聚类分析将照片中的妈妈都标记出来，如下图就是一个半监督学习的例子。</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30as4U.png" srcset="/img/loading.gif" alt="30as4U.png"></p>
+<p><strong>强化学习（Reinforcement Learning ）</strong>：</p>
+<p>强化学习是一个非常不同的概念。该学习系统在此上下文中称为代理，它可以观察环境、选择和执行操作，并获得回报(或负回报形式的惩罚，如图下所示)。然后，它必须自己学习什么是最好的策略，称为策略，以获得最大的回报。策略定义了在给定的情况下，代理应该选择什么操作。</p>
+<p><img src="https://s2.ax1x.com/2020/02/27/30wkWD.png" srcset="/img/loading.gif" alt="30wkWD.png"></p>
+<h4 id="批量和在线学习（Batch-and-Online-Learning-）："><a href="#批量和在线学习（Batch-and-Online-Learning-）：" class="headerlink" title="批量和在线学习（Batch and Online Learning ）："></a><strong>批量和在线学习（Batch and Online Learning ）：</strong></h4><p>用于对机器学习系统进行分类的另一个标准是，系统是否能够从输入的数据流逐渐地学习。</p>
+<p><strong>批量学习（Batch learning ）：</strong></p>
+<p>在批量学习中，系统<strong>不能渐进地学习</strong>:它必须使用所有可用的数据进行训练。这通常会花费大量的时间和计算资源，所以通常是<strong>离线完成</strong>的。首先对系统进行培训，然后将其投入生产并在不学习的情况下运行;它只是应用它所学到的东西。这叫做<strong>离线学习（offline learning ）</strong></p>
+<p>如果希望批处理学习系统了解新数据(例如一种新类型的垃圾邮件)，则需要从头开始在整个数据集上培训系统的新版本(不仅是新的数据，还有旧的数据)，然后停止旧的系统，用新的系统替换它。</p>
+<p>这个解决方案很简单，而且通常工作得很好，但是使用完整的数据集进行培训可能会花费很多小时，所以您通常只需要每24小时甚至每周培训一个新系统。如果你的系统需要适应快速变化的数据(例如预估值股票价格)，那么你需要一个更有反应性的解决方案。同时<strong>面对大数据量的任务我们几乎不会使用批量学习</strong>。</p>
+<p><strong>在线学习（Online learning ）：</strong></p>
+<p>在在线学习中，您可以通过顺序地向系统提供数据实例来增量地培训系统，这些数据实例可以是单个的，也可以是小批量的。每个学习步骤都是快速和低代价的，因此系统可以在新数据到达时动态地学习，这是一个例子：</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30TMKs.png" srcset="/img/loading.gif" alt="30TMKs.png"></p>
+<p>在线学习可以用无法装进主存的巨大数据集来训练系统（称为<strong>核外学习out-of-core learning</strong> ），该算法加载部分数据，在该数据上运行一步训练，然后重复该过程，直到它在所有数据上运行，如下图就是这样一个例子：</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30TxZq.png" srcset="/img/loading.gif" alt="30TxZq.png"></p>
+<p>在线学习系统的一个重要参数是它们应该以多快的速度适应不断变化的数据:这称为<strong>学习率（learning rate） </strong>。</p>
+<p>如果您设置了一个<strong>高的学习率</strong>，那么您的系统将<strong>很快适应新的数据</strong>，但是它也会<strong>很快忘记旧的数据</strong>(您不希望垃圾邮件过滤器只标记它显示的最新类型的垃圾邮件)。</p>
+<p>相反，如果你设定一个<strong>较低的学习率</strong>，系统<strong>会有更多的惯性</strong>;也就是说，它将<strong>学习得更慢</strong>，但它也将<strong>对新数据中的噪声或非代表性数据点的序列不那么敏感</strong>。</p>
+<p>在线学习面临的一大挑战是，<strong>如果向系统输入错误的数据，系统的性能将逐渐下降</strong>。例如，错误的数据可能来自于机器人传感器的故障。了减少这种风险，您需要密切监视您的系统，并在检测到性能下降时立即关闭学习(并可能恢复到以前的工作状态)。您可能还希望监视输入数据并对异常数据做出反应(例如，使用异常检测算法)。</p>
+<h4 id="基于实例和基于模型的学习（Instance-Based-Versus-Model-Based-Learning-）："><a href="#基于实例和基于模型的学习（Instance-Based-Versus-Model-Based-Learning-）：" class="headerlink" title="基于实例和基于模型的学习（Instance-Based Versus Model-Based Learning ）："></a><strong>基于实例和基于模型的学习（Instance-Based Versus Model-Based Learning ）：</strong></h4><p>另一种对机器学习系统进行分类的方法是看它们如何<strong>泛化（generalize）</strong>。<br>大多数机器学习任务都是关于预测的。这意味着，给定大量的训练示例，系统需要能够将其推广到以前从未见过的示例。对培训数据进行训练有良好的效果是很好，但还不够;真正的目标是在新实例上表现良好。</p>
+<p>泛化主要有两种主要方法:<strong>基于实例的学习</strong>和<strong>基于模型的学习</strong></p>
+<p><strong>基于实例的学习（Instance-based learning ）</strong>：</p>
+<p>除了标记与已知的垃圾邮件相同的电子邮件外，您的垃圾邮件过滤器还可以标记与已知的垃圾邮件非常相似的电子邮件。这需要衡量两封电子邮件之间的相似性。一个(非常基本的)度量两封邮件之间的相似度的方法是计算它们共有的字数。如果一封已知的垃圾邮件中有很多单词，系统会将其标记为垃圾邮件。</p>
+<p>这称为基于实例的学习:<strong>系统记住示例，然后使用相似度度量将其推广到新的案例</strong></p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30HB4K.png" srcset="/img/loading.gif" alt="30HB4K.png"></p>
+<p><strong>基于模型的学习( Model-based learning ）</strong>：</p>
+<p>从一组例子中归纳出另一种方法是建立这些例子的模型，然后使用该模型进行预测。这叫做基于模型的学习</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30qqkq.png" srcset="/img/loading.gif" alt="30qqkq.png"></p>
+<p>例如，假设你想知道钱是否能让人快乐，那么你可以下载经合组织网站上的美好生活指数数据，以及国际货币基金组织网站上的人均GDP统计数据。然后你加入表格，并根据人均GDP排序。</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30LZcD.png" srcset="/img/loading.gif" alt="30LZcD.png"></p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30LuBd.png" srcset="/img/loading.gif" alt="30LuBd.png"></p>
+<p>这里似乎确实有一种趋势! 虽然数据是有噪声的(即(部分是随机的)，看起来生活满意度或多或少随着国家人均GDP的增长呈线性增长。所以你决定将生活满意度建模为人均GDP的线性函数。这一步被称为模型选择:你选择了一个只有一个属性的线性的生活满意度模型（人均GDP）</p>
+<p>$life_satisfaction=θ_0 +θ_1× GDP_per_capita $</p>
+<p>这个模型有两个模型参数,$θ_0,θ_1$通过调整这些参数,可以使你的模型代表任何线性函数,如图。</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30Lo8K.png" srcset="/img/loading.gif" alt="30Lo8K.png"></p>
+<p>您可以定义一个效用函数(或适应度函数)来度量模型的好坏，也可以定义一个成本函数来度量模型的好坏。</p>
+<p>对于线性回归问题，人们通常使用一个成本函数来度量线性模型的预测与训练示例之间的距离;目标是最小化这个距离。</p>
+<p>线性回归算法的用武之地:你给它输入你的训练样本，它就会找到使线性模型最适合你的数据的参数。</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/30XPW6.png" srcset="/img/loading.gif" alt="30XPW6.png"></p>
+<p>可视化创建散点图，然后训练一个线性模型并进行预测：</p>
+<p><strong>Training and running a linear model using Scikit-Learn</strong> </p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression<br><span class="hljs-comment"># Load the data</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">prepare_country_stats</span><span class="hljs-params">(oecd_bli, gdp_per_capita)</span>:</span><br>    oecd_bli = oecd_bli[oecd_bli[<span class="hljs-string">"INEQUALITY"</span>]==<span class="hljs-string">"TOT"</span>]<br>    oecd_bli = oecd_bli.pivot(index=<span class="hljs-string">"Country"</span>, columns=<span class="hljs-string">"Indicator"</span>, values=<span class="hljs-string">"Value"</span>)<br>    gdp_per_capita.rename(columns=&#123;<span class="hljs-string">"2015"</span>: <span class="hljs-string">"GDP per capita"</span>&#125;, inplace=<span class="hljs-literal">True</span>)<br>    gdp_per_capita.set_index(<span class="hljs-string">"Country"</span>, inplace=<span class="hljs-literal">True</span>)<br>    full_country_stats = pd.merge(left=oecd_bli, right=gdp_per_capita,<br>                                  left_index=<span class="hljs-literal">True</span>, right_index=<span class="hljs-literal">True</span>)<br>    full_country_stats.sort_values(by=<span class="hljs-string">"GDP per capita"</span>, inplace=<span class="hljs-literal">True</span>)<br>    remove_indices = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">33</span>, <span class="hljs-number">34</span>, <span class="hljs-number">35</span>]<br>    keep_indices = list(set(range(<span class="hljs-number">36</span>)) - set(remove_indices))<br>    <span class="hljs-keyword">return</span> full_country_stats[[<span class="hljs-string">"GDP per capita"</span>, <span class="hljs-string">'Life satisfaction'</span>]].iloc[keep_indices]<br><br>oecd_bli = pd.read_csv(<span class="hljs-string">"oecd_bli_2015.csv"</span>, thousands=<span class="hljs-string">','</span>)<br>gdp_per_capita = pd.read_csv(<span class="hljs-string">"gdp_per_capita.csv"</span>,thousands=<span class="hljs-string">','</span>,delimiter=<span class="hljs-string">'\t'</span>,<br>encoding=<span class="hljs-string">'latin1'</span>, na_values=<span class="hljs-string">"n/a"</span>)<br><span class="hljs-comment"># Prepare the data</span><br>country_stats = prepare_country_stats(oecd_bli, gdp_per_capita)<br>X = np.c_[country_stats[<span class="hljs-string">"GDP per capita"</span>]]<br>y = np.c_[country_stats[<span class="hljs-string">"Life satisfaction"</span>]]<br><span class="hljs-comment"># Visualize the data</span><br>country_stats.plot(kind=<span class="hljs-string">'scatter'</span>, x=<span class="hljs-string">"GDP per capita"</span>, y=<span class="hljs-string">'Life satisfaction'</span>)<br>plt.show()<br><span class="hljs-comment"># Select a linear model</span><br>lin_reg_model = LinearRegression()<br><span class="hljs-comment"># Train the model</span><br>lin_reg_model.fit(X, y)<br><span class="hljs-comment"># Make a prediction for Cyprus</span><br>X_new = [[<span class="hljs-number">22587</span>]] <span class="hljs-comment"># Cyprus' GDP per capita</span><br>print(lin_reg_model.predict(X_new)) <span class="hljs-comment"># outputs [[ 5.96242338]]</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）"><a href="#机器学习的主要挑战（-Main-Challenges-Of-Machine-Learning）" class="headerlink" title="机器学习的主要挑战（ Main Challenges Of Machine Learning）"></a>机器学习的主要挑战（ Main Challenges Of Machine Learning）</h3><p>简而言之，由于您的主要任务是选择一种学习算法并对其进行数据训练，因此可能出错的两件事是“坏算法”和“坏数据”。让我们从坏数据的例子开始。</p>
+<h4 id="数据层面"><a href="#数据层面" class="headerlink" title="数据层面"></a>数据层面</h4><p><strong>培训数据数量不足（Insufficient Quantity of Training Data ）</strong></p>
+<p>机器学习还没有完全实现;大多数机器学习算法需要大量的数据才能正常工作。即使是非常简单的问题，你通常也需要成千上万的例子。</p>
+<p>在2001年发表的一篇著名论文中，微软研究员Michele Banko和Eric Brill  指出，包括相当简单的机器学习算法在内的各种不同的机器学习算法，一旦获得了足够的数据，在解决自然语言消除歧义的复杂问题上，其表现几乎是一样的好，如图：</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3Lfl26.png" srcset="/img/loading.gif" alt="3Lfl26.png"></p>
+<p>这无疑体现了数据相对于算法的重要性。</p>
+<p><strong>非代表性的训练数据（Nonrepresentative Training Data ）</strong></p>
+<p>为了更好地泛化，重要的是您的训练数据要能够代表您想泛化到的新案例。无论您使用基于实例的学习还是基于模型的学习，这都是正确的。</p>
+<p>例如，我们之前用于训练线性模型的国家集并不完全具有代表性;有几个国家失踪了。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3LhkFA.png" srcset="/img/loading.gif" alt="3LhkFA.png"></p>
+<p>如果你用这些数据训练一个线性模型，你会发现  ：而旧的模型用虚线表示。正如您所看到的，添加几个缺失的国家不仅会显著地改变模型，而且还清楚地表明，这样一个简单的线性模型可能永远不会很好地工作。非常富裕的国家似乎并不比中等富裕的国家更幸福(事实上，他们似乎更不幸福)，相反，一些贫穷的国家似乎比许多富裕的国家更幸福。</p>
+<p>通过使用非代表性的训练集，我们训练了一个不太可能做出准确预测的模型，特别是对于非常贫穷和非常富裕的国家。<br>使用一个能代表你想要了解的案例的培训集是至关重要的。这通常比听起来要困难:如果样本太小，就会产生采样噪声(即噪声)。但是，如果抽样方法有缺陷，即使是非常大的样本也可能不具有代表性。这叫做<strong>抽样偏差（sampling bias ）</strong>。</p>
+<p><strong>低质量数据（Poor-Quality Data ）</strong></p>
+<p>显然，如果您的训练数据充满了错误、异常值和噪声(例如，由于质量度量不佳)，那么系统将更难检测底层模式，因此您的系统不太可能表现良好。</p>
+<p><strong>无关的特性（Irrelevant Features）</strong></p>
+<p>机器学习项目成功的一个关键部分是提供一组良好的feature来进行训练，这叫做<strong>特征工程（feature engineering ）</strong>：</p>
+<p>•特性选择:在现有特性中选择最有用的特性进行培训。</p>
+<p>•特征提取:结合现有的特征，生成更有用的特征(正如我们前面看到的，降维算法可以提供帮助)。</p>
+<p>•通过收集新数据来创建新功能</p>
+<h4 id="算法层面"><a href="#算法层面" class="headerlink" title="算法层面"></a>算法层面</h4><p><strong>数据过拟合（overfitting the training data）</strong></p>
+<p>假设你在国外旅游，出租车司机把你敲诈了一顿。你可能会说那个国家所有的出租车司机都是小偷。过度概括是我们人类经常做的事情，不幸的是，如果我们不小心，机器也会落入同样的陷阱。</p>
+<p>在机器学习中，这被称为过度拟合:它意味着模型在训练数据上表现良好，但不能很好地泛化。</p>
+<p>比如预测GDP与幸福指数关系，拟合出了一个十分符合数据集的函数，但是很明显这是十分不可信的。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3L7t61.png" srcset="/img/loading.gif" alt="3L7t61.png"></p>
+<p>当模型相对于训练数据的数量和噪声过于复杂时，就会发生过拟合。可能的解决办法是:<br>•通过选择参数较少的模型来简化模型(例如，一个线性模型而不是一个高次多项式模型)，通过减少训练数据中的属性数量或对模型进行约束</p>
+<p>•收集更多的培训数据</p>
+<p>•减少训练数据中的噪音(例如，修复数据错误并删除异常值)</p>
+<p>为了<strong>简化模型并降低过度拟合的风险</strong>而对模型进行约束称为<strong>正则化（regularization）</strong>。比如线性模型我们定义了两个参数$θ _0$和$θ _1$，所以这就给了算法两个维度的方向来训练，如果我们规定$\theta_0=0$，这样就只剩下了一个维度，也就是说直线只能进行上下移动，那么训练出的是一个均值的模型。如果我们允许算法修改$θ _1$，但我们迫使它让它很小,那么学习算法将有效地在一到两个维度之间。它将产生一个比有两个自由度时更简单的模型，但比只有一个自由度时更复杂。我们希望在<strong>完美地拟合数据</strong>和<strong>保持模型足够简单</strong>以确保它能够很好地泛化之间<strong>找到适当的平衡</strong>。</p>
+<p><img src="https://s2.ax1x.com/2020/03/06/3LjWxe.png" srcset="/img/loading.gif" alt="3LjWxe.png"></p>
+<p>学习过程中需要应用的正则化的数量可以由一个超参数控制。<strong>超参数</strong>是机器学习算法的参数(不是模型的参数)。因此，它不受学习算法本身的影响;它必须在训练前设置，并在训练中保持不变。如果你将正则化超参数设置为一个非常大的值，你会得到一个几乎平坦的模型(斜率接近于零);学习算法几乎肯定不会对训练数据进行过度拟合，但找到一个好的解决方案的可能性较小。<strong>调优超参数</strong>是构建机器学习系统的一个重要部分。</p>
+<h3 id="测试与验证（Testing-and-Validating）"><a href="#测试与验证（Testing-and-Validating）" class="headerlink" title="测试与验证（Testing and Validating）"></a>测试与验证（Testing and Validating）</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Machine-Learning/">Machine Learning</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/28/Pandas%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandas数据分析基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/22/Python-Notebook/">
+                        <span class="hidden-mobile">Python Notebook</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2020/02/28/Hands-On-Machine-Learning-PART-I/';
+        this.page.identifier = '/2020/02/28/Hands-On-Machine-Learning-PART-I/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

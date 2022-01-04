@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>MTCNN(Multi-task Cascaded Convolutional Networks)介绍 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MTCNN(Multi-task Cascaded Convolutional Networks)介绍">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-19 17:11" pubdate>
+        2021年7月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MTCNN(Multi-task Cascaded Convolutional Networks)介绍</h1>
+            
+            <div class="markdown-body">
+              <h1 id="MTCNN-Joint-Face-Detection-and-Alignment-using-Multi-task-Cascaded-Convolutional-Networks"><a href="#MTCNN-Joint-Face-Detection-and-Alignment-using-Multi-task-Cascaded-Convolutional-Networks" class="headerlink" title="MTCNN-Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks"></a>MTCNN-Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks</h1><h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul>
+<li>MTCNN框架利用级联架构，通过精心设计的深度卷积网络的三个阶段，以从粗略到细致的方式预测人脸和landmark位置。</li>
+<li>提出 a new online hard sample mining strategy，即一种新的困难样本挖掘策略，这种策略帮助MTCNN在实际中获得更好的效果。</li>
+</ul>
+<blockquote>
+<p><a href="https://blog.csdn.net/u010165147/article/details/97105166" target="_blank" rel="noopener">关于物体检测中的困难样本挖掘介绍</a></p>
+</blockquote>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>​    级联的人脸检测最早由Viola和Jones两人提出，他们利用Harr特征和AdaBoost训练出了级联分类器，然而，相当多的研究[1,3,4]表明，即使使用更高级的特征和分类器，这种检测器在真实世界的人脸变化更大的场景中应用，效果仍然可能会显著退化。</p>
+<p>​    深度学习方法中利用CNN来检测人脸后来也源源不断的出现，其中Yang[4]的方法由于CNN过于复杂导致训练花费太大，同时它的模型没有考虑到人脸landmark位置和包围盒回归的内在关系。</p>
+<p>​    人脸对齐也引起了广泛的研究兴趣。该领域的研究大致可分为两类，即基于<strong>回归的方法</strong>和模板拟合方法。也有人提出了利用深度卷积神经网络将人脸属性识别作为辅助任务来提高人脸对齐性能。</p>
+<p>​    但是正如上面所说的，无论是人脸检测还是人脸对齐，都没有很好的注意到他们两者的内在关系。Zhang et al[20]利用多任务CNN来提高多视角人脸检测</p>
+<p>的准确率，但检测召回率受到<strong>弱人脸检测器产生的初始检测窗口的限制</strong>。</p>
+<p><strong>这里我们总结一下上述的缺点：</strong></p>
+<ul>
+<li>CNN过于复杂导致训练花费太大</li>
+<li>没有考虑到人脸landmark位置和包围盒回归的内在关系(人脸检测和人脸对齐内在关系没有考虑)</li>
+<li>Multi-task CNN来提高了多视角人脸检测的准确率，但检测召回率受到<strong>弱人脸检测器产生的初始检测窗口的限制</strong>。</li>
+</ul>
+<p><strong>本文提出的CNN分三个阶段：</strong></p>
+<ul>
+<li>P-Net：在第一阶段，它通过一个浅层CNN快速生成候选窗口</li>
+<li>R-Net：它通过一个更复杂的CNN来拒绝大量的非人脸窗口来优化窗口</li>
+<li>O-Net：使用更强大的CNN再次细化结果，并输出5个面部landmark位置(两个眼，一个鼻子，嘴巴的两角)。</li>
+</ul>
+<p>大概流程如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717190416487.png" srcset="/img/loading.gif" alt="image-20210717190416487"></p>
+<p><strong>文章的贡献：</strong></p>
+<p>(1)提出了一种新的基于级联CNN的联合人脸检测和对齐框架，并精心设计了轻量级CNN架构以实现实时性能。</p>
+<p>(2)提出了一种有效的硬样在线开采方法来提高性能。</p>
+<p>(3)在具有挑战性的基准上进行了大量实验，结果表明，与目前最先进的技术相比，该方法在人脸检测和人脸对齐任务中的性能有显著提高。（当然这篇文章发表于16年,现在的效果排名可以看下图）</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717191259974.png" srcset="/img/loading.gif" alt="image-20210717191259974"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717191402835.png" srcset="/img/loading.gif" alt="image-20210717191402835"></p>
+<p>​                                                                                                                (上面两图均来自paper with code)</p>
+<h2 id="Approach-Details"><a href="#Approach-Details" class="headerlink" title="Approach  Details"></a>Approach  Details</h2><h3 id="整体框架"><a href="#整体框架" class="headerlink" title="整体框架"></a>整体框架</h3><p>在进入网络前，先对图片构造图像金字塔，获得不同尺度大小的图片。</p>
+<ol>
+<li><p>首先利用一个全卷积网络(Proposal Net,P-Net)获得待选人脸窗口和包围框的回归向量，使用包围盒回归进行校准，然后通过NMS获得预选框。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190221536.png" srcset="/img/loading.gif" alt="image-20210718190221536"></p>
+</li>
+<li><p>所有的候选框被送入另一个CNN，称为Refine Network (R-Net)，该网络进一步拒绝大量的假候选框，使用包围盒回归进行校准，并进行NMS。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190240812.png" srcset="/img/loading.gif" alt="image-20210718190240812"></p>
+</li>
+<li><p>这一阶段与第二阶段相似，但在这一阶段，我们的目标是在更多的监督下识别面部区域。特别是，该网络将输出五个面部landmark的位置。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190252590.png" srcset="/img/loading.gif" alt="image-20210718190252590"></p>
+</li>
+</ol>
+<h3 id="CNN架构"><a href="#CNN架构" class="headerlink" title="CNN架构"></a>CNN架构</h3><p>作者认为之前也出现过多个CNN框架用于人脸检测，但是都被以下几点所影响了性能和效果：</p>
+<ul>
+<li>卷积中的滤波器缺少多样性，这可能限制了分辨人脸的能力</li>
+<li>与其他多分类目标检测和分类任务相比，人脸检测是一项具有挑战性的二分类任务，因此每层需要的过滤器数量较少，但需要加深网络的深度。</li>
+</ul>
+<p>更改后的效果如下:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719161612406.png" srcset="/img/loading.gif" alt="image-20210719161612406"></p>
+<p>将PReLU(Parametric Rectified Linear Unit),作为卷积和全连接层后的非线性激活函数。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719161751773.png" srcset="/img/loading.gif" alt="image-20210719161751773"></p>
+<p>如果ai=0，那么PReLU退化为ReLU；如果ai是一个很小的固定值(如ai=0.01)，则PReLU退化为Leaky ReLU(LReLU)。 有实验证明，与ReLU相比，LReLU对最终的结果几乎没什么影响。</p>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719162726366.png" srcset="/img/loading.gif" alt="image-20210719162726366"></p>
+<p>作者利用三个任务来训练我们的CNN检测器:人脸/非人脸分类、边界框回归和面部landmark定位。</p>
+<ul>
+<li>人脸/非人脸识别</li>
+</ul>
+<script type="math/tex; mode=display">
+L_{i}^{d e t}=-\left(y_{i}^{d e t} \log \left(p_{i}\right)+\left(1-y_{i}^{d e t}\right)\left(1-\log \left(p_{i}\right)\right)\right)</script><p>$p_i$是网络认为$x_i$为人脸的概率，$y_i^{det}$代表ground-trurh标签，表明$x_i$到底是不是人脸。</p>
+<ul>
+<li>包围盒回归</li>
+</ul>
+<p>对于每个候选窗口，我们预测它与最近的ground-truth(即边界框的左、顶、高度和宽度)之间的偏移量。学习目标被表述为一个回归问题，我们对每个样本使用欧几里德损失。</p>
+<script type="math/tex; mode=display">
+L_{i}^{b o x}=\left\|\hat{y}_{i}^{b o x}-y_{i}^{b o x}\right\|_{2}^{2}</script><ul>
+<li>面部landmark定位</li>
+</ul>
+<script type="math/tex; mode=display">
+L_{i}^{\text {landmark }}=\left\|\hat{y}_{i}^{\text {landmark }}-y_{i}^{\text {landmark }}\right\|_{2}^{2}</script><p>作者使用的训练方式是Multi-source training训练，同时不是对于所有样本都要用三种loss一起计算，几个例子，比如一个候选框里没有人脸，那么我们只用是否人脸的检测损失(即式子(1))即可。包围框损失和landmark损失根本不用算，因为此时的问题还是怎么找到人脸，而不是准确的找到人脸并找到landmark位。</p>
+<p>总之来说，将上述三个loss合并在一起后，我们的损失函数就是：</p>
+<script type="math/tex; mode=display">
+\min \sum_{i=1}^{N} \sum_{j \in\{\text { det }, \text { box,landmark }\}} \alpha_{j} \beta_{i}^{j} L_{i}^{j}</script><p>$N$是训练样本的数量</p>
+<p>在P-Net，R-Net中，$\alpha<em>{det}=1,\alpha</em>{box}=0.5,\alpha_{landmark}=0.5$，也就是此时我们更注重detection，更在意检测到人脸。</p>
+<p>在O-Net中，$\alpha<em>{det}=1,\alpha</em>{box}=0.5,\alpha_{landmark}=1$，也就是此时我们更注重detection，更在意检测到人脸的landmark。</p>
+<p>$\beta$是采样类型指示，当判定为非人脸时，$\beta<em>{box}=0，\beta</em>{landmark}=0,\beta<em>{det}=1$,判定为人脸时全部取1，即$\beta</em>{box}=1，\beta<em>{landmark}=1,\beta</em>{det}=1$.</p>
+<p>L就代表不同的loss值。</p>
+<ul>
+<li><p>online hard sample minning</p>
+<p>不同于传统的困难样本挖掘是在原始分类器经过训练后进行的，本文是在face/non-face分类任务中进行在线硬样本挖掘，这是适应训练过程的。</p>
+<p>具体是在一个batch里面的图片数据，只取分类损失（det loss）的前70%的训练数据backprop回去。</p>
+<p>注意：其余两类损失不做这样的hard sample mining，原因在于回归问题再微小的nudge修正都是有用的，但是二分类就未必了。</p>
+</li>
+</ul>
+<h2 id="Trainning-Data"><a href="#Trainning-Data" class="headerlink" title="Trainning Data"></a>Trainning Data</h2><p>MTCNN的训练集来源于 WILDER FACE 和 CelebA，用前者产生人脸分类任务的图像，后者产生人脸关键位置标注的图像。</p>
+<p>生成的方式是随机取样，根据取样框框与 Ground Truth 人脸框的 IoU 值将其分为4类：</p>
+<p>Negative：IoU&lt;0.3</p>
+<p>Positive：IoU&gt;0.65</p>
+<p>Part：0.4&lt;IoU&lt;0.65</p>
+<p>Landmark：标注了左右眼、鼻、两嘴角共5个位置的横纵坐标的人脸图</p>
+<p>训练集的数据比为 <strong>3:1:1:2 (negatives/ positives/ part face/ landmark face) data.</strong>  </p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] B. Yang, J. Yan, Z. Lei, and S. Z. Li, “Aggregate channel features for multi-view face detection,” in IEEE International Joint Conference on Biometrics, 2014, pp. 1-8. </p>
+<p>[2] P. Viola and M. J. Jones, “Robust real-time face detection. International journal of computer vision,” vol. 57, no. 2, pp. 137-154, 2004 </p>
+<p>[3] M. T. Pham, Y. Gao, V. D. D. Hoang, and T. J. Cham, “Fast polygonal integration and its application in extending haar-like features to improve object detection,” in IEEE Conference on Computer Vision and Pattern Recognition, 2010, pp. 942-949. </p>
+<p>[4]S. Yang, P. Luo, C. C. Loy, and X. Tang, “From facial parts responses to<br>face detection: A deep learning approach,” in IEEE International Conference on Computer Vision, 2015, pp. 3676-3684.  </p>
+<p>[5]人脸检测—MTCNN从头到尾的详解 - 丘学文的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/58825924" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/58825924</a></p>
+<p>[6]MTCNN人脸检测：三个臭皮匠，顶个诸葛亮 || 5分钟看懂CV顶刊论文 - Uno Whoiam的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/59262113" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/59262113</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/22/PSD-Principled-Synthetic-to-Real-Dehazing-Guided-by-Physical-Priors%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PSD: Principled Synthetic-to-Real Dehazing Guided by Physical Priors介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/18/RPN-Region-Proposal-Network-%E4%BB%8B%E7%BB%8D/">
+                        <span class="hidden-mobile">RPN(Region Proposal Network)介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/07/19/MTCNN-Multi-task-Cascaded-Convolutional-Networks-%E4%BB%8B%E7%BB%8D/';
+        this.page.identifier = '/2021/07/19/MTCNN-Multi-task-Cascaded-Convolutional-Networks-%E4%BB%8B%E7%BB%8D/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

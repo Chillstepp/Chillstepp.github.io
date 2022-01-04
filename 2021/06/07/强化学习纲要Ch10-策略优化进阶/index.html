@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>强化学习纲要Ch10-策略优化进阶 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="强化学习纲要Ch10-策略优化进阶">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-07 18:59" pubdate>
+        2021年6月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">强化学习纲要Ch10-策略优化进阶</h1>
+            
+            <div class="markdown-body">
+              <h2 id="策略优化进阶——上"><a href="#策略优化进阶——上" class="headerlink" title="策略优化进阶——上"></a>策略优化进阶——上</h2><p>本次的内容：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602155707220.png" srcset="/img/loading.gif" alt=""></p>
+<p>首先还是先回顾一下Value-based RL和Policy-based RL区别：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602160051163.png" srcset="/img/loading.gif" alt="image-20210602160051163"></p>
+<p>策略目标和策略梯度：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602204803475.png" srcset="/img/loading.gif" alt="image-20210602204803475"></p>
+<p>策略梯度(Policy gradient)有下面几种常见的算法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602210030754.png" srcset="/img/loading.gif" alt="image-20210602210030754"></p>
+<p>这里要说一下这四个优化方法的关系：</p>
+<p>首先是REINFORCE使用的是$G_t$,是由MC方法获得的，他其实就是Q Actor-Critic方法中$Q^w$的采样。Advantage Actor-Critic中为$A^w$,即把$Q^w$减去了一个baseline，这么做是为了减少方差。TD Acrot-critic中直接使用TD target作为reward function。</p>
+<p>critic会用policy evaluation来估计$Q^\pi(s,a)$,$A^\pi(s,a)$,$V^\pi(s)$</p>
+<p>下面介绍当下最历害/前沿的六种强化学习算法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602211059323.png" srcset="/img/loading.gif" alt="image-20210602211059323"></p>
+<h3 id="TRPO"><a href="#TRPO" class="headerlink" title="TRPO"></a>TRPO</h3><p>在介绍这些算法前，首先我们要了解基于Policy Gradient的缺点：</p>
+<ul>
+<li>首先是sample effiency问题：当前优化的policy不仅要被优化，也要用这个policy来采取数据，所以采样效率其实很低。</li>
+<li>训练过程不稳定：强化学习采集到的数据一般都不是iid的，有很强的关联。比如我们的step size不是那么正确，导致的结果是：step too far-&gt;bad policy-&gt;bad data,也就是坏的策略会导致坏的数据，坏的数据会使得策略变得更差，导致我们很难从一个错误的policy中恢复回来。</li>
+</ul>
+<p>对应于这两点，解决方法是：</p>
+<ul>
+<li><p>怎么让训练更稳定：利用Trust region和natual policy gradient</p>
+</li>
+<li><p>怎么让sample高效一些：用另一个policy去产生策略，即off-policy方法，比如在TPRO中就用到了Importance sampling</p>
+</li>
+</ul>
+<p><strong>Natural Policy gradient的概念：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602212829498.png" srcset="/img/loading.gif" alt="image-20210602212829498"></p>
+<p>原来我们考虑的policy gradient就是在一个欧几里得空间找一个d，这个d方向可以使得$J(\theta)$变化最快。</p>
+<p>但是这里有个问题就是，这个d对采取怎样参数化的形式很敏感。</p>
+<p>所以这里提出了一种新的方法：通过分布空间(policy output)来进行梯度更新</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213334424.png" srcset="/img/loading.gif" alt="image-20210602213334424"></p>
+<p>利用KL散度控制梯度变化前后的输出的分布的差异为一个定值c，然后在此基础上在参数空间中找一个d使得J函数变换最大。</p>
+<p>这里补充一下KL散度的概念：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213729987.png" srcset="/img/loading.gif" alt="image-20210602213729987"></p>
+<p>上面说到，我们现在考虑得更新方式为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213820832.png" srcset="/img/loading.gif" alt="image-20210602213820832"></p>
+<p>这种constraint的最优化可以用拉格朗日乘子来解决，如上图。然后把KL[]这个函数用泰勒展开，得到上图中的式子。</p>
+<p>然后我们对上面那个优化函数求导即可，就可以得到natual policy gradient：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214158029.png" srcset="/img/loading.gif" alt="image-20210602214158029"></p>
+<p>因此我们现在策略的更新方式为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214353311.png" srcset="/img/loading.gif" alt="image-20210602214353311"></p>
+<p>和原来相比就是多了一个$F^{-1}$,即Fisher information matrix。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214446265.png" srcset="/img/loading.gif" alt="image-20210602214446265"></p>
+<p>这里的F就是KL散度的二阶导数，我们可以用下式进行计算。</p>
+<p>$F=E<em>{ \left.\pi</em>{\theta}(s, a}\right]}\left[\nabla \log \pi<em>{\theta}(s, a) \nabla \log \pi</em>{\theta}(s, a)^{T}\right]$</p>
+<p>F意味着策略的曲率与模型参数$\theta$的相关性。</p>
+<p>所以Natural policy gradient的出现使得我们让策略优化可以与模型参数空间的选择无关。</p>
+<p> <strong>Importance Sampling方法：</strong></p>
+<p>另外一个方面是我们想把policy gradient方法改成off-policy的方法，我们知道off-policy learning自身有很多好处，我们可以用另一种算法在环境里面去探索(explore)，采集到很多激进的数据，这样来喂给优化的策略。</p>
+<p>这里采取方法是Importance sampling(重要性采样)：Importance sampling在采样过程里面也是用的比较广泛的。</p>
+<p>它的简单概念是：我们现在假设要去估计一个函数的期望，比如说要估算f(x)这个值，x是从p分布里面采样出来的；有时候我们不知道怎么去p分布里面采样，比如说p分布的形式非常奇怪，没法去直接采样，我们只能从如uniform distribution或者Gaussian distribution里面采样，那么我们怎么去根据一个不知道怎么采样的p估计这个f(x)参数呢？</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602220143126.png" srcset="/img/loading.gif" alt="image-20210602220143126"></p>
+<p>通过简单的变换，f(x)针对p的期望，变换成另一种期望的形式，这样x就可以从另外一个分布里面采样了。采样很多的x后再取平均。</p>
+<p>同样的原理，我们可以把策略优化的目标函数也改写一下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602222400585.png" srcset="/img/loading.gif" alt="image-20210602222400585"></p>
+<p>α是优化的策略里面产生的，假设我们现在优化函数没法对它采样，就可以从另外一个策略函数里面对它采样，比如从 $\hat{\pi}$里面去采样action，通过importance sampling去乘以ratio来近似。这里变化就是我们可以用behavior policy $ \hat{\pi}$ 去产生实际的轨迹。</p>
+<p><strong>Increasing the Robustness(鲁棒性) with Trust Regions(信赖域)：</strong></p>
+<p>​    所以这样就可以把策略函数改写成基于之前另外一个策略的一个优化函数，另外一个策略最简单的办法是可以用之前的这个策略，在Deep Q learning中有两个策略函数，behavior policy是用的之前的策略函数，因为之前的策略函数产生的数据我们也可以放到这个replay buffer里面，所以就可以重用之前采到的数据。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225000736.png" srcset="/img/loading.gif" alt="image-20210602225000736"></p>
+<p>这里有个问题需要注意一下，$\frac{\pi_\theta}{\hat{\pi}}$可能非常大，也就是说上下两个策略差距比较大，同样我们可以借用上面的方法，用KL散度来限制分布的差异，限制两个策略的区别：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225604165.png" srcset="/img/loading.gif" alt="image-20210602225604165"></p>
+<p>一个形象的例子是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225626137.png" srcset="/img/loading.gif" alt="image-20210602225626137"></p>
+<p>​    每次优化过程只能在这个圆圈里面（安全的区域）选择一个方向，这样就可以使得这个训练尽可能的稳定，这样也使得它的概率输出和上一步的概率输出的步数尽可能的小，随着训练过程也可以使得trust region缩的越来越小，更新也会变得越来越小，整个过程也会变得越来越稳定。</p>
+<p><strong>Trust Region Optimization:</strong></p>
+<p>对Trust Region Optimization进行进一步的推导，对价值函数做泰勒展开，展开如下：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602231324132.png" srcset="/img/loading.gif" alt="image-20210602231324132"></p>
+<p>此时的目标变为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602231824462.png" srcset="/img/loading.gif" alt="image-20210602231824462"></p>
+<p>这个式子是有显示解的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232211516.png" srcset="/img/loading.gif" alt="image-20210602232211516">    </p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232311127.png" srcset="/img/loading.gif" alt="image-20210602232311127"></p>
+<p>我们会发现他和Natural gradient(自然梯度）的形式很一致。</p>
+<p>我们发现这个natural gradient没有学习率，而是用KL散度之间的差别$\delta$来代替学习率。δ是直接在限制更新之后的policy和之前的policy的近似程度 ，也就是说做了这个推导过后δ和learning rate直接联系起来了。这也是TRPO推导非常好的地方，不需要设定step-size，只需要指定trust region的大小，即更新后的策略和之前的策略输出距离多少，然后用距离去推出step-size。这样我们可以把trust region设的很小，这样就使得更新非常稳定。</p>
+<p>到现在为止，我们推导的就是在TRPO中的Natural policy gradient：</p>
+<ul>
+<li>TRPO是在natural policy gradient的基础上加了importance sampling。</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232716810.png" srcset="/img/loading.gif" alt="image-20210602232716810"></p>
+<p>由于我们提到了H的逆这个问题，求逆复杂度是$O(n^3)$的，十分慢，因此我们常用<strong>共轭梯度法</strong>来解绝这个问题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233256646.png" srcset="/img/loading.gif" alt="image-20210602233256646"></p>
+<p>所以完整的方法就是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233343692.png" srcset="/img/loading.gif" alt="image-20210602233343692"></p>
+<p>TPRO中通过一些推导(具体可看论文的附录)，证明了一个guaranteed monotonic improvement，即：</p>
+<p>随着迭代增加，我们的J函数是单调的。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233726968.png" srcset="/img/loading.gif" alt="image-20210602233726968"></p>
+<p><strong>TPRO的一些问题：</strong></p>
+<ul>
+<li>计算量非常大。虽然用了conjugate gradient method(共轭梯度法），但是对于每一次迭代，policy都要算H逆。</li>
+<li>在近似H的时候，H本身是个期望，但是我们在近似这个期望的时候是用样本近似，需要很多样本。</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602234233708.png" srcset="/img/loading.gif" alt="image-20210602234233708"></p>
+<ul>
+<li>TRPO在某些游戏上并不会比DQN更好。</li>
+</ul>
+<h3 id="ACKTR"><a href="#ACKTR" class="headerlink" title="ACKTR"></a>ACKTR</h3><p><strong>paper:</strong> Y.Wu, et al. “Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation”. NIPS 2017.</p>
+<p>​    ACKTR的核心思想是想提升TRPO的计算效率。在TRPO里面有一步是算Fisher information matrix(FIM),即$H^{-1}$，在矩阵维度很大的时候求逆计算量非常大。因此，ACKTR提出用Kronecker-factored approximation curvature(K-FAC) 方法来加速求逆。</p>
+<h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>PPO可以看作是TRPO的简单版本：</p>
+<p>首先回顾TRPO的loss function：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235520908.png" srcset="/img/loading.gif" alt="image-20210602235520908"></p>
+<p>我们采用这种方法区合并约束：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235546420.png" srcset="/img/loading.gif" alt="image-20210602235546420"></p>
+<p>这样在优化时，一方面就考虑到了让前面一部分变大，另一方面让后面一部分变小。</p>
+<p>我们会发现有个参数$\beta$在衡量他们二者，这个$\beta$可以做到自适应，如下的算法流程图：</p>
+<p>当我们的KL散度过大，说明策略更新过快，变化过大，那么我们就变大$\beta$,让优化时更注重KL散度。反之亦然。</p>
+<p>这个方法叫做PPO with Adaptive KL Penalty</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235859119.png" srcset="/img/loading.gif" alt="image-20210602235859119"></p>
+<p>​    因为PPO本身优化的过程是利用first-order optimization(SGD，一阶优化) 优化的，所以优化效率比二阶的TRPO快很多，因为PPO的算法过程中并没有去计算KL散度或者Fisher information matrix。</p>
+<p>​    除了上面adaptive beta的方法，PPO提供了第二种方式是把objective function自身带了clipping，所以它提出了更复杂一些的形式来处理本身loss的优化情况。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002012967.png" srcset="/img/loading.gif" alt="image-20210603002012967"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002250843.png" srcset="/img/loading.gif" alt="image-20210603002250843"></p>
+<p><strong>这就是PPO with Clipped Objective</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002450181.png" srcset="/img/loading.gif" alt="image-20210603002450181"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/18/RPN-Region-Proposal-Network-%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RPN(Region Proposal Network)介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch9-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80-%E4%B8%8B/">
+                        <span class="hidden-mobile">强化学习纲要Ch9-策略优化基础-下</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/';
+        this.page.identifier = '/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

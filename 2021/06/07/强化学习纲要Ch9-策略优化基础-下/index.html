@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>强化学习纲要Ch9-策略优化基础-下 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="强化学习纲要Ch9-策略优化基础-下">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-07 18:58" pubdate>
+        2021年6月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">强化学习纲要Ch9-策略优化基础-下</h1>
+            
+            <div class="markdown-body">
+              <h2 id="策略优化基础——下"><a href="#策略优化基础——下" class="headerlink" title="策略优化基础——下"></a>策略优化基础——下</h2><h3 id="Score-Function-Gradient-Estimator"><a href="#Score-Function-Gradient-Estimator" class="headerlink" title="Score Function Gradient Estimator"></a>Score Function Gradient Estimator</h3><p>我们考虑写一个更广义的策略函数：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526171539941.png" srcset="/img/loading.gif" alt="image-20210526171539941"></p>
+<p>上面那个推导过程不太详细，下面给出具体的推导步骤：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526182549786.png" srcset="/img/loading.gif" alt="image-20210526182549786"></p>
+<p>这个梯度可以理解为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526204806093.png" srcset="/img/loading.gif" alt="image-20210526204806093"></p>
+<p>p(x)为采样得到的值，他们梯度就是上图蓝色箭头，而f(x)代表给这些梯度一个权重。</p>
+<p>比如当权重分布如下时：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526204957634.png" srcset="/img/loading.gif" alt="image-20210526204957634"></p>
+<p>此时这个p(x)分布会向权值大的哪个方向平移，最后移动至下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526205123627.png" srcset="/img/loading.gif" alt="image-20210526205123627"></p>
+<p>可以看到概率函数p(x)的形状变了，整个形状变得往能得到更高分数的区域走；所以score function gradient estimator就可以通过这样一个几何解释来理解。</p>
+<p><strong>Score Function Gradient Estimator与Maximum Likelihood estimator(极大似然估计)的对比：</strong></p>
+<p>score Function Gradient Estimator多了reward function，可以看成加权后的极大似然估计，也就是说这种policy gradient estimator鼓励函数向获得奖励更多的地方移动。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526212119365.png" srcset="/img/loading.gif" alt="image-20210526212119365"></p>
+<p>而极大似然估计就是单纯的优化一个参数，这个参数是从训练数据中学到的，他学到的是训练数据的分布。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526213505031.png" srcset="/img/loading.gif" alt="image-20210526213505031"></p>
+<p>​    在优化的过程中，score Function Gradient Estimator这种policy gradient estimator方法是：鼓励策略进入到得到奖励尽可能多的区域里面。supervised learning是直接有个标签去优化函数；策略函数是优化策略概率函数使得能够尽可能进入到能够采样产生更高奖励的区域里面。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214253947.png" srcset="/img/loading.gif" alt="image-20210526214253947"></p>
+<p>更形象的理解就是：</p>
+<p>policy gradient方法希望优化概率分布函数$P$的参数$\theta$，从而使得函数更靠近获得奖励高的区域，如下图，我们其实就是希望P函数移动到靠近红色的区域上，这样我们采样时得到的奖励的期望也会更多。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214434895.png" srcset="/img/loading.gif" alt="image-20210526214434895"></p>
+<h3 id="Large-Variance-of-Policy-Gradient"><a href="#Large-Variance-of-Policy-Gradient" class="headerlink" title="Large Variance of Policy Gradient"></a>Large Variance of Policy Gradient</h3><p>现在policy gradient是采样产生的:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214922685.png" srcset="/img/loading.gif" alt="image-20210526214922685"></p>
+<p>由于我们用的MC方法，即基于抽样得到的gradient。但是方差（variance)是非常大的，导致训练不稳定，因此我们现在的新的目标就是减少方差。</p>
+<p>有两种办法减少Policy Gradient的方差：</p>
+<ul>
+<li><strong>方法一：Use temporal causality利用时序上的因果关系减少variance</strong></li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526221946506.png" srcset="/img/loading.gif" alt="image-20210526221946506"></p>
+<p>原来这个式子有一个问题就是，这个式子没有因果关系，他先计算了路径上的log likelihood，然后再把路径上每个点的奖励进行加和。</p>
+<p>不如写成如下形式：我们每走一步，只计算当前一步所获得奖励。</p>
+<p>即写为下式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526222704781.png" srcset="/img/loading.gif" alt="image-20210526222704781"></p>
+<p>那我们的原来的梯度就可以改写成：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526222359202.png" srcset="/img/loading.gif" alt="image-20210526222359202"></p>
+<p>进行一点推到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526223018729.png" srcset="/img/loading.gif" alt="image-20210526223018729"></p>
+<p>最后的$G<em>t=\sum</em>{t^{\prime}=t}^{T-1} r_{t^{\prime}}$</p>
+<p>说一些推到中的细节：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526225121955.png" srcset="/img/loading.gif" alt="image-20210526225121955" style="zoom:67%;" /></p>
+<p>这一步的转化就是和算贡献一样：前面时刻t的每一个score function会对后面时刻的$r_{t’}$做贡献,其中$t’&gt;=t$</p>
+<p>这个其实就是REINFORCE算法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526225807209.png" srcset="/img/loading.gif" alt="image-20210526225807209"></p>
+<ul>
+<li><strong>方法二：引入baseline</strong></li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526230654519.png" srcset="/img/loading.gif" alt="image-20210526230654519"></p>
+<p>这个方法可以不改变期望(保证了仍然是无偏估计)的同时还降低方差：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527151936972.png" srcset="/img/loading.gif" alt="image-20210527151936972"></p>
+<p>期望为0的证明：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527160506754.png" srcset="/img/loading.gif" alt="image-20210527160506754"></p>
+<p><strong>Vanilla Policy Gradient Algorithm with Baseline：</strong></p>
+<p>有时候我们会把baseline用一种参数去拟合，写为$b_w(s)$<br>使得baseline本身带有参数w，在优化过程中同时优化 $\theta$和$w$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527162300142.png" srcset="/img/loading.gif" alt="image-20210527162300142"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs angelscript">对于每次迭代:iter = <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,....：<br>	用策略\pi_theta收集m条轨迹<br>	对于每个轨迹\tau的每一步t：<br>		计算G_t^(i)=r_&#123;t&#125;+r_&#123;t+<span class="hljs-number">1</span>&#125;+...r_&#123;T<span class="hljs-number">-1</span>&#125;<br>		计算advantage estimate：A_t^(i) = G_t^(i)-b(s_t)<br>	通过更新w来更新b(s_t)，即最小化(b(s_t)-G_t^(i))^<span class="hljs-number">2</span>：<br>	计算策略梯度g<br>	利用SGD/Adam更新参数\theta<br><span class="hljs-keyword">return</span> /theta，baseline(即b(s))<br></code></pre></div></td></tr></table></figure>
+<h3 id="Actor-critic"><a href="#Actor-critic" class="headerlink" title="Actor-critic"></a>Actor-critic</h3><p>我们在上一小节已经提出了Policy gradient：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527165838088.png" srcset="/img/loading.gif" alt="image-20210527165838088"></p>
+<p>我们会用一种新的方法来减少梯度，这种方法就是利用cirtic（评价者）</p>
+<p>首先$G_t$在前面提到过是在MC 梯度下降中抽样而来，它本质上是对Q函数无偏的估计：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170057607.png" srcset="/img/loading.gif" alt="image-20210527170057607"></p>
+<p>我们这里利用critic去估计Q函数从而替换掉$G_t$:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170511331.png" srcset="/img/loading.gif" alt="image-20210527170511331"></p>
+<p>那么这就是Actor-Critic Policy Gradient方法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170640401.png" srcset="/img/loading.gif" alt="image-20210527170640401"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527172030517.png" srcset="/img/loading.gif" alt="image-20210527172030517"></p>
+<p>Actor表演者：它就是利用策略函数生成动作，因此成为actor.</p>
+<p>Critic评价者：评价这个动作的价值，类似于Q函数。</p>
+<p>这个critic和policy evaluation的作用很类似：评价当前策略$\pi_\theta$的参数$\theta$到底好不好。</p>
+<p>计算方法有以下三种：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527172611868.png" srcset="/img/loading.gif" alt="image-20210527172611868"></p>
+<p>这样我们就得到了QAC算法：</p>
+<p>假设critic是一个线性的价值函数：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527174245070.png" srcset="/img/loading.gif" alt="image-20210527174245070"></p>
+<p>QAC算法流程图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527174404599.png" srcset="/img/loading.gif" alt="image-20210527174404599"></p>
+<p>这里利用TD error来更新w，由于我们假设了critic的$Q_w$由$\psi$的线性组合得到，那么$Q_w$的梯度就是$\psi$ ，因此更新w的式子为：$\mathbf{w} \leftarrow \mathbf{w}+\beta \delta \psi(s, a)$</p>
+<p>而$\theta$得更新就是policy gradient更新即可。</p>
+<p>理论上我们需要用两个不同的函数来拟合：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175135623.png" srcset="/img/loading.gif" alt="image-20210527175135623"></p>
+<p>实际中我们可以让这两个函数共享网络结构，节省计算：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175209102.png" srcset="/img/loading.gif" alt="image-20210527175209102"></p>
+<p><strong>Actor-critic这种方法同样可以用baseline来减少方差：</strong></p>
+<p>首先回顾一下Q函数和V函数：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175630079.png" srcset="/img/loading.gif" alt="image-20210527175630079"></p>
+<p>我们之前定义的baseline是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175839421.png" srcset="/img/loading.gif" alt="image-20210527175839421"></p>
+<p>因为$G<em>t=r_t+r</em>{t+1}+…r_{T-1}$</p>
+<p>因此:$b(s_t)= E(G_t)$</p>
+<p>而我们之前提到过用Q函数代替$G_t$,那么$b(s_t)=E(Q(.))=V^{\pi,\gamma}(s)$</p>
+<p><strong>policy gradient的一个非常好的应用：解决 不可微分的计算成分</strong></p>
+<p>比如一个网络的得传播是由多段组成的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527182857599.png" srcset="/img/loading.gif" alt="image-20210527182857599"></p>
+<p>中间可能有一段是不可维分的，那么对于这样一部分会使得我们在bp时无法传播到前半段。</p>
+<p>解决方法有两个：</p>
+<ul>
+<li><p>方法一：用Reparameterization trick(VAE变分编码器中使用的trick)的方法。（不懂，以后再说QAQ）</p>
+</li>
+<li><p>方法二：用采样的方法，中间不可微的阶段可以用样本来替代。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527183030226.png" srcset="/img/loading.gif" alt="image-20210527183030226"></p>
+<p>基于policy gradient的算法有很多：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527230126690.png" srcset="/img/loading.gif" alt="image-20210527230126690"></p>
+<p>RL的两个学派：</p>
+<p><strong>1.Value-based RL:利用dynamic programming和bootstrapping的方法去优化它的价值函数，得到价值函数后，从Q函数里面采取行为。</strong><br>代表算法：Deep Q-learning and its variant<br>代表人物：Richard Sutton (no more than 20 pages on PG out of the 500-page textbook), David Silver, from DeepMind<br>从控制论背景出发<br><strong>2.Policy-based RL:只需要少量样本，就可以拟合出策略函数。</strong><br>代表算法： PG, and its variants TRPO, PPO, and others<br>代表人物：Pieter Abbeel, Sergey Levine, John<br>Schulman, from OpenAI, Berkelely<br>从机器人，机器学习背景出发</p>
+<p>DeepMind和OpenAI两大RL流派区别：<br><a href="https://www.zhihu.com/question/316626294/answer/627373838" target="_blank" rel="noopener">https://www.zhihu.com/question/316626294/answer/627373838</a><br>殊途同归，都往Actor-critic发展。<br>DeepMind主要研究游戏领域，主要跑仿真对样本本身不挑剔；OpenAI研究机器人，更注重sample effectioncy（有效性），减少采样。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">强化学习纲要Ch10-策略优化进阶</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84KernelModel-LinearModel%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">机器学习中的KernelModel/LinearModel总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch9-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80-%E4%B8%8B/';
+        this.page.identifier = '/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch9-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80-%E4%B8%8B/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

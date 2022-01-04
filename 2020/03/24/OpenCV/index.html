@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>OpenCv with Python for Image and Video Analysis(3/20) - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="OpenCv with Python for Image and Video Analysis(3/20)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-24 22:57" pubdate>
+        2020年3月24日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OpenCv with Python for Image and Video Analysis(3/20)</h1>
+            
+            <div class="markdown-body">
+              <h1 id="OpenCv-with-Python-for-Image-and-Video-Analysis"><a href="#OpenCv-with-Python-for-Image-and-Video-Analysis" class="headerlink" title="OpenCv with Python for Image and Video Analysis"></a>OpenCv with Python for Image and Video Analysis</h1><h2 id="P1-intro-and-loading-Images"><a href="#P1-intro-and-loading-Images" class="headerlink" title="P1 intro and loading Images"></a>P1 intro and loading Images</h2><h3 id="1-利用cv2显示图像"><a href="#1-利用cv2显示图像" class="headerlink" title="1.利用cv2显示图像"></a><strong>1.利用cv2显示图像</strong></h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> cv2<br><br>img = cv2.imread(<span class="hljs-string">'cat.jpg'</span>,cv2.IMREAD_GRAYSCALE) <span class="hljs-comment">#灰度图读入</span><br> <span class="hljs-comment">#读图片</span><br> <span class="hljs-comment">#IMREAD_GRAYSCALE = 0  灰度</span><br> <span class="hljs-comment">#IMREAD_COLOR =  1   颜色</span><br> <span class="hljs-comment">#IMREAD_UNCHANGE= -1  不变</span><br>cv2.imshow(<span class="hljs-string">'image'</span>, img)  <span class="hljs-comment">#以窗口打开img，窗口名字叫做img</span><br>cv2.waitKey(<span class="hljs-number">0</span>)  <span class="hljs-comment">#等待键入</span><br>cv2.destroyAllWindows() <span class="hljs-comment">#关闭所有窗口</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="2-使用matplotlib显示图像"><a href="#2-使用matplotlib显示图像" class="headerlink" title="2.使用matplotlib显示图像"></a><strong>2.使用matplotlib显示图像</strong></h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> cv2<br><br>img = cv2.imread(<span class="hljs-string">'cat.jpg'</span>, cv2.IMREAD_GRAYSCALE)<br>plt.imshow(img,cmap=<span class="hljs-string">'gray'</span>,interpolation=<span class="hljs-string">'bicubic'</span>)<br>plt.plot([<span class="hljs-number">50</span>,<span class="hljs-number">100</span>],[<span class="hljs-number">80</span>,<span class="hljs-number">100</span>],<span class="hljs-string">'c'</span>,linewidth=<span class="hljs-number">5</span>)<span class="hljs-comment">#linewidth=划线的宽度  'c'指线的颜色为青色</span><br>plt.show()<br>cv2.imwrite(<span class="hljs-string">'gray.png'</span>, img)<span class="hljs-comment">#保存img</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>Colormap是MATLAB里面用来设定和获取当前色图的函数，可以设置如下色图：</strong>   </p>
+<p> <strong>hot 从黑平滑过度到红、橙色和黄色的背景色，然后到白色。</strong>    </p>
+<p><strong>cool 包含青绿色和品红色的阴影色。从青绿色平滑变化到品红色。</strong>    </p>
+<p><strong>gray 返回线性灰度色图。</strong>    </p>
+<p><strong>bone 具有较高的蓝色成分的灰度色图。该色图用于对灰度图添加电子的视图。</strong>    </p>
+<p><strong>white 全白的单色色图。</strong>     </p>
+<p><strong>spring 包含品红和黄的阴影颜色。</strong>     </p>
+<p><strong>summer 包含绿和黄的阴影颜色。</strong>    </p>
+<p><strong>autumn 从红色平滑变化到橙色，然后到黄色。</strong>     </p>
+<p><strong>winter 包含蓝和绿的阴影色。</strong></p>
+<h3 id="3-matplotlib中图片时rgb顺序，cv2中时bgr"><a href="#3-matplotlib中图片时rgb顺序，cv2中时bgr" class="headerlink" title="3.matplotlib中图片时rgb顺序，cv2中时bgr"></a><strong>3.matplotlib中图片时rgb顺序，cv2中时bgr</strong></h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> cv2<br><br>img = cv2.imread(<span class="hljs-string">'cat.jpg'</span>)<br>b, g, r = cv2.split(img)<br>img2 = cv2.merge([r, g, b])<br><span class="hljs-comment"># img2 = img[:,:,::-1]    this can be faster</span><br>plt.subplot(<span class="hljs-number">121</span>) <span class="hljs-comment">#subplot(xyz)的意思时分成x行y列个图 这是第z个图</span><br>plt.imshow(img)  <span class="hljs-comment"># expects distorted color</span><br>plt.subplot(<span class="hljs-number">122</span>)<br>plt.imshow(img2)  <span class="hljs-comment"># expects true color</span><br>plt.show()<br><br>cv2.imshow(<span class="hljs-string">'bgr image'</span>, img)  <span class="hljs-comment"># expects true color</span><br>cv2.imshow(<span class="hljs-string">'rgb image'</span>, img2)  <span class="hljs-comment"># expects distrorted color</span><br>cv2.waitKey(<span class="hljs-number">0</span>)<br>cv2.destroyAllWindows()<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/22/8o902t.png" srcset="/img/loading.gif" alt="8o902t.png"></p>
+<p><a href="https://imgchr.com/i/8oPxHO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/22/8oPxHO.th.png" srcset="/img/loading.gif" alt="8oPxHO.th.png"></a><a href="https://imgchr.com/i/8oiPCd" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/22/8oiPCd.th.png" srcset="/img/loading.gif" alt="8oiPCd.th.png"></a></p>
+<p>​           bgr  image                        rgb image</p>
+<h2 id="P2-loading-video-source"><a href="#P2-loading-video-source" class="headerlink" title="P2 loading video source"></a>P2 loading video source</h2><h3 id="1-加载摄像头"><a href="#1-加载摄像头" class="headerlink" title="1.加载摄像头"></a>1.加载摄像头</h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> cv2<br><br>cap = cv2.VideoCapture(<span class="hljs-number">0</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    ret, frame = cap.read()<br>    cv2.imshow(<span class="hljs-string">'frame'</span>, frame)<br>    <span class="hljs-comment">#gray = cv2.cvtColor(frame,cv2.COLOR_RGB2GRAY) 灰度图展示</span><br>    <span class="hljs-comment">#cv2.imshow('gray', gray)</span><br>    <span class="hljs-keyword">if</span> cv2.waitKey(<span class="hljs-number">1</span>) == ord(<span class="hljs-string">'q'</span>):<br>        <span class="hljs-keyword">break</span><br>cap.release()<br>cv2.destroyAllWindows()<br></code></pre></div></td></tr></table></figure>
+<p><strong>1、cap = cv2.VideoCapture(0)</strong></p>
+<p>VideoCapture()中参数是0，表示打开笔记本的内置摄像头</p>
+<p>参数是视频文件路径则打开视频，如cap = cv2.VideoCapture(“../test.avi”)</p>
+<p><strong>2、ret,frame = cap.read()</strong></p>
+<p> cap.read()按帧读取视频，ret,frame是获cap.read()方法的两个返回值。其中ret是布尔值，如果读取帧是正确的则返回True，如果文件读取到结尾，它的返回值就为False。frame就是每一帧的图像，是个三维矩阵。</p>
+<p><strong>3、cv2.waitKey(1)，waitKey（）方法本身表示等待键盘输入</strong></p>
+<p><strong>参数是1</strong>，表示延时1ms切换到下一帧图像，对于视频而言；</p>
+<p><strong>参数为0</strong>，如cv2.waitKey(0)只显示当前帧图像，相当于视频暂停,；</p>
+<p><strong>参数过大</strong>，如cv2.waitKey(1000)，会因为延时过久而卡顿感觉到卡顿。</p>
+<p>得到的是键盘输入的ASCII码，<strong>ord(‘q’)</strong>表示q的ascii码</p>
+<p><strong>4、调用release()释放摄像头，调用destroyAllWindows()关闭所有图像窗口。</strong><br><strong>5.cv2.cvtColor(frame,cv2.COLOR_RGB2GRAY)</strong> 用于转换颜色</p>
+<h3 id="2-录制视频"><a href="#2-录制视频" class="headerlink" title="2.录制视频"></a>2.录制视频</h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> cv2<br><br>cap = cv2.VideoCapture(<span class="hljs-number">0</span>)<br>fourcc = cv2.VideoWriter_fourcc(*<span class="hljs-string">'XVID'</span>)<br>out = cv2.VideoWriter(<span class="hljs-string">'output.avi'</span>, fourcc, <span class="hljs-number">20.0</span>, (<span class="hljs-number">640</span>, <span class="hljs-number">480</span>))<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    ret, frame = cap.read()<br>    out.write(frame)<br>    cv2.imshow(<span class="hljs-string">"frame"</span>, frame)<br>    <span class="hljs-keyword">if</span> cv2.waitKey(<span class="hljs-number">1</span>) == ord(<span class="hljs-string">'q'</span>):<br>        <span class="hljs-keyword">break</span><br>cap.release()<br>out.release()<br>cv2.destroyAllWindows()<br></code></pre></div></td></tr></table></figure>
+<p><strong>1.详解cv2.VideoWriter_fourcc对象(摘自Learning OpenCV3 Computer Vision with Python)</strong></p>
+<p>定义编码器：</p>
+<h1 id="fourcc意为四字符代码（Four-Character-Codes），顾名思义，该编码由四个字符组成-下面是VideoWriter-fourcc对象一些常用的参数，注意：字符顺序不能弄混"><a href="#fourcc意为四字符代码（Four-Character-Codes），顾名思义，该编码由四个字符组成-下面是VideoWriter-fourcc对象一些常用的参数，注意：字符顺序不能弄混" class="headerlink" title="fourcc意为四字符代码（Four-Character Codes），顾名思义，该编码由四个字符组成,下面是VideoWriter_fourcc对象一些常用的参数，注意：字符顺序不能弄混"></a>fourcc意为四字符代码（Four-Character Codes），顾名思义，该编码由四个字符组成,下面是VideoWriter_fourcc对象一些常用的参数，注意：字符顺序不能弄混</h1><h1 id="cv2-VideoWriter-fourcc-‘I’-‘4’-‘2’-‘0’-该参数是YUV编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘I’-‘4’-‘2’-‘0’-该参数是YUV编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘I’, ‘4’, ‘2’, ‘0’),该参数是YUV编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘I’, ‘4’, ‘2’, ‘0’),该参数是YUV编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘P’-‘I’-‘M’-‘I’-该参数是MPEG-1编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘P’-‘I’-‘M’-‘I’-该参数是MPEG-1编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘P’, ‘I’, ‘M’, ‘I’),该参数是MPEG-1编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘P’, ‘I’, ‘M’, ‘I’),该参数是MPEG-1编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘X’-‘V’-‘I’-‘D’-该参数是MPEG-4编码类型，文件名后缀为-avi"><a href="#cv2-VideoWriter-fourcc-‘X’-‘V’-‘I’-‘D’-该参数是MPEG-4编码类型，文件名后缀为-avi" class="headerlink" title="cv2.VideoWriter_fourcc(‘X’, ‘V’, ‘I’, ‘D’),该参数是MPEG-4编码类型，文件名后缀为.avi"></a>cv2.VideoWriter_fourcc(‘X’, ‘V’, ‘I’, ‘D’),该参数是MPEG-4编码类型，文件名后缀为.avi</h1><h1 id="cv2-VideoWriter-fourcc-‘T’-‘H’-‘E’-‘O’-该参数是Ogg-Vorbis-文件名后缀为-ogv"><a href="#cv2-VideoWriter-fourcc-‘T’-‘H’-‘E’-‘O’-该参数是Ogg-Vorbis-文件名后缀为-ogv" class="headerlink" title="cv2.VideoWriter_fourcc(‘T’, ‘H’, ‘E’, ‘O’),该参数是Ogg Vorbis,文件名后缀为.ogv"></a>cv2.VideoWriter_fourcc(‘T’, ‘H’, ‘E’, ‘O’),该参数是Ogg Vorbis,文件名后缀为.ogv</h1><h1 id="cv2-VideoWriter-fourcc-‘F’-‘L’-‘V’-‘1’-该参数是Flash视频，文件名后缀为-flv"><a href="#cv2-VideoWriter-fourcc-‘F’-‘L’-‘V’-‘1’-该参数是Flash视频，文件名后缀为-flv" class="headerlink" title="cv2.VideoWriter_fourcc(‘F’, ‘L’, ‘V’, ‘1’),该参数是Flash视频，文件名后缀为.flv"></a>cv2.VideoWriter_fourcc(‘F’, ‘L’, ‘V’, ‘1’),该参数是Flash视频，文件名后缀为.flv</h1><p><strong>2.out = cv2.VideoWriter(‘output.avi’, fourcc, 20.0, (640, 480))</strong></p>
+<p>向视频文件写入一帧，输出成为output.avi文件，fourcc 指定编码器，fps=20.0 代表20帧，frameSize 要保存的文件的画面尺寸。</p>
+<h2 id="P3-drawing-and-writing-on-image"><a href="#P3-drawing-and-writing-on-image" class="headerlink" title="P3 drawing and writing on image"></a>P3 drawing and writing on image</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/10/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">后缀数组(SA)+拓展应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/28/Numpy%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">Numpy数据分析基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2020/03/24/OpenCV/';
+        this.page.identifier = '/2020/03/24/OpenCV/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

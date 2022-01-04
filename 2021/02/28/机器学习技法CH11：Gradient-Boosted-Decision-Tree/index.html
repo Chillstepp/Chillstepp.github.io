@@ -1,0 +1,678 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>机器学习技法CH11：Gradient-Boosted-Decision-Tree - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习技法CH11：Gradient-Boosted-Decision-Tree">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-28 17:47" pubdate>
+        2021年2月28日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习技法CH11：Gradient-Boosted-Decision-Tree</h1>
+            
+            <div class="markdown-body">
+              <h1 id="CH11：Gradient-Boosted-Decision-Tree"><a href="#CH11：Gradient-Boosted-Decision-Tree" class="headerlink" title="CH11：Gradient Boosted Decision Tree"></a>CH11：Gradient Boosted Decision Tree</h1><h2 id="AdaBoost-Decision-Tree"><a href="#AdaBoost-Decision-Tree" class="headerlink" title="AdaBoost Decision Tree"></a>AdaBoost Decision Tree</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225222501198.png" srcset="/img/loading.gif" alt="image-20210225222501198"></p>
+<p>我们在AdaBoost-DTree中的第二步的DTree算法中加入了权重$u^{(t)}$。</p>
+<p>如何实现这个呢 ？</p>
+<p>我们回想一下在bootstrap中，我们把$u_n$代表着每个数据被选到的数量。但是我们现在的DTree算法没有权重这一说，我们又想要加上权重这个概念，那怎么办呢？</p>
+<p>我们可以提前先对数据处理一下，比如原来有三个数据(1,1)(2,2) (3,3),权重是2，1，0，也就是2个(1,1),1个(2,2),没有(3,3),那么我们把数据先改变为(1,1)(1,1)(2,2),然后再去随机抽取，这样就用 <strong>抽到的概率</strong> 代替了 <strong>权重的概念</strong>。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225225234849.png" srcset="/img/loading.gif" alt="image-20210225225234849"></p>
+<p>我们现在用sampling 来代替权重概念，还没有魔改DTree。</p>
+<p>在AdaBoost中 $\alpha_t = ln(♦_t) = ln \sqrt{(1-\epsilon_t)/\epsilon_t}$,我们如果同样用到这里：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225235227976.png" srcset="/img/loading.gif" alt="image-20210225235227976"></p>
+<p>我们发现如果我们把树做成了fully-grown，那么$E_{in}=0$,那么会导致权重$\alpha = ∞$，这样就导致了只有这一个$g_t$来决定了，这不就变成decision tree了吗？</p>
+<p>我们可以用一些手段来限制长成fully-grwon，并且尽量让他不全作对：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225235813712.png" srcset="/img/loading.gif" alt="image-20210225235813712"></p>
+<ul>
+<li>可以pruned来限制树高</li>
+<li>我们抽一部分数据来训练decision tree。</li>
+</ul>
+<p>我们反正不需要做的太好，我们把树高限制在1层就好了</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226000850887.png" srcset="/img/loading.gif" alt="image-20210226000850887"></p>
+<p>一层不就是decision stump了吗？</p>
+<p>我们称之为AdaBoost-Stump ，他就是AdaBoost-DTree的一种特殊情况。</p>
+<p>此时也不用做sampling了，因为此时$E_{in}=0$的可能性几乎不存在了，做这个多此一举。</p>
+<h2 id="Optimization-of-AdaBoost"><a href="#Optimization-of-AdaBoost" class="headerlink" title="Optimization of AdaBoost"></a>Optimization of AdaBoost</h2><p>再来回顾一下AdaBoost中的权重迭代：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226161136211.png" srcset="/img/loading.gif" alt="image-20210226161136211"></p>
+<p>我们是否可以写成一个整体呢？即等两种形式都写成乘菱形的形式。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226161932365.png" srcset="/img/loading.gif" alt="image-20210226161932365"></p>
+<p>那么我们可以直接推出$u_n^{T+1}$的通项公式：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226162411135.png" srcset="/img/loading.gif" alt="image-20210226162411135"></p>
+<p>其中橘色的一项就是AdaBoost最终返回的结果$G(x)$：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226162603587.png" srcset="/img/loading.gif" alt="image-20210226162603587"></p>
+<p>在linear blending那一节提到过：linear blending和 线性模型+feature transform很像。(如下图)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226165545108.png" srcset="/img/loading.gif" alt="image-20210226165545108"></p>
+<p>而hard-margin SVM margin的表达式是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226165813321.png" srcset="/img/loading.gif" alt="image-20210226165813321"></p>
+<p>这里的$w^T\phi(x_n)$的就是还没有正规化之前的距离，$y_n$无所谓，他只代表在哪儿一边。</p>
+<p>这么来看，margin和voting score好像很相似，至少表达了同一种性质。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226170556108.png" srcset="/img/loading.gif" alt="image-20210226170556108"></p>
+<p>所以当<strong>迭代的次数多一些，$u_n^{(T+1)}$小一些，AdaBoost可以达到large margin的效果</strong>。</p>
+<p>$u_n^{(T+1)}$小一些，AdaBoost效果就好一点，那不如把$u_n^{(T+1)}$看作一种新的error  measure的指标。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226171521723.png" srcset="/img/loading.gif" alt="image-20210226171521723"></p>
+<p>且这种新的错误指标还是0/1 error measure的上界，那我们能做到很好吗？</p>
+<p>我们来证明一下：</p>
+<p>首先回顾gradient descent：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226172611163.png" srcset="/img/loading.gif" alt="image-20210226172611163"></p>
+<p>$\eta$是步长/学习率，$v^T$是梯度的反方向。</p>
+<p>同理我们考虑$Min\   E_{ADA}$是否也可以转化成这种想法：</p>
+<p>在第$t$次迭代，我们想找一个$h$使得error迭代后最小。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235013482.png" srcset="/img/loading.gif" alt="image-20210226235013482"></p>
+<p>化简：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235409161.png" srcset="/img/loading.gif" alt="image-20210226235409161"></p>
+<p>现在问题转化为了：如何最小化第二项。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235459540.png" srcset="/img/loading.gif" alt="image-20210226235459540"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235714704.png" srcset="/img/loading.gif" alt="image-20210226235714704"></p>
+<p>我们现在把这个式子做一个平移：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227005510055.png" srcset="/img/loading.gif" alt="image-20210227005510055"></p>
+<p>那么我们最小化$E_{in}^{u(t)}(h)$即可</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227005904222.png" srcset="/img/loading.gif" alt="image-20210227005904222"></p>
+<p>那么谁在最小化$E_{in}^{u(t)}(h)$？  这个问题等价于：谁找到了一个最好的$h$作为$g_t$?</p>
+<p>我们看下AdaBoost的算法流程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
+<p>很明显最小化$E_{in}^{u(t)}(h)$的任务就是AdaBoost算法中的$A$来做的，而且这个最好的$h$就像是梯度下降中的梯度方向。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227020800388.png" srcset="/img/loading.gif" alt="image-20210227020800388"></p>
+<p>我们找到最好的h，也就是$g_t$后，我们想着走的大步一些：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227020920164.png" srcset="/img/loading.gif" alt="image-20210227020920164"></p>
+<p>这样找的最优的$\eta$由于是贪心的来走，所以肯定比一个固定的$\eta$大：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227021646829.png" srcset="/img/loading.gif" alt="image-20210227021646829"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227022703631.png" srcset="/img/loading.gif" alt="image-20210227022703631"></p>
+<p>我缓缓打出一个问号？ 这个最好的$\eta$居然就是$\alpha_t$。</p>
+<p>之前我们认为$\alpha_t$是在帮我们做不同$g_t$权重的衡量,现在来看，背后还在帮助我们做最佳化，快速到达最好的局面。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227023937467.png" srcset="/img/loading.gif" alt="image-20210227023937467"></p>
+<p>AdaBoost中的这种steepest decent用到了函数式梯度。</p>
+<h2 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h2><p>那么AdaBoost的本质是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227024344037.png" srcset="/img/loading.gif" alt="image-20210227024344037"></p>
+<p>我们可以把这种思想带入任何其他的error measure方法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227024908244.png" srcset="/img/loading.gif" alt="image-20210227024908244"></p>
+<p>这种算法就是GradientBoost。</p>
+<p>由于任何error measure都可以使用，那么：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227025106668.png" srcset="/img/loading.gif" alt="image-20210227025106668"></p>
+<p>我们现在对回归任务/软分类问题也做GradientBoost。</p>
+<p>我们下面再回归任务上来看看GradientBoost怎么用的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227025454635.png" srcset="/img/loading.gif" alt="image-20210227025454635"></p>
+<p>和上一节AdaBoost一样，做Taylor展开：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227030652494.png" srcset="/img/loading.gif" alt="image-20210227030652494"></p>
+<p>$h(x)$是走的方向，那么他应该要和$2(s_n-y_n)$组合起来保持是负的，才能不断地是原算式边小。</p>
+<p>那么$h(x)$符号方面至少要保证$h(x_n) = -k*(s_n-y_n),其中k&gt;0$,我们希望下降的越大越好，反正$h$没什么限制，不妨让$k$趋于无穷</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227031622661.png" srcset="/img/loading.gif" alt="image-20210227031622661"></p>
+<p>这么做看起来明显不是很合理，之前再gradient descent中我们限制了梯度向量的长度为一个定值。</p>
+<p>那么谁来解决$h(x_n)$的大小问题呢？用$\eta$，因为$\eta$是第二层，外面那一层的优化，他会帮我们来做这个事情。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227032434540.png" srcset="/img/loading.gif" alt="image-20210227032434540"></p>
+<p>我们首先加上了一个平方项，这个和最小化式子是相违背的，这样就帮助我们尽可能地减小$h(x)_n$的大小。</p>
+<p>我们并不关注那些常数项，和最优化没关系。</p>
+<p>最后我们推出我们只关心$h(x_n)$和$(y_n-s_n)$的相似度，而$(y_n-s_n)$代表了实际与预期的差距。</p>
+<p>那么现在的我们最小化的就是 这样一个square error：$(h(x_n)-(y_n-s_n))^2$,再做对数据${(x_n,y_n-s_n)}$一次regression找最好的$h$即可。</p>
+<p>现在问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227173206285.png" srcset="/img/loading.gif" alt="image-20210227173206285"></p>
+<p>发现又变成了squre error的形式，等于现在再做一次regression，不过我们的只求一个$\eta$。</p>
+<p>最后把所有的东西合并在一起，提出Gradient Boosted Decision Tree(GBDT)算法</p>
+<p><code>Gradient Boosted Decision Tree(GBDT)</code>：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227224805845.png" srcset="/img/loading.gif" alt="image-20210227224805845"></p>
+<h2 id="Summary-of-Aggregation"><a href="#Summary-of-Aggregation" class="headerlink" title="Summary of Aggregation"></a>Summary of Aggregation</h2><p>首先是blending(即已经获得$g_t$后的aggregate方法)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227230408968.png" srcset="/img/loading.gif" alt="image-20210227230408968"></p>
+<ul>
+<li><p>uniform：适用于$g_t$的地位相差不大</p>
+</li>
+<li><p>non-uniform：也就是linear blending，要小心overfit</p>
+</li>
+<li>conditional：也就是stacking，要小心overfit</li>
+</ul>
+<p>和第一种aggregation不同，这第二部分的aggregation是边学边获得$g_t$</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227230836402.png" srcset="/img/loading.gif" alt="image-20210227230836402"></p>
+<ul>
+<li><p>bagging：bootstrap抽取数据训练 + uniform合在一起</p>
+</li>
+<li><p>AdaBoost：处理$g_t$的线性组合</p>
+</li>
+<li>Decision Tree：处理conditional vote</li>
+</ul>
+<p>还有一个GradientBoost，他的$g_t$的多样性通过对余数做regression来得到。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227232349094.png" srcset="/img/loading.gif" alt="image-20210227232349094"></p>
+<p>我们还可以进行组合：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227232602033.png" srcset="/img/loading.gif" alt="image-20210227232602033"></p>
+<p>aggregation带来的好处是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227233043284.png" srcset="/img/loading.gif" alt="image-20210227233043284"></p>
+<p>不拟合的时候aggregation相当于做feature transform帮你拟合，却也可以帮你regularization防止过拟合，因此选择合适的aggregation方法才可以获得更好的表现。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH12%EF%BC%9ANeural-Network/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习技法CH12：Neural Network</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/">
+                        <span class="hidden-mobile">机器学习技法CH10：Random Forest</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/02/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH11%EF%BC%9AGradient-Boosted-Decision-Tree/';
+        this.page.identifier = '/2021/02/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH11%EF%BC%9AGradient-Boosted-Decision-Tree/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

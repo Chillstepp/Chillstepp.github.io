@@ -1,0 +1,661 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>强化学习纲要Ch6-价值函数近似-上 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="强化学习纲要Ch6-价值函数近似-上">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-20 21:59" pubdate>
+        2021年5月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">强化学习纲要Ch6-价值函数近似-上</h1>
+            
+            <div class="markdown-body">
+              <h1 id="价值函数近似—上"><a href="#价值函数近似—上" class="headerlink" title="价值函数近似—上"></a>价值函数近似—上</h1><p>Plan：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513211004841.png" srcset="/img/loading.gif" alt="image-20210513211004841"></p>
+<p>前面提到的状态量都很小，而许多实际环境得状态量是很多的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513211057098.png" srcset="/img/loading.gif" alt="image-20210513211057098"></p>
+<p>比如围棋局面高达：$10^{170}$, 那么这么多的状态必然是不能有概率转移矩阵的，因此状态很多的强化学习任务一般也都是model-free的。</p>
+<p>回想之前在model-free中我们是怎么进行policy evaluation的？ 是通过填写Q-Table。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513211504330.png" srcset="/img/loading.gif" alt="image-20210513211504330"></p>
+<p>而在状态数过多时，填写Q-table根本不可能。</p>
+<p>这里一个trival的想法就是函数近似：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513211819468.png" srcset="/img/loading.gif" alt="image-20210513211819468"></p>
+<p>我们想通过见过的状态来近似估计出价值函数，状态动作函数，策略函数等，希望可以泛化到未见过的状态上。</p>
+<p>比如对于价值函数$v$, 可以这样设计：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513212243059.png" srcset="/img/loading.gif" alt="image-20210513212243059"></p>
+<p>输入状态，通过学习$w$,最后得到价值函数$v(s,w)$</p>
+<p>对于状态动作函数$q$, 有两种可行的设计方式:</p>
+<p>一种是输入状态s和动作a，学习参数w，得到q(s,a,w):</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513212426677.png" srcset="/img/loading.gif" alt="image-20210513212426677"></p>
+<p>另一种方法是，通过输入状态，学习参数w，得到各种动作的q值，然后我们使用时直接加一个argmax即可：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513212516094.png" srcset="/img/loading.gif" alt="image-20210513212516094"></p>
+<p>对于函数估计：</p>
+<ul>
+<li>可以采用线性的把feature combine起来</li>
+<li>神经网络</li>
+<li>决策树</li>
+<li>近邻(Nearest Neighbour)算法</li>
+</ul>
+<p>我们这里假设我们已经指导真正的价值函数$v^{\pi}$，我们的近似函数为$\hat{v}$ ：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513230532246.png" srcset="/img/loading.gif" alt="image-20210513230532246"></p>
+<p>通过上图计算它们的差距$J(w)$,最小化$J(w)$ 就是我们现在的任务，可以使用梯度下降来做。</p>
+<p><strong>状态的表示方法：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513231229597.png" srcset="/img/loading.gif" alt="image-20210513231229597"></p>
+<p>状态可以用一个向量$x(s) = (x_1(s),…,x_n(s))^T$来表示，向量中可以有很多东西：比如在上图左下角的mountain car中，我们可以选择车的位置，车的速度。在 cart pole游戏中可以选择木块的位置，木块的速度，杆的角度，杆上端的速度等…</p>
+<p><strong>线性模型来拟合函数：</strong></p>
+<p>可以写为：</p>
+<script type="math/tex; mode=display">
+\hat{v}(s, \mathbf{w})=\mathbf{x}(s)^{T} \mathbf{w}=\sum_{j=1}^{n} x_{j}(s) w_{j}</script><p>所以现在目标函数可以写为：</p>
+<script type="math/tex; mode=display">
+J(\mathbf{w})=\mathbb{E}_{\pi}\left[\left(v^{\pi}(s)-\mathbf{x}(s)^{T} \mathbf{w}\right)^{2}\right]</script><p>那么他的梯度+stepsize设置为$\alpha$时可以表示为：</p>
+<script type="math/tex; mode=display">
+\Delta \mathbf{w}=\alpha\left(v^{\pi}(s)-\hat{v}(s, \mathbf{w})\right) \mathbf{x}(s)</script><p>然后梯度下降。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210513234922149.png" srcset="/img/loading.gif" alt="image-20210513234922149"></p>
+<p>这里运用了一个Table lookup feature的写法：</p>
+<p>他把多个$x(s)$组合在一起变成一个表$x^{table}(s)=(1(s=s_1),…,1(s=s_n))$ ,这样的方法类似于one-hot编码，是哪儿个状态就对应位置是1向量 ，其他是0向量。</p>
+<p>因此:$\hat{v}(s, \mathbf{w})=\left(\mathbf{1}\left(s=s<em>{1}\right), \ldots, \mathbf{1}\left(s=s</em>{n}\right)\right)\left(w<em>{1}, \ldots, w</em>{n}\right)^{T}$，其中$w_i$在此时代表权重向量$w$和$x(s_i)$的向量乘积。</p>
+<p><strong>预测(Prediction)问题, 怎么求价值函数：</strong></p>
+<p>之前都是再假设我们有$v^\pi$,但实际上我们并没有，因此可以借用model-free中的想法，用MC或者TD的方法来估计并代替$v^\pi$：</p>
+<p>原式为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514001210536.png" srcset="/img/loading.gif" alt="image-20210514001210536"></p>
+<p>现在我们要用MC的方法或者TD的方法来搞：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514001252130.png" srcset="/img/loading.gif" alt="image-20210514001252130"></p>
+<p>下面我们详细的说一下MC和TD的方法</p>
+<ul>
+<li>MC方法：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514001848813.png" srcset="/img/loading.gif" alt="image-20210514001848813"></p>
+<p>MC的方法是无偏的估计，但是由于抽取单个一般都是噪音很大的，因此我们需要选取多个求平均。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514002021821.png" srcset="/img/loading.gif" alt="image-20210514002021821"></p>
+<p>这样我们就可以产生一些trainning 数据，它是一个个Pair。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514002113828.png" srcset="/img/loading.gif" alt="image-20210514002113828"></p>
+<p>在线性模型中$\Delta_W\hat{v}(s_t,w)$是一个线性的，即xw，因此可以直接求偏导得出$x(s_t)$</p>
+<ul>
+<li>TD方法：</li>
+</ul>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514002332914.png" srcset="/img/loading.gif" alt="image-20210514002332914"></p>
+<p>TD方法用TD target代替了真实价值。这是一个有偏的，因为TD target的抽样期望并不等于$v^\pi(s_t)$, 因为TD target中包含了我们上次的估计，这种在估计上估计肯定是有偏的。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514002608725.png" srcset="/img/loading.gif" alt="image-20210514002608725"></p>
+<p>因此我们也可以把这种方法发到control问题的第一步policy evalution</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210514002644170.png" srcset="/img/loading.gif" alt="image-20210514002644170"></p>
+<p>拟合行为价值函数，和状态价值函数相同的方法：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519193439670.png" srcset="/img/loading.gif" alt="image-20210519193439670"></p>
+<p>这里我们还是假设行为价值函数Action-Value Function是一个通过不同feature线性的组合得到的函数：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519193730827.png" srcset="/img/loading.gif" alt="image-20210519193730827"></p>
+<p>由于我们还是和之前一样假设了我们已知q函数，但实际上我们是不知道的，因此还是需要TD Target或者MC的抽样来做替换。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519194037804.png" srcset="/img/loading.gif" alt="image-20210519194037804"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519194441936.png" srcset="/img/loading.gif" alt="image-20210519194441936"></p>
+<p>总结：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519195405751.png" srcset="/img/loading.gif" alt="image-20210519195405751"></p>
+<p>上面算法进行更新时有关收敛的问题：</p>
+<ul>
+<li>TD Target对w的梯度包含了w，这其实是不太准确的。</li>
+<li>首先TD Target和就是一个估计的过程，我们用这个估计出来的值去做梯度下降，去估计价值函数，这有太大的不确定性。</li>
+<li>上面我们都是在用linear的function，事实上，当我们使用non-linear function进行拟合时或者是off-policy的方法进行拟合时结果非常不稳定。</li>
+</ul>
+<p>强化学习训练不稳定的原因：</p>
+<ul>
+<li>函数估计所造成的误差</li>
+<li>Bootstrapping会使得估计是在之前估计的基础上估计的，比如TD Target的第二项本来就是估计的，现在却要用这个估计的来更新训练估计价值函数。</li>
+<li>off-policy训练中，采集到的数据是behavior policy所得到的，而我们优化的函数确实在另一个数据分布上的函数。</li>
+</ul>
+<p>有关能否找到最优解的问题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519223152223.png" srcset="/img/loading.gif" alt="image-20210519223152223"></p>
+<ul>
+<li><p>用Table Lookup方法一般都是可以找到最优解的。</p>
+</li>
+<li><p>在Linear的算法中，MC，Sarsa可以找到一个近似最优解的算法。而Q-Learning还是比较难找一个最优解。</p>
+</li>
+<li><p>Non-Linear算法下，三种方法都无法保证最优解。</p>
+</li>
+</ul>
+<p>现在我们优化的方法都是单步的优化，我们可以每次优化一个batch：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519232147324.png" srcset="/img/loading.gif" alt="image-20210519232147324"></p>
+<p>假设我们有一堆数据$D$, 数据类型为&lt;状态，实际价值&gt;，这里的实际价值可以用TD Target或者MC中的$G_t$来替换。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519232322553.png" srcset="/img/loading.gif" alt="image-20210519232322553"></p>
+<p>我们的目标是最优化w，使得w可以最好的fit model，也就是最小化$E_D$。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519232627291.png" srcset="/img/loading.gif" alt="image-20210519232627291"></p>
+<p>因此我们可以用mini-batch 的SGD来做梯度下降。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch7-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">强化学习纲要Ch7-价值函数近似-下</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch5-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8B/">
+                        <span class="hidden-mobile">强化学习纲要Ch5-无模型价值函数估计和控制-下</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/';
+        this.page.identifier = '/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

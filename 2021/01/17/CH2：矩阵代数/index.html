@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>《线性代数及其应用》CH2：矩阵代数 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《线性代数及其应用》CH2：矩阵代数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-17 20:20" pubdate>
+        2021年1月17日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      932 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《线性代数及其应用》CH2：矩阵代数</h1>
+            
+            <div class="markdown-body">
+              <p>[toc]</p>
+<h1 id="第二章-矩阵代数"><a href="#第二章-矩阵代数" class="headerlink" title="第二章  矩阵代数"></a>第二章  矩阵代数</h1><h2 id="2-1-矩阵运算"><a href="#2-1-矩阵运算" class="headerlink" title="2.1 矩阵运算"></a>2.1 矩阵运算</h2><p><strong>对角矩阵，零矩阵定义：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116150748619.png" srcset="/img/loading.gif" alt="image-20210116150748619"></p>
+<p><strong>矩阵与标量的乘法：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116151001880.png" srcset="/img/loading.gif" alt="image-20210116151001880"></p>
+<p><strong>一些矩阵乘法的相关性质：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116153840948.png" srcset="/img/loading.gif" alt="image-20210116153840948"></p>
+<p><strong>矩阵转置：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116154805235.png" srcset="/img/loading.gif" alt="image-20210116154805235"></p>
+<p><strong>转置的相关性质：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116154834116.png" srcset="/img/loading.gif" alt="image-20210116154834116"></p>
+<p>前三个很简单，最后一个证明从定义入手：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116155736051.png" srcset="/img/loading.gif" alt="image-20210116155736051"></p>
+<h2 id="2-2-矩阵的逆"><a href="#2-2-矩阵的逆" class="headerlink" title="2.2 矩阵的逆"></a>2.2 矩阵的逆</h2><p><strong>矩阵可逆：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116160937237.png" srcset="/img/loading.gif" alt="image-20210116160937237"></p>
+<ul>
+<li>不可逆矩阵 = 奇异矩阵</li>
+<li>可逆矩阵 = 废弃及矩阵</li>
+</ul>
+<p><strong>判断矩阵是否可逆：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116161301492.png" srcset="/img/loading.gif" alt="image-20210116161301492"></p>
+<p><strong>方程唯一解 与 矩阵可逆：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116161736676.png" srcset="/img/loading.gif" alt="image-20210116161736676"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116162136500.png" srcset="/img/loading.gif" alt="image-20210116162136500"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116172308887.png" srcset="/img/loading.gif" alt="image-20210116172308887"></p>
+<p>c.证明：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117135038734.png" srcset="/img/loading.gif" alt="image-20210117135038734"></p>
+<p><strong>初等变换 的等价:</strong></p>
+<p>对于一个单位矩阵$I$, 我们进行初等变换为 $I$’, 然后再和 矩阵$E$ 相乘 等于$I’E$, 这个等价于直接对$E$做同样的初等变换。</p>
+<p>例如：把单位矩阵的第一行的-4倍加到第3行，得到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117140601553.png" srcset="/img/loading.gif" alt="image-20210117140601553"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117140729134.png" srcset="/img/loading.gif" alt="image-20210117140729134"></p>
+<p>然后再和矩阵A相乘得：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117140706336.png" srcset="/img/loading.gif" alt="image-20210117140706336"></p>
+<p>我们观察这个矩阵其实和A直接做初等变换是一样的，都是第一行的-4倍加到第3行。</p>
+<p>这个性质可以求逆：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117142106096.png" srcset="/img/loading.gif" alt="image-20210117142106096"></p>
+<p>我们想让$E_1$ 乘一个矩阵边为单位矩阵，那么可以让矩阵为 第一行的+4倍加到第三行就变成了单位矩阵了，这可以利用上面那个性质。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117142240873.png" srcset="/img/loading.gif" alt="image-20210117142240873"></p>
+<p>这个矩阵相当于对单位矩阵做了第一行的+4倍加到第三行的初等变化，那么乘上$E_1$ 就相当于$E_1$做了 初等变化（第一行的+4倍加到第三行的初等变化），从而变成了单位矩阵，那么$E_1$ 的逆就是 <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117142240873.png" srcset="/img/loading.gif" alt="image-20210117142240873"></p>
+<p>这也就对应上了这个定理：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117142523157.png" srcset="/img/loading.gif" alt="image-20210117142523157"></p>
+<p>简单理解就是一个矩阵如果可以经过初等变换变成单位矩阵，那么他就有逆，且他的逆就是 单位矩阵乘上那些初等变化矩阵。</p>
+<p>因此我们此时就可以提出<strong>求矩阵逆的算法</strong>：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117143114850.png" srcset="/img/loading.gif" alt="image-20210117143114850"></p>
+<p>这个很好理解，还是上边的意思，只不过通过矩阵这种形式化的数学语言做了简要概述，对于一个矩阵A，我通过初等变化变为了单位矩阵，说明对单位矩阵做同样的操作，这个就是A的逆矩阵，</p>
+<p>求矩阵逆的算法的例题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117143414963.png" srcset="/img/loading.gif" alt="image-20210117143414963"></p>
+<h2 id="2-3-可逆矩阵的特征"><a href="#2-3-可逆矩阵的特征" class="headerlink" title="2.3 可逆矩阵的特征"></a>2.3 可逆矩阵的特征</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117144434093.png" srcset="/img/loading.gif" alt="image-20210117144434093"></p>
+<p>证明上述定理只需要证明下述的这个环即可：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117144627136.png" srcset="/img/loading.gif" alt="image-20210117144627136"></p>
+<h2 id="2-4-分块矩阵"><a href="#2-4-分块矩阵" class="headerlink" title="2.4 分块矩阵"></a>2.4 分块矩阵</h2><p>首先是一些基本计算和普通矩阵是没有区别的。</p>
+<p><strong>分块矩阵基本运算：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117150748185.png" srcset="/img/loading.gif" alt="image-20210117150748185"></p>
+<p><strong>分块矩阵的逆：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117150928379.png" srcset="/img/loading.gif" alt="image-20210117150928379"></p>
+<p>不妨设：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117151423411.png" srcset="/img/loading.gif" alt="image-20210117151423411"></p>
+<p>列出方程：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117151458449.png" srcset="/img/loading.gif" alt="image-20210117151458449"></p>
+<p>得到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117162850944.png" srcset="/img/loading.gif" alt="image-20210117162850944"></p>
+<p>知道怎么来的即可，分块求逆有很多公式，对应着不同的情况。</p>
+<h2 id="2-5-矩阵因式分解"><a href="#2-5-矩阵因式分解" class="headerlink" title="2.5 矩阵因式分解"></a>2.5 矩阵因式分解</h2><p><strong>LU分解：</strong></p>
+<p>对于这样的一个问题</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117165207504.png" srcset="/img/loading.gif" alt="image-20210117165207504"></p>
+<p>我们可以一个一个的求解。</p>
+<p>当然，如果A可逆，也可以先算$A^{-1}$, 然后直接算$x = A^{-1}b$,即可算出解。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117165532065.png" srcset="/img/loading.gif" alt="image-20210117165532065"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117173317201.png" srcset="/img/loading.gif" alt="image-20210117173317201"></p>
+<p>我们首先可以解$Ly=b$ 这个方程得出$y$,然后算 $Ux=y$ , 解出$x$, 同时我们注意到由于L,U都是三角矩阵，很容易就可以解出来方程。</p>
+<p><strong>LU分解算法：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117173706927.png" srcset="/img/loading.gif" alt="image-20210117173706927"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117174212590.png" srcset="/img/loading.gif" alt="image-20210117174212590"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117175213667.png" srcset="/img/loading.gif" alt="image-20210117175213667"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117174520420.png" srcset="/img/loading.gif" alt="image-20210117174520420"></p>
+<p>L的计算方法很简单，我们在上述将A变成阶梯型矩阵U的过程中，我们就是把每一列</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117175235905.png" srcset="/img/loading.gif" alt="image-20210117175235905"></p>
+<h2 id="2-7-计算机图形学"><a href="#2-7-计算机图形学" class="headerlink" title="2.7 计算机图形学"></a>2.7 计算机图形学</h2><p>这个在博文《AHU计算机图形学》有详细的解释</p>
+<h2 id="2-8-R-n-的子空间"><a href="#2-8-R-n-的子空间" class="headerlink" title="2.8 $R^n$的子空间"></a>2.8 $R^n$的子空间</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117181653194.png" srcset="/img/loading.gif" alt="image-20210117181653194"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117182335539.png" srcset="/img/loading.gif" alt="image-20210117182335539"></p>
+<p><strong>矩阵的列空间：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117182500074.png" srcset="/img/loading.gif" alt="image-20210117182500074"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117182654579.png" srcset="/img/loading.gif" alt="image-20210117182654579"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117184509730.png" srcset="/img/loading.gif" alt="image-20210117184509730"></p>
+<p><strong>矩阵的零空间：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117190707869.png" srcset="/img/loading.gif" alt="image-20210117190707869"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117191117534.png" srcset="/img/loading.gif" alt="image-20210117191117534"></p>
+<p><strong>子空间的基：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117191239270.png" srcset="/img/loading.gif" alt="image-20210117191239270"></p>
+<p>标准基</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117191307369.png" srcset="/img/loading.gif" alt="image-20210117191307369"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117192242118.png" srcset="/img/loading.gif" alt="image-20210117192242118"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117192259496.png" srcset="/img/loading.gif" alt="image-20210117192259496"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117193137910.png" srcset="/img/loading.gif" alt="image-20210117193137910"></p>
+<p>零空间Null A 其实是保证了它一定是矩阵的基。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117193343288.png" srcset="/img/loading.gif" alt="image-20210117193343288"></p>
+<p>我们可以直接找主元列作为列空间的基，即下面这个定理：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117193535647.png" srcset="/img/loading.gif" alt="image-20210117193535647"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117193745935.png" srcset="/img/loading.gif" alt="image-20210117193745935"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117193729487.png" srcset="/img/loading.gif" alt="image-20210117193729487"></p>
+<h2 id="2-9-维数与秩"><a href="#2-9-维数与秩" class="headerlink" title="2.9 维数与秩"></a>2.9 维数与秩</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117194910951.png" srcset="/img/loading.gif" alt="image-20210117194910951"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117195406233.png" srcset="/img/loading.gif" alt="image-20210117195406233"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117195342734.png" srcset="/img/loading.gif" alt="image-20210117195342734"></p>
+<p><strong>矩阵的秩：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117195552448.png" srcset="/img/loading.gif" alt="image-20210117195552448"></p>
+<p>我们一般称子空间的维数为秩：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117195644510.png" srcset="/img/loading.gif" alt="image-20210117195644510"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117200557919.png" srcset="/img/loading.gif" alt="image-20210117200557919"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117201744608.png" srcset="/img/loading.gif" alt="image-20210117201744608"></p>
+<p><strong>秩与可逆矩阵定理 ：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210117201538673.png" srcset="/img/loading.gif" alt="image-20210117201538673"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/18/CH9%EF%BC%9ALinear-Regression/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习基石CH9：Linear Regression</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%9F%B3CH8%EF%BC%9ANoise%20and%20Error/">
+                        <span class="hidden-mobile">机器学习基石CH8：Noise and Error</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/';
+        this.page.identifier = '/2021/01/17/CH2%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%BB%A3%E6%95%B0/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

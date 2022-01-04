@@ -1,0 +1,620 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>机器学习基石Ch5：Training VS Testing - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习基石Ch5：Training VS Testing">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-12 10:54" pubdate>
+        2021年1月12日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      828 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习基石Ch5：Training VS Testing</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Ch5：Training-VS-Testing"><a href="#Ch5：Training-VS-Testing" class="headerlink" title="Ch5：Training VS Testing"></a>Ch5：Training VS Testing</h1><h2 id="Recap-and-preview-回顾"><a href="#Recap-and-preview-回顾" class="headerlink" title="Recap and preview 回顾"></a>Recap and preview 回顾</h2><p><img src="https://i.loli.net/2021/01/11/TRGceul2MPAOfa8.png" srcset="/img/loading.gif" alt="image-20210111230212927"></p>
+<p>上图是我们所希望做到的。</p>
+<p><img src="https://i.loli.net/2021/01/11/824psLJKdMtUC1R.png" srcset="/img/loading.gif" alt="image-20210111230757095"></p>
+<p>回到第四章问题：如果$M$变为无限大，怎么办呢？</p>
+<p>我们所想做到的：</p>
+<p><img src="https://i.loli.net/2021/01/11/JvQOEP9WMVFmac5.png" srcset="/img/loading.gif" alt="image-20210111231128141"></p>
+<ul>
+<li>建立一种有限的量替代M</li>
+<li>证明M为无限时学习的可行性</li>
+<li>这个$m_H$的选择会帮助我们更好的学习hypothesis的选择</li>
+</ul>
+<h2 id="Effective-Number-Of-Lines"><a href="#Effective-Number-Of-Lines" class="headerlink" title="Effective Number Of Lines"></a>Effective Number Of Lines</h2><p><img src="https://i.loli.net/2021/01/11/t8ViHIj42wYGxWs.png" srcset="/img/loading.gif" alt="image-20210111232329199"></p>
+<p>我们在以上不等式 用了union bound，但是M无穷大时出了问题。</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/11/Tx3bD7jgk8hlLzV.png" srcset="/img/loading.gif" alt="image-20210111232659335"></p>
+<p>我们看上图可知，一般相近的两个hypothesis的结果是没有什么太大区别的，因此多个h之间很大一部分都是重叠的（如上图：三个圆圈有重叠），而我们的union bound是把他们直接相加的，造成了over-estimating（过度估计）。</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/11/zqcioRpItn8mHuM.png" srcset="/img/loading.gif" alt="image-20210111233228291"></p>
+<p>我们来考虑一下上图有几个h，即有几种线可以划分出不同的结果。</p>
+<p>不难看出是四种分类结果。</p>
+<p><img src="https://i.loli.net/2021/01/11/7WiUI2ey6bLAYEH.png" srcset="/img/loading.gif" alt="image-20210111233324728"></p>
+<p>同理，若有三个点，则有8种。那么规律是$2^n$吗？</p>
+<p>我们观察下图:</p>
+<p><img src="https://i.loli.net/2021/01/12/WkPceVDdanXIgjO.png" srcset="/img/loading.gif" alt="image-20210111233427807"></p>
+<p>上图我们可以发现，粉色花圈的两个不可能用一条线做到，因此只有6种.</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/11/suFIYN6xyldzO4Z.png" srcset="/img/loading.gif" alt="image-20210111233811256"></p>
+<p>对于四个点，其实最多只有14种方式。</p>
+<p><img src="https://i.loli.net/2021/01/11/UgYGB3VDnef7tjp.png" srcset="/img/loading.gif" alt="image-20210111233858816"></p>
+<p>我们猜测：无限多的线可以划分为有限的种类。同种类的线就不需要union bound加在一起了。</p>
+<p>希望做到上图所提到的公式，找到一个$effective(N)$</p>
+<p>如果$effective(N)$可以做到下的两点，那么我们说学习是可能的。</p>
+<p><img src="https://i.loli.net/2021/01/11/baHm1zYTfX9tLKg.png" srcset="/img/loading.gif" alt="image-20210111234037199"></p>
+<hr>
+<h2 id="Effective-Number-of-Hypothesis"><a href="#Effective-Number-of-Hypothesis" class="headerlink" title="Effective Number of Hypothesis"></a>Effective Number of Hypothesis</h2><p><img src="https://i.loli.net/2021/01/11/7x1paYGMiwzPejB.png" srcset="/img/loading.gif" alt="image-20210111234559377"></p>
+<p>这里我们引入了新的Dichotomies，他和hypothesis的区别是dichotomies代表种类的多少，是有限的。</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/11/EajtHQ2fYG9uZpT.png" srcset="/img/loading.gif" alt="image-20210111234919017"></p>
+<p>这里对于不同的样本，线的种类数量可能不是确定的，如三个点，可能是6，也可能是8种。</p>
+<p>那么不妨考虑最坏情况，我们取这些不同种类种最大的一个：</p>
+<p>即<img src="https://i.loli.net/2021/01/11/HNzqWvw9TsKcBX7.png" srcset="/img/loading.gif" alt="image-20210111235110535">。</p>
+<p>我们称之为$growth \ function$成长函数。</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/11/4Ai6gvVWrCQ8tDP.png" srcset="/img/loading.gif" alt="image-20210111235746549"></p>
+<p>对于这种模型，我们有几种切法呢？</p>
+<p>不难发现左边0个，右边N个，左边1个，右边N-1个….. 这样递推，因此：</p>
+<p><img src="https://i.loli.net/2021/01/11/ivYzqwDEJp3TR42.png" srcset="/img/loading.gif" alt="image-20210111235810729"></p>
+<p>$m_H=N+1$</p>
+<p>如果对下图这种h来说：</p>
+<p><img src="https://i.loli.net/2021/01/12/v9TFQ6PC4OsdIBb.png" srcset="/img/loading.gif" alt="image-20210112000215920"></p>
+<p>就有：</p>
+<p><img src="https://i.loli.net/2021/01/12/DTiIJkg5wmXRpPh.png" srcset="/img/loading.gif" alt="image-20210112000112025"></p>
+<p>这么多种。</p>
+<p><img src="https://i.loli.net/2021/01/12/AoC9EraYu2Pn3ws.png" srcset="/img/loading.gif" alt="image-20210112000450979"></p>
+<p>那么如果对于一个 二维的分类，并别h也是区域覆盖，那么$m_H=2^N$,即成长函数growth function为$2^N$。</p>
+<h2 id="Break-point"><a href="#Break-point" class="headerlink" title="Break point"></a>Break point</h2><p><img src="https://i.loli.net/2021/01/12/49lDr1GYjcENxSA.png" srcset="/img/loading.gif" alt="image-20210112001312073"></p>
+<p>我们回顾一下不同模型的growth function的不同。</p>
+<p><img src="https://i.loli.net/2021/01/12/x6UDzIgYvyBEKdk.png" srcset="/img/loading.gif" alt="image-20210112001459983"></p>
+<p>​    因此如果M的替代量是一个多项式(polynomial)，那么这是一个很好的替代，它的变化远不及后面e的指数的变化，因此这是可以学习的。但是也有可能是指数型(exponential)的，这就不一定会是可以学习了，因为后面的也是e的指数，在一起可能是不收敛的。</p>
+<p>​    那么对于一个2维感知机问题，增长函数是多项式形式的吗？</p>
+<hr>
+<p><img src="https://i.loli.net/2021/01/12/eROUz6SGPDmXCsL.png" srcset="/img/loading.gif" alt="image-20210112001952796"></p>
+<p>这里我们引入$break\  point$，在二维感知机分类中，从4个点开始我们发现无法做到$2^N$种情况，即16种，最多只能找到14种，无论这四个点怎么排列。我们称4为break point。</p>
+<p><img src="https://i.loli.net/2021/01/12/3TBh9clC4XJHvUt.png" srcset="/img/loading.gif" alt="image-20210112002301731"></p>
+<p>我们观察到，这个break point好像和增长函数有如上的关系，那么真的有吗？下一节会从数学角度解决这个问题。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《线性代数及其应用》CH1：线性代数中的线性方程组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/11/CH4%EF%BC%9AFeasibility%20of%20Learning%EF%BC%88%E5%AD%A6%E4%B9%A0%E5%8F%AF%E8%A1%8C%E6%80%A7%EF%BC%89/">
+                        <span class="hidden-mobile">机器学习基石CH4:Feasibility of Learning（学习可行性）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/';
+        this.page.identifier = '/2021/01/12/CH5%EF%BC%9ATraining%20VS%20Testing/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

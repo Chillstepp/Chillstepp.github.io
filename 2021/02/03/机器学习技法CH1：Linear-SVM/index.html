@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>机器学习技法CH1：Linear SVM - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习技法CH1：Linear SVM">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-03 22:27" pubdate>
+        2021年2月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习技法CH1：Linear SVM</h1>
+            
+            <div class="markdown-body">
+              <h1 id="CH1：Linear-SVM"><a href="#CH1：Linear-SVM" class="headerlink" title="CH1：Linear SVM"></a>CH1：Linear SVM</h1><h2 id="Large-Margin-separating-Hyperplane"><a href="#Large-Margin-separating-Hyperplane" class="headerlink" title="Large-Margin separating Hyperplane"></a>Large-Margin separating Hyperplane</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203201812968.png" srcset="/img/loading.gif" alt="image-20210203201812968"></p>
+<p>这三种线都可以把这些点分开。</p>
+<ul>
+<li><p>PLA算法不一定会得出哪儿一种线</p>
+</li>
+<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202005352.png" srcset="/img/loading.gif" alt="image-20210203202005352"></p>
+<p>从我们的VC Bound来看，$E<em>{in}=0$都一样，$d</em>{VC}$=也一样，那么 VC Bound所带来的保证$E_{out}$都相同。</p>
+</li>
+</ul>
+<p>​    但其实我们的直觉告诉我们第三种好一点，因为他如果有一些数据有误差，那么也不会影响结果，因此我们一般认为第三条线对错误容忍度高一些。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202331691.png" srcset="/img/loading.gif" alt="image-20210203202331691"></p>
+<p>​    简单理解就是如果<strong>点距离分割面/分割线越远</strong>，那么他容忍noise的力度越大，我们在基石课中学到，noise是造成overfittng的原因，容忍noise能力越强则<strong>更不容易带来overfitting</strong>。</p>
+<hr>
+<p>因此我们想找健壮性更强一些的线，什么是健壮性更强的呢？就是<strong>点距离分割面/分割线越远</strong>。我们直观理解就是这条线可以有多<strong>胖</strong>。</p>
+<p>如下图：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203010157.png" srcset="/img/loading.gif" alt="image-20210203203010157"></p>
+<p>灰色就代表这条线有多胖，这条线越胖越说明我们的健壮性越强。</p>
+<p>那么我们现在可以给健壮性一个定义：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203149201.png" srcset="/img/loading.gif" alt="image-20210203203149201"></p>
+<p>健壮性就是点距离分割线/分割面 最近的距离。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203422827.png" srcset="/img/loading.gif" alt="image-20210203203422827"></p>
+<p>那么现在我们要做的就是<strong>最大化fatness(w)</strong>。</p>
+<p>但是这个”胖“的说法似乎不太专业，这里我们给出真正的名字margin</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203619396.png" srcset="/img/loading.gif" alt="image-20210203203619396"></p>
+<p>因此我们想要做到下面两点：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203704673.png" srcset="/img/loading.gif" alt="image-20210203203704673"></p>
+<ul>
+<li>Margin越大越好</li>
+<li>分类正确</li>
+</ul>
+<h2 id="Standard-Large-Margin-Problem"><a href="#Standard-Large-Margin-Problem" class="headerlink" title="Standard Large-Margin Problem"></a>Standard Large-Margin Problem</h2><p>我们要解决的问题是：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203955323.png" srcset="/img/loading.gif" alt="image-20210203203955323"></p>
+<p>我们首先要知道距离怎么算。</p>
+<p>我们之前算的时候是需要在数据第一列加上一列1的，然后用$sign(w^Tx)$计算分类结果，但是这里我们不在加上第一列1了，把w的第一列拆出来，那么判断就变成了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203204800204.png" srcset="/img/loading.gif" alt="image-20210203204800204"></p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205335953.png" srcset="/img/loading.gif" alt="image-20210203205335953"></p>
+<p>这个图上的$x’$和$x’’$一定是符合 $w^Tx + b = 0$ 的</p>
+<p>因此:</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205451314.png" srcset="/img/loading.gif" alt="image-20210203205451314"></p>
+<p>我们的这个权重向量一点是是分割面的法向量的。</p>
+<p>我们接下来算距离：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205558354.png" srcset="/img/loading.gif" alt="image-20210203205558354"></p>
+<p>首先$(x-x’)$代表着这个蓝色向量，然后让他做投影，投影到w的方向。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205706594.png" srcset="/img/loading.gif" alt="image-20210203205706594"></p>
+<p>投影后的距离就是<strong>距离分割面的距离：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205818953.png" srcset="/img/loading.gif" alt="image-20210203205818953"></p>
+<p>对于可分的平面来说：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205949602.png" srcset="/img/loading.gif" alt="image-20210203205949602"></p>
+<p>因此我们可以脱去绝对值：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210005363.png" srcset="/img/loading.gif" alt="image-20210203210005363"></p>
+<p>那么现在我们的问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210025215.png" srcset="/img/loading.gif" alt="image-20210203210025215"></p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210208708.png" srcset="/img/loading.gif" alt="image-20210203210208708"></p>
+<p>一条线是可以有多种表达方式的，我们这里只要保持$\frac{w^T}{||w||}$不变即可，因此我们放缩$w^T$,使其符合下面这个式子。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210424443.png" srcset="/img/loading.gif" alt="image-20210203210424443"></p>
+<p>那么此时我们的距离就变成了$\frac{1}{||w||}$。</p>
+<p>问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210545690.png" srcset="/img/loading.gif" alt="image-20210203210545690"></p>
+<p>我们这里发现 <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210608829.png" srcset="/img/loading.gif" alt="image-20210203210608829"></p>
+<p>下面这个条件包含上面的条件了，因此只需要下面的条件即可。</p>
+<p>现在问题转化为：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210649123.png" srcset="/img/loading.gif" alt="image-20210203210649123"></p>
+<hr>
+<p>到现在位置问题中的min还是很难搞，我们如果可以放宽一些他的条件，但是结果还在当前条件的限制之下，那么我们的问题就好解决了。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211159268.png" srcset="/img/loading.gif" alt="image-20210203211159268"></p>
+<p>我们用蓝色的条件代替紫色的，但这样很可能会导致</p>
+<p>$y_n(w^T+b)$全部都大于1，导致最小的也不等于1了，那么这样放大了条件是没有什么意义的。</p>
+<p>我们考虑假如真的全部都大于1，比如都大于1.126.</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211345197.png" srcset="/img/loading.gif" alt="image-20210203211345197"></p>
+<p>我们可以调整$w$和$b$的大小使得其重新满足条件，那么这个条件放大一些是不影响结果的。</p>
+<p>那么此时问题转化为了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211544842.png" srcset="/img/loading.gif" alt="image-20210203211544842"></p>
+<p>做一些小的数学变换，（这个$\frac{1}{2}$就是为了后面方便计算的常数，最大化最小化问题中常数不影响最优的结果）</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211652281.png" srcset="/img/loading.gif" alt="image-20210203211652281"></p>
+<h2 id="Support-Vector-Machine"><a href="#Support-Vector-Machine" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211851541.png" srcset="/img/loading.gif" alt="image-20210203211851541"></p>
+<p>我们以上图为例子：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212202907.png" srcset="/img/loading.gif" alt="image-20210203212202907"></p>
+<p>我们不难得出下面两个式子</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212247035.png" srcset="/img/loading.gif" alt="image-20210203212247035"></p>
+<p>所以$w_1^2+w_2^2\ge2$,即：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212331579.png" srcset="/img/loading.gif" alt="image-20210203212331579"></p>
+<p>因此我们就可以算出这个最胖的线：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212543635.png" srcset="/img/loading.gif" alt="image-20210203212543635"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212649585.png" srcset="/img/loading.gif" alt="image-20210203212649585"></p>
+<p>我们直观理解这个问题就是，我们通过支持向量(support vector)，也就是胖胖的线上边缘的那些点来算得这个胖胖的线。</p>
+<hr>
+<p>但是上面是4个点，比较简单，那么如果包含多个点我们怎么做呢？</p>
+<p>幸运的是，这是一种二次规划问题，我们有现成的工具可以解决，我们只需要把我们现在的公式转换为标准的二次规划问题表达形式即可。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213319550.png" srcset="/img/loading.gif" alt="image-20210203213319550"></p>
+<p>我们只要找到左边的参数即可。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213601556.png" srcset="/img/loading.gif" alt="image-20210203213601556"></p>
+<p>那么我们的Linear Hard-Margin SVM算法就搞定了：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213818582.png" srcset="/img/loading.gif" alt="image-20210203213818582"></p>
+<p>怎么做非线性的呢？还记得基石里讲到的方法吗，做feature transform就好了。</p>
+<h2 id="Reasons-behind-Large-Margin-Hyperplane"><a href="#Reasons-behind-Large-Margin-Hyperplane" class="headerlink" title="Reasons behind Large-Margin Hyperplane"></a>Reasons behind Large-Margin Hyperplane</h2><p>有趣的事情是，我们发现：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214239916.png" srcset="/img/loading.gif" alt="image-20210203214239916"></p>
+<p>SVM怎么和regularization做的是相似的事情，都考虑了两个事情：</p>
+<p>原来regularization做的事情可以防止overfit的原因体现在了SVM里。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214819040.png" srcset="/img/loading.gif" alt="image-20210203214819040"></p>
+<p>我们在之前的线性分类模型中hypothesis的数量可能很多，但是在SVM中比如我们要求这个分割面足够的胖，那么有一些在线性分类模型中的hypothesis在SVM中是不成立的(如上图)，因此<strong>VC Dimension会小一些，因此他的泛化能力更好一些</strong>。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221636904.png" srcset="/img/loading.gif" alt="image-20210203221636904"></p>
+<p>对于上图三个点，如果不考虑胖瘦，那么$d<em>{vc}=3$，但是如果要求宽度大于某个常数，那么$d</em>{vc}&lt;3$.</p>
+<p>我们这里有一个现成的结果：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221816559.png" srcset="/img/loading.gif" alt="image-20210203221816559"></p>
+<p>$\rho$代表SVM中的线的宽度，$R$代表半径，因此我们多了一种控制复杂度的方式。</p>
+<hr>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222213241.png" srcset="/img/loading.gif" alt="image-20210203222213241"></p>
+<p>我们有了large-margin hyperplane 我们可以同时做到 hypothesis set很小 并且 分界也更精细，即：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222433887.png" srcset="/img/loading.gif" alt="image-20210203222433887"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH2%EF%BC%9ADual-Support-Vector-Machine/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习技法CH2：Dual Support Vector Machine</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/27/CH16%EF%BC%9AThree-Learning-Principle/">
+                        <span class="hidden-mobile">机器学习基石CH16：Three Learning Principle(完结)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/';
+        this.page.identifier = '/2021/02/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH1%EF%BC%9ALinear-SVM/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

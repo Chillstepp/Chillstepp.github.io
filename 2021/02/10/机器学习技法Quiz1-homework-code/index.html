@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>机器学习技法Quiz1(homework+code) - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习技法Quiz1(homework+code)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-10 01:06" pubdate>
+        2021年2月10日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习技法Quiz1(homework+code)</h1>
+            
+            <div class="markdown-body">
+              <h1 id="QUIZ-1"><a href="#QUIZ-1" class="headerlink" title="QUIZ 1:"></a>QUIZ 1:</h1><h2 id="Q1"><a href="#Q1" class="headerlink" title="Q1"></a>Q1</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208171228244.png" srcset="/img/loading.gif" alt="image-20210208171228244"></p>
+<h2 id="Q2"><a href="#Q2" class="headerlink" title="Q2"></a>Q2</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208171244423.png" srcset="/img/loading.gif" alt="image-20210208171244423"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">z1</span><span class="hljs-params">(x1,x2)</span>:</span><br>    <span class="hljs-keyword">return</span> x2**<span class="hljs-number">2</span> - <span class="hljs-number">2</span>*x1 + <span class="hljs-number">3</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">z2</span><span class="hljs-params">(x1,x2)</span>:</span><br>    <span class="hljs-keyword">return</span> x1**<span class="hljs-number">2</span> - <span class="hljs-number">2</span>*x2 - <span class="hljs-number">3</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.asarray([[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>], [<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-2</span>], [<span class="hljs-number">-2</span>, <span class="hljs-number">0</span>]])<br>    y = [<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br>    z = []<br>    <span class="hljs-keyword">for</span> vec <span class="hljs-keyword">in</span> x:<br>        z.append([z1(vec[<span class="hljs-number">0</span>], vec[<span class="hljs-number">1</span>]), z2(vec[<span class="hljs-number">0</span>], vec[<span class="hljs-number">1</span>])])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(y)):<br>        <span class="hljs-keyword">if</span> y[i] == <span class="hljs-number">-1</span>:<br>            plt.scatter(z[i][<span class="hljs-number">0</span>], z[i][<span class="hljs-number">1</span>], color=<span class="hljs-string">'blue'</span>)<br>        <span class="hljs-keyword">else</span>:<br>            plt.scatter(z[i][<span class="hljs-number">0</span>], z[i][<span class="hljs-number">1</span>], color=<span class="hljs-string">'red'</span>)<br>    plt.show()<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208171255884.png" srcset="/img/loading.gif" alt="image-20210208171255884"></p>
+<p>不难看出是在$z_1=4.5$处为分界面</p>
+<h2 id="Q3"><a href="#Q3" class="headerlink" title="Q3"></a>Q3</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208200355862.png" srcset="/img/loading.gif" alt="image-20210208200355862"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208173247333.png" srcset="/img/loading.gif" alt="image-20210208173247333"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">kernel</span><span class="hljs-params">(x1, x2)</span>:</span><br>    <span class="hljs-keyword">return</span> (<span class="hljs-number">1</span> + np.dot(x1.T, x2))**<span class="hljs-number">2</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>], [<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-2</span>], [<span class="hljs-number">-2</span>, <span class="hljs-number">0</span>]])<br>    y = np.array([<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])<br>    Q = np.zeros((<span class="hljs-number">7</span>, <span class="hljs-number">7</span>))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>            Q[i][j] = y[i] * y[j] * kernel(x[i], x[j])<br>    P = -np.ones(<span class="hljs-number">7</span>)<br>    A = np.zeros((<span class="hljs-number">9</span>, <span class="hljs-number">7</span>))<br>    A[<span class="hljs-number">0</span>] = y<br>    A[<span class="hljs-number">1</span>] = -y<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>,<span class="hljs-number">9</span>):<br>        A[i][i<span class="hljs-number">-2</span>] = <span class="hljs-number">-1</span><br>    C = np.zeros(<span class="hljs-number">9</span>)<br><br>    Q = matrix(Q)<br>    P = matrix(P)<br>    A = matrix(A)<br>    C = matrix(C)<br><br>    alphas = solvers.qp(Q, P, A, C)<br>    print(<span class="hljs-string">'max alpha:'</span>, np.max(alphas[<span class="hljs-string">'x'</span>]))<br>    print(<span class="hljs-string">'alpha sum:'</span>, np.sum(alphas[<span class="hljs-string">'x'</span>]))<br>    print(<span class="hljs-string">'min alpha:'</span>, np.min(alphas[<span class="hljs-string">'x'</span>]))<br>    print(<span class="hljs-string">'alphas:'</span>, alphas[<span class="hljs-string">'x'</span>])<br></code></pre></div></td></tr></table></figure>
+<p>这里要注意下：cvxopt做二次规划和林轩田老师ppt上的</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208200148937.png" srcset="/img/loading.gif" alt="image-20210208200148937"></p>
+<p>符号方向是相反的。</p>
+<p><strong>运行结果：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">max alpha:</span> <span class="hljs-number">0.8888888987735439</span><br><span class="hljs-attr">alpha sum:</span> <span class="hljs-number">2.814814850082614</span><br><span class="hljs-attr">min alpha:</span> <span class="hljs-number">6.390795094251015e-10</span><br><span class="hljs-attr">alphas:</span> <span class="hljs-string">[</span> <span class="hljs-number">6.69e-09</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">7.04e-01</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">7.04e-01</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">8.89e-01</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">2.59e-01</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">2.59e-01</span><span class="hljs-string">]</span><br><span class="hljs-string">[</span> <span class="hljs-number">6.39e-10</span><span class="hljs-string">]</span><br></code></pre></div></td></tr></table></figure>
+<p>故1，2是正确的。</p>
+<h2 id="Q4"><a href="#Q4" class="headerlink" title="Q4"></a>Q4</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208205053236.png" srcset="/img/loading.gif" alt="image-20210208205053236"></p>
+<p>我们已知道$\alpha$，去求b即可，然后带回$g_{SVM}$.</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208204936807.png" srcset="/img/loading.gif" alt="image-20210208204936807"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs angelscript"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy as np<br><span class="hljs-keyword">import</span> matplotlib.pyplot as plt<br><br>def kernel(x1, x2):<br>    <span class="hljs-keyword">return</span> (<span class="hljs-number">1</span> + np.dot(x1.T, x2))**<span class="hljs-number">2</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    x = np.<span class="hljs-built_in">array</span>([[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>], [<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-2</span>], [<span class="hljs-number">-2</span>, <span class="hljs-number">0</span>]])<br>    y = np.<span class="hljs-built_in">array</span>([<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])<br>    Q = np.zeros((<span class="hljs-number">7</span>, <span class="hljs-number">7</span>))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>            Q[i][j] = y[i] * y[j] * kernel(x[i], x[j])<br>    P = -np.ones(<span class="hljs-number">7</span>)<br>    A = np.zeros((<span class="hljs-number">9</span>, <span class="hljs-number">7</span>))<br>    A[<span class="hljs-number">0</span>] = y<br>    A[<span class="hljs-number">1</span>] = -y<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>,<span class="hljs-number">9</span>):<br>        A[i][i<span class="hljs-number">-2</span>] = <span class="hljs-number">-1</span><br>    C = np.zeros(<span class="hljs-number">9</span>)<br><br>    Q = matrix(Q)<br>    P = matrix(P)<br>    A = matrix(A)<br>    C = matrix(C)<br><br>    alphas = solvers.qp(Q, P, A, C)<br>    alphas = alphas[<span class="hljs-string">'x'</span>]<br><br>    def kernelParameters(x):<br>        <span class="hljs-keyword">return</span> np.<span class="hljs-built_in">array</span>([x[<span class="hljs-number">0</span>] * x[<span class="hljs-number">0</span>], x[<span class="hljs-number">1</span>] * x[<span class="hljs-number">1</span>], <span class="hljs-number">2</span> * x[<span class="hljs-number">0</span>] * x[<span class="hljs-number">1</span>], <span class="hljs-number">2</span> * x[<span class="hljs-number">0</span>], <span class="hljs-number">2</span> * x[<span class="hljs-number">1</span>], <span class="hljs-number">1</span>])<br><br>    w = np.zeros(<span class="hljs-number">6</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>        w += alphas[i] * y[i] * kernelParameters(x[i])<br><br>    b = y[<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">7</span>):<br>        b = b - alphas[i] * y[i] * kernel(x[i], x[<span class="hljs-number">1</span>])<br><br>    print(<span class="hljs-string">'x1*x1:'</span>, w[<span class="hljs-number">0</span>], <span class="hljs-string">'x2*x2:'</span>, w[<span class="hljs-number">1</span>], <span class="hljs-string">'x1*x2:'</span>, w[<span class="hljs-number">2</span>], <span class="hljs-string">'x1:'</span>, w[<span class="hljs-number">3</span>], <span class="hljs-string">'x2:'</span>, w[<span class="hljs-number">4</span>], <span class="hljs-string">'1:'</span>, w[<span class="hljs-number">5</span>])<br>    print(<span class="hljs-string">'b:'</span>, b)<br></code></pre></div></td></tr></table></figure>
+<p><strong>运行结果：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs angelscript">x1*x1: <span class="hljs-number">0.8888888946403547</span> x2*x2: <span class="hljs-number">0.666666683766254</span> x1*x2: <span class="hljs-number">0.0</span> x1: <span class="hljs-number">-1.7777778134824205</span> x2: <span class="hljs-number">-3.3306690738754696e-15</span> <span class="hljs-number">1</span>: <span class="hljs-number">-1.586721330977244e-10</span><br>b: <span class="hljs-number">-1.6666666836075785</span><br></code></pre></div></td></tr></table></figure>
+<p>即第三个。</p>
+<h2 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208205446378.png" srcset="/img/loading.gif" alt="image-20210208205446378"></p>
+<h2 id="Q6"><a href="#Q6" class="headerlink" title="Q6"></a>Q6</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208210536028.png" srcset="/img/loading.gif" alt="image-20210208210536028"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208210408313.png" srcset="/img/loading.gif" alt="image-20210208210408313"></p>
+<p>根据上面的ppt用lagrange multiplier转化为lagrange function即可：</p>
+<p>要注意的是 ppt里给的是$\ge$, 而题目里是$\le$, 两边同加上负号，让符号方向就会转回来即可。</p>
+<p>答案是第一个。</p>
+<h2 id="Q7"><a href="#Q7" class="headerlink" title="Q7"></a>Q7</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210208221238672.png" srcset="/img/loading.gif" alt="image-20210208221238672"></p>
+<p>我们仿写KKT条件：</p>
+<p>$\frac{\partial L(R,c,\lambda)}{\partial R}= R(1-\Sigma_{n=1}^N \lambda_n)=0$</p>
+<p>$\frac{\partial L(R,c,\lambda)}{\partial c<em>i}=0 \to c_i\Sigma</em>{n=1}^N\lambda<em>n =\Sigma</em>{n=1}^N\lambda_nx_n^{(i)} $</p>
+<p>这样就推出了第1，3个是正确的。</p>
+<p>然后为来看第五个，就是KKT条件中所提到的：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/${JUD@8JTDLAK_D_C}%E{FA.png" srcset="/img/loading.gif" alt="img"></p>
+<p>我们仿写就是：$\lambda_n(||x_n-c||^2-R^2) = 0$</p>
+<p>那么第5个也正确。</p>
+<p>所以答案是1，3，5。</p>
+<h2 id="Q8"><a href="#Q8" class="headerlink" title="Q8"></a>Q8</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209011350773.png" srcset="/img/loading.gif" alt="1"></p>
+<p><strong>解析：</strong></p>
+<p>题目提到$R&gt;0$，由Q7可知：$R(1-\Sigma<em>{n=1}^N \lambda_n)=0$,故$1-\Sigma</em>{n=1}^N \lambda_n=0$</p>
+<p>原始的Lagrange Function在Q6中提到了：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209010640077.png" srcset="/img/loading.gif" alt="image-20210209010640077"></p>
+<p>我们把$1-\Sigma_{n=1}^N \lambda_n=0$带入：</p>
+<p>$\ \ \   R^2 + \Sigma<em>{n=1}^N\lambda_n(||x_n-c||^2-R^2)\ = R^2 + \Sigma</em>{n=1}^N\lambda<em>n||x_n-c||^2-\Sigma</em>{n=1}^N\lambda<em>nR^2 \=\Sigma</em>{n=1}^N\lambda_n||x_n-c||^2$</p>
+<p>我们又由Q7中的式子：</p>
+<p>$\frac{\partial L(R,c,\lambda)}{\partial c<em>i}=0 \to c_i\Sigma</em>{n=1}^N\lambda<em>n =\Sigma</em>{n=1}^N\lambda_nx_n^{(i)} $</p>
+<p>又因为$1-\Sigma_{n=1}^N \lambda_n=0$，得到：</p>
+<p>$c<em>i\Sigma</em>{n=1}^N\lambda<em>n =\Sigma</em>{n=1}^N\lambda<em>nx_n^{(i)} \\to c_i =  \Sigma</em>{n=1}^N\lambda_nx_n^{(i)}$</p>
+<p>带入$\Sigma_{n=1}^N\lambda_n||x_n-c||^2$得到第5个为正确答案：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209011310332.png" srcset="/img/loading.gif" alt="image-20210209011310332"></p>
+<h2 id="Q9"><a href="#Q9" class="headerlink" title="Q9"></a>Q9</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209012631861.png" srcset="/img/loading.gif" alt="image-20210209012631861"></p>
+<p><strong>解析：</strong></p>
+<p>从Q8的结果加上kernel技巧就好：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209011857250.png" srcset="/img/loading.gif" alt="image-20210209011857250"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209012611033.png" srcset="/img/loading.gif" alt="image-20210209012611033"></p>
+<h2 id="Q10"><a href="#Q10" class="headerlink" title="Q10"></a>Q10</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209151933569.png" srcset="/img/loading.gif" alt="image-20210209151933569"></p>
+<p><strong>解析：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209151912720.png" srcset="/img/loading.gif" alt="image-20210209151912720"></p>
+<p>选择$\lambda\ne 0 $的SV。</p>
+<h2 id="Q11"><a href="#Q11" class="headerlink" title="Q11"></a>Q11</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209163047123.png" srcset="/img/loading.gif" alt="image-20210209163047123"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209163059245.png" srcset="/img/loading.gif" alt="image-20210209163059245"></p>
+<h2 id="Q12"><a href="#Q12" class="headerlink" title="Q12"></a>Q12</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209163525843.png" srcset="/img/loading.gif" alt="image-20210209163525843"></p>
+<p><strong>解析：</strong></p>
+<p>下面这些都可以：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209163514687.png" srcset="/img/loading.gif" alt="image-20210209163514687"></p>
+<h2 id="Q13"><a href="#Q13" class="headerlink" title="Q13"></a>Q13</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209164101993.png" srcset="/img/loading.gif" alt="image-20210209164101993"></p>
+<h2 id="Q14"><a href="#Q14" class="headerlink" title="Q14"></a>Q14</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209175524211.png" srcset="/img/loading.gif" alt="image-20210209175524211"></p>
+<p>$K(x,x’)=z^Tz $,这里把$K(x,x’)$改写为$pK(x,x’)+q$后，怎样改写$C$才能使得不影响分类效果呢？</p>
+<p>这个是soft-margin SVM的原问题：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209175847416.png" srcset="/img/loading.gif" alt="image-20210209175847416"></p>
+<p>我们知道用核技巧，其实就是把$x$映射到$z$空间上,而$pK(x,x’)+q$这样的改变中，$q$平移空间是不会影响结果的，而$p$拉伸空间是可以改变结果的，所以我们只考虑$p$即可。</p>
+<p>$K$变成原来的$p$倍，那么$z$就是原来的$\sqrt{p}$倍，这样我们为了这个不变化：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209180225533.png" srcset="/img/loading.gif" alt="image-20210209180225533"></p>
+<p>$w$就要变成原来的$\frac{1}{\sqrt{p}}$倍，那么为了使下式子不被影响到：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209180329037.png" srcset="/img/loading.gif" alt="image-20210209180329037"></p>
+<p>由于$\frac{1}{2}w^Tw$变为了原来的$\frac{1}{p}$倍，那么C也要变为原来的$\frac{1}{p}$倍。</p>
+<p>即答案为第五个。</p>
+<h2 id="Q15"><a href="#Q15" class="headerlink" title="Q15"></a>Q15</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209232600273.png" srcset="/img/loading.gif" alt="image-20210209232600273"></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209232614619.png" srcset="/img/loading.gif" alt="image-20210209232614619"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> sklearn.svm <span class="hljs-keyword">as</span> svm<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">splitData</span><span class="hljs-params">(path)</span>:</span><br>    txt = open(path)<br>    data_y = []<br>    data_x = []<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> txt:<br>        linesplit = line.split()<br>        data_y.append(int(float(linesplit[<span class="hljs-number">0</span>])))<br>        data_x.append([float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    <span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">classificationFunction</span><span class="hljs-params">(dataOfy, target)</span>:</span><br>    newdata_y = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> dataOfy:<br>        <span class="hljs-keyword">if</span> _ == target:<br>            newdata_y.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            newdata_y.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> np.array(newdata_y)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    train_data_x, train_data_y = splitData(<span class="hljs-string">"train.dat"</span>)<br>    train_data_y = classificationFunction(train_data_y, <span class="hljs-number">0</span>)<br><br>    clf = svm.SVC(C=<span class="hljs-number">0.01</span>, kernel=<span class="hljs-string">'linear'</span>)<br>    clf.fit(train_data_x, train_data_y)<br>    w = clf.coef_<br>    print(np.sqrt(np.sum(np.square(w))))<br>    <br>    <span class="hljs-comment">#0.5713171494256942</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="Q16"><a href="#Q16" class="headerlink" title="Q16"></a>Q16</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209233841082.png" srcset="/img/loading.gif" alt="image-20210209233841082"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> sklearn.svm <span class="hljs-keyword">as</span> svm<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">splitData</span><span class="hljs-params">(path)</span>:</span><br>    txt = open(path)<br>    data_y = []<br>    data_x = []<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> txt:<br>        linesplit = line.split()<br>        data_y.append(int(float(linesplit[<span class="hljs-number">0</span>])))<br>        data_x.append([float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    <span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">classificationFunction</span><span class="hljs-params">(dataOfy, target)</span>:</span><br>    newdata_y = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> dataOfy:<br>        <span class="hljs-keyword">if</span> _ == target:<br>            newdata_y.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            newdata_y.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> np.array(newdata_y)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    Ein = <span class="hljs-number">1</span><br>    SelectClassway = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">9</span>):<br>        test_data_x, test_data_y = splitData(<span class="hljs-string">"test.dat"</span>)<br>        train_data_x, train_data_y = splitData(<span class="hljs-string">"train.dat"</span>)<br>        train_data_y = classificationFunction(train_data_y, i)<br>        test_data_y = classificationFunction(test_data_y, i)<br>        clf = svm.SVC(C=<span class="hljs-number">0.01</span>, kernel=<span class="hljs-string">'poly'</span>, degree=<span class="hljs-number">2</span>, gamma=<span class="hljs-string">'auto'</span>)<br>        clf.fit(train_data_x, train_data_y)<br>        y_hat = clf.predict(test_data_x)<br>        correct_num = np.sum(y_hat == test_data_y)<br>        <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>] &lt; Ein:<br>            Ein = <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>]<br>            SelectClassway = i<br>    print(i)<br>    <span class="hljs-comment">#8</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="Q17"><a href="#Q17" class="headerlink" title="Q17"></a>Q17</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210209234211953.png" srcset="/img/loading.gif" alt="image-20210209234211953"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> sklearn.svm <span class="hljs-keyword">as</span> svm<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">splitData</span><span class="hljs-params">(path)</span>:</span><br>    txt = open(path)<br>    data_y = []<br>    data_x = []<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> txt:<br>        linesplit = line.split()<br>        data_y.append(int(float(linesplit[<span class="hljs-number">0</span>])))<br>        data_x.append([float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    <span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">classificationFunction</span><span class="hljs-params">(dataOfy, target)</span>:</span><br>    newdata_y = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> dataOfy:<br>        <span class="hljs-keyword">if</span> _ == target:<br>            newdata_y.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            newdata_y.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> np.array(newdata_y)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    Ein = <span class="hljs-number">1</span><br>    SelectClassway = <span class="hljs-number">0</span><br>    maxxalpha = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>):<br>        test_data_x, test_data_y = splitData(<span class="hljs-string">"test.dat"</span>)<br>        train_data_x, train_data_y = splitData(<span class="hljs-string">"train.dat"</span>)<br>        train_data_y = classificationFunction(train_data_y, i)<br>        test_data_y = classificationFunction(test_data_y, i)<br>        clf = svm.SVC(C=<span class="hljs-number">0.01</span>, kernel=<span class="hljs-string">'poly'</span>, degree=<span class="hljs-number">2</span>, gamma=<span class="hljs-string">'auto'</span>)<br>        clf.fit(train_data_x, train_data_y)<br>        y_hat = clf.predict(test_data_x)<br>        correct_num = np.sum(y_hat == test_data_y)<br>        <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>] &lt; Ein:<br>            Ein = <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>]<br>            SelectClassway = i<br>        <span class="hljs-keyword">if</span> np.sum(np.fabs(clf.dual_coef_)) &gt; maxxalpha:<br>            maxxalpha = np.sum(np.fabs(clf.dual_coef_))<br>    print(maxxalpha)<br>    <span class="hljs-comment">#23.88</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="Q18"><a href="#Q18" class="headerlink" title="Q18"></a>Q18</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210210002831071.png" srcset="/img/loading.gif" alt="image-20210210002831071"></p>
+<h2 id="Q19"><a href="#Q19" class="headerlink" title="Q19"></a>Q19</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210210004623282.png" srcset="/img/loading.gif" alt="image-20210210004623282"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> sklearn.svm <span class="hljs-keyword">as</span> svm<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">splitData</span><span class="hljs-params">(path)</span>:</span><br>    txt = open(path)<br>    data_y = []<br>    data_x = []<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> txt:<br>        linesplit = line.split()<br>        data_y.append(int(float(linesplit[<span class="hljs-number">0</span>])))<br>        data_x.append([float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    <span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">classificationFunction</span><span class="hljs-params">(dataOfy, target)</span>:</span><br>    newdata_y = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> dataOfy:<br>        <span class="hljs-keyword">if</span> _ == target:<br>            newdata_y.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            newdata_y.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> np.array(newdata_y)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    Eout = <span class="hljs-number">1</span><br>    Select = <span class="hljs-number">0</span><br>    maxxalpha = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> gamma <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10000</span>]:<br>        print(gamma)<br>        test_data_x, test_data_y = splitData(<span class="hljs-string">"test.dat"</span>)<br>        train_data_x, train_data_y = splitData(<span class="hljs-string">"train.dat"</span>)<br>        train_data_y = classificationFunction(train_data_y, <span class="hljs-number">0</span>)<br>        test_data_y = classificationFunction(test_data_y, <span class="hljs-number">0</span>)<br>        clf = svm.SVC(C=<span class="hljs-number">0.1</span>, kernel=<span class="hljs-string">'rbf'</span>, gamma=gamma)<br>        clf.fit(train_data_x, train_data_y)<br>        y_hat = clf.predict(test_data_x)<br>        correct_num = np.sum(y_hat == test_data_y)<br>        <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>] &lt; Eout:<br>            Eout = <span class="hljs-number">1</span> - correct_num/test_data_y.shape[<span class="hljs-number">0</span>]<br>            Select = gamma<br>    print(Select)<br>    <span class="hljs-comment">#10</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="Q20"><a href="#Q20" class="headerlink" title="Q20"></a>Q20</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210210010309503.png" srcset="/img/loading.gif" alt="image-20210210010309503"></p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> cvxopt <span class="hljs-keyword">import</span> solvers, matrix<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> sklearn.svm <span class="hljs-keyword">as</span> svm<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">splitData</span><span class="hljs-params">(path)</span>:</span><br>    txt = open(path)<br>    data_y = []<br>    data_x = []<br>    data = []<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> txt:<br>        linesplit = line.split()<br>        data.append([int(float(linesplit[<span class="hljs-number">0</span>])), float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    random.shuffle(data)<br><br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> data:<br>        linesplit = line<br>        data_y.append(int(float(linesplit[<span class="hljs-number">0</span>])))<br>        data_x.append([float(linesplit[<span class="hljs-number">1</span>]), float(linesplit[<span class="hljs-number">2</span>])])<br>    <span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">classificationFunction</span><span class="hljs-params">(dataOfy, target)</span>:</span><br>    newdata_y = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> dataOfy:<br>        <span class="hljs-keyword">if</span> _ == target:<br>            newdata_y.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            newdata_y.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> np.array(newdata_y)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    g = &#123;<span class="hljs-number">1</span>: <span class="hljs-number">0</span>, <span class="hljs-number">10</span>: <span class="hljs-number">0</span>, <span class="hljs-number">100</span>: <span class="hljs-number">0</span>, <span class="hljs-number">1000</span>: <span class="hljs-number">0</span>, <span class="hljs-number">10000</span>: <span class="hljs-number">0</span>&#125;<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):<br>        Eout = <span class="hljs-number">1</span><br>        Select = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> gamma <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10000</span>]:<br>            train_data_x, train_data_y = splitData(<span class="hljs-string">"train.dat"</span>)<br>            train_data_y = classificationFunction(train_data_y, <span class="hljs-number">0</span>)<br>            clf = svm.SVC(C=<span class="hljs-number">0.1</span>, kernel=<span class="hljs-string">'rbf'</span>, gamma=gamma)<br>            clf.fit(train_data_x[<span class="hljs-number">0</span>:<span class="hljs-number">1000</span>], train_data_y[<span class="hljs-number">0</span>:<span class="hljs-number">1000</span>])<br>            y_hat = clf.predict(train_data_x[<span class="hljs-number">0</span>:<span class="hljs-number">1000</span>])<br>            correct_num = np.sum(y_hat == train_data_y[<span class="hljs-number">0</span>:<span class="hljs-number">1000</span>])<br>            <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> - correct_num/<span class="hljs-number">1000</span> &lt; Eout:<br>                Eout = <span class="hljs-number">1</span> - correct_num/<span class="hljs-number">1000</span><br>                Select = gamma<br>        print(Select)<br>        g[Select] += <span class="hljs-number">1</span><br>    print(g)<br>    <span class="hljs-comment">#10</span><br>    <span class="hljs-comment">#&#123;1: 1, 10: 97, 100: 1, 1000: 1, 10000: 0&#125;</span><br></code></pre></div></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH5%EF%BC%9AKernel-Logistic-Regression/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习技法CH5：Kernel Logistic Regression</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH4%EF%BC%9ASoft-Margin-Support-Vector-Machine/">
+                        <span class="hidden-mobile">机器学习技法CH4：Soft-Margin Support Vector Machine</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/';
+        this.page.identifier = '/2021/02/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95Quiz1-homework-code/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
