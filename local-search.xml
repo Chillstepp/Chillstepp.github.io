@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>const关键字修饰 相关问题</title>
+    <link href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
+    <url>/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="const关键字修饰-相关问题"><a href="#const关键字修饰-相关问题" class="headerlink" title="const关键字修饰 相关问题"></a>const关键字修饰 相关问题</h1><p>const修饰问题很麻烦，一个不错的识别方式是：<strong>const 修饰的是后面紧接着的东西</strong></p><p>下面举 引用/指针/变量 的例子：</p><h1 id="int-const-amp-p-和const-int-amp-p"><a href="#int-const-amp-p-和const-int-amp-p" class="headerlink" title="int const &amp;p 和const int &amp;p"></a>int const &amp;p 和const int &amp;p</h1><ul><li><p><code>int const &amp;p</code> 就是 <code>int （const &amp;p)</code>，代表p的值不可以被修改(即不能出现<code>p = 5</code>这种操作);  </p></li><li><p><code>const int &amp;p</code> 就是<code>(const int) &amp;p</code>，代表<code>const int</code>类型的引用，p只能对<code>const int类型</code>引用。 </p></li></ul><h1 id="int-const-a和int-const-a"><a href="#int-const-a和int-const-a" class="headerlink" title="int const *a和int* const a"></a>int const *a和int* const a</h1><ul><li><code>int const *a</code>，实际上可以看成是<code>int (const *a)</code>，这表示指针a所指向的地址可以变，但是所指向的那个值不能变。</li><li><code>int* const a</code>，可以看成<code>int* (const a)</code>，我们都知道a的值其实是一个地址，这就表示a所保存的地址是不可以变的，但是这个地址对应的值是可以变的。</li></ul><h1 id="int-const-a和int-const-a-1"><a href="#int-const-a和int-const-a-1" class="headerlink" title="int const a和int const a"></a>int const a和int const a</h1><p>这俩是完全一致的，因为无论是：</p><ul><li><code>int (const a)</code>表示 a的值不可以变</li><li>还是<code>(const int) a</code> 表示a的类型是const int，也表示a的值不可以变。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Leetcode第 277 场周赛题解</title>
     <link href="/2022/01/24/Leetcode%E7%AC%AC-277-%E5%9C%BA%E5%91%A8%E8%B5%9B%E9%A2%98%E8%A7%A3/"/>
     <url>/2022/01/24/Leetcode%E7%AC%AC-277-%E5%9C%BA%E5%91%A8%E8%B5%9B%E9%A2%98%E8%A7%A3/</url>
