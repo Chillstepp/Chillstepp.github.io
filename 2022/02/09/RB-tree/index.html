@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>const关键字修饰 相关问题 - Chillstep</title>
+  <title>RB-tree红黑树 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="const关键字修饰 相关问题">
+            <span class="h2" id="subtitle" title="RB-tree红黑树">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-24 19:48" pubdate>
-        2022年1月24日 晚上
+      <time datetime="2022-02-09 23:52" pubdate>
+        2022年2月9日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      280 字
+      1.3k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      14
        分钟
     </span>
   
@@ -236,26 +236,64 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">const关键字修饰 相关问题</h1>
+            <h1 style="display: none">RB-tree红黑树</h1>
             
             <div class="markdown-body">
-              <h1 id="const关键字修饰-相关问题"><a href="#const关键字修饰-相关问题" class="headerlink" title="const关键字修饰 相关问题"></a>const关键字修饰 相关问题</h1><p>const修饰问题很麻烦，一个不错的识别方式是：<strong>const 修饰的是后面紧接着的东西</strong></p>
-<p>下面举 引用/指针/变量 的例子：</p>
-<h1 id="int-const-amp-p-和const-int-amp-p"><a href="#int-const-amp-p-和const-int-amp-p" class="headerlink" title="int const &amp;p 和const int &amp;p"></a>int const &amp;p 和const int &amp;p</h1><ul>
-<li><p><code>int const &amp;p</code> 就是 <code>int （const &amp;p)</code>，代表p的值不可以被修改(即不能出现<code>p = 5</code>这种操作);  </p>
-</li>
-<li><p><code>const int &amp;p</code> 就是<code>(const int) &amp;p</code>，代表<code>const int</code>类型的引用，p只能对<code>const int类型</code>引用。 </p>
-</li>
-</ul>
-<h1 id="int-const-a和int-const-a"><a href="#int-const-a和int-const-a" class="headerlink" title="int const *a和int* const a"></a>int const *a和int* const a</h1><ul>
-<li><code>int const *a</code>，实际上可以看成是<code>int (const *a)</code>，这表示指针a所指向的地址可以变，但是所指向的那个值不能变。</li>
-<li><code>int* const a</code>，可以看成<code>int* (const a)</code>，我们都知道a的值其实是一个地址，这就表示a所保存的地址是不可以变的，但是这个地址对应的值是可以变的。</li>
-</ul>
-<h1 id="int-const-a和int-const-a-1"><a href="#int-const-a和int-const-a-1" class="headerlink" title="int const a和int const a"></a>int const a和int const a</h1><p>这俩是完全一致的，因为无论是：</p>
+              <h1 id="RB-tree红黑树"><a href="#RB-tree红黑树" class="headerlink" title="RB-tree红黑树"></a>RB-tree红黑树</h1><h2 id="一些基本性质："><a href="#一些基本性质：" class="headerlink" title="一些基本性质："></a>一些基本性质：</h2><p>1.根节点一定是黑色</p>
+<p>2.所有叶子结点(叶子结点都是空节点)都是黑色</p>
+<p>3.<strong>红色</strong>结点的两个子结点一定是<strong>黑色</strong></p>
+<p>4.从任一个节点，到它每个叶子结点的路径都包含相同数目的黑色节点。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207222448091.png" srcset="/img/loading.gif" alt="image-20220207222448091"></p>
+<h2 id="红黑树插入："><a href="#红黑树插入：" class="headerlink" title="红黑树插入："></a>红黑树插入：</h2><p>分三大类情况</p>
+<p>1.<strong>被插入的节点是根节点</strong>，直接把此节点涂黑</p>
+<p>2.<strong>被插入的节点的父节点是黑色</strong>，直接插进去并且把节点变成红色(这是因为变成红色就不会影响上述的 基本性质4)</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207225303265.png" srcset="/img/loading.gif" alt="image-20220207225303265"></p>
+<p>3.<strong>被插入的节点的父节点是红色</strong>，(由于红色只能挨着黑色，所以不能简单的插入后变红。)</p>
 <ul>
-<li><code>int (const a)</code>表示 a的值不可以变</li>
-<li>还是<code>(const int) a</code> 表示a的类型是const int，也表示a的值不可以变。</li>
+<li><p>3.1 叔叔节点也是红色(叔叔节点就是父节点的父节点的另一个儿子节点)</p>
+<p>​    父节点设为黑色，叔叔节点设为黑色，祖父节点设为红色，将祖父节点设为当前节点，之后对当前节点进行操作。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207230629066.png" srcset="/img/loading.gif" alt="image-20220207230629066"></p>
+</li>
+<li><p>3.2 叔叔节点也是黑色，且当前点是父节点的右孩子</p>
+<p>​    将父节点作为新的当前节点，以新的当前节点为支点进行左旋：</p>
+<p>   操作完后就会转化到3.3的情况</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207232442426.png" srcset="/img/loading.gif" alt="image-20220207232442426"></p>
+</li>
+<li><p>3.3 叔叔节点也是黑色，且当前点是父节点的左孩子</p>
+</li>
 </ul>
+<p>​            将父节点变为黑色，将祖父节点设为红色，然后以祖父节点为支点右旋。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207233330608.png" srcset="/img/loading.gif" alt="image-20220207233330608"></p>
+<h2 id="红黑树删除："><a href="#红黑树删除：" class="headerlink" title="红黑树删除："></a><strong>红黑树删除：</strong></h2><p>这里我们先解释一下在<strong>AVL中是如何删除</strong>的：</p>
+<p>1.假如要删除的节点只有1个儿子，那么直接把儿子提上来即可。</p>
+<p>2.假如要删除的节点有2个儿子，那么把<strong>右儿子的最左边节点</strong>提上来即可：</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220208142819636.png" srcset="/img/loading.gif" alt="image-20220208142819636"></p>
+<p>红黑树中删除和AVL的区别是还<strong>需要维护黑色平衡的性质：</strong></p>
+<p><strong>1.如果删除的是红色点</strong>，那么我们什么也不需要做，因为这不会影响黑色平衡的性质，和AVL一样重新调整平衡即可。</p>
+<p><strong>2.如果删除的是黑色点：</strong>先提上来的结点颜色变为混合色：<strong>黑(要删除节点的颜色)+黑/红(提上来结点颜色)</strong> 的混合颜色。</p>
+<ul>
+<li><p><strong>2.1</strong> <strong>黑+提上来的红色 ：</strong>结点设为黑色即可（因为提上来是的红色没了也不影响黑色平衡性，原来的黑色结点被删除后补上新的黑色保持了黑色平衡性）</p>
+</li>
+<li><p><strong>2.2 根节点的黑(根节点一定为黑色)+提上来的黑色：</strong>结点设为黑色即可（因为从根节点开始，只是相当于从根节点开始的所有路径到叶子结点的黑色结点数全部减一，但不影响黑色平衡性）。</p>
+</li>
+<li><p><strong>2.3 普通的黑色节点+提上来的黑色：</strong></p>
+<p>设x为当前要删除的黑色节点。</p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220209010529063.png" srcset="/img/loading.gif" alt="image-20220209010529063"></p>
+</li>
+</ul>
+<h2 id="红黑树和AVL比较："><a href="#红黑树和AVL比较：" class="headerlink" title="红黑树和AVL比较："></a>红黑树和AVL比较：</h2><ol>
+<li><p>红黑树不追求”完全平衡”，即不像AVL那样要求节点的 <code>|balFact| &lt;= 1</code>，它只要求部分达到平衡，但是提出了为节点增加颜色，红黑是用非严格的平衡来换取增删节点时候旋转次数的降低，任何不平衡都会在三次旋转之内解决，而AVL是严格平衡树，因此在增加或者删除节点的时候，根据不同情况，旋转的次数比红黑树要多。</p>
+</li>
+<li><p>插入节点导致树失衡的情况，AVL和RB-Tree都是最多两次树旋转来实现复衡rebalance，旋转的量级是O(1)。</p>
+</li>
+<li><p>删除节点导致失衡，AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN)，而RB-Tree最多只需要旋转3次实现复衡(注意:但是恢复红黑树的颜色性质需要少量logn的操作)，只需O(1)，所以说<strong>RB-Tree删除节点的rebalance的效率更高</strong>！</p>
+</li>
+<li><p><strong>AVL的结构相较于RB-Tree更为平衡</strong>，插入和删除引起失衡，如2所述，RB-Tree复衡效率更高；当然，由于<strong>AVL高度平衡，因此AVL的Search效率更高</strong>。</p>
+</li>
+<li><p>针对插入和删除节点导致失衡后的rebalance操作，红黑树能够提供一个比较”便宜”的解决方案，降低开销，是对search，insert ，以及delete效率的折衷，总体来说，RB-Tree的统计性能高于AVL.</p>
+</li>
+</ol>
+<p>   <strong>总结：</strong>引入RB-Tree是功能、性能、空间开销的折中结果。<br>   1.AVL更平衡，结构上更加直观，search快一些；维护稍慢(因为AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN) )，空间开销较大(每个节点需要额外两比特来表示左斜、平衡、右斜三种状态,红黑树的每个节点只需要额外一比特来表示红、黑两种颜色)。<br>   2.实际应用上，红黑树有着良好的稳定性和完整的功能，性能表现也很不错，综合实力强，在诸如STL的场景中需要稳定表现。</p>
 
             </div>
             <hr>
@@ -266,7 +304,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
                     
                   </div>
                 
@@ -279,18 +317,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/09/RB-tree/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">RB-tree红黑树</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/24/Leetcode%E7%AC%AC-277-%E5%9C%BA%E5%91%A8%E8%B5%9B%E9%A2%98%E8%A7%A3/">
-                        <span class="hidden-mobile">Leetcode第 277 场周赛题解</span>
+                      <a href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">const关键字修饰 相关问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -309,8 +341,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/';
-        this.page.identifier = '/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/';
+        this.page.url = 'https://chillstepp.github.io/2022/02/09/RB-tree/';
+        this.page.identifier = '/2022/02/09/RB-tree/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');

@@ -191,6 +191,62 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/09/RB-tree/" target="_self">
+          <img src="/rbtree.jpg" srcset="/img/loading.gif" alt="RB-tree红黑树">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/09/RB-tree/">RB-tree红黑树</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/09/RB-tree/">
+          
+          
+            
+          
+          RB-tree红黑树一些基本性质：1.根节点一定是黑色
+2.所有叶子结点(叶子结点都是空节点)都是黑色
+3.红色结点的两个子结点一定是黑色
+4.从任一个节点，到它每个叶子结点的路径都包含相同数目的黑色节点。
+
+红黑树插入：分三大类情况
+1.被插入的节点是根节点，直接把此节点涂黑
+2.被插入的节点的父节点是黑色，直接插进去并且把节点变成红色(这是因为变成红色就不会影响上述的 基本性质4)
+
+3.被插
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-09 23:52" pubdate>
+              2022-02-09
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" target="_self">
           <img src="/img/cpp.png" srcset="/img/loading.gif" alt="const关键字修饰 相关问题">
         </a>
@@ -621,58 +677,6 @@ A. A.M. Deviation(贪心)每次操作可以使得a+c-2*b   +3或者-3 。那么�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ACM-Codeforces/">ACM-Codeforces</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/11/11/ABC224-G-Roll-or-Increment-%E4%BA%BA%E7%B1%BB%E6%99%BA%E6%85%A7%EF%BC%8C%E6%95%B0%E5%AD%A6/" target="_self">
-          <img src="/img/acm.jpg" srcset="/img/loading.gif" alt="ABC224-G - Roll or Increment(人类智慧，数学)">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/11/11/ABC224-G-Roll-or-Increment-%E4%BA%BA%E7%B1%BB%E6%99%BA%E6%85%A7%EF%BC%8C%E6%95%B0%E5%AD%A6/">ABC224-G - Roll or Increment(人类智慧，数学)</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/11/ABC224-G-Roll-or-Increment-%E4%BA%BA%E7%B1%BB%E6%99%BA%E6%85%A7%EF%BC%8C%E6%95%B0%E5%AD%A6/">
-          
-          
-            
-          
-          题意一个$N$个面的骰子，开始的值是$S$，现在希望到$T$，你可以做两种操作，操作可以任意顺序，任意次：
-1.花费$A$：将$S$加$1$，但要注意$S$等于$N$时不可以进行该操作。
-2.花费$B$：随机投掷骰子一次，等概率出现$1-N$之间的数。
-寻求一种$S$到$T$期望花费最小的策略，输出最小期望。
-范围
-思路​    首先思考，如果一个骰子做了操作1在做操作2，这是十分奇怪的，因为既然
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-11 15:19" pubdate>
-              2021-11-11
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ACM-Atcoder/">ACM-Atcoder</a>
             
           </div>
         
