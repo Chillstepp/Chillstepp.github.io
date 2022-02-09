@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -282,18 +282,18 @@
 </li>
 </ul>
 <h2 id="红黑树和AVL比较："><a href="#红黑树和AVL比较：" class="headerlink" title="红黑树和AVL比较："></a>红黑树和AVL比较：</h2><ol>
-<li><p>红黑树不追求”完全平衡”，即不像AVL那样要求节点的 <code>|balFact| &lt;= 1</code>，它只要求部分达到平衡，但是提出了为节点增加颜色，红黑是用非严格的平衡来换取增删节点时候旋转次数的降低，任何不平衡都会在三次旋转之内解决，而AVL是严格平衡树，因此在增加或者删除节点的时候，根据不同情况，旋转的次数比红黑树要多。</p>
-</li>
-<li><p>插入节点导致树失衡的情况，AVL和RB-Tree都是最多两次树旋转来实现复衡rebalance，旋转的量级是O(1)。</p>
-</li>
-<li><p>删除节点导致失衡，AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN)，而RB-Tree最多只需要旋转3次实现复衡(注意:但是恢复红黑树的颜色性质需要少量logn的操作)，只需O(1)，所以说<strong>RB-Tree删除节点的rebalance的效率更高</strong>！</p>
-</li>
-<li><p><strong>AVL的结构相较于RB-Tree更为平衡</strong>，插入和删除引起失衡，如2所述，RB-Tree复衡效率更高；当然，由于<strong>AVL高度平衡，因此AVL的Search效率更高</strong>。</p>
-</li>
-<li><p>针对插入和删除节点导致失衡后的rebalance操作，红黑树能够提供一个比较”便宜”的解决方案，降低开销，是对search，insert ，以及delete效率的折衷，总体来说，RB-Tree的统计性能高于AVL.</p>
-</li>
+<li>红黑树不追求”完全平衡”，即不像AVL那样要求节点的 <code>|balFact| &lt;= 1</code>，它只要求部分达到平衡，但是提出了为节点增加颜色，红黑是用非严格的平衡来换取增删节点时候旋转次数的降低，任何不平衡都会在三次旋转之内解决，而AVL是严格平衡树，因此在增加或者删除节点的时候，根据不同情况，旋转的次数比红黑树要多。</li>
+<li>插入节点导致树失衡的情况，AVL和RB-Tree都是最多两次树旋转来实现复衡rebalance，旋转的量级是O(1)。</li>
+<li>删除节点导致失衡，AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN)，而RB-Tree最多只需要旋转3次实现复衡(注意:但是恢复红黑树的颜色性质需要少量logn的操作)，只需O(1)，所以说<strong>RB-Tree删除节点的rebalance的效率更高</strong>！</li>
+<li><strong>AVL的结构相较于RB-Tree更为平衡</strong>，插入和删除引起失衡，如2所述，RB-Tree复衡效率更高；当然，由于<strong>AVL高度平衡，因此AVL的Search效率更高</strong>。</li>
+<li>针对插入和删除节点导致失衡后的rebalance操作，红黑树能够提供一个比较”简单”的解决方案，降低开销，是对search，insert ，以及delete效率的折衷，总体来说，RB-Tree的统计性能高于AVL.</li>
 </ol>
-<p>   <strong>总结：</strong>引入RB-Tree是功能、性能、空间开销的折中结果。<br>   1.AVL更平衡，结构上更加直观，search快一些；维护稍慢(因为AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN) )，空间开销较大(每个节点需要额外两比特来表示左斜、平衡、右斜三种状态,红黑树的每个节点只需要额外一比特来表示红、黑两种颜色)。<br>   2.实际应用上，红黑树有着良好的稳定性和完整的功能，性能表现也很不错，综合实力强，在诸如STL的场景中需要稳定表现。</p>
+<h2 id="总结：引入RB-Tree是功能、性能、空间开销的折中结果。"><a href="#总结：引入RB-Tree是功能、性能、空间开销的折中结果。" class="headerlink" title="总结：引入RB-Tree是功能、性能、空间开销的折中结果。"></a><strong>总结：</strong>引入RB-Tree是功能、性能、空间开销的折中结果。</h2><ol>
+<li>AVL更平衡，结构上更加直观，<strong>search快一些；维护稍慢</strong>(因为AVL需要维护从被删除节点到根节点root这条路径上所有节点的平衡，旋转的量级为O(logN) )，<strong>空间开销较大</strong>(每个节点需要额外两比特来表示左斜、平衡、右斜三种状态,红黑树的每个节点只需要额外一比特来表示红、黑两种颜色)。</li>
+<li>实际应用上，红黑树有着良好的稳定性和完整的功能，性能表现也很不错，综合实力强，在诸如STL的场景中需要稳定表现。</li>
+</ol>
+<h2 id="Reference："><a href="#Reference：" class="headerlink" title="Reference："></a>Reference：</h2><p><a href="https://zhuanlan.zhihu.com/p/93369069" target="_blank" rel="noopener">关于AVL树和红黑树的一点看法</a></p>
+<p><a href="https://www.bilibili.com/video/BV1Ar4y1Q7Js?from=search&amp;seid=13164802402125540668" target="_blank" rel="noopener">视频-红黑树</a></p>
 
             </div>
             <hr>
@@ -585,20 +585,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
