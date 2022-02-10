@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>vector容器内存释放技巧:swap()</title>
+    <link href="/2022/02/11/vector%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E6%8A%80%E5%B7%A7-swap/"/>
+    <url>/2022/02/11/vector%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E6%8A%80%E5%B7%A7-swap/</url>
+    
+    <content type="html"><![CDATA[<h1 id="vector容器内存释放技巧-swap"><a href="#vector容器内存释放技巧-swap" class="headerlink" title="vector容器内存释放技巧:swap()"></a>vector容器内存释放技巧:swap()</h1><p>​    <code>.clear()</code>方法并不会释放内存，他只会清空内容，但是容器内存依然占据着，因此我们需要用一种swap trick来解决这个问题：</p><p>​    下面是一个利用swap trick来修整空间的例子：</p><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;v;<br>v.push_back(<span class="hljs-number">1</span>);<br>v.push_back(<span class="hljs-number">2</span>);<br>v.push_back(<span class="hljs-number">3</span>);<br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(v).swap(v);<br></code></pre></div></td></tr></table></figure><p>我们指导vector的扩容每次会扩大出大于我们所需要的额外的空间，但是如果后面我们暂时不会向vector中添加东西时，想要删除掉多余的额外空间，也就是修整空间，该怎么办呢？</p><p><strong>vector有一个特点就是：容器的拷贝构造函数不会开辟扩容出的空间</strong></p><p>即容器A赋值容器B时，即<strong>调用容器的拷贝构造函数</strong>时，容器B只会开辟正好可以容下容器A所有元素的容量，而不会开辟 <strong>容器A扩容出的空间</strong>。</p><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1;<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000</span>; i++)<br>&#123;<br>v1.push_back(i);<br>&#125;<br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v1的容量："</span> &lt;&lt; v1.capacity() &lt;&lt; <span class="hljs-built_in">endl</span>;<br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v1的大小："</span> &lt;&lt; v1.<span class="hljs-built_in">size</span>() &lt;&lt; <span class="hljs-built_in">endl</span>;<br><br>v1.resize(<span class="hljs-number">3</span>);<br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v1的容量："</span> &lt;&lt; v1.capacity() &lt;&lt; <span class="hljs-built_in">endl</span>;<br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v1的大小："</span> &lt;&lt; v1.<span class="hljs-built_in">size</span>() &lt;&lt; <span class="hljs-built_in">endl</span>;<br><br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;v2(v1);<br><br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v2的容量："</span> &lt;&lt; v2.capacity() &lt;&lt; <span class="hljs-built_in">endl</span>;<br><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"v2的大小："</span> &lt;&lt; v2.<span class="hljs-built_in">size</span>() &lt;&lt; <span class="hljs-built_in">endl</span>;<br></code></pre></div></td></tr></table></figure><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/20191121225536754.png" srcset="/img/loading.gif" alt="在这里插入图片描述"></p><p>如图容量只为3，而不是138255。同时上图的例子告诉我们<strong>resize也不能修整空间</strong>。</p><p>我们可以充分利用<strong>容器的拷贝构造函数不会开辟扩容出的空间</strong>这个特点，同时利用匿名容器会自动析构这个特点：使用这个技巧<code>vector&lt;int&gt;(v).swap(v);</code></p><p>即 我们首先创造出一个匿名的容器<code>vector&lt;int&gt;()</code> ，给他附上了v的所有元素，即<code>vector&lt;int&gt;(v)</code>，此时他的容量等于他的大小。我们将这个匿名的容器和v进行swap()后，v的容量就被修正了，同时匿名函数自动触发析构函数释放空间。</p><p>clear()可以清空所有元素。<strong>但是即使clear()，vector所占用的内存空间依然如故，无法保证内存的回收</strong>。因此同样的技巧可以用于释放vector的所有空间：</p><p>用一个空的vector去和我们想要清空的vector pointVec进行swap。</p><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">vector</span>&lt;Point&gt;().swap(pointVec);<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>RB-tree红黑树</title>
     <link href="/2022/02/09/RB-tree/"/>
     <url>/2022/02/09/RB-tree/</url>
