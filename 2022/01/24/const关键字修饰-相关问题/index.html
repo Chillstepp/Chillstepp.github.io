@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      280 字
+      887 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      11
        分钟
     </span>
   
@@ -239,23 +239,57 @@
             <h1 style="display: none">const关键字修饰 相关问题</h1>
             
             <div class="markdown-body">
-              <h1 id="const关键字修饰-相关问题"><a href="#const关键字修饰-相关问题" class="headerlink" title="const关键字修饰 相关问题"></a>const关键字修饰 相关问题</h1><p>const修饰问题很麻烦，一个不错的识别方式是：<strong>const 修饰的是后面紧接着的东西</strong></p>
-<p>下面举 引用/指针/变量 的例子：</p>
-<h1 id="int-const-amp-p-和const-int-amp-p"><a href="#int-const-amp-p-和const-int-amp-p" class="headerlink" title="int const &amp;p 和const int &amp;p"></a>int const &amp;p 和const int &amp;p</h1><ul>
-<li><p><code>int const &amp;p</code> 就是 <code>int （const &amp;p)</code>，代表p的值不可以被修改(即不能出现<code>p = 5</code>这种操作);  </p>
+              <h1 id="const关键字修饰-相关问题"><a href="#const关键字修饰-相关问题" class="headerlink" title="const关键字修饰 相关问题"></a>const关键字修饰 相关问题</h1><p>const修饰问题很麻烦，一个不错的识别方式是：<strong>const默认作用于其左边的东西，否则作用于其右边的东西：</strong></p>
+<h2 id="辨别方法"><a href="#辨别方法" class="headerlink" title="辨别方法"></a>辨别方法</h2><blockquote>
+<p>const int* </p>
+</blockquote>
+<p><code>const</code>只有右边有东西，所以<code>const</code>修饰<code>int</code>成为常量整型，然后<code>*</code>再作用于常量整型。所以这是<code>a pointer to a constant integer</code>（指向一个整型，不可通过该指针改变其指向的内容，但可改变指针本身所指向的地址）</p>
+<blockquote>
+<p>int const *</p>
+</blockquote>
+<p>再看这个，<code>const</code>左边有东西，所以<code>const</code>作用于<code>int</code>，<code>*</code>再作用于<code>int const</code>所以这还是<code>a pointer to a constant integer</code>（同上）</p>
+<p>因此上面两个是同一个东西</p>
+<blockquote>
+<p>int* const </p>
+</blockquote>
+<p>这个<code>const</code>的左边是<code>*</code>，所以<code>const</code>作用于指针（不可改变指向的地址），所以这是<code>a constant pointer to an integer</code>，可以通过指针改变其所指向的内容但只能指向该地址，不可指向别的地址。</p>
+<blockquote>
+<p>const int* const</p>
+</blockquote>
+<p>这里有两个<code>const</code>。左边的<code>const</code>的左边没东西，右边有<code>int</code>那么此<code>const</code>修饰<code>int</code>。右边的<code>const</code>作用于<code>*</code>使得指针本身变成<code>const</code>（不可改变指向地址），那么这个是<code>a constant pointer to a constant integer</code>，不可改变指针本身所指向的地址也不可通过指针改变其指向的内容。</p>
+<blockquote>
+<p>int const * const</p>
+</blockquote>
+<p>这里也出现了两个<code>const</code>，左边都有东西，那么左边的<code>const</code>作用于<code>int</code>，右边的<code>const</code>作用于<code>*</code>，于是这个还是是<code>a constant pointer to a constant integer</code></p>
+<blockquote>
+<p>int const <em> const </em></p>
+</blockquote>
+<p>左边的<code>const</code>：它左边有<code>int</code>，因此这个<code>const</code>修饰<code>int</code>变为常量整型</p>
+<p>右边的<code>const</code>：它左边有个<code>*</code>，因此这个<code>const</code>修饰<code>*</code>，因此这个<code>const</code>作用于指针（不可改变指向的地址）。</p>
+<p>此时我们发现现在还剩下一个<code>*</code>，表示是<code>int const * const</code>的指针</p>
+<p>因此这就是一个<code>a pointer to (a constant pointer to a constant integer)</code>，其实就是指向上边那个的东西的指针。</p>
+<blockquote>
+<p>int const <em> const </em> const</p>
+</blockquote>
+<p>分析同上：这是一个<code>a (constant) pointer to (a constant pointer to a constant integer)</code>，就是int const <em> const </em>不可改变指向地址的形式。</p>
+<h2 id="常见的-引用-指针-变量-的例子："><a href="#常见的-引用-指针-变量-的例子：" class="headerlink" title="常见的 引用/指针/变量 的例子："></a>常见的 引用/指针/变量 的例子：</h2><h3 id="int-const-amp-p-和const-int-amp-p"><a href="#int-const-amp-p-和const-int-amp-p" class="headerlink" title="int const &amp;p 和const int &amp;p"></a><code>int const &amp;p</code> 和<code>const int &amp;p</code></h3><ul>
+<li><p><code>int const &amp;p</code> ：左边有东西，作用的就是 <code>(int const) &amp;p</code>，代表<code>a reference to a constant integer</code>, 即p的值不可以被修改(即不能出现<code>p = 5</code>这种操作);  </p>
 </li>
-<li><p><code>const int &amp;p</code> 就是<code>(const int) &amp;p</code>，代表<code>const int</code>类型的引用，p只能对<code>const int类型</code>引用。 </p>
+<li><p><code>const int &amp;p</code> : 它的<code>const</code>左边没东西，因此和右边结合，就是<code>(const int) &amp;p</code>，<code>const</code>修饰<code>int</code>表示<code>a const integer</code>类型的引用。代表<code>a reference to a const integer</code>,因此和上面的是一回事。</p>
 </li>
 </ul>
-<h1 id="int-const-a和int-const-a"><a href="#int-const-a和int-const-a" class="headerlink" title="int const *a和int* const a"></a>int const *a和int* const a</h1><ul>
-<li><code>int const *a</code>，实际上可以看成是<code>int (const *a)</code>，这表示指针a所指向的地址可以变，但是所指向的那个值不能变。</li>
-<li><code>int* const a</code>，可以看成<code>int* (const a)</code>，我们都知道a的值其实是一个地址，这就表示a所保存的地址是不可以变的，但是这个地址对应的值是可以变的。</li>
+<h3 id="int-const-a和int-const-a和const-int-a"><a href="#int-const-a和int-const-a和const-int-a" class="headerlink" title="int const *a和int* const a和const int* a"></a><code>int const *a</code>和<code>int* const a</code>和<code>const int* a</code></h3><ul>
+<li><code>int const *a</code>：<code>const</code>和<code>int</code>结合因此这是一个<code>constant integer</code>, 因此这是一个 <code>a pointer to a constant integer</code>，即指针a可以变，但是所指向的那个值不能变。</li>
+<li><code>int* const a</code>：<code>const</code>作用于<code>*</code>，说明是一个<code>a constant pointer to a integer</code>,这就表示<code>a</code>所保存的地址是不可以变的，但是这个地址指向的值是可以变的。</li>
+<li><code>const int* a</code>：<code>const</code>左边没东西，因此只能作用于int，说明只是一个<code>a pointer to a constant integer</code>，即指针a可以变，但是所指向的那个值不能变，因此和第一个是一回事。</li>
 </ul>
-<h1 id="int-const-a和int-const-a-1"><a href="#int-const-a和int-const-a-1" class="headerlink" title="int const a和int const a"></a>int const a和int const a</h1><p>这俩是完全一致的，因为无论是：</p>
+<h3 id="int-const-a和int-const-a"><a href="#int-const-a和int-const-a" class="headerlink" title="int const a和int const a"></a><code>int const a</code>和<code>int const a</code></h3><p>这俩很简单，分析方法同上：</p>
 <ul>
-<li><code>int (const a)</code>表示 a的值不可以变</li>
-<li>还是<code>(const int) a</code> 表示a的类型是const int，也表示a的值不可以变。</li>
+<li><code>int const a</code>：<code>a constant integer</code></li>
+<li><code>const int a</code> ：<code>a constant integer</code>  </li>
 </ul>
+<p>完全一致</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>C++里 const int<em> 与 int const</em> 有什么区别？ - 王国潇的回答 - 知乎 <a href="https://www.zhihu.com/question/443195492/answer/1723886545" target="_blank" rel="noopener">https://www.zhihu.com/question/443195492/answer/1723886545</a></p>
 
             </div>
             <hr>
@@ -553,20 +587,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

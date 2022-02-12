@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.4k 字
+      3.7k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38
+      41
        分钟
     </span>
   
@@ -241,6 +241,11 @@
             <div class="markdown-body">
               <h1 id="C-面向对象高级编程"><a href="#C-面向对象高级编程" class="headerlink" title="C++面向对象高级编程"></a>C++面向对象高级编程</h1><h2 id="header头文件防卫式声明"><a href="#header头文件防卫式声明" class="headerlink" title="header头文件防卫式声明"></a>header头文件防卫式声明</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209230451166.png" srcset="/img/loading.gif" alt="image-20211209230451166"></p>
 <p>这是一种防卫式声明，防卫式声明的作用是：防止由于同一个头文件被包含多次，而导致了重复定义。防卫式声明表示，如果<code>__COMPLEX__</code>没有被定义过，那么就展开定义，否则跳过。</p>
+<p><code>__COMPLEX__</code>被称为<strong>预处理器变量</strong>一般有两种状态：已定义或未定义。</p>
+<ul>
+<li><h1 id="ifndef-指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直到出现-endif；如果已定义，那么-ifndef测试为假，该指示和-endif指示间的代码都被忽略。"><a href="#ifndef-指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直到出现-endif；如果已定义，那么-ifndef测试为假，该指示和-endif指示间的代码都被忽略。" class="headerlink" title="ifndef 指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直到出现#endif；如果已定义，那么#ifndef测试为假，该指示和#endif指示间的代码都被忽略。"></a>ifndef 指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直到出现#endif；如果已定义，那么#ifndef测试为假，该指示和#endif指示间的代码都被忽略。</h1></li>
+<li><h1 id="define-指示接受一个名字并定义该名字为预处理器变量。"><a href="#define-指示接受一个名字并定义该名字为预处理器变量。" class="headerlink" title="define 指示接受一个名字并定义该名字为预处理器变量。"></a>define 指示接受一个名字并定义该名字为预处理器变量。</h1></li>
+</ul>
 <p>一个例子：</p>
 <figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">-- <span class="hljs-string">"Car.h"</span>，代码如下（并没有添加防卫式声明）：<br><span class="hljs-comment">// Car.h</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-comment">// ...</span><br>&#125;;<br>-- <span class="hljs-string">"Person.h"</span>，代码如下（包含了Car.h文件）：<br><span class="hljs-comment">// Person.h</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"Car.h"</span></span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    Car car;<br>&#125;;<br>-- 在<span class="hljs-string">"main.cpp"</span>中，我们同时include两个头文件：<br><br><span class="hljs-comment">// main.cpp</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"Car.h"</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"Person.h"</span></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * argv[])</span> &lt;br&gt;</span>&#123;<br>    Person p;<br>&#125;<br>此时，我们会发现编译出错：Redefinition of 'Car'.<br></code></pre></div></td></tr></table></figure>
 <p>我们需要知道，在预编译阶段，编译器会把.h文件展开，即main.cpp中的代码可以看做是：</p>
@@ -250,9 +255,15 @@
 <p>因此出现了模板：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209231508596.png" srcset="/img/loading.gif" alt="image-20211209231508596"></p>
 <p>我们先把类型设为T，使用时根据所写的类型再将T绑定为各种类型。</p>
-<h2 id="inline内敛函数"><a href="#inline内敛函数" class="headerlink" title="inline内敛函数"></a>inline内敛函数</h2><p>如果你的函数写在class定义里，那么这个函数会成为<strong>inline函数</strong>的候选人，具体内敛与否还要看编译器自己。</p>
+<h2 id="inline内敛函数"><a href="#inline内敛函数" class="headerlink" title="inline内敛函数"></a>inline内敛函数</h2><p>首先了解一下什么是内敛函数？</p>
+<p><strong>内联函数</strong>（有时称作<strong>在线函数</strong>或<strong>编译时期展开函数</strong>），用来建议<a href="https://baike.baidu.com/item/编译器" target="_blank" rel="noopener">编译器</a>对一些特殊<a href="https://baike.baidu.com/item/函数" target="_blank" rel="noopener">函数</a>进行内联扩展（有时称作<strong>在线扩展</strong>）；也就是说建议编译器将指定的函数体插入并取代每一处调用该函数的地方（<a href="https://baike.baidu.com/item/上下文" target="_blank" rel="noopener">上下文</a>），从而节省了每次调用函数带来的额外时间开支。但在选择使用内联函数时，必须在程序占用空间和程序执行效率之间进行权衡，因为过多的比较复杂的函数进行内联扩展将带来很大的存储资源开支。</p>
+<ul>
+<li>如果你的函数写在class定义里，那么这个函数会成为<strong>inline函数</strong>的候选人，具体内敛与否还要看编译器自己。</li>
+</ul>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209232037127.png" srcset="/img/loading.gif" alt="image-20211209232037127"></p>
-<p>你也可以给函数前加上inline，但是这只是你对编译器的<strong>建议</strong>，具体内敛与否还要看编译器自己。</p>
+<ul>
+<li>你也可以给函数前加上inline，但是这只是你对编译器的<strong>建议</strong>，具体内敛与否还要看编译器自己。</li>
+</ul>
 <h2 id="access-level访问级别"><a href="#access-level访问级别" class="headerlink" title="access level访问级别"></a>access level访问级别</h2><p><strong>private,public,protected的访问范围:</strong></p>
 <p><strong>private:</strong> 只能由该类中的函数、其友元函数访问,不能被任何其他访问，该类的对象也不能访问.<br><strong>protected:</strong> 可以被该类中的函数、子类的函数、以及其友元函数访问,但不能被该类的对象访问<br><strong>public:</strong> 可以被该类中的函数、子类的函数、其友元函数访问,也可以由该类的对象访问<br>注：友元函数包括两种：设为友元的全局函数，设为友元类中的成员函数</p>
 <p><strong>类的继承后方法属性变化:</strong><br><strong>使用private继承</strong>,父类的所有方法在子类中变为private;<br><strong>使用protected继承</strong>,父类的protected和public方法在子类中变为protected,private方法不变;<br><strong>使用public继承</strong>,父类中的方法属性不发生改变;</p>
@@ -706,20 +717,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
