@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.7k 字
+      4k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      41
+      44
        分钟
     </span>
   
@@ -272,13 +272,13 @@
 <p>等价于</p>
 <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">complex</span>(<span class="hljs-keyword">double</span> r=<span class="hljs-number">0</span>,<span class="hljs-keyword">double</span> i=<span class="hljs-number">0</span>)&#123;re=r;im=i;&#125;<br></code></pre></div></td></tr></table></figure>
 <p>但我们尽量用第一种，第一种写法更正规，这是构造函数特有的写法(指<code>:re(r),im(i){}</code>)。</p>
-<h2 id="构造函数的重载overloading"><a href="#构造函数的重载overloading" class="headerlink" title="构造函数的重载overloading"></a>构造函数的重载overloading</h2><p>首先函数是可以重载overloading的，即参数不同，但是函数名相同，调用函数时编译器会自动选择参数对应的函数，<strong>重载的几个同名函数本质上都是各不相同的函数</strong>：</p>
+<h2 id="构造函数的重载overloading"><a href="#构造函数的重载overloading" class="headerlink" title="构造函数的重载overloading"></a>构造函数的重载overloading</h2><p>函数是可以重载overloading的，即参数不同，但是函数名相同，调用函数时编译器会自动选择参数对应的函数，<strong>重载的几个同名函数本质上都是各不相同的函数</strong>：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209234150840.png" srcset="/img/loading.gif" alt="image-20211209234150840"></p>
 <p>这种是正确的吗？</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209234407554.png" srcset="/img/loading.gif" alt="image-20211209234407554"></p>
 <p>比如定义一个<code>complex c</code>此时编译器发现这两者都可以使用一个是全是默认参数，另一个是无参，编译器认为都可以，所以此时这两者是不能一起存在的。</p>
-<h2 id="构造函数放在private的意义"><a href="#构造函数放在private的意义" class="headerlink" title="构造函数放在private的意义"></a>构造函数放在private的意义</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209234847158.png" srcset="/img/loading.gif" alt="image-20211209234847158"></p>
-<p>此时是不能调用构造函数的，所以这种做法一定不可能出现吗？并不是，当你不希望被外界创建对象时可以使用，那么这样的一个类还有什么用呢？单例模式。（下面内容建议先浏览<code>static静态：静态变量，静态函数</code>这一节）</p>
+<h2 id="构造函数放在private的意义—单例模式"><a href="#构造函数放在private的意义—单例模式" class="headerlink" title="构造函数放在private的意义—单例模式"></a>构造函数放在private的意义—单例模式</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209234847158.png" srcset="/img/loading.gif" alt="image-20211209234847158"></p>
+<p>此时是不能调用构造函数的，所以这种做法一定不可能出现吗？并不是，当你不希望被外界创建对象时可以使用，那么这样的一个类还有什么用呢？<strong>单例模式</strong>。（下面内容建议先浏览<code>static静态：静态变量，静态函数</code>这一节）</p>
 <p>没有任何人可以创建A类，A类只有一个对象a一开始就被创造好等待被初始化。 </p>
 <ul>
 <li><p>外界想获得这唯一的a：通过<code>getInstance()</code>函数</p>
@@ -299,8 +299,10 @@
 <p><strong>当成员函数const和non-const版本同时存在，const对象只会调用const版本，non-const对象只会调用non-const版本。</strong></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211220021543751.png" srcset="/img/loading.gif" alt="image-20211220021543751"></p>
 <h2 id="传参：by-value-by-reference"><a href="#传参：by-value-by-reference" class="headerlink" title="传参：by value/by reference"></a>传参：by value/by reference</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210000143936.png" srcset="/img/loading.gif" alt="image-20211210000143936"></p>
-<p>引用<strong>占四个字节</strong>的内存。</p>
+<p>引用<strong>占四个字节</strong>的内存(本质是一个指针)。</p>
 <p>我们尽量都传引用，因为他普遍来说更快，但是引用有可能会改变原来的值，如果我们不希望这种情况发生，那么可以利用(const complex&amp;)的方法，使得参数无法修改。</p>
+<p>pass by reference(to const)的一个小例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">/*pass by reference*/</span><br><span class="hljs-keyword">int</span> c = <span class="hljs-number">10</span>;<br><span class="hljs-keyword">int</span> &amp;a = c;<br>a = <span class="hljs-number">5</span>;<br><span class="hljs-built_in">cout</span>&lt;&lt;c&lt;&lt;<span class="hljs-built_in">endl</span>;<span class="hljs-comment">//输出5，这个引用时可以修改引用值的</span><br><br><span class="hljs-comment">/*pass by reference(to const)*/</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="友元friend"><a href="#友元friend" class="headerlink" title="友元friend"></a>友元friend</h2><p>一份更仔细的介绍: <a href="https://www.cnblogs.com/zhuguanhao/p/6286145.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhuguanhao/p/6286145.html</a></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210001054480.png" srcset="/img/loading.gif" alt="image-20211210001054480"></p>
 <p>友元不是成员函数，但是它<strong>可以访问类中的私有成员</strong>，但他会破坏c++类的封装性，尽量少用，规范的用。</p>
@@ -336,9 +338,9 @@
 <p><strong>重载&lt;&lt;的函数返回值可以加<code>const</code>吗？</strong></p>
 <p>不可以，因为这里在不断改变<code>cout</code>的状态：</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210203457500.png" srcset="/img/loading.gif" alt="image-20211210203457500"></p>
-<h2 id="拷贝构造函数-析构函数"><a href="#拷贝构造函数-析构函数" class="headerlink" title="拷贝构造函数/析构函数"></a>拷贝构造函数/析构函数</h2><p>拷贝构造函数如果你不写编译器会默认帮你写一个，即单纯的一个个把成员变量复制过去，但是对于字符串，里面的变量是指针，就会拷贝完后两者都指向同一个字符串。</p>
+<h2 id="拷贝构造函数-析构函数"><a href="#拷贝构造函数-析构函数" class="headerlink" title="拷贝构造函数/析构函数"></a>拷贝构造函数/析构函数</h2><p><strong>拷贝构造函数</strong>如果你不写编译器会默认帮你写一个，即单纯的一个个把成员变量复制过去，但是对于字符串，里面的变量是指针，就会拷贝完后两者都指向同一个字符串。默认的构造函数是有风险的：如果你修改原对象中的字符串，会导致拷贝得到的那个对象字符串也发生变化。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210204953451.png" srcset="/img/loading.gif" alt="image-20211210204953451"></p>
-<p>析构函数：</p>
+<p><strong>析构函数：</strong></p>
 <p>class里有指针我们大多数会做动态分配内存，动态分配的话在变量生命结束之前要释放空间。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210205056346.png" srcset="/img/loading.gif" alt="image-20211210205056346"></p>
 <p>delete对象的指针就是：将指针所指向的内存空间回收</p>
@@ -347,9 +349,9 @@
 <p>例如下面 world就造成了<strong>内存泄漏</strong></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210205903468.png" srcset="/img/loading.gif" alt="image-20211210205903468"></p>
 <p>因此对于重载=函数，需要</p>
-<p>1.先清空自己，防止内存泄露</p>
-<p>2.重新分配空间</p>
-<p>3.给新空间赋值</p>
+<p><strong>1.先清空自己，防止内存泄露(这点一定要注意，因为可能存在<code>s1 = s2, s1 = s3, s1 = s4</code>这种多次赋值操作，如果不清空每次提前自己就会导致自己之前new出的内存找不到了，导致内存泄漏)</strong></p>
+<p><strong>2.重新分配空间</strong></p>
+<p><strong>3.给新空间赋值</strong></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210210133496.png" srcset="/img/loading.gif" alt="image-20211210210133496"></p>
 <p>同时要注意到<strong>自我赋值问题</strong>，即a = a这种傻瓜的用法，但可能确实存在这种用法，因此此时return 自己即可。如果你不写自我赋值检测，那么做以上那么三步，会导致结果出错。</p>
 <h2 id="堆，栈与内存管理"><a href="#堆，栈与内存管理" class="headerlink" title="堆，栈与内存管理"></a>堆，栈与内存管理</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210211452869.png" srcset="/img/loading.gif" alt="image-20211210211452869"></p>
@@ -359,10 +361,10 @@
 <p>指针生命结束了，但指针所指的堆中的空间仍然存在。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210225514119.png" srcset="/img/loading.gif" alt="image-20211210225514119"></p>
 <h2 id="new一个对象的原理"><a href="#new一个对象的原理" class="headerlink" title="new一个对象的原理"></a>new一个对象的原理</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210225938299.png" srcset="/img/loading.gif" alt="image-20211210225938299"></p>
-<p>所以new一个类的对象内部其实做了三件事情：</p>
-<p>1.<code>operator new()</code> 分配空间并返回一个<code>void*</code>类型指针p</p>
-<p>2.void*类型 强转(通过<code>static_cast</code>) 成为目标class类型指针p</p>
-<p>3.指针p调用构造函数。</p>
+<p>所以<strong>new一个类的对象内部其实做了三件事情：</strong></p>
+<p><strong>1.<code>operator new()</code> 分配空间并返回一个<code>void*</code>类型指针p</strong></p>
+<p><strong>2.void*类型 强转(通过<code>static_cast</code>) 成为目标class类型指针p</strong></p>
+<p><strong>3.指针p调用构造函数。</strong></p>
 <p>TIPS of <code>operator new()</code></p>
 <blockquote>
 <p>operator new()：指对new的重载形式，它是一个函数，并不是运算符。</p>
@@ -384,14 +386,16 @@
 <p>比如银行的利率每年调整，每个人的账户都加入一个利率显然是没必要的重复数据，修改也不方便，那利率就可以设置为static 数据，自己独自一份。</p>
 <p><strong>static静态函数：</strong></p>
 <p>他只能处理静态数据</p>
-<p>static 称为类变量，它属于这个类，而不属于这个类的实例对象（但是可以通过实例对象去访问），当类连接的时候就为其分配空间并初始化默认值，空间分配在堆中。 </p>
+<p><strong>static 称为类变量，它属于这个类，而不属于这个类的实例对象</strong>（但是可以通过实例对象去访问），当类链接的时候就为其分配空间并初始化默认值，空间分配在堆中。 </p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210234931612.png" srcset="/img/loading.gif" alt="image-20211210234931612"></p>
 <p><strong>调用static函数方式</strong>有两种：可以通过对象调用或者类名直接调用。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210234550827.png" srcset="/img/loading.gif" alt="image-20211210234550827"></p>
 <p><strong>单例模式可以有这种写法</strong></p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211209235038633.png" srcset="/img/loading.gif" alt="image-20211209235038633"></p>
-<p>尝试更好的写法：static变量写在函数里，即即使你一开始创建了A a，但没有人用这个单例，依然不会占用空间。</p>
+<p><strong>尝试更好的写法：</strong>static变量写在函数里，即即使你一开始创建了A a，但没有人用这个单例，依然不会占用空间。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211210235828020.png" srcset="/img/loading.gif" alt="image-20211210235828020"></p>
+<p>自己写的一个小例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> x,y;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> A&amp; <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">static</span> A a;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br><br>    A(<span class="hljs-keyword">int</span> xx = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> yy = <span class="hljs-number">0</span>): x(xx), y(yy) &#123;&#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br><br>    <span class="hljs-built_in">cout</span>&lt;&lt;A::getInstance().x&lt;&lt;<span class="hljs-built_in">endl</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="函数模板中的参数推导-argument-deduction"><a href="#函数模板中的参数推导-argument-deduction" class="headerlink" title="函数模板中的参数推导(argument deduction)"></a>函数模板中的参数推导(argument deduction)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211211001053901.png" srcset="/img/loading.gif" alt="image-20211211001053901"></p>
 <h2 id="namespace命名空间"><a href="#namespace命名空间" class="headerlink" title="namespace命名空间"></a>namespace命名空间</h2><p>对标准库里的东西全部打开，以后不用写<code>std::cin</code>等 直接写<code>cin</code>即可</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211211001343326.png" srcset="/img/loading.gif" alt="image-20211211001343326"></p>
@@ -717,5 +721,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
