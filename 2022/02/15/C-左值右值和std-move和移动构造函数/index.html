@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>C++左值右值/std::move()/移动构造函数 - Chillstep</title>
+  <title> C++左值右值/左右值引用/std::move() - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="C++左值右值/std::move()/移动构造函数">
+            <span class="h2" id="subtitle" title=" C++左值右值/左右值引用/std::move()">
               
             </span>
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      309 字
+      1.7k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      19
        分钟
     </span>
   
@@ -236,18 +236,18 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">C++左值右值/std::move()/移动构造函数</h1>
+            <h1 style="display: none"> C++左值右值/左右值引用/std::move()</h1>
             
             <div class="markdown-body">
-              <h1 id="C-左值右值-std-move-移动构造函数"><a href="#C-左值右值-std-move-移动构造函数" class="headerlink" title="C++左值右值/std::move()/移动构造函数"></a>C++左值右值/std::move()/移动构造函数</h1><h2 id="左值-右值"><a href="#左值-右值" class="headerlink" title="左值/右值"></a>左值/右值</h2><ul>
-<li><strong>左值(lvalue)</strong>是放在赋值语句左边可以被赋值的值，左值必须在内存中有一个确定的地址。</li>
-<li><strong>右值(rvalue)</strong>用来放在赋值语句右边，将自己的值取出赋给别的变量，右值没有一个确定的地址。</li>
+              <h1 id="C-左值右值-左右值引用-std-move"><a href="#C-左值右值-左右值引用-std-move" class="headerlink" title="C++左值右值/左右值引用/std::move()"></a>C++左值右值/左右值引用/std::move()</h1><h2 id="左值-右值"><a href="#左值-右值" class="headerlink" title="左值/右值"></a>左值/右值</h2><ul>
+<li><strong>左值(lvalue)</strong>是放在赋值语句左边可以被赋值的<strong>值(不是变量！)</strong>，<strong>左值必须在内存中有一个确定的地址</strong>。</li>
+<li><strong>右值(rvalue)</strong>用来放在赋值语句右边，将自己的值取出赋给别的变量，<strong>右值没有一个确定的地址</strong>。</li>
 </ul>
 <p>也可以这么理解：</p>
 <ul>
-<li><p><strong>左值</strong>是指表达式结束后依然存在的持久化对象</p>
+<li><p><strong>左值</strong>是指表达式结束后依然存在的<strong>持久化对象</strong></p>
 </li>
-<li><p><strong>右值</strong>是指表达式结束时就不再存在的临时对象。所有的具名变量或者对象都是左值，而右值不具名。</p>
+<li><p><strong>右值</strong>是指<strong>表达式结束时就不再存在的临时对象</strong>。所有的具名变量或者对象都是左值，而右值不具名（所以匿名变量是一个右值）。</p>
 </li>
 </ul>
 <p>《C++ Primer（第5版）》中描述左值和右值：</p>
@@ -255,9 +255,52 @@
 <li>当对象被用作<strong>左值</strong>的时候，用的是对象的身份（在内存中的位置）</li>
 <li>当一个对象被用作<strong>右值</strong>的时候，用的是对象的值（内容）</li>
 </ul>
-<h2 id="左值引用-右值引用"><a href="#左值引用-右值引用" class="headerlink" title="左值引用/右值引用"></a>左值引用/右值引用</h2><p><strong>常见的右值：</strong>“abc”,123等都是右值。</p>
-<p><strong>右值引用，</strong>用以引用一个右值，可以延长右值的生命期，比如</p>
-<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span>&amp;&amp; i = <span class="hljs-number">123</span>;<span class="hljs-comment">//i 此时是一个右值</span><br><span class="hljs-keyword">int</span>&amp;&amp; j = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(i);<br><span class="hljs-keyword">int</span>&amp;&amp; k = i;<span class="hljs-comment">//编译不过，这里i是一个左值，右值引用只能引用右值</span><br></code></pre></div></td></tr></table></figure>
+<p>以上三个说法都是非常容易理解的，下面我们举个例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">int</span>* px = &amp;x;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li><code>int x</code>中的<code>x</code>是一个左值，因为他是赋值语句<code>=</code>左边的值，表达式结束后依然存在的持久化对象，用的是对象的身份（在内存中的位置，向内存写入0）</li>
+<li><code>&amp;x</code>是返回一个右值，它指向了对象x的地址，通过赋值运算符<code>=</code>，将对象<code>x</code>的地址（右值）赋值给了一个新定义的左值对象<code>px</code>。</li>
+</ul>
+<p><strong>常见的右值：</strong>“abc”,123这种字面值常量和表达式求值过程中创建的<strong>临时对象</strong>，还有<code>typename()</code>这种匿名变量/匿名对象。</p>
+<h3 id="访问关系上来看"><a href="#访问关系上来看" class="headerlink" title="访问关系上来看"></a>访问关系上来看</h3><p><strong>一般来说：</strong>右值可以读，不可以写；左值既可以读，也可以写。</p>
+<p>当然有一些<strong>例外情况</strong>： </p>
+<ul>
+<li><p>即使它是左值，也不可以被修改，比如<code>const</code>限定符，<code>const int a = 3</code>,<code>a</code>是不可以被修改的。</p>
+</li>
+<li><p>右值在某些情况下也可以写，就是右值引用</p>
+<ul>
+<li>```c++<br>int a = 0;<br>int &amp;&amp;temp = a + 3;<figure class="highlight angelscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs angelscript"><br>### 从替代关系上来看<br><br>**一般来说：**需要右值的地方，都可以使用左值来替代。<br><br>当然有一些**例外情况**： <br><br>- 右值引用接收右值，拒绝左值<br><br>  - ```c++<br>    <span class="hljs-built_in">int</span> a = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">int</span> &amp;&amp;temp = a + <span class="hljs-number">3</span>;<span class="hljs-comment">//yes 右值引用接受 a + 3这个表达式(右值)</span><br>    <span class="hljs-built_in">int</span> &amp;&amp;temp1 = a; <span class="hljs-comment">// no 右值引用不接受a这个左值</span><br></code></pre></div></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="左值引用-右值引用"><a href="#左值引用-右值引用" class="headerlink" title="左值引用/右值引用"></a>左值引用/右值引用</h2><h3 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h3><p>​    <strong>引用是变量的别名</strong>，必初始化，C++引入的，C语言只有指针，没有引用。引用操作从反汇编层面看可以说完全指针一样，从使用层面来说的确降低大家都指针的理解成本，传参时引用本意减少拷贝，提高性能，但由于是编译器的内部转为为指针，有时比指针的灵活性弱一点点，像原来拷贝构造函数<code>const T&amp;</code>左引用存在一定的缺陷，右值引用带来的移动语义就是来弥补。</p>
+<p>​    <strong>指向左值的引用就是左引用</strong>，我们单个<code>&amp;</code>来表示，C++11前一直使用的;<strong>对右值的引用是右引用</strong>，我们用<code>&amp;&amp;</code>来表示，如下面代码示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> a1 = <span class="hljs-number">100</span>;<br><br><br><span class="hljs-comment">// c1对左值a1引用，左引用</span><br><span class="hljs-keyword">int</span>&amp; c1 = a1;<br><br><span class="hljs-comment">// b1对右值200的引用，右引用</span><br><span class="hljs-keyword">int</span>&amp;&amp; b1 = <span class="hljs-number">200</span>;<br><br><span class="hljs-comment">// rkTA1对右值TestClassA(1000)进行右引用(匿名变量是左值！)</span><br>TestClassA&amp;&amp; rkTA1 = TestClassA(<span class="hljs-number">1000</span>);<br><br><span class="hljs-comment">// 无法对右值( a1++)进行左引用，编译失败</span><br><span class="hljs-keyword">int</span>&amp; c2 = a1++; <span class="hljs-comment">// error</span><br><br><span class="hljs-comment">// 无法对左值a1进行直接右引用，编译失败</span><br><span class="hljs-keyword">int</span>&amp;&amp; b2 = a1; <span class="hljs-comment">// error</span><br><br><span class="hljs-comment">// 无法对右值TestClassA(1000)进行左引用，编译失败</span><br>TestClassA&amp; rkTA2 = TestClassA(<span class="hljs-number">1000</span>); <span class="hljs-comment">// error</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>注意：虽然右值引用只能引用右值，但是右值引用本身却是左值。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> &amp;&amp;rr_1 = <span class="hljs-number">42</span>;<br><span class="hljs-keyword">int</span> &amp;&amp;rr_2 = rr_1;  <span class="hljs-comment">// 编译错误 error: cannot bind rvalue reference of type 'int&amp;&amp;' to lvalue of type 'int'|</span><br></code></pre></div></td></tr></table></figure>
+<p>因此<code>rr_1</code>单独使用，是一个表达式——一个没有运算符的表达式，它返回的是左值；因此不可以将右值引用绑定到左值<code>rr_1</code>上。</p>
+<h3 id="一种特殊的常量左值引用"><a href="#一种特殊的常量左值引用" class="headerlink" title="一种特殊的常量左值引用"></a>一种特殊的常量左值引用</h3><p><strong>有没有直接对右值进行左引用的？</strong></p>
+<p>还真有，那就是<strong><code>const T&amp;</code></strong>，<strong>常量左值引用，能接受右值</strong>，对右值进行这种形式左引用写法也不少，其生命周期被延续。</p>
+<p><strong>这个<code>const T&amp;</code>最大的好处就是：</strong></p>
+<p><strong>工业界实践</strong>的时候，如果C++中，函数传参，不改变参数时，尤其是大数据，尽量使用<code>const T&amp;</code>。我们常用的<strong>拷贝构造函数T(const T&amp;)参数是这个形式，vector容器的函数push_back(const value_type&amp; val)参数也是</strong>，有没有注意到，这类函数<strong>同时接受右值和左值</strong>。</p>
+<h2 id="左右值转换：std-move"><a href="#左右值转换：std-move" class="headerlink" title="左右值转换：std::move"></a>左右值转换：std::move</h2><p>既然是左/右值引用数据类型，就存在转换关系。</p>
+<p>我们可以使用标准库函数<code>std::move</code>得到左值的右值引用类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> &amp;&amp;rr_1 = <span class="hljs-number">42</span>;<br><span class="hljs-keyword">int</span> &amp;&amp;rr_2 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(rr_1);<br></code></pre></div></td></tr></table></figure>
+<p><code>move</code>调用告诉编译器，我们有一个左值<code>rr_1</code>，但是我希望像一个右值一样处理它。我们必须保证，接下来除了对<code>rr_1</code>赋值或销毁它，我们不再使用它。我们不能对<code>rr_1</code>的值作任何假设。</p>
+<p>《C++ Primer（第5版）》推荐使用<code>std::move</code>而不是<code>move</code>，可以避免潜在的命名冲突。</p>
+<p><strong>std::move的定义：</strong></p>
+<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/v2-2ed58d5f5802817edbbf0008dffc7715_r.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>​    这里，<code>T&amp;&amp;</code>是通用引用，需要注意和右值引用（比如<code>int&amp;&amp;</code>）区分。通过<code>move</code>定义可以看出，<strong>move并没有”移动“什么内容</strong>，<strong>只是将传入的值转换为右值</strong>，此外没有其他动作。<code>std::move</code><strong>+移动构造函数或者移动赋值运算符</strong> ，也就是两者合力才起到这样的作用，才能充分起到减少不必要拷贝的意义。<br><strong>std::move使用前提：</strong></p>
+<ul>
+<li><p>定义的类使用了资源并定义了移动构造函数和移动赋值运算符 (右值和移动构造函数/移动赋值函数配合使用才能起到资源直接转移的作用，减少不必要的拷贝)  </p>
+</li>
+<li><p>该变量即将不再使用 (很容易理解：move后就会变成右值，右值不再具有资源，而单纯作为一个值，不再作为一个对象)</p>
+</li>
+</ul>
+<p><strong>关于move到底是怎么做到左右值转换的请看这篇文章：</strong></p>
+<p><a href="https://blog.csdn.net/daaikuaichuan/article/details/88371948" target="_blank" rel="noopener">https://blog.csdn.net/daaikuaichuan/article/details/88371948</a></p>
+<p>简单总结下来就是：我们通过<code>static_cast&lt;&gt;</code>进行强制类型转换返回<code>T&amp;&amp;</code>右值引用，而<code>static_cast</code>之所以能使用类型转换，是通过<code>remove_refrence::type</code>的偏特化模板移除T&amp;&amp;，T&amp;的引用，获取具体类型T（模板偏特化）。</p>
 
             </div>
             <hr>
