@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.8k 字
+      5.9k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      68
+      70
        分钟
     </span>
   
@@ -385,13 +385,17 @@
 <p><strong>函数重载中，函数仅有是否加const的区别会被认为是不同函数，因此可以同时出现：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">test</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">imag</span><span class="hljs-params">(<span class="hljs-keyword">double</span> im)</span><span class="hljs-keyword">const</span></span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-number">1.0</span>;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">imag</span><span class="hljs-params">(<span class="hljs-keyword">double</span> im)</span></span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-number">2.0</span>;&#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br><br>   <span class="hljs-comment">// fastIO</span><br>    <span class="hljs-keyword">const</span> test a;<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> t = <span class="hljs-number">1.5</span>;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;a.imag(t)&lt;&lt;<span class="hljs-built_in">endl</span>; <span class="hljs-comment">//1</span><br><br>    test b;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;b.imag(t)&lt;&lt;<span class="hljs-built_in">endl</span>; <span class="hljs-comment">//2</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>因此我们可以 认为const是判别是否为相同函数的<strong>函数签名</strong> 的一部分</p>
-<h2 id="虚指针-vptr-和虚表-vtbl"><a href="#虚指针-vptr-和虚表-vtbl" class="headerlink" title="虚指针(vptr)和虚表(vtbl)"></a>虚指针(vptr)和虚表(vtbl)</h2><p>带<code>x</code>个虚函数的class的大小会多<code>x*4</code>字节，这是因为虚函数有一个虚函数指针，他的大小是4字节，这个虚函数指针会指向虚表。</p>
+<h2 id="虚指针-vptr-和虚表-vtbl"><a href="#虚指针-vptr-和虚表-vtbl" class="headerlink" title="虚指针(vptr)和虚表(vtbl)"></a>虚指针(vptr)和虚表(vtbl)</h2><p>带<code>x</code>个虚函数的class的大小也只会多 <strong>8 字节(64位下)</strong>，这是因为含有虚函数的对象/类有一个虚表指针，他的大小是8字节，这个虚表指针会指向虚表。</p>
+<p><strong>那么编译器是如何处理虚函数的呢？</strong></p>
+<p>1.如果<strong>类中有虚函数，就将虚函数的地址记录在类的虚函数表中</strong>。</p>
+<p>2.<strong>派生类在继承基类的时候，如果有重写基类的虚函数，就将虚函数表中相应的函数指针设置为派生类的函数地址</strong>，否则指向基类的函数地址。<br>3.<strong>为每个类的实例添加一个虚表指针（vptr），虚表指针指向类的虚函数表</strong>。</p>
+<p>4.实例在调用虚函数的时候，<strong>通过这个虚函数表指针找到类中的虚函数表，再找到相应的函数进行调用</strong>。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211216200306046.png" srcset="/img/loading.gif" alt="image-20211216200306046"></p>
 <p>1.首先<code>class A</code>有两个虚函数，因此虚表应该有两个指针指向两个虚函数。如下图标出的红色框。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211216201251442.png" srcset="/img/loading.gif" alt="image-20211216201251442"></p>
 <p>2.<code>class B</code>继承了<code>Class A</code>，但是<code>class B</code>的虚函数也是<code>vfun1()</code>，由于和从<code>A</code>继承的虚函数<code>vfun1()</code>同名，这就会推翻<code>class B</code>从<code>class A</code>所继承来的<code>vfun1()</code>, 因此可以看作是一个全新的函数<code>B::vfun1()</code>。除此之外，还会从<code>class A</code>继承一个<code>vfun2()</code>虚函数。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211216201727405.png" srcset="/img/loading.gif" alt="image-20211216201727405"></p>
-<p>虚函数实现了多态：</p>
+<p><strong>虚函数实现了多态：</strong></p>
 <p>A可以看作是shape，里面有纯虚函数draw()，继承他的各个形状自己改写draw()函数，我们的容器可以存不同的形状(通过父类指针作为容器元素)，调用draw就会触发不同的效果，实现了多态。</p>
 <p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211216211058781.png" srcset="/img/loading.gif" alt="image-20211216211058781"></p>
 <h2 id="动态绑定和静态绑定"><a href="#动态绑定和静态绑定" class="headerlink" title="动态绑定和静态绑定"></a>动态绑定和静态绑定</h2><p>转自: <a href="https://www.cnblogs.com/leoncumt/p/10491842.html" target="_blank" rel="noopener">https://www.cnblogs.com/leoncumt/p/10491842.html</a></p>
@@ -751,20 +755,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
