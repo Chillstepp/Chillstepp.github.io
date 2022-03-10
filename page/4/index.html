@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,119 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch4-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8A/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch4-无模型价值函数估计和控制-上">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch4-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8A/">强化学习纲要Ch4-无模型价值函数估计和控制-上</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch4-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8A/">
+          
+          
+            
+          
+          无模型的价值函数估计和控制—上
+这一次讲的是model-free的value function的预策(prediction)和控制(control)。
+model-free就是指无模型，MDP不是已知的。也就是说我们不知道$R(Reward)$和状态转移矩阵$P$
+下面是上一次课的concise review：
+
+对于Model-free的RL，我们没有了R和P, 因此我们需要从交互过程中来学习：
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 21:59" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch3-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B-MDP-%E2%80%94%E4%B8%8B/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch3-马尔可夫决策过程(MDP)—下">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch3-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B-MDP-%E2%80%94%E4%B8%8B/">强化学习纲要Ch3-马尔可夫决策过程(MDP)—下</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch3-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B-MDP-%E2%80%94%E4%B8%8B/">
+          
+          
+            
+          
+          马尔可夫决策过程(MDP)—下马尔可夫决策过程有两个核心问题：分别是预策(prediction)和控制(control)
+
+预测：
+
+
+预策问题就是给定马尔可夫决策过程和策略$\pi$， 或者给出马尔科夫奖励过程。然后去做预策每个状态的价值函数$v^{\pi}$
+
+控制：
+
+
+控制是指给出一个马尔可夫过程，需要最优化得到价值函数和策略。
+这两个问题都可以通过动态规划来解决。
+首先是预测问题：
+
+通
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 21:58" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -632,115 +745,11 @@ backpropagation的运行方式：
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/07/CS231n-CH2-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0-%E6%9C%80%E4%BC%98%E5%8C%96-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/" target="_self">
-          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH2-损失函数/最优化/特征提取">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/07/CS231n-CH2-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0-%E6%9C%80%E4%BC%98%E5%8C%96-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/">CS231n-CH2-损失函数/最优化/特征提取</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/04/07/CS231n-CH2-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0-%E6%9C%80%E4%BC%98%E5%8C%96-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/">
-          
-          
-            
-          
-          CS231n：Computer Science损失函数和优化损失函数(Loss Function)
-
-​    我们这里使用了multiclass SVM loss(hinge loss function)，如果属于$y_i$类别的图像在$y_i$类得到的分数比在$j$类中得到的分数多1(这个1可以看作两类差距的一个阈值margin，毕竟如果两类如果差距不大，说明分类还是有些问题的，此时loss也
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-07 23:00" pubdate>
-              2021-04-07
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/" target="_self">
-          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH1-图像分类">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/">CS231n-CH1-图像分类</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/">
-          
-          
-            
-          
-          CS231n：Computer Science图像分类数据驱动方法
-800*600*3, 其中3代表三个channels（R,G,B）。
-我们可以把图像分类想成这两个大的部分：
-
-第一个是训练部分：放进去(图像,label)，训练得到模型
-
-123def train(imgs, labels):    #Machine Learning    return model
-
-第二个是预策部分：有了模型
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-06 20:57" pubdate>
-              2021-04-06
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
@@ -919,5 +928,20 @@ backpropagation的运行方式：
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

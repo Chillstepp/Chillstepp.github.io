@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,111 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH14：Regularization">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">机器学习基石CH14：Regularization</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/CH14%EF%BC%9ARegularization/">
+          
+          
+            
+          
+          CH14：RegularizationRegularized Hypothesis  Set
+我们之前由于overfit造成了右边图所示的状况，我们今天要把右图转化为左图通过：Regularization
+因此我们要从高次的hypothesis走回到低次的hypothesis，因此我们想找一种方法可以提供一种指标使得高次走回到低次。
+
+
+因此我们可以看出：低次多项式其实就是高次多项式 加上了一些限
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 22:29" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/" target="_self">
+          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH13：Hazard of Overfitting">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">机器学习基石CH13：Hazard of Overfitting</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/24/CH13%EF%BC%9AHazard-of-Overfitting/">
+          
+          
+            
+          
+          CH13：Hazard of OverfittingWhat is overfitting
+比如我们现在的数据是通过一个二次曲线+noise 造出来的数据，然后我们用这个数据进行机器学习，假如你用了5次曲线（即一定可以经过上述的五个点），那么我们就会画出图中红色的曲线(且$E_{in}=0$)
+但是她和我们的target function蓝色线差距很大。
+
+一个overfitting的例子：
+
+o
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-24 22:28" pubdate>
+              2021-01-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -667,128 +772,11 @@ VC Bound依然适用。
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/" target="_self">
-          <img src="/img/ml_twu.png" srcset="/img/loading.gif" alt="机器学习基石CH6:Theory of Generalization">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/">机器学习基石CH6:Theory of Generalization</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/14/CH6%20%EF%BC%9ATheory%20of%20Generalization/">
-          
-          
-            
-          
-          CH6: Theory of GeneralizationRestriction of break point还是回到上节，我们做出了以下的猜想：
-
-我们做出了以下的猜想：
-
-
-我们思考,当$break \ point = 2$的时候：
-
-那么 N=1的时候小于break point，所以还是符合$2^N$的规律。
-N=2 ,也就是break point，此时 $m_H(N)&lt;2^N$,也就
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-14 16:44" pubdate>
-              2021-01-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" target="_self">
-          <img src="/img/linear.png" srcset="/img/loading.gif" alt="《线性代数及其应用》CH1：线性代数中的线性方程组">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">《线性代数及其应用》CH1：线性代数中的线性方程组</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/13/CH1%EF%BC%9A%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
-          
-          
-            
-          
-          [TOC]
-第1章 线性代数中的线性方程组1.1 线性方程组
-线性方程的解有三种情况
-
-无解
-唯一解
-无穷多解
-
-当方程组有解，我们称线性方程组是相容的。反之无解称之为不相容的。
-
-我们称 为系数矩阵，称为增广矩阵。
-解方程的方法：我们可以通过变换先变成
-然后通过第三行消去第二行的$x_3$，然后用只包含$x_2$的第二行和只包含$x_3$的第三行消去第一行的$x_2$和$x_3$
-最后得到：
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-13 13:00" pubdate>
-              2021-01-13
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
@@ -967,5 +955,20 @@ N=2 ,也就是break point，此时 $m_H(N)&lt;2^N$,也就
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
