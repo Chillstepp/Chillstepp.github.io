@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,36 +240,36 @@
             
             <div class="markdown-body">
               <h1 id="介绍神经网络"><a href="#介绍神经网络" class="headerlink" title="介绍神经网络"></a>介绍神经网络</h1><h2 id="反向传播-backpropagation"><a href="#反向传播-backpropagation" class="headerlink" title="反向传播(backpropagation)"></a>反向传播(backpropagation)</h2><p>梯度的计算是通过计算图 ：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408173032210.png" srcset="/img/loading.gif" alt="image-20210408173032210"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408173201444.png" srcset="/img/loading.gif" alt="image-20210408173201444"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408173032210.png" srcset="/img/loading.gif" alt="image-20210408173032210"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408173201444.png" srcset="/img/loading.gif" alt="image-20210408173201444"></p>
 <p>链式法则告诉我们，我们只需要把计算图上的每一段相邻的梯度算出来，我们连乘上他们就是最后一个变量对最前面一个变量的梯度。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408174230201.png" srcset="/img/loading.gif" alt="image-20210408174230201"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408174230201.png" srcset="/img/loading.gif" alt="image-20210408174230201"></p>
 <p><strong>backpropagation的运行方式：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408174650557.png" srcset="/img/loading.gif" alt="image-20210408174650557"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408174650557.png" srcset="/img/loading.gif" alt="image-20210408174650557"></p>
 <p><strong>一个比较复杂的例子：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408175229409.png" srcset="/img/loading.gif" alt="image-20210408175229409"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408175229409.png" srcset="/img/loading.gif" alt="image-20210408175229409"></p>
 <p>对于<strong>add门</strong>，求对两边梯度都是1，因此直接传过去梯度upstream gradient即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408180823411.png" srcset="/img/loading.gif" alt="image-20210408180823411"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408180823411.png" srcset="/img/loading.gif" alt="image-20210408180823411"></p>
 <p>对于<strong>max门</strong>，local gradient只会对其中较大的一个变量的梯度1，另一个为0.</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408180512330.png" srcset="/img/loading.gif" alt="image-20210408180512330"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408180512330.png" srcset="/img/loading.gif" alt="image-20210408180512330"></p>
 <p>对于<strong>mul门</strong>，对其中一个求梯度就是另一个变量的值，如下图，x<em>y对x求梯度就是y，也就是-4，然后upstream gradient是2，2\</em>(-4)=-8</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408180924815.png" srcset="/img/loading.gif" alt="image-20210408180924815"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408180924815.png" srcset="/img/loading.gif" alt="image-20210408180924815"></p>
 <p>假如变量是高维的，做法和刚才一样，只不过我们的梯度变成了雅可比矩阵。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408181616473.png" srcset="/img/loading.gif" alt="image-20210408181616473"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408181616473.png" srcset="/img/loading.gif" alt="image-20210408181616473"></p>
 <p>如果我们对向量求导，即x对每个4096维的向量的每个元素求偏导，那么结果这个雅可比矩阵就是4096*4096的矩阵，这个矩阵太过于大了。</p>
 <p>其实这个矩阵存在大量0，我们只需要记录非零项即可，这样就大大减少了空间的开销。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408202521881.png" srcset="/img/loading.gif" alt="image-20210408202521881"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408202521881.png" srcset="/img/loading.gif" alt="image-20210408202521881"></p>
 <p>所以梯度就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408202738112.png" srcset="/img/loading.gif" alt="image-20210408202738112"></p>
-<h2 id="神经网络-Neural-Network"><a href="#神经网络-Neural-Network" class="headerlink" title="神经网络(Neural Network)"></a>神经网络(Neural Network)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408205641681.png" srcset="/img/loading.gif" alt="image-20210408205641681"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408202738112.png" srcset="/img/loading.gif" alt="image-20210408202738112"></p>
+<h2 id="神经网络-Neural-Network"><a href="#神经网络-Neural-Network" class="headerlink" title="神经网络(Neural Network)"></a>神经网络(Neural Network)</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408205641681.png" srcset="/img/loading.gif" alt="image-20210408205641681"></p>
 <p>$f=Wx$是一种最简单的线性的网络。</p>
 <p>我们可以组成一个两层的网络，其中一层是$W_2$，另一层是$max(0,W_1x)$，这一层将网络变成了非线性的，这是因为$max(0,W_1x)$本身不是一个线性的函数。</p>
 <p>扩展到多层网络：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408210850595.png" srcset="/img/loading.gif" alt="image-20210408210850595"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408210850595.png" srcset="/img/loading.gif" alt="image-20210408210850595"></p>
 <p>一些激活函数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408211605721.png" srcset="/img/loading.gif" alt="image-20210408211605721"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408211605721.png" srcset="/img/loading.gif" alt="image-20210408211605721"></p>
 <p>神经网络的叫法： 一般我们更喜欢叫 k层神经网络，k=1(a input layer)+hidden layer层数.</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210408211700789.png" srcset="/img/loading.gif" alt="image-20210408211700789"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210408211700789.png" srcset="/img/loading.gif" alt="image-20210408211700789"></p>
 
             </div>
             <hr>
@@ -567,20 +567,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

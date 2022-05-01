@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,18 +240,18 @@
             
             <div class="markdown-body">
               <h2 id="策略优化进阶——上"><a href="#策略优化进阶——上" class="headerlink" title="策略优化进阶——上"></a>策略优化进阶——上</h2><p>本次的内容：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602155707220.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602155707220.png" srcset="/img/loading.gif" alt=""></p>
 <p>首先还是先回顾一下Value-based RL和Policy-based RL区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602160051163.png" srcset="/img/loading.gif" alt="image-20210602160051163"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602160051163.png" srcset="/img/loading.gif" alt="image-20210602160051163"></p>
 <p>策略目标和策略梯度：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602204803475.png" srcset="/img/loading.gif" alt="image-20210602204803475"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602204803475.png" srcset="/img/loading.gif" alt="image-20210602204803475"></p>
 <p>策略梯度(Policy gradient)有下面几种常见的算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602210030754.png" srcset="/img/loading.gif" alt="image-20210602210030754"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602210030754.png" srcset="/img/loading.gif" alt="image-20210602210030754"></p>
 <p>这里要说一下这四个优化方法的关系：</p>
 <p>首先是REINFORCE使用的是$G_t$,是由MC方法获得的，他其实就是Q Actor-Critic方法中$Q^w$的采样。Advantage Actor-Critic中为$A^w$,即把$Q^w$减去了一个baseline，这么做是为了减少方差。TD Acrot-critic中直接使用TD target作为reward function。</p>
 <p>critic会用policy evaluation来估计$Q^\pi(s,a)$,$A^\pi(s,a)$,$V^\pi(s)$</p>
 <p>下面介绍当下最历害/前沿的六种强化学习算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602211059323.png" srcset="/img/loading.gif" alt="image-20210602211059323"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602211059323.png" srcset="/img/loading.gif" alt="image-20210602211059323"></p>
 <h3 id="TRPO"><a href="#TRPO" class="headerlink" title="TRPO"></a>TRPO</h3><p>在介绍这些算法前，首先我们要了解基于Policy Gradient的缺点：</p>
 <ul>
 <li>首先是sample effiency问题：当前优化的policy不仅要被优化，也要用这个policy来采取数据，所以采样效率其实很低。</li>
@@ -265,23 +265,23 @@
 </li>
 </ul>
 <p><strong>Natural Policy gradient的概念：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602212829498.png" srcset="/img/loading.gif" alt="image-20210602212829498"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602212829498.png" srcset="/img/loading.gif" alt="image-20210602212829498"></p>
 <p>原来我们考虑的policy gradient就是在一个欧几里得空间找一个d，这个d方向可以使得$J(\theta)$变化最快。</p>
 <p>但是这里有个问题就是，这个d对采取怎样参数化的形式很敏感。</p>
 <p>所以这里提出了一种新的方法：通过分布空间(policy output)来进行梯度更新</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213334424.png" srcset="/img/loading.gif" alt="image-20210602213334424"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602213334424.png" srcset="/img/loading.gif" alt="image-20210602213334424"></p>
 <p>利用KL散度控制梯度变化前后的输出的分布的差异为一个定值c，然后在此基础上在参数空间中找一个d使得J函数变换最大。</p>
 <p>这里补充一下KL散度的概念：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213729987.png" srcset="/img/loading.gif" alt="image-20210602213729987"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602213729987.png" srcset="/img/loading.gif" alt="image-20210602213729987"></p>
 <p>上面说到，我们现在考虑得更新方式为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602213820832.png" srcset="/img/loading.gif" alt="image-20210602213820832"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602213820832.png" srcset="/img/loading.gif" alt="image-20210602213820832"></p>
 <p>这种constraint的最优化可以用拉格朗日乘子来解决，如上图。然后把KL[]这个函数用泰勒展开，得到上图中的式子。</p>
 <p>然后我们对上面那个优化函数求导即可，就可以得到natual policy gradient：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214158029.png" srcset="/img/loading.gif" alt="image-20210602214158029"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602214158029.png" srcset="/img/loading.gif" alt="image-20210602214158029"></p>
 <p>因此我们现在策略的更新方式为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214353311.png" srcset="/img/loading.gif" alt="image-20210602214353311"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602214353311.png" srcset="/img/loading.gif" alt="image-20210602214353311"></p>
 <p>和原来相比就是多了一个$F^{-1}$,即Fisher information matrix。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602214446265.png" srcset="/img/loading.gif" alt="image-20210602214446265"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602214446265.png" srcset="/img/loading.gif" alt="image-20210602214446265"></p>
 <p>这里的F就是KL散度的二阶导数，我们可以用下式进行计算。</p>
 <p>$F=E<em>{ \left.\pi</em>{\theta}(s, a}\right]}\left[\nabla \log \pi<em>{\theta}(s, a) \nabla \log \pi</em>{\theta}(s, a)^{T}\right]$</p>
 <p>F意味着策略的曲率与模型参数$\theta$的相关性。</p>
@@ -290,47 +290,47 @@
 <p>另外一个方面是我们想把policy gradient方法改成off-policy的方法，我们知道off-policy learning自身有很多好处，我们可以用另一种算法在环境里面去探索(explore)，采集到很多激进的数据，这样来喂给优化的策略。</p>
 <p>这里采取方法是Importance sampling(重要性采样)：Importance sampling在采样过程里面也是用的比较广泛的。</p>
 <p>它的简单概念是：我们现在假设要去估计一个函数的期望，比如说要估算f(x)这个值，x是从p分布里面采样出来的；有时候我们不知道怎么去p分布里面采样，比如说p分布的形式非常奇怪，没法去直接采样，我们只能从如uniform distribution或者Gaussian distribution里面采样，那么我们怎么去根据一个不知道怎么采样的p估计这个f(x)参数呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602220143126.png" srcset="/img/loading.gif" alt="image-20210602220143126"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602220143126.png" srcset="/img/loading.gif" alt="image-20210602220143126"></p>
 <p>通过简单的变换，f(x)针对p的期望，变换成另一种期望的形式，这样x就可以从另外一个分布里面采样了。采样很多的x后再取平均。</p>
 <p>同样的原理，我们可以把策略优化的目标函数也改写一下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602222400585.png" srcset="/img/loading.gif" alt="image-20210602222400585"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602222400585.png" srcset="/img/loading.gif" alt="image-20210602222400585"></p>
 <p>α是优化的策略里面产生的，假设我们现在优化函数没法对它采样，就可以从另外一个策略函数里面对它采样，比如从 $\hat{\pi}$里面去采样action，通过importance sampling去乘以ratio来近似。这里变化就是我们可以用behavior policy $ \hat{\pi}$ 去产生实际的轨迹。</p>
 <p><strong>Increasing the Robustness(鲁棒性) with Trust Regions(信赖域)：</strong></p>
 <p>​    所以这样就可以把策略函数改写成基于之前另外一个策略的一个优化函数，另外一个策略最简单的办法是可以用之前的这个策略，在Deep Q learning中有两个策略函数，behavior policy是用的之前的策略函数，因为之前的策略函数产生的数据我们也可以放到这个replay buffer里面，所以就可以重用之前采到的数据。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225000736.png" srcset="/img/loading.gif" alt="image-20210602225000736"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602225000736.png" srcset="/img/loading.gif" alt="image-20210602225000736"></p>
 <p>这里有个问题需要注意一下，$\frac{\pi_\theta}{\hat{\pi}}$可能非常大，也就是说上下两个策略差距比较大，同样我们可以借用上面的方法，用KL散度来限制分布的差异，限制两个策略的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225604165.png" srcset="/img/loading.gif" alt="image-20210602225604165"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602225604165.png" srcset="/img/loading.gif" alt="image-20210602225604165"></p>
 <p>一个形象的例子是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602225626137.png" srcset="/img/loading.gif" alt="image-20210602225626137"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602225626137.png" srcset="/img/loading.gif" alt="image-20210602225626137"></p>
 <p>​    每次优化过程只能在这个圆圈里面（安全的区域）选择一个方向，这样就可以使得这个训练尽可能的稳定，这样也使得它的概率输出和上一步的概率输出的步数尽可能的小，随着训练过程也可以使得trust region缩的越来越小，更新也会变得越来越小，整个过程也会变得越来越稳定。</p>
 <p><strong>Trust Region Optimization:</strong></p>
 <p>对Trust Region Optimization进行进一步的推导，对价值函数做泰勒展开，展开如下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602231324132.png" srcset="/img/loading.gif" alt="image-20210602231324132"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602231324132.png" srcset="/img/loading.gif" alt="image-20210602231324132"></p>
 <p>此时的目标变为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602231824462.png" srcset="/img/loading.gif" alt="image-20210602231824462"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602231824462.png" srcset="/img/loading.gif" alt="image-20210602231824462"></p>
 <p>这个式子是有显示解的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232211516.png" srcset="/img/loading.gif" alt="image-20210602232211516">    </p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232311127.png" srcset="/img/loading.gif" alt="image-20210602232311127"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602232211516.png" srcset="/img/loading.gif" alt="image-20210602232211516">    </p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602232311127.png" srcset="/img/loading.gif" alt="image-20210602232311127"></p>
 <p>我们会发现他和Natural gradient(自然梯度）的形式很一致。</p>
 <p>我们发现这个natural gradient没有学习率，而是用KL散度之间的差别$\delta$来代替学习率。δ是直接在限制更新之后的policy和之前的policy的近似程度 ，也就是说做了这个推导过后δ和learning rate直接联系起来了。这也是TRPO推导非常好的地方，不需要设定step-size，只需要指定trust region的大小，即更新后的策略和之前的策略输出距离多少，然后用距离去推出step-size。这样我们可以把trust region设的很小，这样就使得更新非常稳定。</p>
 <p>到现在为止，我们推导的就是在TRPO中的Natural policy gradient：</p>
 <ul>
 <li>TRPO是在natural policy gradient的基础上加了importance sampling。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602232716810.png" srcset="/img/loading.gif" alt="image-20210602232716810"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602232716810.png" srcset="/img/loading.gif" alt="image-20210602232716810"></p>
 <p>由于我们提到了H的逆这个问题，求逆复杂度是$O(n^3)$的，十分慢，因此我们常用<strong>共轭梯度法</strong>来解绝这个问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233256646.png" srcset="/img/loading.gif" alt="image-20210602233256646"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602233256646.png" srcset="/img/loading.gif" alt="image-20210602233256646"></p>
 <p>所以完整的方法就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233343692.png" srcset="/img/loading.gif" alt="image-20210602233343692"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602233343692.png" srcset="/img/loading.gif" alt="image-20210602233343692"></p>
 <p>TPRO中通过一些推导(具体可看论文的附录)，证明了一个guaranteed monotonic improvement，即：</p>
 <p>随着迭代增加，我们的J函数是单调的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602233726968.png" srcset="/img/loading.gif" alt="image-20210602233726968"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602233726968.png" srcset="/img/loading.gif" alt="image-20210602233726968"></p>
 <p><strong>TPRO的一些问题：</strong></p>
 <ul>
 <li>计算量非常大。虽然用了conjugate gradient method(共轭梯度法），但是对于每一次迭代，policy都要算H逆。</li>
 <li>在近似H的时候，H本身是个期望，但是我们在近似这个期望的时候是用样本近似，需要很多样本。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602234233708.png" srcset="/img/loading.gif" alt="image-20210602234233708"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602234233708.png" srcset="/img/loading.gif" alt="image-20210602234233708"></p>
 <ul>
 <li>TRPO在某些游戏上并不会比DQN更好。</li>
 </ul>
@@ -338,20 +338,20 @@
 <p>​    ACKTR的核心思想是想提升TRPO的计算效率。在TRPO里面有一步是算Fisher information matrix(FIM),即$H^{-1}$，在矩阵维度很大的时候求逆计算量非常大。因此，ACKTR提出用Kronecker-factored approximation curvature(K-FAC) 方法来加速求逆。</p>
 <h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>PPO可以看作是TRPO的简单版本：</p>
 <p>首先回顾TRPO的loss function：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235520908.png" srcset="/img/loading.gif" alt="image-20210602235520908"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602235520908.png" srcset="/img/loading.gif" alt="image-20210602235520908"></p>
 <p>我们采用这种方法区合并约束：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235546420.png" srcset="/img/loading.gif" alt="image-20210602235546420"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602235546420.png" srcset="/img/loading.gif" alt="image-20210602235546420"></p>
 <p>这样在优化时，一方面就考虑到了让前面一部分变大，另一方面让后面一部分变小。</p>
 <p>我们会发现有个参数$\beta$在衡量他们二者，这个$\beta$可以做到自适应，如下的算法流程图：</p>
 <p>当我们的KL散度过大，说明策略更新过快，变化过大，那么我们就变大$\beta$,让优化时更注重KL散度。反之亦然。</p>
 <p>这个方法叫做PPO with Adaptive KL Penalty</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210602235859119.png" srcset="/img/loading.gif" alt="image-20210602235859119"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210602235859119.png" srcset="/img/loading.gif" alt="image-20210602235859119"></p>
 <p>​    因为PPO本身优化的过程是利用first-order optimization(SGD，一阶优化) 优化的，所以优化效率比二阶的TRPO快很多，因为PPO的算法过程中并没有去计算KL散度或者Fisher information matrix。</p>
 <p>​    除了上面adaptive beta的方法，PPO提供了第二种方式是把objective function自身带了clipping，所以它提出了更复杂一些的形式来处理本身loss的优化情况。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002012967.png" srcset="/img/loading.gif" alt="image-20210603002012967"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002250843.png" srcset="/img/loading.gif" alt="image-20210603002250843"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210603002012967.png" srcset="/img/loading.gif" alt="image-20210603002012967"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210603002250843.png" srcset="/img/loading.gif" alt="image-20210603002250843"></p>
 <p><strong>这就是PPO with Clipped Objective</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210603002450181.png" srcset="/img/loading.gif" alt="image-20210603002450181"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210603002450181.png" srcset="/img/loading.gif" alt="image-20210603002450181"></p>
 
             </div>
             <hr>
@@ -649,20 +649,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,106 +239,106 @@
             <h1 style="display: none">机器学习技法CH11：Gradient-Boosted-Decision-Tree</h1>
             
             <div class="markdown-body">
-              <h1 id="CH11：Gradient-Boosted-Decision-Tree"><a href="#CH11：Gradient-Boosted-Decision-Tree" class="headerlink" title="CH11：Gradient Boosted Decision Tree"></a>CH11：Gradient Boosted Decision Tree</h1><h2 id="AdaBoost-Decision-Tree"><a href="#AdaBoost-Decision-Tree" class="headerlink" title="AdaBoost Decision Tree"></a>AdaBoost Decision Tree</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225222501198.png" srcset="/img/loading.gif" alt="image-20210225222501198"></p>
+              <h1 id="CH11：Gradient-Boosted-Decision-Tree"><a href="#CH11：Gradient-Boosted-Decision-Tree" class="headerlink" title="CH11：Gradient Boosted Decision Tree"></a>CH11：Gradient Boosted Decision Tree</h1><h2 id="AdaBoost-Decision-Tree"><a href="#AdaBoost-Decision-Tree" class="headerlink" title="AdaBoost Decision Tree"></a>AdaBoost Decision Tree</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210225222501198.png" srcset="/img/loading.gif" alt="image-20210225222501198"></p>
 <p>我们在AdaBoost-DTree中的第二步的DTree算法中加入了权重$u^{(t)}$。</p>
 <p>如何实现这个呢 ？</p>
 <p>我们回想一下在bootstrap中，我们把$u_n$代表着每个数据被选到的数量。但是我们现在的DTree算法没有权重这一说，我们又想要加上权重这个概念，那怎么办呢？</p>
 <p>我们可以提前先对数据处理一下，比如原来有三个数据(1,1)(2,2) (3,3),权重是2，1，0，也就是2个(1,1),1个(2,2),没有(3,3),那么我们把数据先改变为(1,1)(1,1)(2,2),然后再去随机抽取，这样就用 <strong>抽到的概率</strong> 代替了 <strong>权重的概念</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225225234849.png" srcset="/img/loading.gif" alt="image-20210225225234849"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210225225234849.png" srcset="/img/loading.gif" alt="image-20210225225234849"></p>
 <p>我们现在用sampling 来代替权重概念，还没有魔改DTree。</p>
 <p>在AdaBoost中 $\alpha_t = ln(♦_t) = ln \sqrt{(1-\epsilon_t)/\epsilon_t}$,我们如果同样用到这里：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225235227976.png" srcset="/img/loading.gif" alt="image-20210225235227976"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210225235227976.png" srcset="/img/loading.gif" alt="image-20210225235227976"></p>
 <p>我们发现如果我们把树做成了fully-grown，那么$E_{in}=0$,那么会导致权重$\alpha = ∞$，这样就导致了只有这一个$g_t$来决定了，这不就变成decision tree了吗？</p>
 <p>我们可以用一些手段来限制长成fully-grwon，并且尽量让他不全作对：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210225235813712.png" srcset="/img/loading.gif" alt="image-20210225235813712"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210225235813712.png" srcset="/img/loading.gif" alt="image-20210225235813712"></p>
 <ul>
 <li>可以pruned来限制树高</li>
 <li>我们抽一部分数据来训练decision tree。</li>
 </ul>
 <p>我们反正不需要做的太好，我们把树高限制在1层就好了</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226000850887.png" srcset="/img/loading.gif" alt="image-20210226000850887"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226000850887.png" srcset="/img/loading.gif" alt="image-20210226000850887"></p>
 <p>一层不就是decision stump了吗？</p>
 <p>我们称之为AdaBoost-Stump ，他就是AdaBoost-DTree的一种特殊情况。</p>
 <p>此时也不用做sampling了，因为此时$E_{in}=0$的可能性几乎不存在了，做这个多此一举。</p>
 <h2 id="Optimization-of-AdaBoost"><a href="#Optimization-of-AdaBoost" class="headerlink" title="Optimization of AdaBoost"></a>Optimization of AdaBoost</h2><p>再来回顾一下AdaBoost中的权重迭代：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226161136211.png" srcset="/img/loading.gif" alt="image-20210226161136211"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226161136211.png" srcset="/img/loading.gif" alt="image-20210226161136211"></p>
 <p>我们是否可以写成一个整体呢？即等两种形式都写成乘菱形的形式。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226161932365.png" srcset="/img/loading.gif" alt="image-20210226161932365"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226161932365.png" srcset="/img/loading.gif" alt="image-20210226161932365"></p>
 <p>那么我们可以直接推出$u_n^{T+1}$的通项公式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226162411135.png" srcset="/img/loading.gif" alt="image-20210226162411135"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226162411135.png" srcset="/img/loading.gif" alt="image-20210226162411135"></p>
 <p>其中橘色的一项就是AdaBoost最终返回的结果$G(x)$：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226162603587.png" srcset="/img/loading.gif" alt="image-20210226162603587"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226162603587.png" srcset="/img/loading.gif" alt="image-20210226162603587"></p>
 <p>在linear blending那一节提到过：linear blending和 线性模型+feature transform很像。(如下图)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226165545108.png" srcset="/img/loading.gif" alt="image-20210226165545108"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226165545108.png" srcset="/img/loading.gif" alt="image-20210226165545108"></p>
 <p>而hard-margin SVM margin的表达式是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226165813321.png" srcset="/img/loading.gif" alt="image-20210226165813321"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226165813321.png" srcset="/img/loading.gif" alt="image-20210226165813321"></p>
 <p>这里的$w^T\phi(x_n)$的就是还没有正规化之前的距离，$y_n$无所谓，他只代表在哪儿一边。</p>
 <p>这么来看，margin和voting score好像很相似，至少表达了同一种性质。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226170556108.png" srcset="/img/loading.gif" alt="image-20210226170556108"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226170556108.png" srcset="/img/loading.gif" alt="image-20210226170556108"></p>
 <p>所以当<strong>迭代的次数多一些，$u_n^{(T+1)}$小一些，AdaBoost可以达到large margin的效果</strong>。</p>
 <p>$u_n^{(T+1)}$小一些，AdaBoost效果就好一点，那不如把$u_n^{(T+1)}$看作一种新的error  measure的指标。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226171521723.png" srcset="/img/loading.gif" alt="image-20210226171521723"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226171521723.png" srcset="/img/loading.gif" alt="image-20210226171521723"></p>
 <p>且这种新的错误指标还是0/1 error measure的上界，那我们能做到很好吗？</p>
 <p>我们来证明一下：</p>
 <p>首先回顾gradient descent：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226172611163.png" srcset="/img/loading.gif" alt="image-20210226172611163"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226172611163.png" srcset="/img/loading.gif" alt="image-20210226172611163"></p>
 <p>$\eta$是步长/学习率，$v^T$是梯度的反方向。</p>
 <p>同理我们考虑$Min\   E_{ADA}$是否也可以转化成这种想法：</p>
 <p>在第$t$次迭代，我们想找一个$h$使得error迭代后最小。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235013482.png" srcset="/img/loading.gif" alt="image-20210226235013482"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226235013482.png" srcset="/img/loading.gif" alt="image-20210226235013482"></p>
 <p>化简：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235409161.png" srcset="/img/loading.gif" alt="image-20210226235409161"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226235409161.png" srcset="/img/loading.gif" alt="image-20210226235409161"></p>
 <p>现在问题转化为了：如何最小化第二项。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235459540.png" srcset="/img/loading.gif" alt="image-20210226235459540"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210226235714704.png" srcset="/img/loading.gif" alt="image-20210226235714704"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226235459540.png" srcset="/img/loading.gif" alt="image-20210226235459540"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210226235714704.png" srcset="/img/loading.gif" alt="image-20210226235714704"></p>
 <p>我们现在把这个式子做一个平移：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227005510055.png" srcset="/img/loading.gif" alt="image-20210227005510055"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227005510055.png" srcset="/img/loading.gif" alt="image-20210227005510055"></p>
 <p>那么我们最小化$E_{in}^{u(t)}(h)$即可</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227005904222.png" srcset="/img/loading.gif" alt="image-20210227005904222"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227005904222.png" srcset="/img/loading.gif" alt="image-20210227005904222"></p>
 <p>那么谁在最小化$E_{in}^{u(t)}(h)$？  这个问题等价于：谁找到了一个最好的$h$作为$g_t$?</p>
 <p>我们看下AdaBoost的算法流程：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
 <p>很明显最小化$E_{in}^{u(t)}(h)$的任务就是AdaBoost算法中的$A$来做的，而且这个最好的$h$就像是梯度下降中的梯度方向。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227020800388.png" srcset="/img/loading.gif" alt="image-20210227020800388"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227020800388.png" srcset="/img/loading.gif" alt="image-20210227020800388"></p>
 <p>我们找到最好的h，也就是$g_t$后，我们想着走的大步一些：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227020920164.png" srcset="/img/loading.gif" alt="image-20210227020920164"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227020920164.png" srcset="/img/loading.gif" alt="image-20210227020920164"></p>
 <p>这样找的最优的$\eta$由于是贪心的来走，所以肯定比一个固定的$\eta$大：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227021646829.png" srcset="/img/loading.gif" alt="image-20210227021646829"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227022703631.png" srcset="/img/loading.gif" alt="image-20210227022703631"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227021646829.png" srcset="/img/loading.gif" alt="image-20210227021646829"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227022703631.png" srcset="/img/loading.gif" alt="image-20210227022703631"></p>
 <p>我缓缓打出一个问号？ 这个最好的$\eta$居然就是$\alpha_t$。</p>
 <p>之前我们认为$\alpha_t$是在帮我们做不同$g_t$权重的衡量,现在来看，背后还在帮助我们做最佳化，快速到达最好的局面。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227023937467.png" srcset="/img/loading.gif" alt="image-20210227023937467"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227023937467.png" srcset="/img/loading.gif" alt="image-20210227023937467"></p>
 <p>AdaBoost中的这种steepest decent用到了函数式梯度。</p>
 <h2 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h2><p>那么AdaBoost的本质是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227024344037.png" srcset="/img/loading.gif" alt="image-20210227024344037"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227024344037.png" srcset="/img/loading.gif" alt="image-20210227024344037"></p>
 <p>我们可以把这种思想带入任何其他的error measure方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227024908244.png" srcset="/img/loading.gif" alt="image-20210227024908244"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227024908244.png" srcset="/img/loading.gif" alt="image-20210227024908244"></p>
 <p>这种算法就是GradientBoost。</p>
 <p>由于任何error measure都可以使用，那么：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227025106668.png" srcset="/img/loading.gif" alt="image-20210227025106668"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227025106668.png" srcset="/img/loading.gif" alt="image-20210227025106668"></p>
 <p>我们现在对回归任务/软分类问题也做GradientBoost。</p>
 <p>我们下面再回归任务上来看看GradientBoost怎么用的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227025454635.png" srcset="/img/loading.gif" alt="image-20210227025454635"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227025454635.png" srcset="/img/loading.gif" alt="image-20210227025454635"></p>
 <p>和上一节AdaBoost一样，做Taylor展开：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227030652494.png" srcset="/img/loading.gif" alt="image-20210227030652494"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227030652494.png" srcset="/img/loading.gif" alt="image-20210227030652494"></p>
 <p>$h(x)$是走的方向，那么他应该要和$2(s_n-y_n)$组合起来保持是负的，才能不断地是原算式边小。</p>
 <p>那么$h(x)$符号方面至少要保证$h(x_n) = -k*(s_n-y_n),其中k&gt;0$,我们希望下降的越大越好，反正$h$没什么限制，不妨让$k$趋于无穷</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227031622661.png" srcset="/img/loading.gif" alt="image-20210227031622661"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227031622661.png" srcset="/img/loading.gif" alt="image-20210227031622661"></p>
 <p>这么做看起来明显不是很合理，之前再gradient descent中我们限制了梯度向量的长度为一个定值。</p>
 <p>那么谁来解决$h(x_n)$的大小问题呢？用$\eta$，因为$\eta$是第二层，外面那一层的优化，他会帮我们来做这个事情。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227032434540.png" srcset="/img/loading.gif" alt="image-20210227032434540"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227032434540.png" srcset="/img/loading.gif" alt="image-20210227032434540"></p>
 <p>我们首先加上了一个平方项，这个和最小化式子是相违背的，这样就帮助我们尽可能地减小$h(x)_n$的大小。</p>
 <p>我们并不关注那些常数项，和最优化没关系。</p>
 <p>最后我们推出我们只关心$h(x_n)$和$(y_n-s_n)$的相似度，而$(y_n-s_n)$代表了实际与预期的差距。</p>
 <p>那么现在的我们最小化的就是 这样一个square error：$(h(x_n)-(y_n-s_n))^2$,再做对数据${(x_n,y_n-s_n)}$一次regression找最好的$h$即可。</p>
 <p>现在问题转化为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227173206285.png" srcset="/img/loading.gif" alt="image-20210227173206285"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227173206285.png" srcset="/img/loading.gif" alt="image-20210227173206285"></p>
 <p>发现又变成了squre error的形式，等于现在再做一次regression，不过我们的只求一个$\eta$。</p>
 <p>最后把所有的东西合并在一起，提出Gradient Boosted Decision Tree(GBDT)算法</p>
 <p><code>Gradient Boosted Decision Tree(GBDT)</code>：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227224805845.png" srcset="/img/loading.gif" alt="image-20210227224805845"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227224805845.png" srcset="/img/loading.gif" alt="image-20210227224805845"></p>
 <h2 id="Summary-of-Aggregation"><a href="#Summary-of-Aggregation" class="headerlink" title="Summary of Aggregation"></a>Summary of Aggregation</h2><p>首先是blending(即已经获得$g_t$后的aggregate方法)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227230408968.png" srcset="/img/loading.gif" alt="image-20210227230408968"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227230408968.png" srcset="/img/loading.gif" alt="image-20210227230408968"></p>
 <ul>
 <li><p>uniform：适用于$g_t$的地位相差不大</p>
 </li>
@@ -347,7 +347,7 @@
 <li>conditional：也就是stacking，要小心overfit</li>
 </ul>
 <p>和第一种aggregation不同，这第二部分的aggregation是边学边获得$g_t$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227230836402.png" srcset="/img/loading.gif" alt="image-20210227230836402"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227230836402.png" srcset="/img/loading.gif" alt="image-20210227230836402"></p>
 <ul>
 <li><p>bagging：bootstrap抽取数据训练 + uniform合在一起</p>
 </li>
@@ -356,11 +356,11 @@
 <li>Decision Tree：处理conditional vote</li>
 </ul>
 <p>还有一个GradientBoost，他的$g_t$的多样性通过对余数做regression来得到。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227232349094.png" srcset="/img/loading.gif" alt="image-20210227232349094"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227232349094.png" srcset="/img/loading.gif" alt="image-20210227232349094"></p>
 <p>我们还可以进行组合：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227232602033.png" srcset="/img/loading.gif" alt="image-20210227232602033"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227232602033.png" srcset="/img/loading.gif" alt="image-20210227232602033"></p>
 <p>aggregation带来的好处是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210227233043284.png" srcset="/img/loading.gif" alt="image-20210227233043284"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210227233043284.png" srcset="/img/loading.gif" alt="image-20210227233043284"></p>
 <p>不拟合的时候aggregation相当于做feature transform帮你拟合，却也可以帮你regularization防止过拟合，因此选择合适的aggregation方法才可以获得更好的表现。</p>
 
             </div>
@@ -659,20 +659,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

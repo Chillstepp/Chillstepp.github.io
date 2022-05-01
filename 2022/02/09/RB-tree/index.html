@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,31 +243,31 @@
 <p>2.所有叶子结点(叶子结点都是空节点)都是黑色</p>
 <p>3.<strong>红色</strong>结点的两个子结点一定是<strong>黑色</strong></p>
 <p>4.从任一个节点，到它每个叶子结点的路径都包含相同数目的黑色节点。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207222448091.png" srcset="/img/loading.gif" alt="image-20220207222448091"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220207222448091.png" srcset="/img/loading.gif" alt="image-20220207222448091"></p>
 <h2 id="红黑树插入："><a href="#红黑树插入：" class="headerlink" title="红黑树插入："></a>红黑树插入：</h2><p>分三大类情况</p>
 <p>1.<strong>被插入的节点是根节点</strong>，直接把此节点涂黑</p>
 <p>2.<strong>被插入的节点的父节点是黑色</strong>，直接插进去并且把节点变成红色(这是因为变成红色就不会影响上述的 基本性质4)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207225303265.png" srcset="/img/loading.gif" alt="image-20220207225303265"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220207225303265.png" srcset="/img/loading.gif" alt="image-20220207225303265"></p>
 <p>3.<strong>被插入的节点的父节点是红色</strong>，(由于红色只能挨着黑色，所以不能简单的插入后变红。)</p>
 <ul>
 <li><p>3.1 叔叔节点也是红色(叔叔节点就是父节点的父节点的另一个儿子节点)</p>
 <p>​    父节点设为黑色，叔叔节点设为黑色，祖父节点设为红色，将祖父节点设为当前节点，之后对当前节点进行操作。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207230629066.png" srcset="/img/loading.gif" alt="image-20220207230629066"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220207230629066.png" srcset="/img/loading.gif" alt="image-20220207230629066"></p>
 </li>
 <li><p>3.2 叔叔节点也是黑色，且当前点是父节点的右孩子</p>
 <p>​    将父节点作为新的当前节点，以新的当前节点为支点进行左旋：</p>
 <p>   操作完后就会转化到3.3的情况</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207232442426.png" srcset="/img/loading.gif" alt="image-20220207232442426"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220207232442426.png" srcset="/img/loading.gif" alt="image-20220207232442426"></p>
 </li>
 <li><p>3.3 叔叔节点也是黑色，且当前点是父节点的左孩子</p>
 </li>
 </ul>
 <p>​            将父节点变为黑色，将祖父节点设为红色，然后以祖父节点为支点右旋。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220207233330608.png" srcset="/img/loading.gif" alt="image-20220207233330608"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220207233330608.png" srcset="/img/loading.gif" alt="image-20220207233330608"></p>
 <h2 id="红黑树删除："><a href="#红黑树删除：" class="headerlink" title="红黑树删除："></a><strong>红黑树删除：</strong></h2><p>这里我们先解释一下在<strong>AVL中是如何删除</strong>的：</p>
 <p>1.假如要删除的节点只有1个儿子，那么直接把儿子提上来即可。</p>
 <p>2.假如要删除的节点有2个儿子，那么把<strong>右儿子的最左边节点</strong>提上来即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220208142819636.png" srcset="/img/loading.gif" alt="image-20220208142819636"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220208142819636.png" srcset="/img/loading.gif" alt="image-20220208142819636"></p>
 <p>红黑树中删除和AVL的区别是还<strong>需要维护黑色平衡的性质：</strong></p>
 <p><strong>1.如果删除的是红色点</strong>，那么我们什么也不需要做，因为这不会影响黑色平衡的性质，和AVL一样重新调整平衡即可。</p>
 <p><strong>2.如果删除的是黑色点：</strong>先提上来的结点颜色变为混合色：<strong>黑(要删除节点的颜色)+黑/红(提上来结点颜色)</strong> 的混合颜色。</p>
@@ -278,7 +278,7 @@
 </li>
 <li><p><strong>2.3 普通的黑色节点+提上来的黑色：</strong></p>
 <p>设x为当前要删除的黑色节点。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220209010529063.png" srcset="/img/loading.gif" alt="image-20220209010529063"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220209010529063.png" srcset="/img/loading.gif" alt="image-20220209010529063"></p>
 </li>
 </ul>
 <h2 id="红黑树和AVL比较："><a href="#红黑树和AVL比较：" class="headerlink" title="红黑树和AVL比较："></a>红黑树和AVL比较：</h2><ol>
@@ -591,20 +591,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

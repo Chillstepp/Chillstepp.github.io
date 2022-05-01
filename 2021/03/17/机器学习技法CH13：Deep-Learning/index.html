@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,7 +239,7 @@
             <h1 style="display: none">机器学习技法CH13：Deep Learning</h1>
             
             <div class="markdown-body">
-              <h1 id="CH13：Deep-Learning"><a href="#CH13：Deep-Learning" class="headerlink" title="CH13：Deep Learning"></a>CH13：Deep Learning</h1><h2 id="Deep-Neural-Network"><a href="#Deep-Neural-Network" class="headerlink" title="Deep Neural Network"></a>Deep Neural Network</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317192103675.png" srcset="/img/loading.gif" alt="image-20210317192103675"></p>
+              <h1 id="CH13：Deep-Learning"><a href="#CH13：Deep-Learning" class="headerlink" title="CH13：Deep Learning"></a>CH13：Deep Learning</h1><h2 id="Deep-Neural-Network"><a href="#Deep-Neural-Network" class="headerlink" title="Deep Neural Network"></a>Deep Neural Network</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317192103675.png" srcset="/img/loading.gif" alt="image-20210317192103675"></p>
 <p>Deep NNet特点 ：</p>
 <ul>
 <li><p>训练很难</p>
@@ -252,58 +252,58 @@
 </li>
 </ul>
 <p>实际物理意义举个例子，如下 ：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317192318665.png" srcset="/img/loading.gif" alt="image-20210317192318665"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317192318665.png" srcset="/img/loading.gif" alt="image-20210317192318665"></p>
 <p>每一层的神经元都有他自己的物理意义，向着从简单到复杂feature的转换。</p>
 <p>一些Deep Learning的chllenges和keys：</p>
 <ul>
 <li>结构复杂</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317193020437.png" srcset="/img/loading.gif" alt="image-20210317193020437"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317193020437.png" srcset="/img/loading.gif" alt="image-20210317193020437"></p>
 <p>比如决定网络结构的时候，我们可以人为的做一些选择，比如图像识别，我们网络连接时，对于某个像素，我们只连接他周围的像素。</p>
 <ul>
 <li>模型复杂</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317193314091.png" srcset="/img/loading.gif" alt="image-20210317193314091"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317193314091.png" srcset="/img/loading.gif" alt="image-20210317193314091"></p>
 <p>一般做视觉我们数据会很大很多，因此不用太担心。</p>
 <p>同时也要做正则化，例如：dropout和denoising</p>
 <ul>
 <li><p>局部最佳很难：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317193437870.png" srcset="/img/loading.gif" alt="image-20210317193437870"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317193437870.png" srcset="/img/loading.gif" alt="image-20210317193437870"></p>
 </li>
 </ul>
 <p>可以通过pre-traning来选择合适的初始化值，避免局部最小。</p>
 <ul>
 <li>计算量大</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317193602822.png" srcset="/img/loading.gif" alt="image-20210317193602822"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317193602822.png" srcset="/img/loading.gif" alt="image-20210317193602822"></p>
 <p>现阶段的GPU 已经可以做很大的运算了。</p>
-<h2 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317194213125.png" srcset="/img/loading.gif" alt="image-20210317194213125"></p>
+<h2 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317194213125.png" srcset="/img/loading.gif" alt="image-20210317194213125"></p>
 <p>首先我们要对权重w的初值pre-training，它不用做到很好，能够帮助最后w迭代的快一些即可，同时帮助我们在一个还不错的地方做梯度下降，这样效果也会更好。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317194652702.png" srcset="/img/loading.gif" alt="image-20210317194652702"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317194652702.png" srcset="/img/loading.gif" alt="image-20210317194652702"></p>
 <p>​    什么是好的权重？ 可以保存原来的信息，只是比较简明精炼。如果你设计的把原来的资料搞得乱七八糟毫无规律，那么下一层也训练不出来什么好的效果。</p>
 <p>​    一个比较具体的例子就是下图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317194941797.png" srcset="/img/loading.gif" alt="image-20210317194941797"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317194941797.png" srcset="/img/loading.gif" alt="image-20210317194941797"></p>
 <p>我们分开的这些小部分可以重建回来，那么它必然带着原来的信息，且更精炼，那么这个转换就是一个information-preserving(信息保留)的。</p>
 <p>怎么找这么一个information-preserving的转换呢？</p>
 <p>还是通过一个简单的神经网络：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317195529292.png" srcset="/img/loading.gif" alt="image-20210317195529292"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317195529292.png" srcset="/img/loading.gif" alt="image-20210317195529292"></p>
 <p>这个网络很有意思，最开始输入$x$进去，他输出还是$x$，这说明了第一次所做的转换可以反转回来，也就说信息得到了保留。</p>
 <p>我们称之为autoencoder自动编码：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317195656463.png" srcset="/img/loading.gif" alt="image-20210317195656463"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317195656463.png" srcset="/img/loading.gif" alt="image-20210317195656463"></p>
 <p>那么我们就是在让这个information-preserving Neural Network逼近一个不做任何转换的函数，这有什么意义呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317200241356.png" srcset="/img/loading.gif" alt="image-20210317200241356"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317200241356.png" srcset="/img/loading.gif" alt="image-20210317200241356"></p>
 <p>这个逼近过程利用了一些数据的隐藏结构：</p>
 <ul>
 <li>对于监督学习，这些隐藏的结构可以帮助我们做一个合理的transform，也就是学习数据所带的有效信息。</li>
 <li>对于非监督学习，比如分布稠密的检测，这个transform可以告诉我们分布的稠密，我们就k可以知道数据起到主要作用的表达信息是什么。反着来看，我们还可以通过找到那些$g(x)! \approx x$，来看到是为什么差？为什么不合群。 所以可以告诉我们什么要的数据是一个典型的数据。</li>
 </ul>
 <p>那么我们可以提出这个基本的<code>Autoencoder</code>的算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317201350570.png" srcset="/img/loading.gif" alt="image-20210317201350570"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317201350570.png" srcset="/img/loading.gif" alt="image-20210317201350570"></p>
 <p>训练数据很简单就是 (x,y=x),因为我们想让它输入输出一样。</p>
 <p>我们通常希望第二层的神经元数量要少于第一层，因为我们希望得到的是精炼的信息。</p>
 <p>可以用backprop训练，层数不多很容易训练。</p>
 <p>有时我们会加上这个限制：$w<em>{ij}^{(1)} =w</em>{ji}^{(2)}$，这个很容易理解，这个权重怎么送过来的就怎么传回去，这样做完后如果能够按照转化来的时候的方法转换回去，那么信息说明得到了保留。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317202420410.png" srcset="/img/loading.gif" alt="image-20210317202420410"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317202420410.png" srcset="/img/loading.gif" alt="image-20210317202420410"></p>
 <p>那么我们对每一层来做即可，得到每层的初始权重。</p>
 <h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><h2 id="Denoising-Autoencoder"><a href="#Denoising-Autoencoder" class="headerlink" title="Denoising Autoencoder"></a>Denoising Autoencoder</h2><p>由于深度神经网络模型复杂，我们要小心overfitting，可以添加一些regularization：</p>
 <ul>
@@ -313,16 +313,16 @@
 </ul>
 <p>除此之外，我们还有一种方法：</p>
 <p>先回顾一下overfitting的原因：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317203546561.png" srcset="/img/loading.gif" alt="image-20210317203546561"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317203546561.png" srcset="/img/loading.gif" alt="image-20210317203546561"></p>
 <p>一个直观的想法是：我们直接去掉noise，这样noise少一些，overfit就会减轻一些，但是这样并不容易做到。</p>
 <p>想让网络鲁棒性更强，我们甚至可以主动喂给autoencoder网络一些noise！</p>
 <p>这个想法非常反直观，我们换个角度来想，如果我们在训练autoencoder的时候放一些noise，比如写的很丑的数字一，但是我们依然把他的输出期望设置为干净的1。那么我们的encoder就有了一种去除杂质的功能。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317204440749.png" srcset="/img/loading.gif" alt="image-20210317204440749"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317204440749.png" srcset="/img/loading.gif" alt="image-20210317204440749"></p>
 <p>我们称之为denoising autoencoder，具体就是训练数据上的输入加一些noise，输出不变，用这样的数据去训练一个denoising的encoder。</p>
 <p>这样做出来的权重一定程度上表达了我们需要的性质，也获得了一定的去杂质功能，这也是一种regularization的方式。</p>
 <h2 id="Principal-Component-Analysis-PCA"><a href="#Principal-Component-Analysis-PCA" class="headerlink" title="Principal Component Analysis(PCA)"></a>Principal Component Analysis(PCA)</h2><p>autoencoder不是一个线性模型，里面包含tanh()。</p>
 <p>我们现在考虑线性的autoencoder：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317210130194.png" srcset="/img/loading.gif" alt="image-20210317210130194"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317210130194.png" srcset="/img/loading.gif" alt="image-20210317210130194"></p>
 <p>考虑一些特殊的条件：</p>
 <ul>
 <li>$x_0$我们会拿掉，这样就保持了输入输出维度一致</li>
@@ -331,12 +331,12 @@
 </ul>
 <p>不妨另$W = [w_{ij}]$,这是一个$d* \tilde d$维的矩阵。</p>
 <p>那么我们就可以推出新的用$W$表示的$h(x)$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317210846704.png" srcset="/img/loading.gif" alt="image-20210317210846704"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317210846704.png" srcset="/img/loading.gif" alt="image-20210317210846704"></p>
 <p>我们的error measure function $E_{in}$就是变化后和希望得到的结果的平方差，而我们希望得到的恰好是我们的输入，那么表达式就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317211026674.png" srcset="/img/loading.gif" alt="image-20210317211026674"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317211026674.png" srcset="/img/loading.gif" alt="image-20210317211026674"></p>
 <p>我们尝试去解他的闭式解：</p>
 <p>$WW^T$首先可以做特征分解(也叫谱分解/酉相似对角化)：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317214343309.png" srcset="/img/loading.gif" alt="image-20210317214343309"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317214343309.png" srcset="/img/loading.gif" alt="image-20210317214343309"></p>
 <ul>
 <li>$d*d$维的矩阵$V$的每一行向量是互相垂直/正交的(orthogonal):所以$VV^T=V^TV=I_d，I_d是一个单位矩阵$</li>
 <li>$\Gamma$是一个对角矩阵，这个对角矩阵,对角上的值是$W$的特征值，非零项最多有$\tilde d$个，这个不难理解，因为我们的$W$是一个$d*\tilde d$的矩阵，那么他的秩最大是$\tilde d$。</li>
@@ -349,42 +349,42 @@
 <li><p>$ V\Gamma V^Tx_n$,表示我们最后在旋转回来</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317215007785.png" srcset="/img/loading.gif" alt="image-20210317215007785"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317215007785.png" srcset="/img/loading.gif" alt="image-20210317215007785"></p>
 <p>那么这个公式前面的$x_n$也可以看作：$x_n = VIV^Tx_n$,$I$是单位矩阵。</p>
 <p>那么现在把问题转化为了$W$最佳化问题转换为了$\Gamma$和$V$最佳化的问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317215851919.png" srcset="/img/loading.gif" alt="image-20210317215851919"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317215851919.png" srcset="/img/loading.gif" alt="image-20210317215851919"></p>
 <ul>
 <li><p>首先红色的$V$代表back-rotate，就是第一次旋转/反射 的逆变换，这不会影响长度，所以我们暂时可以把他们去掉</p>
 </li>
-<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317220218142.png" srcset="/img/loading.gif" alt="image-20210317220218142"></p>
+<li><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317220218142.png" srcset="/img/loading.gif" alt="image-20210317220218142"></p>
 <p>我们想要先考虑里面一层最小化$\Gamma$的问题： 也就是说我们想要尽可能多的0塞入$(I-\Gamma)$这个对角矩阵中，这样就可以减少这个表达式的值。由于$\Gamma$的$rank\le \tilde d$,因此我们不失一般性的设$\Gamma$长这个样子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317220717594.png" srcset="/img/loading.gif" alt="image-20210317220717594"> </p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317220717594.png" srcset="/img/loading.gif" alt="image-20210317220717594"> </p>
 </li>
 </ul>
 <p>那么下一步我们就去做$V$的最佳化维题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317220832260.png" srcset="/img/loading.gif" alt="image-20210317220832260"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317221058596.png" srcset="/img/loading.gif" alt="image-20210317221058596"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317220832260.png" srcset="/img/loading.gif" alt="image-20210317220832260"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317221058596.png" srcset="/img/loading.gif" alt="image-20210317221058596"></p>
 <p>首先把最小化问题转成最大换，原来代表的是留下哪儿些维度，希望他们最小，这就等价于拿掉哪儿些维度，希望他们最大。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317221310845.png" srcset="/img/loading.gif" alt="image-20210317221310845"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317221310845.png" srcset="/img/loading.gif" alt="image-20210317221310845"></p>
 <p>首先只考虑是对角上非零的个数只有一个的情况：</p>
 <p>由lagrange multiplier可以得到：</p>
-<p>我们对两边<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317222404376.png" srcset="/img/loading.gif" alt="image-20210317222404376">和他的限制条件<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317222417315.png" srcset="/img/loading.gif" alt="image-20210317222417315">分别求导后，最优解是可以使得两个导数平行，即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317222525088.png" srcset="/img/loading.gif" alt="image-20210317222525088"></p>
+<p>我们对两边<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317222404376.png" srcset="/img/loading.gif" alt="image-20210317222404376">和他的限制条件<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317222417315.png" srcset="/img/loading.gif" alt="image-20210317222417315">分别求导后，最优解是可以使得两个导数平行，即：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317222525088.png" srcset="/img/loading.gif" alt="image-20210317222525088"></p>
 <p>这么看来$v$就是这个绿色部分就是的特征向量！</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317222830355.png" srcset="/img/loading.gif" alt="image-20210317222830355"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317222830355.png" srcset="/img/loading.gif" alt="image-20210317222830355"></p>
 <p>那么在$\tilde d = 1$的情况下，最优的$v$就是 $XX^T$的最大特征向量。</p>
 <p>拓展到$\tilde d$不限制为1的情况下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317222814934.png" srcset="/img/loading.gif" alt="image-20210317222814934"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317222814934.png" srcset="/img/loading.gif" alt="image-20210317222814934"></p>
 <p>我们找最大的几个特征向量即可，这就是我们最好的$V$</p>
 <p>因此linear autoencoder就是在告诉我们：我们拿到一个数据矩阵，我们对他做特征分解，找出最大的几个特征向量，这几个特征向量就是最符合$x_n$的向量，我们最应该做投影，做特征转化的向量。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317223422148.png" srcset="/img/loading.gif" alt="image-20210317223422148"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317223422148.png" srcset="/img/loading.gif" alt="image-20210317223422148"></p>
 <p><code>Linear Autoencoder</code>算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317223734229.png" srcset="/img/loading.gif" alt="image-20210317223734229"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317224133309.png" srcset="/img/loading.gif" alt="image-20210317224133309"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317223734229.png" srcset="/img/loading.gif" alt="image-20210317223734229"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317224133309.png" srcset="/img/loading.gif" alt="image-20210317224133309"></p>
 <p>因此这个算法可以帮我们最大化投影后的效果。</p>
 <p>他主要用在PCA(<em>Principal Component Analy</em>sis,主成分分析)上，主成分分析中希望我们最大化 一个差值：$x- \overline x$,即投影后的变化量最大。</p>
 <p>其实PCA算法就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210317224922367.png" srcset="/img/loading.gif" alt="image-20210317224922367"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210317224922367.png" srcset="/img/loading.gif" alt="image-20210317224922367"></p>
 <p>也就是说把一个高维的数据找到一个线性上表现最好的形式。</p>
 <p>这也是PCA的主要作用：降维</p>
 
@@ -684,20 +684,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

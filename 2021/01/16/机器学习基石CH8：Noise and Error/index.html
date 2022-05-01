@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -242,60 +242,60 @@
               <h1 id="CH8-Noise-and-Error"><a href="#CH8-Noise-and-Error" class="headerlink" title="CH8: Noise and Error"></a>CH8: Noise and Error</h1><p>[toc]</p>
 <h2 id="Noise-and-Probabilistic-Target"><a href="#Noise-and-Probabilistic-Target" class="headerlink" title="Noise and Probabilistic Target"></a>Noise and Probabilistic Target</h2><p>我们之前对于机器学习的流程如下图：</p>
 <p>那么在加上noise后是否会影响机器学习呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116011204209.png" srcset="/img/loading.gif" alt="image-20210116011204209"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116011204209.png" srcset="/img/loading.gif" alt="image-20210116011204209"></p>
 <p>原来的瓶子里抽弹珠是确定的，即输入x，出来就是f(x) ：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116104306921.png" srcset="/img/loading.gif" alt="image-20210116104306921"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116104306921.png" srcset="/img/loading.gif" alt="image-20210116104306921"></p>
 <p>现在出来可能有一些不是f(x)了，即出现了噪声：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116104340142.png" srcset="/img/loading.gif" alt="image-20210116104340142"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116104340142.png" srcset="/img/loading.gif" alt="image-20210116104340142"></p>
 <p>但是这并不影响我们估计一个。</p>
 <p>那么：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116104657159.png" srcset="/img/loading.gif" alt="image-20210116104657159"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116104657159.png" srcset="/img/loading.gif" alt="image-20210116104657159"></p>
 <p>VC Bound依然适用。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116105215672.png" srcset="/img/loading.gif" alt="image-20210116105215672"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116105215672.png" srcset="/img/loading.gif" alt="image-20210116105215672"></p>
 <p>我们以前的机器学习都是target，而今天是一个target distribution，即一个目标分布。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116105037073.png" srcset="/img/loading.gif" alt="image-20210116105037073"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116105037073.png" srcset="/img/loading.gif" alt="image-20210116105037073"></p>
 <p>target distribution的看法</p>
 <ul>
 <li>在这里他把distribution看作是 最理想的目标函数和 noise 的组合(0.7 + 0.3)，所以我们把0.7当作target，然后我们会犯30%的错误。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116105740216.png" srcset="/img/loading.gif" alt="image-20210116105740216"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116105740216.png" srcset="/img/loading.gif" alt="image-20210116105740216"></p>
 <p><strong>新的learning flow：</strong></p>
-<p> <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116105854338.png" srcset="/img/loading.gif" alt="image-20210116105854338"></p>
+<p> <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116105854338.png" srcset="/img/loading.gif" alt="image-20210116105854338"></p>
 <h2 id="Error-Measure"><a href="#Error-Measure" class="headerlink" title="Error Measure"></a>Error Measure</h2><p>错误率的计算方式：</p>
 <ul>
 <li><p>pointwise error measure</p>
 <p>这个就是每个都测一遍，然后统计一下错误率，这也是最常用的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116113306198.png" srcset="/img/loading.gif" alt="image-20210116113306198"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116113306198.png" srcset="/img/loading.gif" alt="image-20210116113306198"></p>
 </li>
 </ul>
 <ul>
 <li><p>two important pointwise error measure(分别是0/1 error 和 squared error)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116130729797.png" srcset="/img/loading.gif" alt="image-20210116130729797"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116130729797.png" srcset="/img/loading.gif" alt="image-20210116130729797"></p>
 </li>
 </ul>
 <p><strong>举一个0/1 error 和 squared error的区别：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116130448953.png" srcset="/img/loading.gif" alt="image-20210116130448953"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116130448953.png" srcset="/img/loading.gif" alt="image-20210116130448953"></p>
 <p>可以看出不同的错误测量的准则会影响我们选取的结果。</p>
 <p>加上error measure 的leaning flow</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116114212238.png" srcset="/img/loading.gif" alt="image-20210116114212238"></p>
-<h2 id="Algorithmic-Error-Measure"><a href="#Algorithmic-Error-Measure" class="headerlink" title="Algorithmic Error Measure"></a>Algorithmic Error Measure</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116114926707.png" srcset="/img/loading.gif" alt="image-20210116114926707"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116114212238.png" srcset="/img/loading.gif" alt="image-20210116114212238"></p>
+<h2 id="Algorithmic-Error-Measure"><a href="#Algorithmic-Error-Measure" class="headerlink" title="Algorithmic Error Measure"></a>Algorithmic Error Measure</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116114926707.png" srcset="/img/loading.gif" alt="image-20210116114926707"></p>
 <p>不同的错误方式：对于指纹系统其实是无所谓的，因为我们只需要知道可以不可以进去就OK了，而不在该进去的进不去，不该进去的进去了，这都是致命错误。</p>
 <p>​    但是在超市应用时，两种错误会影响未来的生意：比如我该有折扣，但是因为系统错误没给我折扣，这回lose future business。但是我不该有折扣但是给了我折扣，超市在不亏钱的情况下还收获了跟好的口碑。所以这两者的错误权重不能看作相同的。</p>
 <p>不妨设置为某个数倍的错误：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116115203647.png" srcset="/img/loading.gif" alt="image-20210116115203647"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116115203647.png" srcset="/img/loading.gif" alt="image-20210116115203647"></p>
 <p>但这上面这个错误的衡量方法就一定是10吗，为什么不是100，因此我们在做系统时非专业的人很难给出这个倍数的大小。我们后面会更详细的讲下面这个错误度量方法。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116115652631.png" srcset="/img/loading.gif" alt="image-20210116115652631"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116115652631.png" srcset="/img/loading.gif" alt="image-20210116115652631"></p>
 <h2 id="Weighted-Classification"><a href="#Weighted-Classification" class="headerlink" title="Weighted Classification"></a>Weighted Classification</h2><p>现在我们改写了$E_{in}$的衡量方式，那么会影响我们之前所提到的 分类问题 吗？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116120423493.png" srcset="/img/loading.gif" alt="image-20210116120423493"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116120423493.png" srcset="/img/loading.gif" alt="image-20210116120423493"></p>
 <p>首先是PLA：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116120526891.png" srcset="/img/loading.gif" alt="image-20210116120526891"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116120526891.png" srcset="/img/loading.gif" alt="image-20210116120526891"></p>
 <p>PLA是无所谓的，因为他最后一定是没有错的，权重对他来说没什么用。</p>
 <p>那么如果不是线性可分的呢？</p>
 <p>还是可以用pocket算法，从 原来的比错误个数 改为 比错误权重和，这样合理吗？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116120610805.png" srcset="/img/loading.gif" alt="image-20210116120610805"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116120610805.png" srcset="/img/loading.gif" alt="image-20210116120610805"></p>
 <p>证明：我们可以这么改写错误的点，对于1000权重的错误，我们可以看作  1000个权重1的错误在同一点，因此这太符合pocket算法了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210116120804782.png" srcset="/img/loading.gif" alt="image-20210116120804782"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210116120804782.png" srcset="/img/loading.gif" alt="image-20210116120804782"></p>
 
             </div>
             <hr>
@@ -593,20 +593,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

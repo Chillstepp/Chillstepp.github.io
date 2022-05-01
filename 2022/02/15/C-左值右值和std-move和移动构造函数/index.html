@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -290,7 +290,7 @@
 <p><code>move</code>调用告诉编译器，我们有一个左值<code>rr_1</code>，但是我希望像一个右值一样处理它。我们必须保证，接下来除了对<code>rr_1</code>赋值或销毁它，我们不再使用它。我们不能对<code>rr_1</code>的值作任何假设。</p>
 <p>《C++ Primer（第5版）》推荐使用<code>std::move</code>而不是<code>move</code>，可以避免潜在的命名冲突。</p>
 <p><strong>std::move的定义：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/v2-2ed58d5f5802817edbbf0008dffc7715_r.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/v2-2ed58d5f5802817edbbf0008dffc7715_r.jpg" srcset="/img/loading.gif" alt="img"></p>
 <p>​    这里，<code>T&amp;&amp;</code>是通用引用，需要注意和右值引用（比如<code>int&amp;&amp;</code>）区分。通过<code>move</code>定义可以看出，<strong>move并没有”移动“什么内容</strong>，<strong>只是将传入的值转换为右值</strong>，此外没有其他动作。<code>std::move</code><strong>+移动构造函数或者移动赋值运算符</strong> ，也就是两者合力才起到这样的作用，才能充分起到减少不必要拷贝的意义。<br><strong>std::move使用前提：</strong></p>
 <ul>
 <li><p>定义的类使用了资源并定义了移动构造函数和移动赋值运算符 (右值和移动构造函数/移动赋值函数配合使用才能起到资源直接转移的作用，减少不必要的拷贝)  </p>
@@ -598,20 +598,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

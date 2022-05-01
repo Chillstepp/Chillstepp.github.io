@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,12 +240,12 @@
             
             <div class="markdown-body">
               <h1 id="CH9-Linear-Regression"><a href="#CH9-Linear-Regression" class="headerlink" title="CH9: Linear Regression"></a>CH9: Linear Regression</h1><h2 id="Linear-Regression-Problem-线性回归"><a href="#Linear-Regression-Problem-线性回归" class="headerlink" title="Linear Regression Problem(线性回归)"></a>Linear Regression Problem(线性回归)</h2><p>首先我们要知道线性回归要反映在一个具体的实数上才可以做回归，因此我们要把数据通过某种方式整合成实数。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118130219356.png" srcset="/img/loading.gif" alt="image-20210118130219356"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118130219356.png" srcset="/img/loading.gif" alt="image-20210118130219356"></p>
 <p>加权计算一个分数是一种方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118130350059.png" srcset="/img/loading.gif" alt="image-20210118130350059"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118130350059.png" srcset="/img/loading.gif" alt="image-20210118130350059"></p>
 <p>$W^T$ 是权重 ，$x$是顾客的信息，这样算出来一个加权的分数。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118130607758.png" srcset="/img/loading.gif" alt="image-20210118130607758"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118130607758.png" srcset="/img/loading.gif" alt="image-20210118130607758"></p>
 <p>所以：</p>
 <ul>
 <li><p>我们的hypothesis对于<strong>二维</strong>时，即我们找了一个$f(x)$,作为计算加权分数，然后找一条<strong>线</strong>来合适的分开这些点。</p>
@@ -254,41 +254,41 @@
 </li>
 </ul>
 <p>线性回归的问题是希望这些红色线(即余数)越小越好。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118130922969.png" srcset="/img/loading.gif" alt="image-20210118130922969"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118130922969.png" srcset="/img/loading.gif" alt="image-20210118130922969"></p>
 <hr>
 <p><strong>线性回归的错误衡量方式：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131021641.png" srcset="/img/loading.gif" alt="image-20210118131021641"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131021641.png" srcset="/img/loading.gif" alt="image-20210118131021641"></p>
 <p>有VC Bound的理论做支撑，保证了$E<em>{in}，E</em>{out}$相差不大，那么下面我们的问题就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131146505.png" srcset="/img/loading.gif" alt="image-20210118131146505"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131146505.png" srcset="/img/loading.gif" alt="image-20210118131146505"></p>
 <h2 id="Linear-Regression-Algorithm"><a href="#Linear-Regression-Algorithm" class="headerlink" title="Linear Regression Algorithm"></a>Linear Regression Algorithm</h2><p>接着上节的这个问题开始：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131146505.png" srcset="/img/loading.gif" alt="image-20210118131146505"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131146505.png" srcset="/img/loading.gif" alt="image-20210118131146505"></p>
 <p>首先看一下$E_{in}$的公式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131514104.png" srcset="/img/loading.gif" alt="image-20210118131514104"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131514104.png" srcset="/img/loading.gif" alt="image-20210118131514104"></p>
 <p>我们首先把$w^Tx_n$ 变化下顺序$x_n^Tw$,当然这个变化是很自然的，并不会改变结果。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131703108.png" srcset="/img/loading.gif" alt="image-20210118131703108"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131703108.png" srcset="/img/loading.gif" alt="image-20210118131703108"></p>
 <p>接下来我们把$\Sigma$去掉：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118131808754.png" srcset="/img/loading.gif" alt="image-20210118131808754"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118131808754.png" srcset="/img/loading.gif" alt="image-20210118131808754"></p>
 <p>easily, 这个矩阵可以拆成下面这个东西：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132009789.png" srcset="/img/loading.gif" alt="image-20210118132009789"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132009789.png" srcset="/img/loading.gif" alt="image-20210118132009789"></p>
 <p>接下来的任务就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132148743.png" srcset="/img/loading.gif" alt="image-20210118132148743"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132148743.png" srcset="/img/loading.gif" alt="image-20210118132148743"></p>
 <p>这个w和y都是确定的，w是不确定的。</p>
 <p>画出$E_{in}$随变换的曲线：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132244032.png" srcset="/img/loading.gif" alt="image-20210118132244032"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132244032.png" srcset="/img/loading.gif" alt="image-20210118132244032"></p>
 <ul>
 <li><p>这是一个凸函数</p>
 </li>
 <li><p>我们在最低点取梯度，梯度是0，即</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132431070.png" srcset="/img/loading.gif" alt="image-20210118132431070"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132431070.png" srcset="/img/loading.gif" alt="image-20210118132431070"></p>
 </li>
 </ul>
 <p>所以任务变成了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132512503.png" srcset="/img/loading.gif" alt="image-20210118132512503"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132512503.png" srcset="/img/loading.gif" alt="image-20210118132512503"></p>
 <hr>
 <p>我们把平方展开：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132646552.png" srcset="/img/loading.gif" alt="image-20210118132646552"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132646552.png" srcset="/img/loading.gif" alt="image-20210118132646552"></p>
 <p>我们设一些变量：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132840451.png" srcset="/img/loading.gif" alt="image-20210118132840451"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132840451.png" srcset="/img/loading.gif" alt="image-20210118132840451"></p>
 <p>其中：</p>
 <ul>
 <li>A是矩阵</li>
@@ -297,28 +297,28 @@
 </ul>
 <p>接下来就是对向量求导：</p>
 <p>首先我们考虑这样一个简单问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118132955381.png" srcset="/img/loading.gif" alt="image-20210118132955381"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118132955381.png" srcset="/img/loading.gif" alt="image-20210118132955381"></p>
 <p>这个求导是非常简单。</p>
 <p>那我们再看我们要求的东西：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118133051630.png" srcset="/img/loading.gif" alt="image-20210118133051630"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118133051630.png" srcset="/img/loading.gif" alt="image-20210118133051630"></p>
 <p>我们发现这两个是很类似的。</p>
 <p>因此我们得出<strong>梯度的表达式：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118133441075.png" srcset="/img/loading.gif" alt="image-20210118133441075"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118133441075.png" srcset="/img/loading.gif" alt="image-20210118133441075"></p>
 <p>因此<strong>如果$X^TX$可逆</strong>，那么很简单：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118133605008.png" srcset="/img/loading.gif" alt="image-20210118133605008"></p>
-<p>这里有个习惯，我们把<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118133731451.png" srcset="/img/loading.gif" alt="image-20210118133731451">这个称之为pseudo-inverse伪逆矩阵。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118133605008.png" srcset="/img/loading.gif" alt="image-20210118133605008"></p>
+<p>这里有个习惯，我们把<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118133731451.png" srcset="/img/loading.gif" alt="image-20210118133731451">这个称之为pseudo-inverse伪逆矩阵。</p>
 <p>当然，大部分情况这个$X^TX$都是可逆的，因为 $X^TX$ 是(d+1)*(d+1)维的</p>
 <p>当没有逆矩阵时：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118150158176.png" srcset="/img/loading.gif" alt="image-20210118150158176"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118150158176.png" srcset="/img/loading.gif" alt="image-20210118150158176"></p>
 <p>因此我们如果编程语言里有 pseudo-inverse伪逆矩阵，直接用就好了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118150239299.png" srcset="/img/loading.gif" alt="image-20210118150239299"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118150239299.png" srcset="/img/loading.gif" alt="image-20210118150239299"></p>
 <hr>
 <p><strong>最后总结一下算法：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118150616350.png" srcset="/img/loading.gif" alt="image-20210118150616350"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118150616350.png" srcset="/img/loading.gif" alt="image-20210118150616350"></p>
 <h2 id="Generalization-Issue"><a href="#Generalization-Issue" class="headerlink" title="Generalization Issue"></a>Generalization Issue</h2><p>$E_{in}$的计算：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118163034160.png" srcset="/img/loading.gif" alt="image-20210118163034160"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118163034160.png" srcset="/img/loading.gif" alt="image-20210118163034160"></p>
 <p>​    我们一般把$XX^十$ 叫做hat matrix，因为它让y带上了hat，即这个东西乘上y，就是预测的y。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118164327466.png" srcset="/img/loading.gif" alt="image-20210118164327466"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118164327466.png" srcset="/img/loading.gif" alt="image-20210118164327466"></p>
 <p>这个Hay Matrix在做什么？</p>
 <ul>
 <li><p>首先我们可以看出$y\  hat$, 就是$X$列向量所张成的空间里的一个向量。</p>
@@ -328,21 +328,21 @@
 <li>H使得取到的最小，所以H干了一件怎么样的事情？ 是的，H把向量y投影到span上形成y hat。</li>
 </ul>
 <p>那么如果有噪声的情况呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118165525095.png" srcset="/img/loading.gif" alt="image-20210118165525095"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118170340121.png" srcset="/img/loading.gif" alt="image-20210118170340121"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118165525095.png" srcset="/img/loading.gif" alt="image-20210118165525095"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118170340121.png" srcset="/img/loading.gif" alt="image-20210118170340121"></p>
 <p>我们可以算出这两个表达式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118170437688.png" srcset="/img/loading.gif" alt="image-20210118170437688"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118170611233.png" srcset="/img/loading.gif" alt="image-20210118170611233"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118170437688.png" srcset="/img/loading.gif" alt="image-20210118170437688"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118170611233.png" srcset="/img/loading.gif" alt="image-20210118170611233"></p>
 <h2 id="for-Binary-Classification"><a href="#for-Binary-Classification" class="headerlink" title="for Binary Classification"></a>for Binary Classification</h2><p>线性分类和线性回归的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118170940600.png" srcset="/img/loading.gif" alt="image-20210118170940600"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118170940600.png" srcset="/img/loading.gif" alt="image-20210118170940600"></p>
 <p>可是我们发现${+1,-1}∈R$，那么是不是可以不用PLA做Linear Classification，而用Linear Regression做呢？这样做的话运行就会很快了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118171853903.png" srcset="/img/loading.gif" alt="image-20210118171853903"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118171853903.png" srcset="/img/loading.gif" alt="image-20210118171853903"></p>
 <p>我们先观察一下两种错误衡量方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118171934930.png" srcset="/img/loading.gif" alt="image-20210118171934930"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118171934930.png" srcset="/img/loading.gif" alt="image-20210118171934930"></p>
 <p>画图后我们不难发现：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118171948534.png" srcset="/img/loading.gif" alt="image-20210118171948534"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118171948534.png" srcset="/img/loading.gif" alt="image-20210118171948534"></p>
 <p>配合VC Bound可以发现</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210118172023067.png" srcset="/img/loading.gif" alt="image-20210118172023067"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210118172023067.png" srcset="/img/loading.gif" alt="image-20210118172023067"></p>
 <p>这么一看 classification的Eout会被regression的Ein和根号项所包围住。</p>
 <p>我们把红色的做好，那么蓝色的效果也不错，所以我们就是损失了一些精度来加快了速度。</p>
 <p>因此这种替换方式是可以的。</p>
@@ -645,20 +645,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -264,24 +264,24 @@
 <li>O-Net：使用更强大的CNN再次细化结果，并输出5个面部landmark位置(两个眼，一个鼻子，嘴巴的两角)。</li>
 </ul>
 <p>大概流程如下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717190416487.png" srcset="/img/loading.gif" alt="image-20210717190416487"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210717190416487.png" srcset="/img/loading.gif" alt="image-20210717190416487"></p>
 <p><strong>文章的贡献：</strong></p>
 <p>(1)提出了一种新的基于级联CNN的联合人脸检测和对齐框架，并精心设计了轻量级CNN架构以实现实时性能。</p>
 <p>(2)提出了一种有效的硬样在线开采方法来提高性能。</p>
 <p>(3)在具有挑战性的基准上进行了大量实验，结果表明，与目前最先进的技术相比，该方法在人脸检测和人脸对齐任务中的性能有显著提高。（当然这篇文章发表于16年,现在的效果排名可以看下图）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717191259974.png" srcset="/img/loading.gif" alt="image-20210717191259974"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210717191402835.png" srcset="/img/loading.gif" alt="image-20210717191402835"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210717191259974.png" srcset="/img/loading.gif" alt="image-20210717191259974"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210717191402835.png" srcset="/img/loading.gif" alt="image-20210717191402835"></p>
 <p>​                                                                                                                (上面两图均来自paper with code)</p>
 <h2 id="Approach-Details"><a href="#Approach-Details" class="headerlink" title="Approach  Details"></a>Approach  Details</h2><h3 id="整体框架"><a href="#整体框架" class="headerlink" title="整体框架"></a>整体框架</h3><p>在进入网络前，先对图片构造图像金字塔，获得不同尺度大小的图片。</p>
 <ol>
 <li><p>首先利用一个全卷积网络(Proposal Net,P-Net)获得待选人脸窗口和包围框的回归向量，使用包围盒回归进行校准，然后通过NMS获得预选框。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190221536.png" srcset="/img/loading.gif" alt="image-20210718190221536"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718190221536.png" srcset="/img/loading.gif" alt="image-20210718190221536"></p>
 </li>
 <li><p>所有的候选框被送入另一个CNN，称为Refine Network (R-Net)，该网络进一步拒绝大量的假候选框，使用包围盒回归进行校准，并进行NMS。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190240812.png" srcset="/img/loading.gif" alt="image-20210718190240812"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718190240812.png" srcset="/img/loading.gif" alt="image-20210718190240812"></p>
 </li>
 <li><p>这一阶段与第二阶段相似，但在这一阶段，我们的目标是在更多的监督下识别面部区域。特别是，该网络将输出五个面部landmark的位置。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718190252590.png" srcset="/img/loading.gif" alt="image-20210718190252590"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718190252590.png" srcset="/img/loading.gif" alt="image-20210718190252590"></p>
 </li>
 </ol>
 <h3 id="CNN架构"><a href="#CNN架构" class="headerlink" title="CNN架构"></a>CNN架构</h3><p>作者认为之前也出现过多个CNN框架用于人脸检测，但是都被以下几点所影响了性能和效果：</p>
@@ -290,11 +290,11 @@
 <li>与其他多分类目标检测和分类任务相比，人脸检测是一项具有挑战性的二分类任务，因此每层需要的过滤器数量较少，但需要加深网络的深度。</li>
 </ul>
 <p>更改后的效果如下:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719161612406.png" srcset="/img/loading.gif" alt="image-20210719161612406"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210719161612406.png" srcset="/img/loading.gif" alt="image-20210719161612406"></p>
 <p>将PReLU(Parametric Rectified Linear Unit),作为卷积和全连接层后的非线性激活函数。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719161751773.png" srcset="/img/loading.gif" alt="image-20210719161751773"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210719161751773.png" srcset="/img/loading.gif" alt="image-20210719161751773"></p>
 <p>如果ai=0，那么PReLU退化为ReLU；如果ai是一个很小的固定值(如ai=0.01)，则PReLU退化为Leaky ReLU(LReLU)。 有实验证明，与ReLU相比，LReLU对最终的结果几乎没什么影响。</p>
-<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210719162726366.png" srcset="/img/loading.gif" alt="image-20210719162726366"></p>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210719162726366.png" srcset="/img/loading.gif" alt="image-20210719162726366"></p>
 <p>作者利用三个任务来训练我们的CNN检测器:人脸/非人脸分类、边界框回归和面部landmark定位。</p>
 <ul>
 <li>人脸/非人脸识别</li>
@@ -635,20 +635,5 @@ L_{i}^{\text {landmark }}=\left\|\hat{y}_{i}^{\text {landmark }}-y_{i}^{\text {l
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -257,7 +257,7 @@ I(x) = J(x)t(x) + A(1-t(x))</script><p>其中$J(x)$是原图，$I(x)$是观测�
 <p>通过把backbone修改成基于物理模型的网络，这样可以同时产生无雾霾图像$J$，投射图$t$，全局大气光$A$。修改如下图：</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210721221750651.png" srcset="/img/loading.gif" alt="image-20210721221750651"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210721221750651.png" srcset="/img/loading.gif" alt="image-20210721221750651"></p>
 <p>​    为了可以联合最优化这三者$J,t,A$，作者给出了一个reconstruction loss，这个loss指导着网络的输出符合雾天退化模型。</p>
 <p>​    注意：在这一部分我们只利用有标签的生成数据做训练，因此这部分预训练得到的模型是在生成数据域上的模型。</p>
 <ul>
@@ -268,11 +268,11 @@ I(x) = J(x)t(x) + A(1-t(x))</script><p>其中$J(x)$是原图，$I(x)$是观测�
 </ul>
 <p>​    </p>
 <h3 id="网络介绍：Physics-Based-Network"><a href="#网络介绍：Physics-Based-Network" class="headerlink" title="网络介绍：Physics-Based Network"></a>网络介绍：Physics-Based Network</h3><p>​    大部分去雾的深度学习模型都是直接估计恢复后的图片，但作者提出的是在他们的基础上添加了两个模块：<strong>Physics-compatible head</strong>和<strong>Atmospheric light estimation network(A-Net)</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210721223832033.png" srcset="/img/loading.gif" alt="image-20210721223832033"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210721223832033.png" srcset="/img/loading.gif" alt="image-20210721223832033"></p>
 <ul>
 <li>Physics-compatible head</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210721224249230.png" srcset="/img/loading.gif" alt="image-20210721224249230"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210721224249230.png" srcset="/img/loading.gif" alt="image-20210721224249230"></p>
 <p>这部分两个分支，每个分支都有两层卷积层，这里假设backbone是一种可以有效提取投射图和去雾后图像的特征提取器，backbone得到feature map后直接连入Physics-compatible head的卷积层。</p>
 <ul>
 <li>Atmospheric light estimation network(A-Net)</li>
@@ -318,13 +318,13 @@ I(x) = J(x)t(x) + A(1-t(x))</script><p>其中$J(x)$是原图，$I(x)$是观测�
 <p>这里放在一起优化可以更好地改进，我的想法是：既然已经拿到了二分掩膜找到了天空的位置，可以对他们进行分开处理，先让非天空的景物进行恢复，然后再用原模型还原出天空，根据二分掩膜的边界进行拼接。</p>
 </blockquote>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>值得一提，这篇文章算是我读过的paper中十分solid的，主观，客观，间接利用下游方法反过来反应PSD的效果，还有Ablation study证明idea的有效性。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210722182315341.png" srcset="/img/loading.gif" alt="image-20210722182315341"></p>
-<h3 id="主观评价："><a href="#主观评价：" class="headerlink" title="主观评价："></a>主观评价：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210722182706128.png" srcset="/img/loading.gif" alt="image-20210722182706128"></p>
-<h3 id="无参考图像质量评估-客观量化-："><a href="#无参考图像质量评估-客观量化-：" class="headerlink" title="无参考图像质量评估(客观量化)："></a>无参考图像质量评估(客观量化)：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210722182637266.png" srcset="/img/loading.gif" alt="image-20210722182637266"></p>
-<h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210722182419097.png" srcset="/img/loading.gif" alt="image-20210722182419097"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210722182315341.png" srcset="/img/loading.gif" alt="image-20210722182315341"></p>
+<h3 id="主观评价："><a href="#主观评价：" class="headerlink" title="主观评价："></a>主观评价：</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210722182706128.png" srcset="/img/loading.gif" alt="image-20210722182706128"></p>
+<h3 id="无参考图像质量评估-客观量化-："><a href="#无参考图像质量评估-客观量化-：" class="headerlink" title="无参考图像质量评估(客观量化)："></a>无参考图像质量评估(客观量化)：</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210722182637266.png" srcset="/img/loading.gif" alt="image-20210722182637266"></p>
+<h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210722182419097.png" srcset="/img/loading.gif" alt="image-20210722182419097"></p>
 <p>文章做了ablation study说明文章的idea确实是solid的。</p>
 <h3 id="任务驱动评价"><a href="#任务驱动评价" class="headerlink" title="任务驱动评价"></a>任务驱动评价</h3><p>去雾最终是为了下游任务更好的使用，作者提出可以对图片先进行去雾处理，然后放在yolo3中比较mAP的涨点，结果显示PSD效果最好，可以真正利用在下游任务中，提高下游任务精度。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210722183241158.png" srcset="/img/loading.gif" alt="image-20210722183241158"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210722183241158.png" srcset="/img/loading.gif" alt="image-20210722183241158"></p>
 
             </div>
             <hr>
@@ -622,20 +622,5 @@ I(x) = J(x)t(x) + A(1-t(x))</script><p>其中$J(x)$是原图，$I(x)$是观测�
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

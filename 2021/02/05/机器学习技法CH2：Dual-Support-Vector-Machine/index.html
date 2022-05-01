@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,76 +240,76 @@
             
             <div class="markdown-body">
               <h1 id="CH2：Dual-Support-Vector-Machine"><a href="#CH2：Dual-Support-Vector-Machine" class="headerlink" title="CH2：Dual Support Vector Machine"></a>CH2：Dual Support Vector Machine</h1><h2 id="Motivation-of-Dual-SVM"><a href="#Motivation-of-Dual-SVM" class="headerlink" title="Motivation of Dual SVM"></a>Motivation of Dual SVM</h2><p>我们上节提到过，如果想让<strong>SVM来做非线性的分类</strong>，那么我们是需要feature transform的，此时的问题变为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204180416185.png" srcset="/img/loading.gif" alt="image-20210204180416185"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204180416185.png" srcset="/img/loading.gif" alt="image-20210204180416185"></p>
 <p>这个$\phi(x_n)$就是对原来的$x_n$做了feature transform。</p>
 <p>我们的二次规划问题也变为了:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204180544571.png" srcset="/img/loading.gif" alt="image-20210204180544571"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204180544571.png" srcset="/img/loading.gif" alt="image-20210204180544571"></p>
 <p>​    为什么想到用SVM来做这件事情呢，因为在之前我们的linear regression中我们了解到，如果去做feature transform会导致$d_{vc}$变大的，也就是hypothesis set也会更大。而在SVM中，他有一个很好的性质就是由于分界面有厚度，导致一些hypothesis是不成立的，这就帮我们控制了模型的复杂度，我们就可以很好的使用feature transform了。</p>
 <p>这里我们提出SVM的对偶问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204181204149.png" srcset="/img/loading.gif" alt="image-20210204181204149"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204181204149.png" srcset="/img/loading.gif" alt="image-20210204181204149"></p>
 <p>我们这里把原来的$d+1$维转化为了一个只与N有关的维度。</p>
 <p>提示：下面的内容许多包含最优化的问题，因此我们不会着重讲这些，而是当作现成的理论。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204181341890.png" srcset="/img/loading.gif" alt="image-20210204181341890"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204181341890.png" srcset="/img/loading.gif" alt="image-20210204181341890"></p>
 <p>我们这里用到了一个工具叫做拉格朗日乘子（Largrange Multiplier）：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204181523106.png" srcset="/img/loading.gif" alt="image-20210204181523106"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204181523106.png" srcset="/img/loading.gif" alt="image-20210204181523106"></p>
 <p>在之前的正则化问题中，我的的$\lambda$是给好的，但是在dual SVM问题中$\lambda$被我们看作给出的约束，并且我们需要去解$\lambda$。</p>
 <p>在SVM中有N个constraint，那么也就是说有N个不同的$\lambda$。</p>
 <p>我们把原问题<strong>转化为lagrange function</strong>:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204185856288.png" srcset="/img/loading.gif" alt="image-20210204185856288"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204185856288.png" srcset="/img/loading.gif" alt="image-20210204185856288"></p>
 <p>（要注意，学术文献一般喜欢用$\alpha$而不是$\lambda$，下面我们将替换掉$\lambda$）</p>
 <p>我们直接给出SVM问题的数学表达：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204190400644.png" srcset="/img/loading.gif" alt="image-20210204190400644"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204190400644.png" srcset="/img/loading.gif" alt="image-20210204190400644"></p>
 <p>这个怎么理解呢？</p>
 <p>我们拆开来看：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204190426015.png" srcset="/img/loading.gif" alt="image-20210204190426015"></p>
-<p>如果今天我们计算蓝色部分也就是<img src="C:\Users\49815\AppData\Roaming\Typora\typora-user-images\image-20210204191000863.png" srcset="/img/loading.gif" alt="">这部分时，算出来是正数，也就代表$y_n(w^Tz_n+b)&lt;1$,那么说明这是不符合我们constraint的，这是一个非法解。同时我们来看这样算出来的肯定会趋于正无穷的：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204190834365.png" srcset="/img/loading.gif" alt="image-20210204190834365"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204190426015.png" srcset="/img/loading.gif" alt="image-20210204190426015"></p>
+<p>如果今天我们计算蓝色部分也就是<img src="C:\Users\49815\AppData\Roaming\Typora\typora-user-images\image-20210204191000863.png" srcset="/img/loading.gif" alt="">这部分时，算出来是正数，也就代表$y_n(w^Tz_n+b)&lt;1$,那么说明这是不符合我们constraint的，这是一个非法解。同时我们来看这样算出来的肯定会趋于正无穷的：<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204190834365.png" srcset="/img/loading.gif" alt="image-20210204190834365"></p>
 <p>因为蓝色部分是正的，我们的$a_n$取无穷大就好喽，这样就达到max了。</p>
-<p>反之同理，如果<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204191000863.png" srcset="/img/loading.gif" alt="">这部分小于0，最后加算出来的值就是$\frac{1}{2}w^Tw$ , 也就说这部分是符合要求的解。我们再来看下SVM的表达式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204191206373.png" srcset="/img/loading.gif" alt="image-20210204191206373"></p>
+<p>反之同理，如果<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204191000863.png" srcset="/img/loading.gif" alt="">这部分小于0，最后加算出来的值就是$\frac{1}{2}w^Tw$ , 也就说这部分是符合要求的解。我们再来看下SVM的表达式：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204191206373.png" srcset="/img/loading.gif" alt="image-20210204191206373"></p>
 <p>也就说这个式子帮我们选到了feasible的$b$和$w$。</p>
-<h2 id="Largange-Dual-SVM"><a href="#Largange-Dual-SVM" class="headerlink" title="Largange Dual SVM"></a>Largange Dual SVM</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204194334889.png" srcset="/img/loading.gif" alt="image-20210204194334889"></p>
+<h2 id="Largange-Dual-SVM"><a href="#Largange-Dual-SVM" class="headerlink" title="Largange Dual SVM"></a>Largange Dual SVM</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204194334889.png" srcset="/img/loading.gif" alt="image-20210204194334889"></p>
 <p>上式是显然成立的。</p>
 <p>上面式子告诉我们任何的$\alpha$取值都会小于左边部分，那么右边最大时也依然会小于左边的式子，即下图的式子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204194519102.png" srcset="/img/loading.gif" alt="image-20210204194519102"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204194519102.png" srcset="/img/loading.gif" alt="image-20210204194519102"></p>
 <p>我们称之为Largange dual problem（拉格朗日对偶问题），其实就是min，max换了一下顺序。</p>
 <p>最优化的一些知识指出，如果我们可以做到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204200031508.png" srcset="/img/loading.gif" alt="image-20210204200031508"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204200031508.png" srcset="/img/loading.gif" alt="image-20210204200031508"></p>
 <p>那么我们就可以给下面的式子画上等号：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204200048825.png" srcset="/img/loading.gif" alt="image-20210204200048825"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204200048825.png" srcset="/img/loading.gif" alt="image-20210204200048825"></p>
 <p>我们现在做右边的即可。</p>
 <p>我们把$L(b,w,\alpha)$展开：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204202433014.png" srcset="/img/loading.gif" alt="image-20210204202433014"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204202433014.png" srcset="/img/loading.gif" alt="image-20210204202433014"></p>
 <p>我们怎么解括号里面这个问题呢？</p>
 <p>可以用梯度下降来做：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204202718378.png" srcset="/img/loading.gif" alt="image-20210204202718378"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204202718378.png" srcset="/img/loading.gif" alt="image-20210204202718378"></p>
 <p>所以我们可以把这个式子作为新的constraint。</p>
 <p>即然$\Sigma_{n=1}^Na_ny_n=0$,那么$b$就会被消掉，即问题转化为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204203047742.png" srcset="/img/loading.gif" alt="image-20210204203047742"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204203047742.png" srcset="/img/loading.gif" alt="image-20210204203047742"></p>
 <p>同样我们也可以对w求偏导：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204203401235.png" srcset="/img/loading.gif" alt="image-20210204203401235"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204203401235.png" srcset="/img/loading.gif" alt="image-20210204203401235"></p>
 <p>那么$w =\Sigma_{n=1}^Na_ny_nz_n $ 就是一个新的constraint了。</p>
 <p> 有了上面的等式，我们可以化简为下式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204203620747.png" srcset="/img/loading.gif" alt="image-20210204203620747"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204203620747.png" srcset="/img/loading.gif" alt="image-20210204203620747"></p>
 <p>即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204203723946.png" srcset="/img/loading.gif" alt="image-20210204203723946"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204203723946.png" srcset="/img/loading.gif" alt="image-20210204203723946"></p>
 <p>KKT 最优化的情况：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204204253704.png" srcset="/img/loading.gif" alt="image-20210204204253704"></p>
-<h2 id="Solving-Dual-SVM"><a href="#Solving-Dual-SVM" class="headerlink" title="Solving Dual SVM"></a>Solving Dual SVM</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204221824671.png" srcset="/img/loading.gif" alt="image-20210204221824671"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204204253704.png" srcset="/img/loading.gif" alt="image-20210204204253704"></p>
+<h2 id="Solving-Dual-SVM"><a href="#Solving-Dual-SVM" class="headerlink" title="Solving Dual SVM"></a>Solving Dual SVM</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204221824671.png" srcset="/img/loading.gif" alt="image-20210204221824671"></p>
 <p>​    我们通过转化把问题边为上图中下面的部分，这里面为什么没有加上$w$的约束条件呢？因为我们此时要解的问题是求$\alpha$, $w$的这个约束条件可以在我们求得$\alpha$后反求得$w$,但是在这里我们可以先把它隐藏起来。</p>
 <p>​    现在问题转化为了$N+1$个约束条件</p>
 <p>​    接下来我们把它转化为QP（二次规划）问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210204222626601.png" srcset="/img/loading.gif" alt="image-20210204222626601"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210204222626601.png" srcset="/img/loading.gif" alt="image-20210204222626601"></p>
 <p>我们发现$Q$是一个N*N的矩阵，这就意味着：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205000001802.png" srcset="/img/loading.gif" alt="image-20210205000001802"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205000001802.png" srcset="/img/loading.gif" alt="image-20210205000001802"></p>
 <p>矩阵在N=30000时就需要3G 的RAM,所以我们需要特解来解。</p>
 <p>我们再来看KTT条件：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205002741555.png" srcset="/img/loading.gif" alt="image-20210205002741555"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205002741555.png" srcset="/img/loading.gif" alt="image-20210205002741555"></p>
 <ul>
 <li>$w$的计算方法：有了$\alpha$我们就可以算出$w$</li>
 <li>$b$的计算方法：从上面第四点可以看出，我们如果求出了一个$\alpha \ne 0$,那么$1-y_n(w^Tz_n+b)$就要等于0，我们就可以很轻易的解出$b$了。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205003033917.png" srcset="/img/loading.gif" alt="image-20210205003033917"></p>
-<h2 id="Messages-behind-Dual-SVM"><a href="#Messages-behind-Dual-SVM" class="headerlink" title="Messages behind Dual SVM"></a>Messages behind Dual SVM</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205003345628.png" srcset="/img/loading.gif" alt="image-20210205003345628"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205003033917.png" srcset="/img/loading.gif" alt="image-20210205003033917"></p>
+<h2 id="Messages-behind-Dual-SVM"><a href="#Messages-behind-Dual-SVM" class="headerlink" title="Messages behind Dual SVM"></a>Messages behind Dual SVM</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205003345628.png" srcset="/img/loading.gif" alt="image-20210205003345628"></p>
 <ul>
 <li><p>Dual SVM和SVM一样。</p>
 </li>
@@ -317,16 +317,16 @@
 </li>
 <li>我们称那些$\alpha _n&gt;0$的计算结果$(z_n,y_n)$叫做支持向量（support vector）</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205004352974.png" srcset="/img/loading.gif" alt="image-20210205004352974"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205004352974.png" srcset="/img/loading.gif" alt="image-20210205004352974"></p>
 <p>我们发现SV是SV candidates的一个子集。</p>
 <p>而我们计算的时候只需要考虑SV，即胖胖的边上的点：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205004448522.png" srcset="/img/loading.gif" alt="image-20210205004448522"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205004702015.png" srcset="/img/loading.gif" alt="image-20210205004702015"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205004448522.png" srcset="/img/loading.gif" alt="image-20210205004448522"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205004702015.png" srcset="/img/loading.gif" alt="image-20210205004702015"></p>
 <p>​    当我们求得$\alpha$后，我们可以把$w<em>{SVM}$的看作边界上点的线性组合，这个表达形式和PLA中很像，$w</em>{PLA}$就是使得分类错误的点的线性组合，不断改正，$\beta$为调整修改的幅度大小。</p>
 <p><strong>总结一下：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205005205144.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205005205144.png" srcset="/img/loading.gif" alt=""></p>
 <p>我们对比一下原始SVM和Dual SVM的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205005404552.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205005404552.png" srcset="/img/loading.gif" alt=""></p>
 <p>我们做Dual SVM是为了如果$\tilde{d}$很大，也就是说数据的维数很高，我们就可以用Dual SVM来做，Dual的好处就是它不需要所有数据来解，只需要SV来解。</p>
 
             </div>
@@ -625,20 +625,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

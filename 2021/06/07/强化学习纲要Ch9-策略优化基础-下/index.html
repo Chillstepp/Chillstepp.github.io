@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,98 +240,98 @@
             
             <div class="markdown-body">
               <h2 id="策略优化基础——下"><a href="#策略优化基础——下" class="headerlink" title="策略优化基础——下"></a>策略优化基础——下</h2><h3 id="Score-Function-Gradient-Estimator"><a href="#Score-Function-Gradient-Estimator" class="headerlink" title="Score Function Gradient Estimator"></a>Score Function Gradient Estimator</h3><p>我们考虑写一个更广义的策略函数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526171539941.png" srcset="/img/loading.gif" alt="image-20210526171539941"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526171539941.png" srcset="/img/loading.gif" alt="image-20210526171539941"></p>
 <p>上面那个推导过程不太详细，下面给出具体的推导步骤：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526182549786.png" srcset="/img/loading.gif" alt="image-20210526182549786"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526182549786.png" srcset="/img/loading.gif" alt="image-20210526182549786"></p>
 <p>这个梯度可以理解为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526204806093.png" srcset="/img/loading.gif" alt="image-20210526204806093"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526204806093.png" srcset="/img/loading.gif" alt="image-20210526204806093"></p>
 <p>p(x)为采样得到的值，他们梯度就是上图蓝色箭头，而f(x)代表给这些梯度一个权重。</p>
 <p>比如当权重分布如下时：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526204957634.png" srcset="/img/loading.gif" alt="image-20210526204957634"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526204957634.png" srcset="/img/loading.gif" alt="image-20210526204957634"></p>
 <p>此时这个p(x)分布会向权值大的哪个方向平移，最后移动至下图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526205123627.png" srcset="/img/loading.gif" alt="image-20210526205123627"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526205123627.png" srcset="/img/loading.gif" alt="image-20210526205123627"></p>
 <p>可以看到概率函数p(x)的形状变了，整个形状变得往能得到更高分数的区域走；所以score function gradient estimator就可以通过这样一个几何解释来理解。</p>
 <p><strong>Score Function Gradient Estimator与Maximum Likelihood estimator(极大似然估计)的对比：</strong></p>
 <p>score Function Gradient Estimator多了reward function，可以看成加权后的极大似然估计，也就是说这种policy gradient estimator鼓励函数向获得奖励更多的地方移动。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526212119365.png" srcset="/img/loading.gif" alt="image-20210526212119365"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526212119365.png" srcset="/img/loading.gif" alt="image-20210526212119365"></p>
 <p>而极大似然估计就是单纯的优化一个参数，这个参数是从训练数据中学到的，他学到的是训练数据的分布。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526213505031.png" srcset="/img/loading.gif" alt="image-20210526213505031"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526213505031.png" srcset="/img/loading.gif" alt="image-20210526213505031"></p>
 <p>​    在优化的过程中，score Function Gradient Estimator这种policy gradient estimator方法是：鼓励策略进入到得到奖励尽可能多的区域里面。supervised learning是直接有个标签去优化函数；策略函数是优化策略概率函数使得能够尽可能进入到能够采样产生更高奖励的区域里面。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214253947.png" srcset="/img/loading.gif" alt="image-20210526214253947"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526214253947.png" srcset="/img/loading.gif" alt="image-20210526214253947"></p>
 <p>更形象的理解就是：</p>
 <p>policy gradient方法希望优化概率分布函数$P$的参数$\theta$，从而使得函数更靠近获得奖励高的区域，如下图，我们其实就是希望P函数移动到靠近红色的区域上，这样我们采样时得到的奖励的期望也会更多。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214434895.png" srcset="/img/loading.gif" alt="image-20210526214434895"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526214434895.png" srcset="/img/loading.gif" alt="image-20210526214434895"></p>
 <h3 id="Large-Variance-of-Policy-Gradient"><a href="#Large-Variance-of-Policy-Gradient" class="headerlink" title="Large Variance of Policy Gradient"></a>Large Variance of Policy Gradient</h3><p>现在policy gradient是采样产生的:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526214922685.png" srcset="/img/loading.gif" alt="image-20210526214922685"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526214922685.png" srcset="/img/loading.gif" alt="image-20210526214922685"></p>
 <p>由于我们用的MC方法，即基于抽样得到的gradient。但是方差（variance)是非常大的，导致训练不稳定，因此我们现在的新的目标就是减少方差。</p>
 <p>有两种办法减少Policy Gradient的方差：</p>
 <ul>
 <li><strong>方法一：Use temporal causality利用时序上的因果关系减少variance</strong></li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526221946506.png" srcset="/img/loading.gif" alt="image-20210526221946506"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526221946506.png" srcset="/img/loading.gif" alt="image-20210526221946506"></p>
 <p>原来这个式子有一个问题就是，这个式子没有因果关系，他先计算了路径上的log likelihood，然后再把路径上每个点的奖励进行加和。</p>
 <p>不如写成如下形式：我们每走一步，只计算当前一步所获得奖励。</p>
 <p>即写为下式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526222704781.png" srcset="/img/loading.gif" alt="image-20210526222704781"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526222704781.png" srcset="/img/loading.gif" alt="image-20210526222704781"></p>
 <p>那我们的原来的梯度就可以改写成：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526222359202.png" srcset="/img/loading.gif" alt="image-20210526222359202"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526222359202.png" srcset="/img/loading.gif" alt="image-20210526222359202"></p>
 <p>进行一点推到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526223018729.png" srcset="/img/loading.gif" alt="image-20210526223018729"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526223018729.png" srcset="/img/loading.gif" alt="image-20210526223018729"></p>
 <p>最后的$G<em>t=\sum</em>{t^{\prime}=t}^{T-1} r_{t^{\prime}}$</p>
 <p>说一些推到中的细节：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526225121955.png" srcset="/img/loading.gif" alt="image-20210526225121955" style="zoom:67%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526225121955.png" srcset="/img/loading.gif" alt="image-20210526225121955" style="zoom:67%;" /></p>
 <p>这一步的转化就是和算贡献一样：前面时刻t的每一个score function会对后面时刻的$r_{t’}$做贡献,其中$t’&gt;=t$</p>
 <p>这个其实就是REINFORCE算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526225807209.png" srcset="/img/loading.gif" alt="image-20210526225807209"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526225807209.png" srcset="/img/loading.gif" alt="image-20210526225807209"></p>
 <ul>
 <li><strong>方法二：引入baseline</strong></li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210526230654519.png" srcset="/img/loading.gif" alt="image-20210526230654519"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210526230654519.png" srcset="/img/loading.gif" alt="image-20210526230654519"></p>
 <p>这个方法可以不改变期望(保证了仍然是无偏估计)的同时还降低方差：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527151936972.png" srcset="/img/loading.gif" alt="image-20210527151936972"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527151936972.png" srcset="/img/loading.gif" alt="image-20210527151936972"></p>
 <p>期望为0的证明：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527160506754.png" srcset="/img/loading.gif" alt="image-20210527160506754"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527160506754.png" srcset="/img/loading.gif" alt="image-20210527160506754"></p>
 <p><strong>Vanilla Policy Gradient Algorithm with Baseline：</strong></p>
 <p>有时候我们会把baseline用一种参数去拟合，写为$b_w(s)$<br>使得baseline本身带有参数w，在优化过程中同时优化 $\theta$和$w$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527162300142.png" srcset="/img/loading.gif" alt="image-20210527162300142"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527162300142.png" srcset="/img/loading.gif" alt="image-20210527162300142"></p>
 <figure class="highlight angelscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs angelscript">对于每次迭代:iter = <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,....：<br>	用策略\pi_theta收集m条轨迹<br>	对于每个轨迹\tau的每一步t：<br>		计算G_t^(i)=r_&#123;t&#125;+r_&#123;t+<span class="hljs-number">1</span>&#125;+...r_&#123;T<span class="hljs-number">-1</span>&#125;<br>		计算advantage estimate：A_t^(i) = G_t^(i)-b(s_t)<br>	通过更新w来更新b(s_t)，即最小化(b(s_t)-G_t^(i))^<span class="hljs-number">2</span>：<br>	计算策略梯度g<br>	利用SGD/Adam更新参数\theta<br><span class="hljs-keyword">return</span> /theta，baseline(即b(s))<br></code></pre></div></td></tr></table></figure>
 <h3 id="Actor-critic"><a href="#Actor-critic" class="headerlink" title="Actor-critic"></a>Actor-critic</h3><p>我们在上一小节已经提出了Policy gradient：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527165838088.png" srcset="/img/loading.gif" alt="image-20210527165838088"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527165838088.png" srcset="/img/loading.gif" alt="image-20210527165838088"></p>
 <p>我们会用一种新的方法来减少梯度，这种方法就是利用cirtic（评价者）</p>
 <p>首先$G_t$在前面提到过是在MC 梯度下降中抽样而来，它本质上是对Q函数无偏的估计：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170057607.png" srcset="/img/loading.gif" alt="image-20210527170057607"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527170057607.png" srcset="/img/loading.gif" alt="image-20210527170057607"></p>
 <p>我们这里利用critic去估计Q函数从而替换掉$G_t$:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170511331.png" srcset="/img/loading.gif" alt="image-20210527170511331"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527170511331.png" srcset="/img/loading.gif" alt="image-20210527170511331"></p>
 <p>那么这就是Actor-Critic Policy Gradient方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527170640401.png" srcset="/img/loading.gif" alt="image-20210527170640401"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527172030517.png" srcset="/img/loading.gif" alt="image-20210527172030517"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527170640401.png" srcset="/img/loading.gif" alt="image-20210527170640401"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527172030517.png" srcset="/img/loading.gif" alt="image-20210527172030517"></p>
 <p>Actor表演者：它就是利用策略函数生成动作，因此成为actor.</p>
 <p>Critic评价者：评价这个动作的价值，类似于Q函数。</p>
 <p>这个critic和policy evaluation的作用很类似：评价当前策略$\pi_\theta$的参数$\theta$到底好不好。</p>
 <p>计算方法有以下三种：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527172611868.png" srcset="/img/loading.gif" alt="image-20210527172611868"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527172611868.png" srcset="/img/loading.gif" alt="image-20210527172611868"></p>
 <p>这样我们就得到了QAC算法：</p>
 <p>假设critic是一个线性的价值函数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527174245070.png" srcset="/img/loading.gif" alt="image-20210527174245070"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527174245070.png" srcset="/img/loading.gif" alt="image-20210527174245070"></p>
 <p>QAC算法流程图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527174404599.png" srcset="/img/loading.gif" alt="image-20210527174404599"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527174404599.png" srcset="/img/loading.gif" alt="image-20210527174404599"></p>
 <p>这里利用TD error来更新w，由于我们假设了critic的$Q_w$由$\psi$的线性组合得到，那么$Q_w$的梯度就是$\psi$ ，因此更新w的式子为：$\mathbf{w} \leftarrow \mathbf{w}+\beta \delta \psi(s, a)$</p>
 <p>而$\theta$得更新就是policy gradient更新即可。</p>
 <p>理论上我们需要用两个不同的函数来拟合：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175135623.png" srcset="/img/loading.gif" alt="image-20210527175135623"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527175135623.png" srcset="/img/loading.gif" alt="image-20210527175135623"></p>
 <p>实际中我们可以让这两个函数共享网络结构，节省计算：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175209102.png" srcset="/img/loading.gif" alt="image-20210527175209102"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527175209102.png" srcset="/img/loading.gif" alt="image-20210527175209102"></p>
 <p><strong>Actor-critic这种方法同样可以用baseline来减少方差：</strong></p>
 <p>首先回顾一下Q函数和V函数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175630079.png" srcset="/img/loading.gif" alt="image-20210527175630079"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527175630079.png" srcset="/img/loading.gif" alt="image-20210527175630079"></p>
 <p>我们之前定义的baseline是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527175839421.png" srcset="/img/loading.gif" alt="image-20210527175839421"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527175839421.png" srcset="/img/loading.gif" alt="image-20210527175839421"></p>
 <p>因为$G<em>t=r_t+r</em>{t+1}+…r_{T-1}$</p>
 <p>因此:$b(s_t)= E(G_t)$</p>
 <p>而我们之前提到过用Q函数代替$G_t$,那么$b(s_t)=E(Q(.))=V^{\pi,\gamma}(s)$</p>
 <p><strong>policy gradient的一个非常好的应用：解决 不可微分的计算成分</strong></p>
 <p>比如一个网络的得传播是由多段组成的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527182857599.png" srcset="/img/loading.gif" alt="image-20210527182857599"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527182857599.png" srcset="/img/loading.gif" alt="image-20210527182857599"></p>
 <p>中间可能有一段是不可维分的，那么对于这样一部分会使得我们在bp时无法传播到前半段。</p>
 <p>解决方法有两个：</p>
 <ul>
@@ -340,9 +340,9 @@
 <li><p>方法二：用采样的方法，中间不可微的阶段可以用样本来替代。</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527183030226.png" srcset="/img/loading.gif" alt="image-20210527183030226"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527183030226.png" srcset="/img/loading.gif" alt="image-20210527183030226"></p>
 <p>基于policy gradient的算法有很多：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210527230126690.png" srcset="/img/loading.gif" alt="image-20210527230126690"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210527230126690.png" srcset="/img/loading.gif" alt="image-20210527230126690"></p>
 <p>RL的两个学派：</p>
 <p><strong>1.Value-based RL:利用dynamic programming和bootstrapping的方法去优化它的价值函数，得到价值函数后，从Q函数里面采取行为。</strong><br>代表算法：Deep Q-learning and its variant<br>代表人物：Richard Sutton (no more than 20 pages on PG out of the 500-page textbook), David Silver, from DeepMind<br>从控制论背景出发<br><strong>2.Policy-based RL:只需要少量样本，就可以拟合出策略函数。</strong><br>代表算法： PG, and its variants TRPO, PPO, and others<br>代表人物：Pieter Abbeel, Sergey Levine, John<br>Schulman, from OpenAI, Berkelely<br>从机器人，机器学习背景出发</p>
 <p>DeepMind和OpenAI两大RL流派区别：<br><a href="https://www.zhihu.com/question/316626294/answer/627373838" target="_blank" rel="noopener">https://www.zhihu.com/question/316626294/answer/627373838</a><br>殊途同归，都往Actor-critic发展。<br>DeepMind主要研究游戏领域，主要跑仿真对样本本身不挑剔；OpenAI研究机器人，更注重sample effectioncy（有效性），减少采样。</p>
@@ -643,20 +643,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

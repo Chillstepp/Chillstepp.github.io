@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,62 +240,62 @@
             
             <div class="markdown-body">
               <h1 id="CH8：Adaptive-Boosting"><a href="#CH8：Adaptive-Boosting" class="headerlink" title="CH8：Adaptive Boosting"></a>CH8：Adaptive Boosting</h1><h2 id="Motivation-of-Boosting"><a href="#Motivation-of-Boosting" class="headerlink" title="Motivation of Boosting"></a>Motivation of Boosting</h2><p>我们假设一个老师教学生认苹果的场景：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221204246512.png" srcset="/img/loading.gif" alt="image-20210221204246512"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221204246512.png" srcset="/img/loading.gif" alt="image-20210221204246512"></p>
 <p>其中上半部分是苹果，下半部分是其他水果。</p>
 <p>1.首先A提出<strong>按照形状判别</strong>苹果：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221204401308.png" srcset="/img/loading.gif" alt="image-20210221204401308"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221204401308.png" srcset="/img/loading.gif" alt="image-20210221204401308"></p>
 <p>那么A做对了一部分，但是蓝色方块的水果里判别犯了错误。</p>
 <p>2.我们为了减少这些错误，我们可以把已经做对的变得小一些(表示我们减轻一些对这些图片的注意力，着重看我们犯错的地方)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221205111564.png" srcset="/img/loading.gif" alt="image-20210221205111564"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221205111564.png" srcset="/img/loading.gif" alt="image-20210221205111564"></p>
 <p>我们又提出一种判别的方法：红颜色的是苹果</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221205157904.png" srcset="/img/loading.gif" alt="image-20210221205157904"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221205157904.png" srcset="/img/loading.gif" alt="image-20210221205157904"></p>
 <p>但是这种方法在其他地方又会在蓝色部分判断错误。</p>
 <p>3.我们重复第二步，放大错误，缩小正确的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221205317442.png" srcset="/img/loading.gif" alt="image-20210221205317442"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221205317442.png" srcset="/img/loading.gif" alt="image-20210221205317442"></p>
 <p>我们提出新的判别方法：苹果是绿色的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221205428810.png" srcset="/img/loading.gif" alt="image-20210221205428810"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221205428810.png" srcset="/img/loading.gif" alt="image-20210221205428810"></p>
 <p>我们此时犯了一堆错误，但是请注意，我们犯错的都是我们注意力已经下降的图片了，在主要的注意力上，比如右下角的番茄被判别正确了。</p>
 <p>4.和上面一样，蓝色部分(错误的)放大，再找新的规则来判别：苹果有梗</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221205633153.png" srcset="/img/loading.gif" alt="image-20210221205633153"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221205633153.png" srcset="/img/loading.gif" alt="image-20210221205633153"></p>
 <p>以此不断重复。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221210142178.png" srcset="/img/loading.gif" alt="image-20210221210142178"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221210142178.png" srcset="/img/loading.gif" alt="image-20210221210142178"></p>
 <p>这就像一堆二元分类的classifier的aggregation。</p>
 <p>老师给出的指导就是让我们focus on key example</p>
 <h2 id="Diversity-by-Re-weighting"><a href="#Diversity-by-Re-weighting" class="headerlink" title="Diversity by Re-weighting"></a>Diversity by Re-weighting</h2><p>我们首先回想一下<code>Bagging算法</code>,首先做bootstrap：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221211046001.png" srcset="/img/loading.gif" alt="image-20210221211046001"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221211046001.png" srcset="/img/loading.gif" alt="image-20210221211046001"></p>
 <p>然后我们找出每个$g<em>t$通过使得该份数据都最小化$E</em>{in}$来得到。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221211057685.png" srcset="/img/loading.gif" alt="image-20210221211057685"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221211057685.png" srcset="/img/loading.gif" alt="image-20210221211057685"></p>
 <p>其实我们可以换一种写法，我们用$u_t$代表第$t$个数据的重复次数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221211308193.png" srcset="/img/loading.gif" alt="image-20210221211308193"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221211400829.png" srcset="/img/loading.gif" alt="image-20210221211400829"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221211308193.png" srcset="/img/loading.gif" alt="image-20210221211308193"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221211400829.png" srcset="/img/loading.gif" alt="image-20210221211400829"></p>
 <p>这里面的$u$的概念可以代表这个点的权重：</p>
 <p>我们提出weighted base algorithm</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221212214679.png" srcset="/img/loading.gif" alt="image-20210221212214679"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221212214679.png" srcset="/img/loading.gif" alt="image-20210221212214679"></p>
 <p>我们可以把这个问题转化为一个SVM问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221213458324.png" srcset="/img/loading.gif" alt="image-20210221213458324"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221213458324.png" srcset="/img/loading.gif" alt="image-20210221213458324"></p>
 <p>也可以转化为一个logistic regression问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221215133126.png" srcset="/img/loading.gif" alt="image-20210221215133126"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221215133126.png" srcset="/img/loading.gif" alt="image-20210221215133126"></p>
 <p>在aggregate里我们提到过：我们希望$g$之间越不同越好，也就是$g$多样性一些，因为这说明着我们学到了新的特性。</p>
 <p>我们怎么才能使得$g$有一些多样性呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221222247281.png" srcset="/img/loading.gif" alt="image-20210221222247281"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221222247281.png" srcset="/img/loading.gif" alt="image-20210221222247281"></p>
 <p>我们比如现在用$u<em>n^{(t)}$和$u_n^{(t+1)}$两份数据分别来训练$g$并得到$g</em>{t}$和$g_{t+1}$，我们希望的多样性就是指这两个预策的结果不是很像。</p>
 <p>那么现在假设我们已经有$g<em>t$了，我们想要获得一个新的$u_n^{(t+1)}$来使得训练得到的$g</em>{t+1}<script type="math/tex">和</script>g_{t}$不太一样：</p>
 <p>我们怎么数学的去衡量这个不一样呢？</p>
 <p>我们用$u_n^{t+1}$这个权重去计算$g_t$算出来的判别结果来加上权重，这样算出来的错误率如果能达到$1/2$,那么说明已经长得很不一样了，因为这样计算出来的错误率和瞎说判别结果得到的错误率已经没区别了(几率都是$1/2$)，那么此时用这个$u_n^{t+1}$去训练数据一定可以得到一个和$g_t$相差比较大的结果。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221223318626.png" srcset="/img/loading.gif" alt="image-20210221223318626"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221223318626.png" srcset="/img/loading.gif" alt="image-20210221223318626"></p>
 <p>现在的问题就是我们希望怎么到达这个$1/2$.</p>
 <p>我们拆开来看这个式子，就是计算错误的次数 </p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221224318504.png" srcset="/img/loading.gif" alt="image-20210221224318504"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221224318504.png" srcset="/img/loading.gif" alt="image-20210221224318504"></p>
 <p>我们希望在$u_n^{t+1}$的数据下用$g_t$来预测，最后得到结果这样的结果：错的数据数 占 总数据数的一半。那么怎么调节呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210221234903979.png" srcset="/img/loading.gif" alt="image-20210221234903979"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210221234903979.png" srcset="/img/loading.gif" alt="image-20210221234903979"></p>
 <p>​    比如我们在$u<em>n^{(t)}$下我们错误数是1126，正确数是6211，我们调整一下下一次的权重对于犯错的点权重调整为：$u_n^{(t+1)} = u_n^{(t)}<em>6211$，同理，对于正确的点调整为：$u_n^{(t+1)} = u_n^{(t)}</em>1126$。我们就可以得到一个全新的$u_n^{(t+1)}$，这个就保证$g</em>{t+1}$和$g_{t}$的不同。</p>
 <h2 id="Adaptive-Boosting-Algorithm"><a href="#Adaptive-Boosting-Algorithm" class="headerlink" title="Adaptive Boosting Algorithm"></a>Adaptive Boosting Algorithm</h2><p>我们把上节最后的内容用一个<code>scaling factor</code>来统一下这样的操作：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222003828364.png" srcset="/img/loading.gif" alt="image-20210222003828364"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222003828364.png" srcset="/img/loading.gif" alt="image-20210222003828364"></p>
 <p>这个<code>scaling factor</code> 很好的统一了两种操作。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222004452365.png" srcset="/img/loading.gif" alt="image-20210222004452365"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222004452365.png" srcset="/img/loading.gif" alt="image-20210222004452365"></p>
 <p>就像这个放大错误就像是第一节老师所起到的作用一样。</p>
 <p>我们现在提出我们的算法的一个大致思路：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222004900270.png" srcset="/img/loading.gif" alt="image-20210222004900270"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222004900270.png" srcset="/img/loading.gif" alt="image-20210222004900270"></p>
 <p>但有两个问题：</p>
 <ul>
 <li><p>$u^{(1)}$怎么选择呢？   我们想让$g_1$表现最好，一个比较直观的就是让$u_n^{(1)} = 1/N$.也就是我们不做干涉。</p>
@@ -309,7 +309,7 @@
 </li>
 </ul>
 <p>我们希望这种算法是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222005833329.png" srcset="/img/loading.gif" alt="image-20210222005833329"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222005833329.png" srcset="/img/loading.gif" alt="image-20210222005833329"></p>
 <p>这种算法可以边算$g$边给出权重$\alpha$.</p>
 <ul>
 <li>我们希望好的$g$占的权重可以大一些,我们可以让$\alpha_t=ln(♦_t)$:<ul>
@@ -319,31 +319,31 @@
 </li>
 </ul>
 <p>因此Adaptive Aggregation的算法是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
 <p>其实这个算法就是三部分组成：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011305837.png" srcset="/img/loading.gif" alt="image-20210222011305837"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222011305837.png" srcset="/img/loading.gif" alt="image-20210222011305837"></p>
 <p>比较弱的算法$A$,老师进行权重调整，最后aggregate到一起。</p>
 <p><strong><code>AdaBoost</code>的理论保证：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011622233.png" srcset="/img/loading.gif" alt="image-20210222011622233"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222011622233.png" srcset="/img/loading.gif" alt="image-20210222011622233"></p>
 <ul>
 <li>AdaBoost的作者给出了迭代$logN$轮后即可让$E_{in}$几乎等于0</li>
 <li>我们把$T=logN$带入VC bound后半部分的式子就会发现后半部分式子很小</li>
 <li>这样VC Bound就告诉我们，AdaBoost算法让$E<em>{in}$几乎等于0，并且还可以得到很好的$E</em>{out}$</li>
 </ul>
 <h2 id="Adaptive-Boosting-in-Action"><a href="#Adaptive-Boosting-in-Action" class="headerlink" title="Adaptive Boosting in Action"></a>Adaptive Boosting in Action</h2><p>回到上次的AdaBoositng算法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222011244963.png" srcset="/img/loading.gif" alt="image-20210222011244963"></p>
 <p>我们希望让找一种比较弱的算法，可以使得表现的效果过好一点，但不用特别好，因为我们上节提到，几个比较准确率大于$1/2$的算法就可以aggregate一个不错的算法了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222013450922.png" srcset="/img/loading.gif" alt="image-20210222013450922"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222013450922.png" srcset="/img/loading.gif" alt="image-20210222013450922"></p>
 <p>一种比较常用的方法是：<code>decision stump</code>​</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222013930476.png" srcset="/img/loading.gif" alt="image-20210222013930476"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222013930476.png" srcset="/img/loading.gif" alt="image-20210222013930476"></p>
 <p>这种方法是：在不同维度的feature上做简单的二元分类，分割线在二维面上只有水平/竖直 分割线。</p>
 <p>但是效率非常高: 每次我们对每个维度去排序$O(NlogN)$，然后$O(n)$去遍历最好的分割点，对每一个维度都这么操作，$d$个维度，那么复杂度就是$O(d*Nlog N)$</p>
 <p>举个例子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222014339370.png" srcset="/img/loading.gif" alt="image-20210222014339370"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222014415538.png" srcset="/img/loading.gif" alt="image-20210222014415538"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222014445932.png" srcset="/img/loading.gif" alt="image-20210222014445932"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222014520776.png" srcset="/img/loading.gif" alt="image-20210222014520776"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222014526907.png" srcset="/img/loading.gif" alt="image-20210222014526907"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222014339370.png" srcset="/img/loading.gif" alt="image-20210222014339370"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222014415538.png" srcset="/img/loading.gif" alt="image-20210222014415538"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222014445932.png" srcset="/img/loading.gif" alt="image-20210222014445932"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222014520776.png" srcset="/img/loading.gif" alt="image-20210222014520776"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222014526907.png" srcset="/img/loading.gif" alt="image-20210222014526907"></p>
 
             </div>
             <hr>
@@ -641,20 +641,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,62 +240,62 @@
             
             <div class="markdown-body">
               <h1 id="CH3：Kernel-Support-Vector-Machine"><a href="#CH3：Kernel-Support-Vector-Machine" class="headerlink" title="CH3：Kernel Support Vector Machine"></a>CH3：Kernel Support Vector Machine</h1><h2 id="Kernel-Trick"><a href="#Kernel-Trick" class="headerlink" title="Kernel Trick"></a>Kernel Trick</h2><p>回顾上节的内容：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205185427247.png" srcset="/img/loading.gif" alt="image-20210205185427247"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205185427247.png" srcset="/img/loading.gif" alt="image-20210205185427247"></p>
 <p>我们看似Dual SVM已经与$\tilde{d}$无关了，可是在计算时我们会发现$q_{n,m}=y_my_mz_n^Tz_m$这个式子中的$z$却包含了$\tilde{d}$, 如果这个$\tilde{d}$非常大，我们算的还是非常慢。</p>
 <p>我们想做的是这一步，做得快一点：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205185809028.png" srcset="/img/loading.gif" alt="image-20210205185809028"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205185809028.png" srcset="/img/loading.gif" alt="image-20210205185809028"></p>
 <p>$\phi$是在做feature transform</p>
 <p>我们考虑一个二次的转化：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205211553134.png" srcset="/img/loading.gif" alt="image-20210205211553134"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205211553134.png" srcset="/img/loading.gif" alt="image-20210205211553134"></p>
 <p>这里的$\tilde{d}=d^2$, 因为他是任意两个的组合，因此如果直接算复杂度是$O(d^2)$。</p>
 <p>我们通过上图的整理，可以把复杂度边为$O(d)$,因为我们只需要算$x^Tx’$就好了。</p>
 <p>所以这里我们就找到了这样的一个$\phi$所对应的<strong>kernel function：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205211927953.png" srcset="/img/loading.gif" alt="image-20210205211927953"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205211927953.png" srcset="/img/loading.gif" alt="image-20210205211927953"></p>
 <p>我们就可以用kernel function来做这样的事情：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205212100994.png" srcset="/img/loading.gif" alt="image-20210205212100994"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205212100994.png" srcset="/img/loading.gif" alt="image-20210205212100994"></p>
 <p>那么b怎么算呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205212231425.png" srcset="/img/loading.gif" alt="image-20210205212231425"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205212231425.png" srcset="/img/loading.gif" alt="image-20210205212231425"></p>
 <p>$g_{SVM}$同上，把$w^T$换掉：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205212334210.png" srcset="/img/loading.gif" alt="image-20210205212334210"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205212334210.png" srcset="/img/loading.gif" alt="image-20210205212334210"></p>
 <p>最后我们把上述的总结一下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205212610558.png" srcset="/img/loading.gif" alt="image-20210205212610558"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205212719512.png" srcset="/img/loading.gif" alt="image-20210205212719512"></p>
-<h2 id="Polynomial-Kernel（多项式核）"><a href="#Polynomial-Kernel（多项式核）" class="headerlink" title="Polynomial Kernel（多项式核）"></a>Polynomial Kernel（多项式核）</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205213534481.png" srcset="/img/loading.gif" alt="image-20210205213534481"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205212610558.png" srcset="/img/loading.gif" alt="image-20210205212610558"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205212719512.png" srcset="/img/loading.gif" alt="image-20210205212719512"></p>
+<h2 id="Polynomial-Kernel（多项式核）"><a href="#Polynomial-Kernel（多项式核）" class="headerlink" title="Polynomial Kernel（多项式核）"></a>Polynomial Kernel（多项式核）</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205213534481.png" srcset="/img/loading.gif" alt="image-20210205213534481"></p>
 <p>我们因为转换到的空间相同，他们能够做的事情是相同的。</p>
 <p>我们最常用的就是$K_2$：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205213732329.png" srcset="/img/loading.gif" alt="image-20210205213732329"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205213732329.png" srcset="/img/loading.gif" alt="image-20210205213732329"></p>
 <p>但是这样的两个转换$\phi$虽然能够做的事情都一样，但是他们的内积肯定是不同的，而内积会影响margin，也就是说两个$\phi$虽然再同一个空间里，但是可能边界不相同。</p>
 <p>比如下图，不同的二次多项式核就有不同的结果：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205214121194.png" srcset="/img/loading.gif" alt="image-20210205214121194"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205214152297.png" srcset="/img/loading.gif" alt="image-20210205214152297"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205214121194.png" srcset="/img/loading.gif" alt="image-20210205214121194"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205214152297.png" srcset="/img/loading.gif" alt="image-20210205214152297"></p>
 <ul>
 <li>也就是不同的$\phi$会带来$g_{SVM}$的不同，那么他们的支持向量(SV)也会不同</li>
 <li>但是我们很难知道那儿一个比较好</li>
 </ul>
 <p>不同次数的多项式核：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205214421507.png" srcset="/img/loading.gif" alt="image-20210205214421507"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205214421507.png" srcset="/img/loading.gif" alt="image-20210205214421507"></p>
 <p><strong>$K_1$就是Linear Kernel：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205214649362.png" srcset="/img/loading.gif" alt="image-20210205214649362"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205214702765.png" srcset="/img/loading.gif" alt="image-20210205214702765"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205214649362.png" srcset="/img/loading.gif" alt="image-20210205214649362"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205214702765.png" srcset="/img/loading.gif" alt="image-20210205214702765"></p>
 <h2 id="Gaussian-Kernel-高斯核"><a href="#Gaussian-Kernel-高斯核" class="headerlink" title="Gaussian Kernel  (高斯核)"></a>Gaussian Kernel  (高斯核)</h2><p>我们现在由于计算复杂度和维度没关系了，那么我们如果做feature tranform到一个无穷多维度的空间上会怎么样呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205215507029.png" srcset="/img/loading.gif" alt="image-20210205215507029"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205215507029.png" srcset="/img/loading.gif" alt="image-20210205215507029"></p>
 <p>我们上图把$exp(-(x-x’)^2)$看做核，然后反着取做转化，化为$\phi(x)^T\phi(x’)$的形式，那么此时的$\phi(x)$竟然代表了一个无穷多维的转化。</p>
 <p>我们称这种为<strong>高斯核：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205215801155.png" srcset="/img/loading.gif" alt="image-20210205215801155"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205220015086.png" srcset="/img/loading.gif" alt="image-20210205220015086"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205215801155.png" srcset="/img/loading.gif" alt="image-20210205215801155"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205220015086.png" srcset="/img/loading.gif" alt="image-20210205220015086"></p>
 <p><strong>不同的$\gamma$可能会造成overfitting:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205220220185.png" srcset="/img/loading.gif" alt="image-20210205220220185"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205220220185.png" srcset="/img/loading.gif" alt="image-20210205220220185"></p>
 <p>我们不建议用很大的$\gamma$。</p>
 <h2 id="Comparison-of-Kernels"><a href="#Comparison-of-Kernels" class="headerlink" title="Comparison of Kernels"></a>Comparison of Kernels</h2><p>我们这一节来比较一下不同的kernel：</p>
 <p><strong>Linear Kernel：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205220520589.png" srcset="/img/loading.gif" alt="image-20210205220520589"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205220520589.png" srcset="/img/loading.gif" alt="image-20210205220520589"></p>
 <p><strong>Polynomial Kernel：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205220650202.png" srcset="/img/loading.gif" alt="image-20210205220650202"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205220650202.png" srcset="/img/loading.gif" alt="image-20210205220650202"></p>
 <p><strong>Gaussian Kernel：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205220844882.png" srcset="/img/loading.gif" alt="image-20210205220844882"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205220844882.png" srcset="/img/loading.gif" alt="image-20210205220844882"></p>
 <p>那我们自己可以定义一个kernel吗？</p>
 <p>可以，但是kernel有一定的条件，<strong>Mercer’s condition</strong>就是是否为一个kernel的评判标准：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210205221253438.png" srcset="/img/loading.gif" alt="image-20210205221253438"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210205221253438.png" srcset="/img/loading.gif" alt="image-20210205221253438"></p>
 
             </div>
             <hr>
@@ -593,20 +593,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

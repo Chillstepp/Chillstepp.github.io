@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -277,7 +277,7 @@
 <li><strong><code>reset()</code>函数删除调用者的引用</strong></li>
 </ul>
 <p>​    首先我们要清楚这个是干嘛的，当一个<code>shared_ptr</code>调用这个函数，那么<code>shared_ptr</code>就会引用减去1。代码例子在下面：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220216012011270.png" srcset="/img/loading.gif" alt="image-20220216012011270"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220216012011270.png" srcset="/img/loading.gif" alt="image-20220216012011270"></p>
 <p>查阅cpp reference，可以看出这个<code>shared_ptr</code>类有3个偏特化的模板：</p>
 <p>其中提到了第2，3，4种模板在<code>use_count</code>为1时调用<code>reset</code>函数，且函数里含有指针，可以使得：</p>
 <p>1.引用计数减1，引用计数为0</p>
@@ -593,20 +593,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

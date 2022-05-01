@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,36 +239,36 @@
             <h1 style="display: none">机器学习技法CH5：Kernel Logistic Regression</h1>
             
             <div class="markdown-body">
-              <h1 id="CH5：Kernel-Logistic-Regression"><a href="#CH5：Kernel-Logistic-Regression" class="headerlink" title="CH5：Kernel Logistic Regression"></a>CH5：Kernel Logistic Regression</h1><h2 id="Soft-Margin-SVM-as-Regularzied"><a href="#Soft-Margin-SVM-as-Regularzied" class="headerlink" title="Soft-Margin SVM as Regularzied"></a>Soft-Margin SVM as Regularzied</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217182704686.png" srcset="/img/loading.gif" alt="image-20210217182704686"></p>
+              <h1 id="CH5：Kernel-Logistic-Regression"><a href="#CH5：Kernel-Logistic-Regression" class="headerlink" title="CH5：Kernel Logistic Regression"></a>CH5：Kernel Logistic Regression</h1><h2 id="Soft-Margin-SVM-as-Regularzied"><a href="#Soft-Margin-SVM-as-Regularzied" class="headerlink" title="Soft-Margin SVM as Regularzied"></a>Soft-Margin SVM as Regularzied</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217182704686.png" srcset="/img/loading.gif" alt="image-20210217182704686"></p>
 <p>当$(x_n,y_n)$越过边界时，错误就是$1-y_n(w^Tz_n+b)$,当$(x_n,y_n)$没有越过边界时，说明他是正确的没有错误，即$\xi=0$,那么我们综上所述：可以把$\xi$换成另一种写法：$max(1-y_n(w^Tz_n+b),0)$</p>
 <p>此时我们的SVM可以这么写:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217183252584.png" srcset="/img/loading.gif" alt="image-20210217183252584"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217183252584.png" srcset="/img/loading.gif" alt="image-20210217183252584"></p>
 <p>这样一来，我们把之前抽象的$\xi$概念转化为了具体的式子，同时我们现在可以通过 $b,w$的不同取值最小化下式的soft-margin SVM问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217183428181.png" srcset="/img/loading.gif" alt="image-20210217183428181"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217183541395.png" srcset="/img/loading.gif" alt="image-20210217183541395"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217184542732.png" srcset="/img/loading.gif" alt="image-20210217184542732"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217183428181.png" srcset="/img/loading.gif" alt="image-20210217183428181"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217183541395.png" srcset="/img/loading.gif" alt="image-20210217183541395"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217184542732.png" srcset="/img/loading.gif" alt="image-20210217184542732"></p>
 <p>因此soft-margin SVM就是一个L2 regularization的问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217185054053.png" srcset="/img/loading.gif" alt="image-20210217185054053"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217185054053.png" srcset="/img/loading.gif" alt="image-20210217185054053"></p>
 <p>他们之间有一些相互的关系：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217185144879.png" srcset="/img/loading.gif" alt="image-20210217185144879"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217185144879.png" srcset="/img/loading.gif" alt="image-20210217185144879"></p>
 <h2 id="SVM-versus-Logistic-Regression"><a href="#SVM-versus-Logistic-Regression" class="headerlink" title="SVM versus Logistic  Regression"></a>SVM versus Logistic  Regression</h2><p>首先我们对比一下0-1error 和 SVM中的error measure的区别：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217190201303.png" srcset="/img/loading.gif" alt="image-20210217190201303"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217190201303.png" srcset="/img/loading.gif" alt="image-20210217190201303"></p>
 <p>不难看出：SVM中的error measure总是大于0-1error measure。</p>
 <p>之前在logistic regression中所用到的error measure方法叫做：scaled cross-entropy error ，详细推导见：<a href="https://chillstepp.github.io/2021/01/20/CH10%EF%BC%9ALogistic-Regression/">logistic regression</a>。</p>
 <p>首先有个概念叫做：cross entropy</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217190950840.png" srcset="/img/loading.gif" alt="image-20210217190950840"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217190950840.png" srcset="/img/loading.gif" alt="image-20210217190950840"></p>
 <p>但是为了图像对比，改进成了<strong>scaled cross-entropy</strong>,即$ln$换成了$log_2$</p>
 <p>我们对比一下三者：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217191214795.png" srcset="/img/loading.gif" alt="image-20210217191214795"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217191744126.png" srcset="/img/loading.gif" alt="image-20210217191744126"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217191214795.png" srcset="/img/loading.gif" alt="image-20210217191214795"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217191744126.png" srcset="/img/loading.gif" alt="image-20210217191744126"></p>
 <p>这样看来： SVM的error measure方法和logistic regression的error measure方法很相似。</p>
 <p>SVM此时可以看作: 有着L2-regularized的logistic regression</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217191912311.png" srcset="/img/loading.gif" alt="image-20210217191912311"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217192206685.png" srcset="/img/loading.gif" alt="image-20210217192206685"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217191912311.png" srcset="/img/loading.gif" alt="image-20210217191912311"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217192206685.png" srcset="/img/loading.gif" alt="image-20210217192206685"></p>
 <p>因此现在我们有了一个新的想法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217192312492.png" srcset="/img/loading.gif" alt="image-20210217192312492"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217192312492.png" srcset="/img/loading.gif" alt="image-20210217192312492"></p>
 <p>当我们求出SVM的解的时候，我们是否可以通过SVM的解来反映logistics regression里的几率问题呢？</p>
-<h2 id="SVM-for-Soft-Binary"><a href="#SVM-for-Soft-Binary" class="headerlink" title="SVM for Soft Binary"></a>SVM for Soft Binary</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217210724051.png" srcset="/img/loading.gif" alt="image-20210217210724051"></p>
+<h2 id="SVM-for-Soft-Binary"><a href="#SVM-for-Soft-Binary" class="headerlink" title="SVM for Soft Binary"></a>SVM for Soft Binary</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217210724051.png" srcset="/img/loading.gif" alt="image-20210217210724051"></p>
 <ul>
 <li><p>我们跑soft-margin SVM然后得到$b，w$, 然后传回到g(x)当作分类器，相当于是利用了SVM来直接算出Logistic regression问题。这样的方法表现得一般不错，但是<strong>少了一些逻辑回归的特点，logistics regression体现了极大似然估计相关的一些想法，且梯度下降强调的是maximum(最大)，但是现在SVM跑出来的肯定和最大有一点点的差距。</strong></p>
 </li>
@@ -276,7 +276,7 @@
 </li>
 </ul>
 <p>我们想着补全两者的缺点，一个想法是添加上两个自由度A,B：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217212417123.png" srcset="/img/loading.gif" alt="image-20210217212417123"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217212417123.png" srcset="/img/loading.gif" alt="image-20210217212417123"></p>
 <ul>
 <li><p>用A,B去微调hyperplane 使得其满足maximum likelihood的特性。</p>
 </li>
@@ -284,55 +284,55 @@
 </li>
 </ul>
 <p>同时我们也要注意到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217212635731.png" srcset="/img/loading.gif" alt="image-20210217212635731"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217212635731.png" srcset="/img/loading.gif" alt="image-20210217212635731"></p>
 <p>A一般大于0，如果你的A小于0，说明你的$w_{SVM}$求得有问题。B一般约等于0，他只是平移hyperplane，由于我们SVM求出的已经比较准确了，所以一般不会有什么太大的动作。</p>
 <p>那现在只需要优化这个A,B即可，用logistic regression的目标优化方程套进去即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217212616360.png" srcset="/img/loading.gif" alt="image-20210217212616360"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217212616360.png" srcset="/img/loading.gif" alt="image-20210217212616360"></p>
 <p>我们观察这个式子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217213032621.png" srcset="/img/loading.gif" alt="image-20210217213032621"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217213032621.png" srcset="/img/loading.gif" alt="image-20210217213032621"></p>
 <p>这个操作将一个多维的数据$x_n$转换为了一个具体的数:</p>
 <p>$\phi<em>{SVM}(x_n)=w</em>{SVM}^T\phi(x<em>n)+b</em>{SVM}$</p>
 <p>我们再用这个值作为训练数据来用A,B做调整即可，此时logistics regression此时只需要做A,B两个维度即可。</p>
 <p>其实Platt Model种提出的Probablistic SVM和这个很相似，只不过多了一些正则化，我们这里不讲platt提出的这些细节。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217215153765.png" srcset="/img/loading.gif" alt="image-20210217215153765"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217222127484.png" srcset="/img/loading.gif" alt="image-20210217222127484"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217215153765.png" srcset="/img/loading.gif" alt="image-20210217215153765"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217222127484.png" srcset="/img/loading.gif" alt="image-20210217222127484"></p>
 <p>但是这样得到的不是Z空间的最优解，只是一个经过A,B调整后比较好的解。</p>
-<h2 id="Kernel-Logistic-Regression"><a href="#Kernel-Logistic-Regression" class="headerlink" title="Kernel Logistic Regression"></a>Kernel Logistic Regression</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217222608350.png" srcset="/img/loading.gif" alt="image-20210217222608350"></p>
+<h2 id="Kernel-Logistic-Regression"><a href="#Kernel-Logistic-Regression" class="headerlink" title="Kernel Logistic Regression"></a>Kernel Logistic Regression</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217222608350.png" srcset="/img/loading.gif" alt="image-20210217222608350"></p>
 <p>最优解的$w$中也包含核技巧，并且也是$z_n$的线性组合</p>
 <p>其实无论是SVM，PLA还是logReg by SGD都是$z_n$的线性组合：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217222735537.png" srcset="/img/loading.gif" alt="image-20210217222735537"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217222735537.png" srcset="/img/loading.gif" alt="image-20210217222735537"></p>
 <p>所以我们得出结论：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217232135387.png" srcset="/img/loading.gif" alt="image-20210217232135387"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217232208332.png" srcset="/img/loading.gif" alt="image-20210217232208332"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217232135387.png" srcset="/img/loading.gif" alt="image-20210217232135387"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217232208332.png" srcset="/img/loading.gif" alt="image-20210217232208332"></p>
 <p>​    我们的最佳的$w_*$一定是由两部分组成的，一部分是$z_n$所张成的空间，另一部分是垂直于这个张成的空间。</p>
 <p>​    我们肯定希望垂直于张成的空间的w部分，即$w<em>⊥=0$，因为做到$w</em>⊥=0$时说明我们最优化的$w_*$可以全部用$z_n$来表示了。</p>
 <p>我们思考一下$w_⊥$到底会影响到什么？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210521173805544.png" srcset="/img/loading.gif" alt="image-20210521173805544"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210521173805544.png" srcset="/img/loading.gif" alt="image-20210521173805544"></p>
 <p>考虑目标优化函数的两部分，一部分是err() ,另一部分是$w^Tw$。</p>
 <p>如果$w_⊥\ne 0$会得到什么结果呢？我们考虑一下下面两个部分：</p>
 <ul>
 <li>第一部分：err()</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217232702845.png" srcset="/img/loading.gif" alt="image-20210217232702845"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217232702845.png" srcset="/img/loading.gif" alt="image-20210217232702845"></p>
 <p>我们发现这部分并不会被影响因为$w_⊥z_n=0$是一个事实，垂直于$z_n$的向量和$z_n$相乘当然等于0。</p>
 <ul>
 <li><p>第二部分：$w^Tw$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217232836583.png" srcset="/img/loading.gif" alt="image-20210217232836583"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217232836583.png" srcset="/img/loading.gif" alt="image-20210217232836583"></p>
 <p>当考虑$w$大小时就出现了问题，可以看出向量会大一些。但是这就出现了问题，这提示我们$w<em>*^Tw</em>*&gt;w<em>∥^Tw</em>∥$,这说明我们的最优解不是最优解了竟然，这意味着我们的最优w中：w$w_⊥=0$是恒成立的。</p>
 </li>
 </ul>
 <p>$w<em>⊥=0$是恒成立的就意味着：**我们的$w</em><em>$一定是由$z_n$的线性组合得来的。*</em></p>
 <p>这样一来我们就可以加上核技巧了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217233615892.png" srcset="/img/loading.gif" alt="image-20210217233615892"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217233615892.png" srcset="/img/loading.gif" alt="image-20210217233615892"></p>
 <p>此时我们求解$\beta$即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217233704780.png" srcset="/img/loading.gif" alt="image-20210217233704780"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217233704780.png" srcset="/img/loading.gif" alt="image-20210217233704780"></p>
 <p>怎么求呢？ GD/SGD都是很好的选择。</p>
 <p>另一种视角：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217234001203.png" srcset="/img/loading.gif" alt="image-20210217234001203"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217234001203.png" srcset="/img/loading.gif" alt="image-20210217234001203"></p>
 <ul>
 <li><p>相当于权重$\beta$和做feature transform后的数据的乘积。</p>
 </li>
-<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210217234232883.png" srcset="/img/loading.gif" alt="image-20210217234232883">这部分可以看作一种特殊的正则化。</p>
+<li><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210217234232883.png" srcset="/img/loading.gif" alt="image-20210217234232883">这部分可以看作一种特殊的正则化。</p>
 </li>
 <li><p>因此Kernel Logistic Regression可以看作$\beta$的线性模型，只不过它是通过kernel transform后的数据和一种特殊的kernel regularizer 得到的结果。</p>
 </li>
@@ -634,20 +634,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

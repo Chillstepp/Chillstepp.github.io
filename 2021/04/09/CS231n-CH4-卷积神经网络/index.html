@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,43 +240,43 @@
             
             <div class="markdown-body">
               <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>全连接层：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409162420380.png" srcset="/img/loading.gif" alt="image-20210409162420380"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409162420380.png" srcset="/img/loading.gif" alt="image-20210409162420380"></p>
 <p>卷积层(convolution Layer):</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409162546045.png" srcset="/img/loading.gif" alt="image-20210409162546045"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409162546045.png" srcset="/img/loading.gif" alt="image-20210409162546045"></p>
 <p>卷积网络就是一系列的卷积层的叠加，并加上各种各样的激活函数。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409163643703.png" srcset="/img/loading.gif" alt="image-20210409163643703"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409163643703.png" srcset="/img/loading.gif" alt="image-20210409163643703"></p>
 <p>随着层数的增加，所包含的信息越来越多。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409163844238.png" srcset="/img/loading.gif" alt="image-20210409163844238"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164331727.png" srcset="/img/loading.gif" alt="image-20210409164331727"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409163844238.png" srcset="/img/loading.gif" alt="image-20210409163844238"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409164331727.png" srcset="/img/loading.gif" alt="image-20210409164331727"></p>
 <p>卷积计算过程：</p>
 <p>我们可以一步一步的来走，那么得到的就是 5*5的结果</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164505656.png" srcset="/img/loading.gif" alt="image-20210409164505656"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409164505656.png" srcset="/img/loading.gif" alt="image-20210409164505656"></p>
 <p>但是步长调整到2时：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164739985.png" srcset="/img/loading.gif" alt="image-20210409164739985"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409164739985.png" srcset="/img/loading.gif" alt="image-20210409164739985"></p>
 <p>那么得到的就是一个3*3的结果。</p>
 <p>步长为3时：(7-3)/3+1 = 2.33 所以这样会导致不平衡的结果，所以步长为3不可取。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409164831571.png" srcset="/img/loading.gif" alt="image-20210409164831571"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409164831571.png" srcset="/img/loading.gif" alt="image-20210409164831571"></p>
 <p>我们也可以在周围添上0，这样就可以在边缘上做卷积：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409165253842.png" srcset="/img/loading.gif" alt="image-20210409165253842"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409165253842.png" srcset="/img/loading.gif" alt="image-20210409165253842"></p>
 <p>例如：一个32*32*3的输入，用10个5*5*3的卷积核去做卷积，边缘填充为2,步长为1。那么最后得到的就是32*32*10的输出，首先是32怎么得出来的呢：</p>
 <p>(32+2*2-5)/1 + 1 = 32。</p>
 <p>由于有10个卷积核，那么就是10层。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409170501645.png" srcset="/img/loading.gif" alt="image-20210409170501645"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409170501645.png" srcset="/img/loading.gif" alt="image-20210409170501645"></p>
 <p>那么这个例子中包含多少参数呢：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409171108179.png" srcset="/img/loading.gif" alt="image-20210409171108179"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409171108179.png" srcset="/img/loading.gif" alt="image-20210409171108179"></p>
 <p>首先是每kernel的大小是5*5*3 = 75,还有一个bias项，所以一共是76，由于有10层，那么就是760个参数。</p>
 <p>1*1的卷积也有意义：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409171525184.png" srcset="/img/loading.gif" alt="image-20210409171525184"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409171525184.png" srcset="/img/loading.gif" alt="image-20210409171525184"></p>
 <p>可以对深度进行操作。</p>
-<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409172416207.png" srcset="/img/loading.gif" alt="image-20210409172416207"></p>
+<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409172416207.png" srcset="/img/loading.gif" alt="image-20210409172416207"></p>
 <p>感受野(neuron view)：一个神经元所看到的视野，如上图蓝色面上的一个神经元是由卷积核和input做卷积得到的，他们操作的范围是5*5的范围。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173042186.png" srcset="/img/loading.gif" alt="image-20210409173042186"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409173042186.png" srcset="/img/loading.gif" alt="image-20210409173042186"></p>
 <p>池化层(pooling layer)做的是降采样(downsampling)：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173144211.png" srcset="/img/loading.gif" alt="image-20210409173144211"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409173144211.png" srcset="/img/loading.gif" alt="image-20210409173144211"></p>
 <p>我们一般不会做深度方向的池化，只对平面做。所以我们池化后的深度是不会变的。</p>
 <p>一种常用的池化方法是Max Pooling。</p>
 <p>Max Pooling：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210409173511648.png" srcset="/img/loading.gif" alt="image-20210409173511648"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210409173511648.png" srcset="/img/loading.gif" alt="image-20210409173511648"></p>
 <p>除了pooling可以降采样，我们调整卷积时的步长也可以做到降采样。</p>
 
             </div>
@@ -575,20 +575,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

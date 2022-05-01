@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,7 +243,7 @@
 <p>1.花费$A$：将$S$加$1$，但要注意$S$等于$N$时不可以进行该操作。</p>
 <p>2.花费$B$：随机投掷骰子一次，等概率出现$1-N$之间的数。</p>
 <p>寻求一种$S$到$T$期望花费最小的策略，输出最小期望。</p>
-<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20211111152750571.png" srcset="/img/loading.gif" alt="image-20211111152750571"></p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20211111152750571.png" srcset="/img/loading.gif" alt="image-20211111152750571"></p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​    首先思考，如果一个骰子做了操作1在做操作2，这是十分奇怪的，因为既然要做操作2，何必做操作1呢，先做的操作1不会对操作2有任何影响。<strong>因此得出第一个结论：先做操作2，再做操作1</strong>(也可以不做操作2直接做操作1,总之不能做完操作1再做操作2)。</p>
 <p>​    那么掷到多大才可以做操作1呢？不妨设为$X$, 那么投掷到目标区间$[T-X+1,T]$的时候就可以直接进行操作1，直到T，要么就一直进行操作2。因此期望就是: 投掷到目标区间花费的期望$E_1$+从目标区间到T的期望$E_2$。</p>
 <p>​    首先考虑$E_2=(X-1)*A/2$，这个计算就是一个线性期望计算。</p>
@@ -548,20 +548,5 @@ E_2=\Sigma_{i=1}^{\inf}p_i*i*B</script><p>然后就是高中数列知识错位�
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

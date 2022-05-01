@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,7 +243,7 @@
 <p><a href="https://chillstepp.github.io/2022/02/15/C-11%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">C++的智能指针-unique_ptr,shared_ptr,weak_ptr</a></p>
 <h2 id="循环引用问题"><a href="#循环引用问题" class="headerlink" title="循环引用问题"></a>循环引用问题</h2><p>shared_ptr存在循环引用问题：</p>
 <p>考虑下面这样一个代码</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20220224204433703.png" srcset="/img/loading.gif" alt="image-20220224204433703"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220224204433703.png" srcset="/img/loading.gif" alt="image-20220224204433703"></p>
 <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-keyword">int</span> _data;<br>	<span class="hljs-built_in">shared_ptr</span>&lt;Node&gt; next;<br>	<span class="hljs-built_in">shared_ptr</span>&lt;Node&gt; prev;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    fastIO<br><br>    <span class="hljs-built_in">shared_ptr</span>&lt;Node&gt;sp1 = make_shared&lt;Node&gt;();<br>    <span class="hljs-built_in">shared_ptr</span>&lt;Node&gt;sp2 = make_shared&lt;Node&gt;();<br>    sp1-&gt;next = sp2;<br>    sp2-&gt;prev = sp1;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><code>sp1</code>，<code>sp2</code>，<code>next</code>，<code>prev</code>均为<code>shared_ptr</code>类型的智能指针 :</p>
 <ul>
@@ -550,20 +550,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

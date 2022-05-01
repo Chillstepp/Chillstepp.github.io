@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,7 +240,7 @@
             
             <div class="markdown-body">
               <h1 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h1><p>后面补一个专题梳理一下这一节：to do..</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418220507728.png" srcset="/img/loading.gif" alt="image-20210418220507728"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418220507728.png" srcset="/img/loading.gif" alt="image-20210418220507728"></p>
 <p>原来的CNN是1对1的模型，即输入是固定的大小，输出也是固定的大小。</p>
 <p>而RNN可以是：</p>
 <p>1对多：输入一张图片，输出对图片的理解。</p>
@@ -248,44 +248,44 @@
 <p>多对多：翻译中输入可变，输出可变。</p>
 <p><strong>RNN主要用于处理大小可变的有序数据。</strong></p>
 <p>但实际上RNN也可以处理一些输入大小固定，输出大小固定的问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418221500352.png" srcset="/img/loading.gif" alt="image-20210418221500352"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418221500352.png" srcset="/img/loading.gif" alt="image-20210418221500352"></p>
 <p>比如手写数字识别，他不是单纯的做一个前向传递然后把识别结果返回出来。而是观察一组图片，看看这些图片的各种不同部分，在完成这样的一组观察后再得出识别结果。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418222055571.png" srcset="/img/loading.gif" alt="image-20210418222055571"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418222055571.png" srcset="/img/loading.gif" alt="image-20210418222055571"></p>
 <p>这个$f<em>W$相当于途中的绿色模块，他对old state$h</em>{t-1}$和当前输入的状态$x_t$做运算得到下一个隐藏态$h_t$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418222647581.png" srcset="/img/loading.gif" alt="image-20210418222647581"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418222647581.png" srcset="/img/loading.gif" alt="image-20210418222647581"></p>
 <p>比如：上例就是$h_t$首先不断更新，最后得到$h_t$,然后做一个全连接层得到的$y_t$</p>
 <p>我们把这个计算过程展开会更好的理解RNN是如何处理序列的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223037106.png" srcset="/img/loading.gif" alt="image-20210418223037106"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418223037106.png" srcset="/img/loading.gif" alt="image-20210418223037106"></p>
 <p>这样我们就可以预策每个时刻的$y$了。</p>
 <p>同时我们可以把每个时刻的loss和总共的loss加上去：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223223212.png" srcset="/img/loading.gif" alt="image-20210418223223212"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418223223212.png" srcset="/img/loading.gif" alt="image-20210418223223212"></p>
 <p>当然如果哦我们在做多对一的任务，比如给出一段文字/视频，输出表达的情感，那么只需要最后的输出即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223316380.png" srcset="/img/loading.gif" alt="image-20210418223316380"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418223316380.png" srcset="/img/loading.gif" alt="image-20210418223316380"></p>
 <p>当然还有1对多问题的结构：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223343273.png" srcset="/img/loading.gif" alt="image-20210418223343273"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418223343273.png" srcset="/img/loading.gif" alt="image-20210418223343273"></p>
 <p>Sequence to Sequence结构是一个<strong>多对一</strong> 和 <strong>一对多</strong>组合的情况：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418223453678.png" srcset="/img/loading.gif" alt="image-20210418223453678"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418223453678.png" srcset="/img/loading.gif" alt="image-20210418223453678"></p>
 <p>可以理解为输入一段文字得到一个表达，然后表达在转化为一段文字，多用于翻译中。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418224225774.png" srcset="/img/loading.gif" alt="image-20210418224225774"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418224225774.png" srcset="/img/loading.gif" alt="image-20210418224225774"></p>
 <p>一个预策hello的例子，上图是训练阶段：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418224853371.png" srcset="/img/loading.gif" alt="image-20210418224853371"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418224853371.png" srcset="/img/loading.gif" alt="image-20210418224853371"></p>
 <p>测试阶段，我们需要把softmax的得分变成一个概率分布，然后再抽取字母。</p>
 <p>​    这样做的好处是，想象prepare,prescent这两个单词的前缀 都是pre，如果我们只选择得分最多的作为结果，那么结果就会过于单一，如果采用概率来抽样，那么prepare和prescent都有机会被学习到。这使得我们的输出结果更加多样化。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418225848525.png" srcset="/img/loading.gif" alt="image-20210418225848525"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418225848525.png" srcset="/img/loading.gif" alt="image-20210418225848525"></p>
 <p>上图这种训练方法是很难训练的，因为我们需要把所有的loss算一遍返回总的loss，然后算梯度再更新，这样迭代一次却需要把整个全部计算一次，同时这也会导致内存不够。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210418230004344.png" srcset="/img/loading.gif" alt="image-20210418230004344"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210418230004344.png" srcset="/img/loading.gif" alt="image-20210418230004344"></p>
 <p>一种Truncated Backpropagation through time(TBPTT)的方法把很长的序列分解为每几十个一组。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419131435574.png" srcset="/img/loading.gif" alt="image-20210419131435574"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419131435574.png" srcset="/img/loading.gif" alt="image-20210419131435574"></p>
 <p>对于RNN这样的网络，是很容易出现梯度爆炸/梯度弥散的：</p>
 <p>对于梯度爆炸可以用梯度阶段(Gradient clipping)来解绝：</p>
 <p>如果梯度的L2范数大于某一个阈值，就把他截断并做一个缩小的除法。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419131624732.png" srcset="/img/loading.gif" alt="image-20210419131624732"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419131624732.png" srcset="/img/loading.gif" alt="image-20210419131624732"></p>
 <p>而对于梯度消失，一般我们会选择一个换一个更好的RNN结构来做，这也是LSTM出现的原因。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419132234399.png" srcset="/img/loading.gif" alt="image-20210419132234399"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419132608763.png" srcset="/img/loading.gif" alt="image-20210419132608763"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419132234399.png" srcset="/img/loading.gif" alt="image-20210419132234399"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419132608763.png" srcset="/img/loading.gif" alt="image-20210419132608763"></p>
 <p>LSTM中有两个hidden state(隐藏状态)，一个是和vanilla RNN一样的$h_{t-1}$，另一个是$c_t$称为cell state。这个cell state类似于保留在LSTM内部的隐藏状态。</p>
 <p>计算时首先我们可以计算出$i,f,o,g$ 的值，然后用这些值去更新$c_t$, 然后再用$c_t$计算处next step的$h_t$.</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419133541096.png" srcset="/img/loading.gif" alt="image-20210419133541096"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419133541096.png" srcset="/img/loading.gif" alt="image-20210419133541096"></p>
 <p>$i$：input gate，输入门，表示神经元要接受多少新的输入信息</p>
 <p>$f$：forget gate，遗忘门，我们要以往多少之前的神经元记忆</p>
 <p>$o$：output gate，输出门，表示我们要输出多少信息给外部</p>
@@ -293,7 +293,7 @@
 <p>$i,f,o$的范围由于sigmoid导致范围是0-1，而$g$的范围由于tanh的作用是-1到1.</p>
 <p>其中$f$ 为0说明我们想要忘记上一个cell state的值，是1说明要记住。</p>
 <p>一个具体的结构图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419135020028.png" srcset="/img/loading.gif" alt="image-20210419135020028"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419135020028.png" srcset="/img/loading.gif" alt="image-20210419135020028"></p>
 <p>LSTM有两个好处：</p>
 <ul>
 <li><p>LSTM做bp时通过forget gate时是逐元素相乘，这比矩阵乘法快很多</p>
@@ -301,7 +301,7 @@
 <li><p>LSTM会在不同的时间乘以不同的forget gate，而在vanilla RNN我们只会不断乘一个不变的$W$，这就很容易导致梯度爆炸/弥散。</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210419151524591.png" srcset="/img/loading.gif" alt="image-20210419151524591"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210419151524591.png" srcset="/img/loading.gif" alt="image-20210419151524591"></p>
 <p>和ResNet类似，LSTM也为网络提供了一个快速进行反向传播的通道。</p>
 
             </div>
@@ -600,20 +600,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

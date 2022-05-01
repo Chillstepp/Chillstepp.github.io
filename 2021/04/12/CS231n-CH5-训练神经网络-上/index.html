@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,25 +239,25 @@
             <h1 style="display: none">CS231n-CH5-训练神经网络(上)</h1>
             
             <div class="markdown-body">
-              <h1 id="训练神经网络-上"><a href="#训练神经网络-上" class="headerlink" title="训练神经网络(上)"></a>训练神经网络(上)</h1><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p> <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210410232705398.png" srcset="/img/loading.gif" alt="image-20210410232705398"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210410233025296.png" srcset="/img/loading.gif" alt="image-20210410233025296"></p>
+              <h1 id="训练神经网络-上"><a href="#训练神经网络-上" class="headerlink" title="训练神经网络(上)"></a>训练神经网络(上)</h1><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p> <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210410232705398.png" srcset="/img/loading.gif" alt="image-20210410232705398"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210410233025296.png" srcset="/img/loading.gif" alt="image-20210410233025296"></p>
 <p>问题：</p>
 <ul>
 <li><p>当x是一个很大/很小的区域时，梯度是一个十分接近0的数值，这会导致upstream如果是0，那么返回值就会十分小。这会使得梯度逐渐消失。</p>
 </li>
-<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411002045387.png" srcset="/img/loading.gif" alt="image-20210411002045387"></p>
+<li><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411002045387.png" srcset="/img/loading.gif" alt="image-20210411002045387"></p>
 <p>比如这个方程的对$x$的梯度是一堆$w$,我们假设数据的x要么都是大于0/要么都是小于0的，那么$\Sigma w_ix_i+b$这个式子对$w$求梯度是一堆$x$,我们上面假设了这里都是大于0，那么这个梯度也都大于0，同时$f$对$\Sigma w_ix_i+b$求导，由于f在各个点导数倒是正的，所以梯度恒大于0，这就导致了$f$对$w$求导是恒正的。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411003604753.png" srcset="/img/loading.gif" alt="image-20210411003604753"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411003604753.png" srcset="/img/loading.gif" alt="image-20210411003604753"></p>
 <p>而这样会导致无法想着正确的梯度去走，w增加的永远是正值/负值，这样会导致收敛缓慢。无法向着正确的方向去走，我们仔细想想就会发现数据x中全正/全负是我们无法改变的，真正原因是因为sigmoid函数梯度恒大于0，这样就导致了梯度方向的局限。因此这也是sigmoid的缺点。当然，如果我们的数据是zero-mean的，也就是说有正有负的那种数据，sigmoid是不会影响什么的。总之，两个限制(数据全正全负，sigmoid梯度恒大于0)，有一个被解决就可以快速地梯度下降。</p>
 </li>
 <li><p>exp()计算比较费时。</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215745708.png" srcset="/img/loading.gif" alt="image-20210411215745708"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411215745708.png" srcset="/img/loading.gif" alt="image-20210411215745708"></p>
 <ul>
 <li>$tanh$和$sigmiod$一样在x很大/很小的时候梯度几乎为0，这会导致upstream是0，那么返回值就会十分小。这会使得梯度逐渐消失。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411215952528.png" srcset="/img/loading.gif" alt="image-20210411215952528"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411215952528.png" srcset="/img/loading.gif" alt="image-20210411215952528"></p>
 <ul>
 <li>ReLU梯度不会消失</li>
 <li>计算高效(不包含exp())</li>
@@ -273,48 +273,48 @@
 <p><strong>解决方法</strong>：采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411221752359.png" srcset="/img/loading.gif" alt="image-20210411221752359"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411221752359.png" srcset="/img/loading.gif" alt="image-20210411221752359"></p>
 <p>和ReLU比，在负坐标上梯度不是0了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222029682.png" srcset="/img/loading.gif" alt="image-20210411222029682"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222541954.png" srcset="/img/loading.gif" alt="image-20210411222541954"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411222029682.png" srcset="/img/loading.gif" alt="image-20210411222029682"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411222541954.png" srcset="/img/loading.gif" alt="image-20210411222541954"></p>
 <h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>我们一般会对<strong>数据做中心化（零均值化zero-mean）</strong>，原因就是上面提到的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210411222827272.png" srcset="/img/loading.gif" alt="image-20210411222827272"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210411222827272.png" srcset="/img/loading.gif" alt="image-20210411222827272"></p>
 <p>对训练的图像求个平均，然后让每张图像都减去这个平均图像。</p>
 <p><strong>权重的初始化问题：</strong></p>
 <p>深度前馈网络与Xavier初始化原理 - 知乎 <a href="https://zhuanlan.zhihu.com/p/27919794" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27919794</a></p>
-<h2 id="批量归一化-Batch-Normalization"><a href="#批量归一化-Batch-Normalization" class="headerlink" title="批量归一化(Batch Normalization)"></a>批量归一化(Batch Normalization)</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412114711250.png" srcset="/img/loading.gif" alt="image-20210412114711250"></p>
+<h2 id="批量归一化-Batch-Normalization"><a href="#批量归一化-Batch-Normalization" class="headerlink" title="批量归一化(Batch Normalization)"></a>批量归一化(Batch Normalization)</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412114711250.png" srcset="/img/loading.gif" alt="image-20210412114711250"></p>
 <p>这个式子可以推一推，就是把x的分布变成了均值为0，方差为1的一个分布。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115256170.png" srcset="/img/loading.gif" alt="image-20210412115256170"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412115256170.png" srcset="/img/loading.gif" alt="image-20210412115256170"></p>
 <p>我们通常会那一个batch的数据，然后对每一维度求期望，方差，然后归一化这些数据。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115507181.png" srcset="/img/loading.gif" alt="image-20210412115507181"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412115507181.png" srcset="/img/loading.gif" alt="image-20210412115507181"></p>
 <p>Batch Normalization通常放在全连接层后，卷积层后，非线性层前。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412115942446.png" srcset="/img/loading.gif" alt="image-20210412115942446"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412115942446.png" srcset="/img/loading.gif" alt="image-20210412115942446"></p>
 <p>我们可以对Batch Nomalization后的$x$进行缩放，$y = \gamma x+\beta$,其中如果我们的$\gamma=\sqrt{Var[x]},\beta=E[x]$时，就相当于我们没做Batch normaliazation，因此我们的$\gamma,\beta$在学习中也可以恢复到不做normalization的情况，这样加入batch normalization的效果不好时也可以保证恢复回来。</p>
 <p>总体来说，<code>Batch Normalization</code>的过程是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412121031927.png" srcset="/img/loading.gif" alt="image-20210412121031927"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412121031927.png" srcset="/img/loading.gif" alt="image-20210412121031927"></p>
 <p>BN的优点：</p>
 <ul>
 <li><p>可以使用更高的学习率</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412130421433.png" srcset="/img/loading.gif" alt="image-20210412130421433"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412130421433.png" srcset="/img/loading.gif" alt="image-20210412130421433"></p>
 <p>原因大概解释一下就是：首先我们要知道高学习率通常会导致梯度爆炸/梯度消失，这是因为底层的网络对高层的网络会有叠加的影响。而BN由于对层进行归一化，因此这组织了某层输出的值会变得过大或者过小，因此这直接的解绝了梯度爆炸/梯度消失的问题。 因此我们此时就可以用更高的学习率。</p>
 <p>同时下面这个数学上的解释也是work的：</p>
 <p>深度学习中 Batch Normalization为什么效果好？ - Juliuszh的回答 - 知乎 <a href="https://www.zhihu.com/question/38102762/answer/302841181" target="_blank" rel="noopener">https://www.zhihu.com/question/38102762/answer/302841181</a></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412131651757.png" srcset="/img/loading.gif" alt="image-20210412131651757"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412131651757.png" srcset="/img/loading.gif" alt="image-20210412131651757"></p>
 </li>
 <li><p>可以防止过拟合，当然作者在原文章中并没拿出什么有力的论证，所以只是含糊的说有了BN就可以不要dropout层了。</p>
 </li>
 </ul>
 <p>对于训练，学习率的一般通过在[1e-5,1e-3]做validation来选择。</p>
 <p>超参数的除了grid search(即一组一组的参数一个一个去做validation，哪儿个好用哪儿个)。也可以random  search(给每个超参数设定一个分布，然后去对每个参数从他所属的分布中抽样，用这样的方法获得一组超参数，然后再去validation)。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142559169.png" srcset="/img/loading.gif" alt="image-20210412142559169"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142757950.png" srcset="/img/loading.gif" alt="image-20210412142757950"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412142559169.png" srcset="/img/loading.gif" alt="image-20210412142559169"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412142757950.png" srcset="/img/loading.gif" alt="image-20210412142757950"></p>
 <p>黄色：过高的学习率会导致梯度爆炸</p>
 <p>蓝色：低的学习率导致loss下降缓慢</p>
 <p>绿色：高的学习率也会导致无法陷入局部最优解</p>
 <p>红色：好的学习率，loss下降快。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412142959585.png" srcset="/img/loading.gif" alt="image-20210412142959585"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412142959585.png" srcset="/img/loading.gif" alt="image-20210412142959585"></p>
 <p>一般这样开始loss不下降，在某一个节点突然下降，说明<strong>初始化做的不好</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210412143103173.png" srcset="/img/loading.gif" alt="image-20210412143103173"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210412143103173.png" srcset="/img/loading.gif" alt="image-20210412143103173"></p>
 <p>如果validation和train的差别太大，说明是overfitting了，可以试着做一些正则化。如果差别不大且两者准确率都不高，那就应该去找模型的问题了。</p>
 
             </div>
@@ -613,20 +613,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

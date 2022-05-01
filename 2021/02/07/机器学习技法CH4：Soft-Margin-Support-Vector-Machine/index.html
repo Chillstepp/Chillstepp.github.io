@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,74 +239,74 @@
             <h1 style="display: none">机器学习技法CH4：Soft-Margin Support Vector Machine</h1>
             
             <div class="markdown-body">
-              <h1 id="CH4：Soft-Margin-Support-Vector-Machine"><a href="#CH4：Soft-Margin-Support-Vector-Machine" class="headerlink" title="CH4：Soft-Margin Support Vector Machine"></a>CH4：Soft-Margin Support Vector Machine</h1><h2 id="Motivation-and-Primal"><a href="#Motivation-and-Primal" class="headerlink" title="Motivation and Primal"></a>Motivation and Primal</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206215810111.png" srcset="/img/loading.gif" alt="image-20210206215810111"></p>
+              <h1 id="CH4：Soft-Margin-Support-Vector-Machine"><a href="#CH4：Soft-Margin-Support-Vector-Machine" class="headerlink" title="CH4：Soft-Margin Support Vector Machine"></a>CH4：Soft-Margin Support Vector Machine</h1><h2 id="Motivation-and-Primal"><a href="#Motivation-and-Primal" class="headerlink" title="Motivation and Primal"></a>Motivation and Primal</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206215810111.png" srcset="/img/loading.gif" alt="image-20210206215810111"></p>
 <p>我们不能一直追求全部正确，数据也不一定可分。</p>
 <p>在pocket中我们选择容忍一些错误：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206220144485.png" srcset="/img/loading.gif" alt="image-20210206220144485"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206220242382.png" srcset="/img/loading.gif" alt="image-20210206220242382"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206220144485.png" srcset="/img/loading.gif" alt="image-20210206220144485"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206220242382.png" srcset="/img/loading.gif" alt="image-20210206220242382"></p>
 <p>​    因此我们让SVM上min的目标不仅包含$\frac{1}{2}w^Tw$ ,也包括错误的数量，这个C代表着这两者的权衡，如果你不在意多错一点，想要使得$\frac{1}{2}w^Tw$最小(即胖胖的间隔更宽)，那么C就可以小一点，反之同理。</p>
 <p>​    这是又一个trade-off： 在<strong>更宽的边界</strong>和<strong>噪声容忍度</strong>上的权衡。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206220835057.png" srcset="/img/loading.gif" alt="image-20210206220835057"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206220835057.png" srcset="/img/loading.gif" alt="image-20210206220835057"></p>
 <p>上面这个式子想法很好，但是有几个问题：</p>
 <ul>
 <li>$[·]$不是一个线性函数，QP(二次规划)没法解决。</li>
 <li>我们无法区分错误的严重程度，大的错误和小的错误被认为相同。</li>
 </ul>
 <p>我们首先把不同的错误程度用$\xi$代表，这样我们就把记录错误的数量转换为了记录多大的错误。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206222135854.png" srcset="/img/loading.gif" alt="image-20210206222135854"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206222135854.png" srcset="/img/loading.gif" alt="image-20210206222135854"></p>
 <p>这个$\xi$代表着错误程度，如下图代表着距离胖胖额外边界的长度：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206222224142.png" srcset="/img/loading.gif" alt="image-20210206222224142"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206222224142.png" srcset="/img/loading.gif" alt="image-20210206222224142"></p>
 <p>C大小的意义：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206222330636.png" srcset="/img/loading.gif" alt="image-20210206222330636"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206222330636.png" srcset="/img/loading.gif" alt="image-20210206222330636"></p>
 <p>现在的问题转化为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206222346294.png" srcset="/img/loading.gif" alt="image-20210206222346294"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206222346294.png" srcset="/img/loading.gif" alt="image-20210206222346294"></p>
 <p>有了这个以后我们做对偶的QP问题，把$\tilde{d}$拿掉。</p>
 <h2 id="Dual-Problem"><a href="#Dual-Problem" class="headerlink" title="Dual Problem"></a>Dual Problem</h2><p>和之前一样，先求<strong>lagrange fuction：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206223201183.png" srcset="/img/loading.gif" alt="image-20210206223201183"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206223201183.png" srcset="/img/loading.gif" alt="image-20210206223201183"></p>
 <p>化简一下$\xi$和$\beta$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206231915121.png" srcset="/img/loading.gif" alt="image-20210206231915121"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206231915121.png" srcset="/img/loading.gif" alt="image-20210206231915121"></p>
 <p>和之前算Dual SVM一样，对不同变量进行求偏导：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206232123454.png" srcset="/img/loading.gif" alt="image-20210206232123454"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206232123454.png" srcset="/img/loading.gif" alt="image-20210206232123454"></p>
 <p>最后我们转化为了如下的问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206232229963.png" srcset="/img/loading.gif" alt="image-20210206232229963"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206232229963.png" srcset="/img/loading.gif" alt="image-20210206232229963"></p>
 <p>这里的soft margin推导和我们之前所提到的hard margin区别就是：$\alpha$多了一个上界。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206232318466.png" srcset="/img/loading.gif" alt="image-20210206232318466"></p>
-<h2 id="Messages"><a href="#Messages" class="headerlink" title="Messages"></a>Messages</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206232621996.png" srcset="/img/loading.gif" alt="image-20210206232621996"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206232318466.png" srcset="/img/loading.gif" alt="image-20210206232318466"></p>
+<h2 id="Messages"><a href="#Messages" class="headerlink" title="Messages"></a>Messages</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206232621996.png" srcset="/img/loading.gif" alt="image-20210206232621996"></p>
 <p>和我们做hard-margin的过程一样，但是这个里的b怎么求呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206233104839.png" srcset="/img/loading.gif" alt="image-20210206233104839"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206233104839.png" srcset="/img/loading.gif" alt="image-20210206233104839"></p>
 <ul>
 <li>和之前hard-margin只用第一个条件，那么我们求出来的SV:终于有b和$\xi$两个未知的是无法求出b的。</li>
 <li>我们考虑用第二个式子，当$\alpha&lt;C$的时候，$\xi=0$，那么我们就可以求出解了：</li>
 </ul>
 <p>用free SV可以求出$b$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206234440681.png" srcset="/img/loading.gif" alt="image-20210206234440681"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206234440681.png" srcset="/img/loading.gif" alt="image-20210206234440681"></p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206234702474.png" srcset="/img/loading.gif" alt="image-20210206234702474"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206234702474.png" srcset="/img/loading.gif" alt="image-20210206234702474"></p>
 <p><strong>C越来越大</strong>，我们做的<strong>正确的会越来越多</strong>，但是<strong>边界会越来越瘦</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206235114218.png" srcset="/img/loading.gif" alt="image-20210206235114218"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206235114218.png" srcset="/img/loading.gif" alt="image-20210206235114218"></p>
 <ul>
 <li><p>不是支持向量的：原理fat boundary的那些点</p>
 </li>
 <li><p>free SV：fat boundary的边界点</p>
 </li>
-<li><p>bounded SV：越界的点，比如：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206235600471.png" srcset="/img/loading.gif" alt="image-20210206235600471"></p>
+<li><p>bounded SV：越界的点，比如：<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206235600471.png" srcset="/img/loading.gif" alt="image-20210206235600471"></p>
 <p>上图中红叉的距离没有在红色边界的一遍，他的错误程度就是紫色线的距离。</p>
 </li>
 </ul>
 <h2 id="Model-Selection"><a href="#Model-Selection" class="headerlink" title="Model Selection"></a>Model Selection</h2><p>我们在用Gauss核的时候有两个要选的：$C$和$\gamma$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210206235917018.png" srcset="/img/loading.gif" alt="image-20210206235917018"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210206235917018.png" srcset="/img/loading.gif" alt="image-20210206235917018"></p>
 <p>怎么选择合适的呢？</p>
 <p>做validation即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210207000306700.png" srcset="/img/loading.gif" alt="image-20210207000306700"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210207000306700.png" srcset="/img/loading.gif" alt="image-20210207000306700"></p>
 <p>有趣的是在做Leave-One-Out Cross Validation的时候有一些新的值得注意的东西：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210207000617644.png" srcset="/img/loading.gif" alt="image-20210207000617644"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210207000617644.png" srcset="/img/loading.gif" alt="image-20210207000617644"></p>
 <p>我们取出来的One是$\alpha=0$的，即non SV ，这些不是支持向量，因此加上也不会使得结果更准确。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210207001851833.png" srcset="/img/loading.gif" alt="image-20210207001851833"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210207001851833.png" srcset="/img/loading.gif" alt="image-20210207001851833"></p>
 <p>我们的non-SV 一定都是正确的，而SV的错误率最多也就是1而已。加入我们一共有N个向量，那么我们同体的错误肯定小于$SV的数量  /  N$.</p>
 <p>即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210207002056807.png" srcset="/img/loading.gif" alt="image-20210207002056807"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210207002056807.png" srcset="/img/loading.gif" alt="image-20210207002056807"></p>
 <p>这也侧面告诉我们可以通过SV的数量来做安全检查：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210207002206915.png" srcset="/img/loading.gif" alt="image-20210207002206915"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210207002206915.png" srcset="/img/loading.gif" alt="image-20210207002206915"></p>
 <p>特别大的SV数量我们就要小心用了。</p>
 
             </div>
@@ -605,20 +605,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

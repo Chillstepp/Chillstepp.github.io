@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,120 +239,120 @@
             <h1 style="display: none">机器学习技法CH1：Linear SVM</h1>
             
             <div class="markdown-body">
-              <h1 id="CH1：Linear-SVM"><a href="#CH1：Linear-SVM" class="headerlink" title="CH1：Linear SVM"></a>CH1：Linear SVM</h1><h2 id="Large-Margin-separating-Hyperplane"><a href="#Large-Margin-separating-Hyperplane" class="headerlink" title="Large-Margin separating Hyperplane"></a>Large-Margin separating Hyperplane</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203201812968.png" srcset="/img/loading.gif" alt="image-20210203201812968"></p>
+              <h1 id="CH1：Linear-SVM"><a href="#CH1：Linear-SVM" class="headerlink" title="CH1：Linear SVM"></a>CH1：Linear SVM</h1><h2 id="Large-Margin-separating-Hyperplane"><a href="#Large-Margin-separating-Hyperplane" class="headerlink" title="Large-Margin separating Hyperplane"></a>Large-Margin separating Hyperplane</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203201812968.png" srcset="/img/loading.gif" alt="image-20210203201812968"></p>
 <p>这三种线都可以把这些点分开。</p>
 <ul>
 <li><p>PLA算法不一定会得出哪儿一种线</p>
 </li>
-<li><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202005352.png" srcset="/img/loading.gif" alt="image-20210203202005352"></p>
+<li><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203202005352.png" srcset="/img/loading.gif" alt="image-20210203202005352"></p>
 <p>从我们的VC Bound来看，$E<em>{in}=0$都一样，$d</em>{VC}$=也一样，那么 VC Bound所带来的保证$E_{out}$都相同。</p>
 </li>
 </ul>
 <p>​    但其实我们的直觉告诉我们第三种好一点，因为他如果有一些数据有误差，那么也不会影响结果，因此我们一般认为第三条线对错误容忍度高一些。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203202331691.png" srcset="/img/loading.gif" alt="image-20210203202331691"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203202331691.png" srcset="/img/loading.gif" alt="image-20210203202331691"></p>
 <p>​    简单理解就是如果<strong>点距离分割面/分割线越远</strong>，那么他容忍noise的力度越大，我们在基石课中学到，noise是造成overfittng的原因，容忍noise能力越强则<strong>更不容易带来overfitting</strong>。</p>
 <hr>
 <p>因此我们想找健壮性更强一些的线，什么是健壮性更强的呢？就是<strong>点距离分割面/分割线越远</strong>。我们直观理解就是这条线可以有多<strong>胖</strong>。</p>
 <p>如下图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203010157.png" srcset="/img/loading.gif" alt="image-20210203203010157"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203010157.png" srcset="/img/loading.gif" alt="image-20210203203010157"></p>
 <p>灰色就代表这条线有多胖，这条线越胖越说明我们的健壮性越强。</p>
 <p>那么我们现在可以给健壮性一个定义：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203149201.png" srcset="/img/loading.gif" alt="image-20210203203149201"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203149201.png" srcset="/img/loading.gif" alt="image-20210203203149201"></p>
 <p>健壮性就是点距离分割线/分割面 最近的距离。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203422827.png" srcset="/img/loading.gif" alt="image-20210203203422827"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203422827.png" srcset="/img/loading.gif" alt="image-20210203203422827"></p>
 <p>那么现在我们要做的就是<strong>最大化fatness(w)</strong>。</p>
 <p>但是这个”胖“的说法似乎不太专业，这里我们给出真正的名字margin</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203619396.png" srcset="/img/loading.gif" alt="image-20210203203619396"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203619396.png" srcset="/img/loading.gif" alt="image-20210203203619396"></p>
 <p>因此我们想要做到下面两点：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203704673.png" srcset="/img/loading.gif" alt="image-20210203203704673"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203704673.png" srcset="/img/loading.gif" alt="image-20210203203704673"></p>
 <ul>
 <li>Margin越大越好</li>
 <li>分类正确</li>
 </ul>
 <h2 id="Standard-Large-Margin-Problem"><a href="#Standard-Large-Margin-Problem" class="headerlink" title="Standard Large-Margin Problem"></a>Standard Large-Margin Problem</h2><p>我们要解决的问题是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203203955323.png" srcset="/img/loading.gif" alt="image-20210203203955323"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203203955323.png" srcset="/img/loading.gif" alt="image-20210203203955323"></p>
 <p>我们首先要知道距离怎么算。</p>
 <p>我们之前算的时候是需要在数据第一列加上一列1的，然后用$sign(w^Tx)$计算分类结果，但是这里我们不在加上第一列1了，把w的第一列拆出来，那么判断就变成了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203204800204.png" srcset="/img/loading.gif" alt="image-20210203204800204"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203204800204.png" srcset="/img/loading.gif" alt="image-20210203204800204"></p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205335953.png" srcset="/img/loading.gif" alt="image-20210203205335953"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205335953.png" srcset="/img/loading.gif" alt="image-20210203205335953"></p>
 <p>这个图上的$x’$和$x’’$一定是符合 $w^Tx + b = 0$ 的</p>
 <p>因此:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205451314.png" srcset="/img/loading.gif" alt="image-20210203205451314"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205451314.png" srcset="/img/loading.gif" alt="image-20210203205451314"></p>
 <p>我们的这个权重向量一点是是分割面的法向量的。</p>
 <p>我们接下来算距离：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205558354.png" srcset="/img/loading.gif" alt="image-20210203205558354"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205558354.png" srcset="/img/loading.gif" alt="image-20210203205558354"></p>
 <p>首先$(x-x’)$代表着这个蓝色向量，然后让他做投影，投影到w的方向。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205706594.png" srcset="/img/loading.gif" alt="image-20210203205706594"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205706594.png" srcset="/img/loading.gif" alt="image-20210203205706594"></p>
 <p>投影后的距离就是<strong>距离分割面的距离：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205818953.png" srcset="/img/loading.gif" alt="image-20210203205818953"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205818953.png" srcset="/img/loading.gif" alt="image-20210203205818953"></p>
 <p>对于可分的平面来说：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203205949602.png" srcset="/img/loading.gif" alt="image-20210203205949602"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203205949602.png" srcset="/img/loading.gif" alt="image-20210203205949602"></p>
 <p>因此我们可以脱去绝对值：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210005363.png" srcset="/img/loading.gif" alt="image-20210203210005363"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210005363.png" srcset="/img/loading.gif" alt="image-20210203210005363"></p>
 <p>那么现在我们的问题转化为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210025215.png" srcset="/img/loading.gif" alt="image-20210203210025215"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210025215.png" srcset="/img/loading.gif" alt="image-20210203210025215"></p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210208708.png" srcset="/img/loading.gif" alt="image-20210203210208708"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210208708.png" srcset="/img/loading.gif" alt="image-20210203210208708"></p>
 <p>一条线是可以有多种表达方式的，我们这里只要保持$\frac{w^T}{||w||}$不变即可，因此我们放缩$w^T$,使其符合下面这个式子。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210424443.png" srcset="/img/loading.gif" alt="image-20210203210424443"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210424443.png" srcset="/img/loading.gif" alt="image-20210203210424443"></p>
 <p>那么此时我们的距离就变成了$\frac{1}{||w||}$。</p>
 <p>问题转化为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210545690.png" srcset="/img/loading.gif" alt="image-20210203210545690"></p>
-<p>我们这里发现 <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210608829.png" srcset="/img/loading.gif" alt="image-20210203210608829"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210545690.png" srcset="/img/loading.gif" alt="image-20210203210545690"></p>
+<p>我们这里发现 <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210608829.png" srcset="/img/loading.gif" alt="image-20210203210608829"></p>
 <p>下面这个条件包含上面的条件了，因此只需要下面的条件即可。</p>
 <p>现在问题转化为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203210649123.png" srcset="/img/loading.gif" alt="image-20210203210649123"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203210649123.png" srcset="/img/loading.gif" alt="image-20210203210649123"></p>
 <hr>
 <p>到现在位置问题中的min还是很难搞，我们如果可以放宽一些他的条件，但是结果还在当前条件的限制之下，那么我们的问题就好解决了。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211159268.png" srcset="/img/loading.gif" alt="image-20210203211159268"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203211159268.png" srcset="/img/loading.gif" alt="image-20210203211159268"></p>
 <p>我们用蓝色的条件代替紫色的，但这样很可能会导致</p>
 <p>$y_n(w^T+b)$全部都大于1，导致最小的也不等于1了，那么这样放大了条件是没有什么意义的。</p>
 <p>我们考虑假如真的全部都大于1，比如都大于1.126.</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211345197.png" srcset="/img/loading.gif" alt="image-20210203211345197"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203211345197.png" srcset="/img/loading.gif" alt="image-20210203211345197"></p>
 <p>我们可以调整$w$和$b$的大小使得其重新满足条件，那么这个条件放大一些是不影响结果的。</p>
 <p>那么此时问题转化为了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211544842.png" srcset="/img/loading.gif" alt="image-20210203211544842"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203211544842.png" srcset="/img/loading.gif" alt="image-20210203211544842"></p>
 <p>做一些小的数学变换，（这个$\frac{1}{2}$就是为了后面方便计算的常数，最大化最小化问题中常数不影响最优的结果）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211652281.png" srcset="/img/loading.gif" alt="image-20210203211652281"></p>
-<h2 id="Support-Vector-Machine"><a href="#Support-Vector-Machine" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203211851541.png" srcset="/img/loading.gif" alt="image-20210203211851541"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203211652281.png" srcset="/img/loading.gif" alt="image-20210203211652281"></p>
+<h2 id="Support-Vector-Machine"><a href="#Support-Vector-Machine" class="headerlink" title="Support Vector Machine"></a>Support Vector Machine</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203211851541.png" srcset="/img/loading.gif" alt="image-20210203211851541"></p>
 <p>我们以上图为例子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212202907.png" srcset="/img/loading.gif" alt="image-20210203212202907"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203212202907.png" srcset="/img/loading.gif" alt="image-20210203212202907"></p>
 <p>我们不难得出下面两个式子</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212247035.png" srcset="/img/loading.gif" alt="image-20210203212247035"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203212247035.png" srcset="/img/loading.gif" alt="image-20210203212247035"></p>
 <p>所以$w_1^2+w_2^2\ge2$,即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212331579.png" srcset="/img/loading.gif" alt="image-20210203212331579"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203212331579.png" srcset="/img/loading.gif" alt="image-20210203212331579"></p>
 <p>因此我们就可以算出这个最胖的线：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212543635.png" srcset="/img/loading.gif" alt="image-20210203212543635"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203212649585.png" srcset="/img/loading.gif" alt="image-20210203212649585"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203212543635.png" srcset="/img/loading.gif" alt="image-20210203212543635"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203212649585.png" srcset="/img/loading.gif" alt="image-20210203212649585"></p>
 <p>我们直观理解这个问题就是，我们通过支持向量(support vector)，也就是胖胖的线上边缘的那些点来算得这个胖胖的线。</p>
 <hr>
 <p>但是上面是4个点，比较简单，那么如果包含多个点我们怎么做呢？</p>
 <p>幸运的是，这是一种二次规划问题，我们有现成的工具可以解决，我们只需要把我们现在的公式转换为标准的二次规划问题表达形式即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213319550.png" srcset="/img/loading.gif" alt="image-20210203213319550"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203213319550.png" srcset="/img/loading.gif" alt="image-20210203213319550"></p>
 <p>我们只要找到左边的参数即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213601556.png" srcset="/img/loading.gif" alt="image-20210203213601556"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203213601556.png" srcset="/img/loading.gif" alt="image-20210203213601556"></p>
 <p>那么我们的Linear Hard-Margin SVM算法就搞定了：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203213818582.png" srcset="/img/loading.gif" alt="image-20210203213818582"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203213818582.png" srcset="/img/loading.gif" alt="image-20210203213818582"></p>
 <p>怎么做非线性的呢？还记得基石里讲到的方法吗，做feature transform就好了。</p>
 <h2 id="Reasons-behind-Large-Margin-Hyperplane"><a href="#Reasons-behind-Large-Margin-Hyperplane" class="headerlink" title="Reasons behind Large-Margin Hyperplane"></a>Reasons behind Large-Margin Hyperplane</h2><p>有趣的事情是，我们发现：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214239916.png" srcset="/img/loading.gif" alt="image-20210203214239916"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203214239916.png" srcset="/img/loading.gif" alt="image-20210203214239916"></p>
 <p>SVM怎么和regularization做的是相似的事情，都考虑了两个事情：</p>
 <p>原来regularization做的事情可以防止overfit的原因体现在了SVM里。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203214819040.png" srcset="/img/loading.gif" alt="image-20210203214819040"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203214819040.png" srcset="/img/loading.gif" alt="image-20210203214819040"></p>
 <p>我们在之前的线性分类模型中hypothesis的数量可能很多，但是在SVM中比如我们要求这个分割面足够的胖，那么有一些在线性分类模型中的hypothesis在SVM中是不成立的(如上图)，因此<strong>VC Dimension会小一些，因此他的泛化能力更好一些</strong>。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221636904.png" srcset="/img/loading.gif" alt="image-20210203221636904"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203221636904.png" srcset="/img/loading.gif" alt="image-20210203221636904"></p>
 <p>对于上图三个点，如果不考虑胖瘦，那么$d<em>{vc}=3$，但是如果要求宽度大于某个常数，那么$d</em>{vc}&lt;3$.</p>
 <p>我们这里有一个现成的结果：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203221816559.png" srcset="/img/loading.gif" alt="image-20210203221816559"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203221816559.png" srcset="/img/loading.gif" alt="image-20210203221816559"></p>
 <p>$\rho$代表SVM中的线的宽度，$R$代表半径，因此我们多了一种控制复杂度的方式。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222213241.png" srcset="/img/loading.gif" alt="image-20210203222213241"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203222213241.png" srcset="/img/loading.gif" alt="image-20210203222213241"></p>
 <p>我们有了large-margin hyperplane 我们可以同时做到 hypothesis set很小 并且 分界也更精细，即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210203222433887.png" srcset="/img/loading.gif" alt="image-20210203222433887"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210203222433887.png" srcset="/img/loading.gif" alt="image-20210203222433887"></p>
 
             </div>
             <hr>
@@ -650,20 +650,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -243,59 +243,59 @@
 <ul>
 <li>预测：</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503214530939.png" srcset="/img/loading.gif" alt="image-20210503214530939"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503214530939.png" srcset="/img/loading.gif" alt="image-20210503214530939"></p>
 <p>预策问题就是给定马尔可夫决策过程和策略$\pi$， 或者给出马尔科夫奖励过程。然后去做预策每个状态的价值函数$v^{\pi}$</p>
 <ul>
 <li>控制：</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503214841239.png" srcset="/img/loading.gif" alt="image-20210503214841239"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503214841239.png" srcset="/img/loading.gif" alt="image-20210503214841239"></p>
 <p>控制是指给出一个马尔可夫过程，需要最优化得到价值函数和策略。</p>
 <p>这两个问题都可以通过动态规划来解决。</p>
 <p>首先是预测问题：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503215450158.png" srcset="/img/loading.gif" alt="image-20210503215450158"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503215450158.png" srcset="/img/loading.gif" alt="image-20210503215450158"></p>
 <p>通过这样的状态转移方程去做动态规划即可。</p>
 <p>这里给出一个代码框架：</p>
 <script type="math/tex; mode=display">
 v_{t+1}(s)=\sum_{a \in \mathcal{A}} \pi(a \mid s)\left(R(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) v_{t}\left(s^{\prime}\right)\right)</script><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-comment">#在已知策略\pi 下迭代</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    old_table = self.table.copy()<br><br>    <span class="hljs-keyword">for</span> state <span class="hljs-keyword">in</span> range(self.obs_dim):<br>        <span class="hljs-comment">#由于已知策略，可以直接根据policy，输入当前state找出act</span><br>        act = self.policy(state)<br>        transition_list = self._get_transitions(state, act)<br><br>        state_value = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> transition <span class="hljs-keyword">in</span> transition_list:<br>            prob = transition[<span class="hljs-string">'prob'</span>]<br>            reward = transition[<span class="hljs-string">'reward'</span>]<br>            next_state = transition[<span class="hljs-string">'next_state'</span>]<br>            done = transition[<span class="hljs-string">'done'</span>]<br><br>            <span class="hljs-comment"># [TODO] what is the right state value?</span><br>            <span class="hljs-comment"># hint: you should use reward, self.gamma, old_table, prob,</span><br>            <span class="hljs-comment"># and next_state to compute the state value</span><br>            state_value += prob*(reward+self.gamma*<span class="hljs-number">1</span>*old_table[next_state])<br><br>            <span class="hljs-comment"># update the state value</span><br>            self.table[state] = state_value<br><br>        <span class="hljs-comment"># [TODO] Compare the old_table and current table to</span><br>        <span class="hljs-comment">#  decide whether to break the value update process.</span><br>        <span class="hljs-comment"># hint: you should use self.eps, old_table and self.table</span><br>        should_break = <span class="hljs-literal">None</span><br>        <span class="hljs-comment">#如果迭代两次差距太小就说明收敛</span><br>        <span class="hljs-keyword">if</span> (np.fabs(self.table - old_table) &lt; np.array([self.eps]*self.obs_dim)).all():<br>            should_break = <span class="hljs-literal">True</span><br></code></pre></div></td></tr></table></figure>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503222023509.png" srcset="/img/loading.gif" alt="image-20210503222023509"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503222023509.png" srcset="/img/loading.gif" alt="image-20210503222023509"></p>
 <p>我们举一个例子来迭代一下$v$:</p>
 <p>开始时:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503222552287.png" srcset="/img/loading.gif" alt="image-20210503222552287"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503222552287.png" srcset="/img/loading.gif" alt="image-20210503222552287"></p>
 <p>一定次数的传播后$v$就会逐渐稳定：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503222638284.png" srcset="/img/loading.gif" alt="image-20210503222638284"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503222638284.png" srcset="/img/loading.gif" alt="image-20210503222638284"></p>
 <p>上述都是再讲怎么迭代计算出$v^{\pi}(s)$。</p>
 <p>我们还有一个问题是control，也就是如何算出最优化的策略/状态价值函数：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503224251512.png" srcset="/img/loading.gif" alt="image-20210503224251512"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503224251512.png" srcset="/img/loading.gif" alt="image-20210503224251512"></p>
 <p>最优的状态价值函数中的有关变量是策略$\pi$, 也就是 在各种各样的策略下，可以使得每个状态价值最大的策略就是我们需要选择的策略，在这样的策略下，我们就可以获得最优的状态价值函数。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503225215570.png" srcset="/img/loading.gif" alt="image-20210503225215570"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503225215570.png" srcset="/img/loading.gif" alt="image-20210503225215570"></p>
 <p>同理，如果找最优策略，就如上述所说的，找可以使得状态价值函数最大的策略就被成为最优的策略。</p>
 <p>当我们知道最优化的值时，就可以说MDP问题被解决了。</p>
 <p><strong>怎么寻找最佳的策略：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504091803979.png" srcset="/img/loading.gif" alt="image-20210504091803979"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504091803979.png" srcset="/img/loading.gif" alt="image-20210504091803979"></p>
 <p>最简单的一种方式就是选择可以使得$a =  argmax _{a \in A}q<em>(s,a)$的action，这样的action，并让这种动作的在状态出现的概率$\pi^</em>(a \mid s) = 1$即可，此时由公式：</p>
 <script type="math/tex; mode=display">
 v^{\pi}(s)=\sum_{a \in A} \pi(a \mid s) q^{\pi}(s, a)</script><p>不难得知$v^{\pi}$在此时取得了最大值，那么根据上最优化策略的定义，此时的$\pi$即为最优策略。</p>
 <p>一个简单的想法，就是枚举所有的状态的action，算一算他们的state-value function，然而这种方法仅仅枚举复杂度就达到了$O(s^a)$，其中s为状态数，a为在该状态下可做的行为数量。</p>
 <p>还有一种想法是<strong>策略迭代(Policy Iteration)：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504094510039.png" srcset="/img/loading.gif" alt="image-20210504094510039"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504094510039.png" srcset="/img/loading.gif" alt="image-20210504094510039"></p>
 <p>这种策略分为两部分，一个是计算在策略$\pi$下的value function，另一个是提升策略(即贪心的选择可以使得v函数更大的$\pi$)。</p>
 <p>提升策略中有两步：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504094854696.png" srcset="/img/loading.gif" alt="image-20210504094854696"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504094854696.png" srcset="/img/loading.gif" alt="image-20210504094854696"></p>
 <p>首先是计算状态行为价值函数(q函数)，也就是在状态s做出动作a所获得的reward。</p>
 <p>然后计算新策略下计算使得q在状态s下可以被最大化的动作。这种迭代方式叫做策略迭代：它包括策略估计和策略提升</p>
 <p>上面已经给出在策略$\pi$下如何迭代计算出价值函数，这里再给出<strong>策略提升的框架代码：</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_policy</span><span class="hljs-params">(self)</span>:</span><br>    <span class="hljs-string">"""You need to define a new policy function, given current</span><br><span class="hljs-string">    value function. The best action for a given state is the one that</span><br><span class="hljs-string">    has greatest expected return.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    To optimize computing efficiency, we introduce a policy table,</span><br><span class="hljs-string">    which take state as index and return the action given a state.</span><br><span class="hljs-string">    """</span><br>    policy_table = np.zeros([self.obs_dim, ], dtype=np.int)<br><br>    <span class="hljs-keyword">for</span> state <span class="hljs-keyword">in</span> range(self.obs_dim):<br>        state_action_values = [<span class="hljs-number">0</span>] * self.action_dim<br>        <br>        <span class="hljs-comment"># [TODO] assign the action with greatest "value"</span><br>        <span class="hljs-comment"># to policy_table[state]</span><br>        <span class="hljs-comment"># hint: what is the proper "value" here?</span><br>        <span class="hljs-comment">#  you should use table, gamma, reward, prob,</span><br>        <span class="hljs-comment">#  next_state and self._get_transitions() function</span><br>        <span class="hljs-comment">#  as what we done at self.update_value_function()</span><br>        <span class="hljs-comment">#  Bellman equation may help.</span><br>        best_action = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">for</span> act <span class="hljs-keyword">in</span> range(self.action_dim):<br>            transition_list = self._get_transitions(state, act)<br>            action_value = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">for</span> transition <span class="hljs-keyword">in</span> transition_list:<br>                prob = transition[<span class="hljs-string">'prob'</span>]<br>                reward = transition[<span class="hljs-string">'reward'</span>]<br>                next_state = transition[<span class="hljs-string">'next_state'</span>]<br>                done = transition[<span class="hljs-string">'done'</span>]<br>                action_value += prob*(reward+self.gamma*self.table[next_state])<br>            state_action_values[act] = action_value<br>        best_action = np.argmax(state_action_values)<br>        policy_table[state] = best_action<br><br>    self.policy = <span class="hljs-keyword">lambda</span> obs: policy_table[obs]<br></code></pre></div></td></tr></table></figure>
 <p>那么就可以推出：Bellman Optimality Equation</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504101827815.png" srcset="/img/loading.gif" alt="image-20210504101827815"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504101827815.png" srcset="/img/loading.gif" alt="image-20210504101827815"></p>
 <p>因此就可以通过<strong>Bellman Optimality Equation得出迭代算法：</strong></p>
-<p>这种迭代叫做：<strong>价值迭代Value iteration</strong><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504102033826.png" srcset="/img/loading.gif" alt="image-20210504102033826"></p>
+<p>这种迭代叫做：<strong>价值迭代Value iteration</strong><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504102033826.png" srcset="/img/loading.gif" alt="image-20210504102033826"></p>
 <p>代码框架：</p>
 <figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">old_policy_result = &#123;<br>    obs: <span class="hljs-number">-1</span> <span class="hljs-keyword">for</span> obs <span class="hljs-keyword">in</span> range(trainer.obs_dim)<br>&#125;<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(config[<span class="hljs-string">'max_iteration'</span>]):<br>    <span class="hljs-comment"># train the agent</span><br>    trainer.train()  <span class="hljs-comment"># [TODO] please uncomment this line</span><br><br>    <span class="hljs-comment"># evaluate the result</span><br>    <span class="hljs-keyword">if</span> i % config[<span class="hljs-string">'evaluate_interval'</span>] == <span class="hljs-number">0</span>:<br>        print(<span class="hljs-string">"[INFO]\tIn &#123;&#125; iteration, current "</span><br>              <span class="hljs-string">"mean episode reward is &#123;&#125;."</span>.format(<br>            i, trainer.evaluate()<br>        ))<br><br>        <span class="hljs-comment"># [TODO] compare the new policy with old policy to check should</span><br>        <span class="hljs-comment">#  we stop.</span><br>        <span class="hljs-comment"># [HINT] If new and old policy have same output given any</span><br>        <span class="hljs-comment">#  observation, them we consider the algorithm is converged and</span><br>        <span class="hljs-comment">#  should be stopped.</span><br>        should_stop = <span class="hljs-literal">None</span><br>        should_stop = <span class="hljs-literal">True</span><br>        new_policy_result = &#123;<br>        obs: trainer.policy(obs) <span class="hljs-keyword">for</span> obs <span class="hljs-keyword">in</span> range(trainer.obs_dim)<br>        &#125;<br>        <span class="hljs-keyword">for</span> obs <span class="hljs-keyword">in</span> range(trainer.obs_dim):<br>            <span class="hljs-keyword">if</span> new_policy_result[obs] != old_policy_result[obs]:<br>                should_stop = <span class="hljs-literal">False</span><br>                <span class="hljs-keyword">break</span><br>        old_policy_result = new_policy_result<br>        <span class="hljs-keyword">if</span> should_stop:<br>            print(<span class="hljs-string">"We found policy is not changed anymore at "</span><br>                  <span class="hljs-string">"iteration &#123;&#125;. Current mean episode reward "</span><br>                  <span class="hljs-string">"is &#123;&#125;. Stop training."</span>.format(i, trainer.evaluate()))<br>            <span class="hljs-keyword">break</span><br></code></pre></div></td></tr></table></figure>
 <p>举一个最短路的例子，在不断的更新迭代，我们发现距离左上角深色方块越远，v函数在该点的状态越小。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504102959224.png" srcset="/img/loading.gif" alt="image-20210504102959224"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504102959224.png" srcset="/img/loading.gif" alt="image-20210504102959224"></p>
 <p><strong>最后总结一下策略迭代和价值迭代的区别：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504104405231.png" srcset="/img/loading.gif" alt="image-20210504104405231"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210504104546069.png" srcset="/img/loading.gif" alt="image-20210504104546069"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504104405231.png" srcset="/img/loading.gif" alt="image-20210504104405231"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210504104546069.png" srcset="/img/loading.gif" alt="image-20210504104546069"></p>
 
             </div>
             <hr>
@@ -593,20 +593,5 @@ v^{\pi}(s)=\sum_{a \in A} \pi(a \mid s) q^{\pi}(s, a)</script><p>不难得知$v^
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

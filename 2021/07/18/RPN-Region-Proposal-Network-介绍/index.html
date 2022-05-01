@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -241,26 +241,26 @@
             <div class="markdown-body">
               <h1 id="RPN-Region-Proposal-Network"><a href="#RPN-Region-Proposal-Network" class="headerlink" title="RPN(Region Proposal Network)"></a>RPN(Region Proposal Network)</h1><p>RPN简单来说就是<strong>输入一张图片可以得到很多待选框</strong>的一个网络，再详细一点就是：</p>
 <p>RPN的本质是对所有候选框进行判定，前景概率为多少，如果是前景那么其候选框所需要的修正因子应该是多少。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718150049697.png" srcset="/img/loading.gif" alt="image-20210718150049697"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718150049697.png" srcset="/img/loading.gif" alt="image-20210718150049697"></p>
 <p>​    </p>
 <h2 id="首先经过backbone提取特征："><a href="#首先经过backbone提取特征：" class="headerlink" title="首先经过backbone提取特征："></a>首先经过backbone提取特征：</h2><p>​    首先拿到一张原图时，我们要先利用backbone获得feature map，可以看到上图中右部从feature map中获得了一个256维的向量，这个256来自于哪儿里呢？其实就是feature map的深度，而我们的backbone是ZF时，提取出的feature map深度就是256的。官方也提到可以用VGG16来当作backbone，这样得到的feature map深度就是512的了。当然上图举的例子是ZF做backbone时的情况。</p>
 <p>​    同时也要注意获得256维向量是通过滑动窗口获得的，即3*3的滑动窗口扫面feature map的每一处，padding 1个，步长也是1, 就正好覆盖了feature map。</p>
 <h2 id="找出anchor-box："><a href="#找出anchor-box：" class="headerlink" title="找出anchor box："></a>找出anchor box：</h2><p>​    feature map上的每一个点都可以映射回原图，映射方法如下图，首先计算$x$方向上的$stride_x$，$y$方向上的$stride_y$，这两个是怎么计算的呢？ 举个例子，比如输入的图像是500*600的，经过backbone得到的feature map大小是100*150,那么$stride_x = 500/100 = 5,stride_y =600/150=4$。 此时我们查看feature map上每个点$(a,b)$映射回原图的坐标就是$(a<em>stride_x,b</em>stride_y)$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718151219049.png" srcset="/img/loading.gif" alt="image-20210718151219049"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718151219049.png" srcset="/img/loading.gif" alt="image-20210718151219049"></p>
 <p>找到原图坐标后，在原图出画出k个anchor box: </p>
 <p>作者给出了九种的anchor box：</p>
 <figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">[[ <span class="hljs-number">-84.</span>  <span class="hljs-number">-40.</span>   <span class="hljs-number">99.</span>   <span class="hljs-number">55.</span>]<br> [<span class="hljs-number">-176.</span>  <span class="hljs-number">-88.</span>  <span class="hljs-number">191.</span>  <span class="hljs-number">103.</span>]<br> [<span class="hljs-number">-360.</span> <span class="hljs-number">-184.</span>  <span class="hljs-number">375.</span>  <span class="hljs-number">199.</span>]<br> [ <span class="hljs-number">-56.</span>  <span class="hljs-number">-56.</span>   <span class="hljs-number">71.</span>   <span class="hljs-number">71.</span>]<br> [<span class="hljs-number">-120.</span> <span class="hljs-number">-120.</span>  <span class="hljs-number">135.</span>  <span class="hljs-number">135.</span>]<br> [<span class="hljs-number">-248.</span> <span class="hljs-number">-248.</span>  <span class="hljs-number">263.</span>  <span class="hljs-number">263.</span>]<br> [ <span class="hljs-number">-36.</span>  <span class="hljs-number">-80.</span>   <span class="hljs-number">51.</span>   <span class="hljs-number">95.</span>]<br> [ <span class="hljs-number">-80.</span> <span class="hljs-number">-168.</span>   <span class="hljs-number">95.</span>  <span class="hljs-number">183.</span>]<br> [<span class="hljs-number">-168.</span> <span class="hljs-number">-344.</span>  <span class="hljs-number">183.</span>  <span class="hljs-number">359.</span>]]<br></code></pre></div></td></tr></table></figure>
 <p>其中每行的4个值 $(x_1,y_1,x_2,y_2) $表矩形左上和右下角点坐标。9个矩形共有3种形状，长宽比为大约为$1:2, 1:1, 2:1$三种，实际上通过anchors就引入了检测中常用到的多尺度方法。在代码中，作者把任意大小的输入图像reshape成800x600。然后再用九个anchor box来包围，其实就几乎覆盖到了各种各样尺度的目标。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718155228975.png" srcset="/img/loading.gif" alt="image-20210718155228975"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718152947759.png" srcset="/img/loading.gif" alt="image-20210718152947759" style="zoom:67%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718155228975.png" srcset="/img/loading.gif" alt="image-20210718155228975"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718152947759.png" srcset="/img/loading.gif" alt="image-20210718152947759" style="zoom:67%;" /></p>
 <p>到此Anchor box就找到了</p>
-<h2 id="调整anchor-box："><a href="#调整anchor-box：" class="headerlink" title="调整anchor box："></a>调整anchor box：</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718153802828.png" srcset="/img/loading.gif" alt="image-20210718153802828"></p>
+<h2 id="调整anchor-box："><a href="#调整anchor-box：" class="headerlink" title="调整anchor box："></a>调整anchor box：</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718153802828.png" srcset="/img/loading.gif" alt="image-20210718153802828"></p>
 <p>除了刚才介绍的结构，这里还一个$2k\  score$和$4k\ coordinates$。 这两个就是对anchor box进行调整的。对于feature map的每一个点都会在原图生成$k$个anchor box。</p>
 <ul>
 <li>每个anchor box都有2个概率，即是背景(无目标物)的概率和是前景(有目标物)的概率, 所以每个点有$2k$个score</li>
 <li>每个anchor box都有4个回归参数，即是包围框的左上角点和包围框的长宽，所以每个点有$4k$个coordinates，帮助我们调整anchor box的位置与大小。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718154621051.png" srcset="/img/loading.gif" alt="image-20210718154621051"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718154621051.png" srcset="/img/loading.gif" alt="image-20210718154621051"></p>
 <p>请注意RPN网络找的目标可以有多个，因此我们只区分是前景概率和是背景概率，我们在RPN中并不关心这个到底是前景中的哪儿一个目标。举个例子，想获得人和车的预选包围框，车和人都算是前景。</p>
 <h2 id="感受野问题："><a href="#感受野问题：" class="headerlink" title="感受野问题："></a>感受野问题：</h2><ul>
 <li>对于ZF网络作为Backbone，他的感受野是171。</li>
@@ -268,7 +268,7 @@
 </ul>
 <p>那么这就有一个问题，我们在feature map中的每一个点要映射回原图，而你的感受野只有171*171这么大, 为什么anchor box要有256*256,甚至是512*512这么大的？</p>
 <p>作者给出的看法是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718155328374.png" srcset="/img/loading.gif" alt="image-20210718155328374"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718155328374.png" srcset="/img/loading.gif" alt="image-20210718155328374"></p>
 <p>即感受野小于实际物体的包围框是有可能的，因为我们人也可以看到物体的一部分就大概猜出物体的整体大小。实际中，这个方法也确实是work的。</p>
 <h2 id="减少候选框"><a href="#减少候选框" class="headerlink" title="减少候选框:"></a>减少候选框:</h2><ol>
 <li>对于1张1000*600*3的图像，大约有60*40*9个<strong>anchor</strong></li>
@@ -281,20 +281,20 @@
 <p>正样本： 我们的anchor与ground-truth box最大的IoU&gt;0.7,那么就可以认为是正样本，如果最大的都不大于0.7，那么我们就把IoU最大的Anchor作为正样本即可。</p>
 <p>负样本： 我们的anchor与所有的ground-truth box的IoU&lt;0.3,那么就可以认为是负样本。</p>
 <p>正负样本之外的我们就会丢弃掉。</p>
-<h3 id="loss函数："><a href="#loss函数：" class="headerlink" title="loss函数："></a>loss函数：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718165644649.png" srcset="/img/loading.gif" alt="image-20210718165644649"></p>
+<h3 id="loss函数："><a href="#loss函数：" class="headerlink" title="loss函数："></a>loss函数：</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718165644649.png" srcset="/img/loading.gif" alt="image-20210718165644649"></p>
 <h3 id="分类损失函数："><a href="#分类损失函数：" class="headerlink" title="分类损失函数："></a>分类损失函数：</h3><p>首先说分类损失，原文给的是<code>Softmax Cross Entorpy Loss</code>来计算的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718173721552.png" srcset="/img/loading.gif" alt="image-20210718173721552"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718173721552.png" srcset="/img/loading.gif" alt="image-20210718173721552"></p>
 <p>1代表是前景，0代表是背景，那么:</p>
 <script type="math/tex; mode=display">
 L_{cls}=-log(p_i)</script><p>比如第一个anchor实际是前景，而预测前景概率是0.9，那么$L = -log(0.9)$，第二个是背景，而背景概率是0.2，那么$L = -log(0.2)$。</p>
 <p>在pytorch官方实现的方式是用二分类的交叉熵损失<code>Binart Cross Entropy</code>：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718180649938.png" srcset="/img/loading.gif" alt="image-20210718180649938"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718180649938.png" srcset="/img/loading.gif" alt="image-20210718180649938"></p>
 <p>也就是说这里只需要预测K个值即可。</p>
-<h3 id="边界框损失函数："><a href="#边界框损失函数：" class="headerlink" title="边界框损失函数："></a>边界框损失函数：</h3><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718181104344.png" srcset="/img/loading.gif" alt="image-20210718181104344"></p>
+<h3 id="边界框损失函数："><a href="#边界框损失函数：" class="headerlink" title="边界框损失函数："></a>边界框损失函数：</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718181104344.png" srcset="/img/loading.gif" alt="image-20210718181104344"></p>
 <h2 id="Faster-RCNN整体是怎么训练的？"><a href="#Faster-RCNN整体是怎么训练的？" class="headerlink" title="Faster-RCNN整体是怎么训练的？"></a>Faster-RCNN整体是怎么训练的？</h2><p>我们知道RPN的提出让Faster R-CNN真正做到了end-to-end，使得网络之间关系更加密切，效果更好。</p>
 <p>现在的Faster R-CNN直接采用RPN Loss+Fast R-CNN Loss来做。</p>
 <p>但是原文中采用分别训练RPN和Fast R-CNN Loss：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210718182153148.png" srcset="/img/loading.gif" alt="image-20210718182153148"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210718182153148.png" srcset="/img/loading.gif" alt="image-20210718182153148"></p>
 
             </div>
             <hr>
@@ -592,20 +592,5 @@ L_{cls}=-log(p_i)</script><p>比如第一个anchor实际是前景，而预测前
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,48 +240,48 @@
             
             <div class="markdown-body">
               <h1 id="无模型的价值函数估计和控制—下"><a href="#无模型的价值函数估计和控制—下" class="headerlink" title="无模型的价值函数估计和控制—下"></a>无模型的价值函数估计和控制—下</h1><p>上一节讲了预测(prediction)问题，这一节我们来解决控制(control)问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210506222813211.png" srcset="/img/loading.gif" alt="image-20210506222813211"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210506222813211.png" srcset="/img/loading.gif" alt="image-20210506222813211"></p>
 <p>我们之前再policy evaluation中用的方法是动态规划迭代，而上一节提到了一种新的做法也就是通过MC方法来做在特定策略$\pi$下计算状态的价值函数。</p>
 <p><strong>model-free时control问题的解决方法：</strong></p>
 <ul>
 <li>在model-free中，我们首先要用MC方法来填一个表格Q-table，即policy evaluation：</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210506224528600.png" srcset="/img/loading.gif" alt="image-20210506224528600"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210506224528600.png" srcset="/img/loading.gif" alt="image-20210506224528600"></p>
 <ul>
 <li>然后去更新策略，即control的第二步策略提升policy improvement</li>
 </ul>
 <p>在MC算Q-table时有一个trade-off，也就是exploration和exploitation之间的trade-off。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210506225241469.png" srcset="/img/loading.gif" alt="image-20210506225241469"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210506225241469.png" srcset="/img/loading.gif" alt="image-20210506225241469"></p>
 <p><strong>$\epsilon$-Greedy Exploration​ ：</strong></p>
 <p>提出了在策略$\pi$下，一个状态在策略$\pi$下不仅可以对应着一个当前收益最大的act，还会有一个随机的act，这个随机的act就是为了exploration。</p>
 <p>这个$\epsilon$是可以变化的，在前期可以大一些，后面可以逐渐变小。</p>
 <p>MC with $\epsilon$-Greedy Exploration算法有一个特点：在新策略下的价值函数总比以前就策略下的价值函数大。下面给出一个简单的证明：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210506230233190.png" srcset="/img/loading.gif" alt="image-20210506230233190"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210506234705288.png" srcset="/img/loading.gif" alt="image-20210506234705288"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210506230233190.png" srcset="/img/loading.gif" alt="image-20210506230233190"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210506234705288.png" srcset="/img/loading.gif" alt="image-20210506234705288"></p>
 <p><strong>Sarsa算法（On-Policy TD Control）：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511212737480.png" srcset="/img/loading.gif" alt="image-20210511212737480"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511212737480.png" srcset="/img/loading.gif" alt="image-20210511212737480"></p>
 <p>Sarsa这名字的来历就是：SARSA分开来看，根据当前状态，做出ACT，得到Reward，然后转移到一个状态，做出新的ACT。</p>
 <p>伪代码：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511214856933.png" srcset="/img/loading.gif" alt="image-20210511214856933"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511214856933.png" srcset="/img/loading.gif" alt="image-20210511214856933"></p>
 <p>即然存在n-step TD，那么也会存在n-step sarsa。</p>
 <p><strong>On-policy  vs.  Off-policy Learning：</strong></p>
 <p>On-policy是 学习策略$\pi$通过策略$\pi$所产生的轨迹数据。</p>
 <p>Off-policy是指在学习策略$\pi$时，用了两种策略产生轨迹数据给他学习：一种策略是现在学到的策略，也是我们希望最优化的策略，我们一般称之为目标策略target policy $\pi$。另一个 策略是我们拿来探索的策略，那么这个探索的策略可以激进一些，我们称之为行为策略behavior policy $\mu$ ，这个行为策略通过探索找到一些新的轨迹数据，然后再喂给target policy来学习。</p>
 <p>on-policy 与 off-policy的本质区别在于：更新Q值时所使用的方法是沿用既定的策略（on-policy）还是使用 新策略（off-policy）。</p>
 <p><strong>Off-Policy Control with Q-Learning：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511220835055.png" srcset="/img/loading.gif" alt="image-20210511220835055"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511220835055.png" srcset="/img/loading.gif" alt="image-20210511220835055"></p>
 <p>Q-Learning 就是一种Off-Policy的算法，一种target policy是按照贪心的方法选择当前已知最好的方法去更新，另一种就是behavior policy，但是这里她并没有采用完全的随机，因为完全的随机其实一般效果不会那么好，我们可以用$\epsilon-greedy$的方法，前期$\epsilon$可以大一些随机性强一些，以后$\epsilon$调到低一些即可。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511222437412.png" srcset="/img/loading.gif" alt="image-20210511222437412"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511222437412.png" srcset="/img/loading.gif" alt="image-20210511222437412"></p>
 <p><strong>Q-Learning vs. Sarsa:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511223537205.png" srcset="/img/loading.gif" alt="image-20210511223537205"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511223537205.png" srcset="/img/loading.gif" alt="image-20210511223537205"></p>
 <p>从backup这个图上来看：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511223856072.png" srcset="/img/loading.gif" alt="image-20210511223856072"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511223856072.png" srcset="/img/loading.gif" alt="image-20210511223856072"></p>
 <p>Sarsa中的A’ 是通过和A一样，从策略当前的策略抽取到的。而Q-Learning中，他是通过观察Q-Table，找到一个可以使得$Q(S_{t+1},a)$最大的$a$。</p>
 <p><strong>cliff walk问题中，看一下Sarsa和Q-learning的区别：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511224316635.png" srcset="/img/loading.gif" alt="image-20210511224316635"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511224316635.png" srcset="/img/loading.gif" alt="image-20210511224316635"></p>
 <p>Q-learning的策略更激进，Sarsa的策略更稳健。</p>
 <p><strong>总计：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210511224418317.png" srcset="/img/loading.gif" alt="image-20210511224418317"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210511224418317.png" srcset="/img/loading.gif" alt="image-20210511224418317"></p>
 
             </div>
             <hr>
@@ -579,20 +579,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

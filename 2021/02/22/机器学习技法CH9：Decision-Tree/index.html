@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,24 +239,24 @@
             <h1 style="display: none">机器学习技法CH9：Decision Tree</h1>
             
             <div class="markdown-body">
-              <h1 id="CH9：Decision-Tree"><a href="#CH9：Decision-Tree" class="headerlink" title="CH9：Decision Tree"></a>CH9：Decision Tree</h1><h2 id="Decision-Tree-Hypothesis"><a href="#Decision-Tree-Hypothesis" class="headerlink" title="Decision Tree Hypothesis"></a>Decision Tree Hypothesis</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222201947821.png" srcset="/img/loading.gif" alt="image-20210222201947821"></p>
+              <h1 id="CH9：Decision-Tree"><a href="#CH9：Decision-Tree" class="headerlink" title="CH9：Decision Tree"></a>CH9：Decision Tree</h1><h2 id="Decision-Tree-Hypothesis"><a href="#Decision-Tree-Hypothesis" class="headerlink" title="Decision Tree Hypothesis"></a>Decision Tree Hypothesis</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222201947821.png" srcset="/img/loading.gif" alt="image-20210222201947821"></p>
 <p>一个decision tree的例子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222202359077.png" srcset="/img/loading.gif" alt="image-20210222202359077"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222202359077.png" srcset="/img/loading.gif" alt="image-20210222202359077"></p>
 <ul>
 <li>$g_t(x)$：称为base hypothesis，叶子节点，一个常数，代表路径$t$的终点的常量，也就是最后做的决定。</li>
 <li>$q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。</li>
 </ul>
 <p>我们可以把一棵树看成如下的样式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210529122441024.png" srcset="/img/loading.gif" alt="image-20210529122441024"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210529122441024.png" srcset="/img/loading.gif" alt="image-20210529122441024"></p>
 <p>那么上图这种一个节点对应着三个子树，然后在子树中可以接着递归找子树。因此我们还可以用递归的来定义这个决策树：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222202917934.png" srcset="/img/loading.gif" alt="image-20210222202917934"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222202917934.png" srcset="/img/loading.gif" alt="image-20210222202917934"></p>
 <ul>
 <li>$G(x)$ 一个树</li>
 <li>$b(x)$分支条件</li>
 <li>$G_c(c)$:第c个分支条件通向的子树</li>
 </ul>
 <p><strong>decision tree的优点：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222203127186.png" srcset="/img/loading.gif" alt="image-20210222203127186" style="zoom:50%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222203127186.png" srcset="/img/loading.gif" alt="image-20210222203127186" style="zoom:50%;" /></p>
 <ul>
 <li>可解释性强，常用在医学等模型上。</li>
 <li>简单，只是一个树递归</li>
@@ -268,7 +268,7 @@
 <li>实际应用中依赖启发式的选择，需要灵感。</li>
 </ul>
 <h2 id="Decision-Tree-Algorithm"><a href="#Decision-Tree-Algorithm" class="headerlink" title="Decision Tree Algorithm"></a>Decision Tree Algorithm</h2><p>这个算法很容易写出一个basic的版本。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222203617410.png" srcset="/img/loading.gif" alt="image-20210222203617410"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222203617410.png" srcset="/img/loading.gif" alt="image-20210222203617410"></p>
 <p>但是我们要做四个选择</p>
 <ul>
 <li>分支有多少</li>
@@ -277,7 +277,7 @@
 <li>回传的constant是什么</li>
 </ul>
 <p>下面介绍一种常用的decision tree：<code>Classification and Regression Tree(C&amp;RT)</code></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222203844228.png" srcset="/img/loading.gif" alt="image-20210222203844228"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222203844228.png" srcset="/img/loading.gif" alt="image-20210222203844228"></p>
 <ul>
 <li><p>这个tree是一个binary tree，每个结点只有两个分支。</p>
 </li>
@@ -289,32 +289,32 @@
 </li>
 </ul>
 <p>除了上面的 如何设置分支也是很重要的一部分：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222205355159.png" srcset="/img/loading.gif" alt="image-20210222205355159"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222205355159.png" srcset="/img/loading.gif" alt="image-20210222205355159"></p>
 <p><code>C&amp;RT</code>的划分方法：</p>
 <ul>
 <li><strong>用<code>Decision Stump</code>来划分：</strong>对feature的每个维度划分，那么一共可以有$d$个binary decision。</li>
 <li><strong>依靠purifying(纯度)来决定分支：</strong></li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222210524103.png" srcset="/img/loading.gif" alt="image-20210222210524103"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222210524103.png" srcset="/img/loading.gif" alt="image-20210222210524103"></p>
 <p>对于每个binary decision，也就是一个$h$ ,我们考量他的得分$b(x)$，思路很简单，就是对于$h$分割开的两份我们分别去算各自那一份的不纯度，然后乘上那一份的大小，这个做法很符合直觉。</p>
 <p>上述的$impurity$函数选择有下面几种：</p>
 <p>首先可以通过$E_{in}$来选择。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222213449020.png" srcset="/img/loading.gif" alt="image-20210222213449020"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222213449020.png" srcset="/img/loading.gif" alt="image-20210222213449020"></p>
 <p>对于classification错误，我们也可以用这几种：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222213711232.png" srcset="/img/loading.gif" alt="image-20210222213711232"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222213711232.png" srcset="/img/loading.gif" alt="image-20210222213711232"></p>
 <p>实际应用这 在regression中常用<code>regression error</code>，在classification中常用<code>Gini index</code></p>
 <p>最后一个问题就是：什么时候停止？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222214006301.png" srcset="/img/loading.gif" alt="image-20210222214006301"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222214006301.png" srcset="/img/loading.gif" alt="image-20210222214006301"></p>
 <h2 id="Decision-Tree-Heuristics-in-C-amp-RT"><a href="#Decision-Tree-Heuristics-in-C-amp-RT" class="headerlink" title="Decision Tree Heuristics in C&amp;RT"></a>Decision Tree Heuristics in C&amp;RT</h2><p><code>C&amp;RT</code>算法总结：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222214204395.png" srcset="/img/loading.gif" alt="image-20210222214204395"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222214204395.png" srcset="/img/loading.gif" alt="image-20210222214204395"></p>
 <p>二元分类任务可以很简单的完成，同时如果是一个multi-classification的任务，我们对上面的算法只需要constant改一下，impurity的计算公式改一下就可以做多分类问题了。</p>
 <p>但是我们注意到了一个问题：</p>
 <p>这个算法里要求最后是fully-grown tree，即$E_{in}(G)=0$, 但这样很有可能最后overfit。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222221003570.png" srcset="/img/loading.gif" alt="image-20210222221003570"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222221003570.png" srcset="/img/loading.gif" alt="image-20210222221003570"></p>
 <ul>
 <li><p>我们需要一种regularizer,一种简单想法：控制叶子节点的数量。</p>
 </li>
-<li><p>然后我们去做正则化：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222221021100.png" srcset="/img/loading.gif" alt="image-20210222221021100"></p>
+<li><p>然后我们去做正则化：<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222221021100.png" srcset="/img/loading.gif" alt="image-20210222221021100"></p>
 </li>
 </ul>
 <ul>
@@ -322,30 +322,30 @@
 </ul>
 <p>通过$\lambda$来平衡这件事情，我们称这种decision tree为<code>pruned decision tree</code></p>
 <p>但是这个方法操作起来没那么简单，我们考虑的是all possible G，那种类可就太多了，所以我们考虑这么做：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222221349533.png" srcset="/img/loading.gif" alt="image-20210222221349533"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222221349533.png" srcset="/img/loading.gif" alt="image-20210222221349533"></p>
 <ul>
 <li>先做一个fully-grown tree，作为$G^{(0)}$.</li>
 <li>然后对这个G(0),每次去掉一个叶子节点，计算$E<em>{in}$,然后先放回去，接着再选一个叶子节点去掉，我们找这里面$E</em>{in}$最低的一种删除掉，作为$G^{(1)}$</li>
 <li>以此循环</li>
 </ul>
 <p>如果我们有一些资料缺少了一些feature，我们可以用其他相似的feature 来替代：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222230831375.png" srcset="/img/loading.gif" alt="image-20210222230831375"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222230831375.png" srcset="/img/loading.gif" alt="image-20210222230831375"></p>
 <p>比如体重数据缺失了一部分，可以根据身高的threshold。</p>
 <h2 id="Decision-Tree-in-Action"><a href="#Decision-Tree-in-Action" class="headerlink" title="Decision Tree in Action"></a>Decision Tree in Action</h2><p>举一个例子：</p>
 <p>第一次：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222232922678.png" srcset="/img/loading.gif" alt="image-20210222232922678"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222232922678.png" srcset="/img/loading.gif" alt="image-20210222232922678"></p>
 <p>第二次：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222232939444.png" srcset="/img/loading.gif" alt="image-20210222232939444"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222232939444.png" srcset="/img/loading.gif" alt="image-20210222232939444"></p>
 <p>第三次：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222232951537.png" srcset="/img/loading.gif" alt="image-20210222232951537"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222232951537.png" srcset="/img/loading.gif" alt="image-20210222232951537"></p>
 <p>第四次：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222233009854.png" srcset="/img/loading.gif" alt="image-20210222233009854"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222233056743.png" srcset="/img/loading.gif" alt="image-20210222233056743"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222233009854.png" srcset="/img/loading.gif" alt="image-20210222233009854"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222233056743.png" srcset="/img/loading.gif" alt="image-20210222233056743"></p>
 <p>我们可以看出区别：AdaBoost切的都是贯穿全局的，而C&amp;RT可以由于在子树里切，因此可以切一部分</p>
 <p>当数据多的时候，我们会发现C&amp;RT效率会高一些，因为它可以切一小部分。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222233232138.png" srcset="/img/loading.gif" alt="image-20210222233232138"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222233232138.png" srcset="/img/loading.gif" alt="image-20210222233232138"></p>
 <p><strong>Decision tree 优势：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210222233333535.png" srcset="/img/loading.gif" alt="image-20210222233333535"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210222233333535.png" srcset="/img/loading.gif" alt="image-20210222233333535"></p>
 
             </div>
             <hr>
@@ -643,20 +643,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

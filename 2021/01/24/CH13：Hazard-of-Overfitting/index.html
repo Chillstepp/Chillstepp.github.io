@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,66 +239,66 @@
             <h1 style="display: none">机器学习基石CH13：Hazard of Overfitting</h1>
             
             <div class="markdown-body">
-              <h1 id="CH13：Hazard-of-Overfitting"><a href="#CH13：Hazard-of-Overfitting" class="headerlink" title="CH13：Hazard of Overfitting"></a>CH13：Hazard of Overfitting</h1><h2 id="What-is-overfitting"><a href="#What-is-overfitting" class="headerlink" title="What is overfitting"></a>What is overfitting</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124183710854.png" srcset="/img/loading.gif" alt="image-20210124183710854"></p>
+              <h1 id="CH13：Hazard-of-Overfitting"><a href="#CH13：Hazard-of-Overfitting" class="headerlink" title="CH13：Hazard of Overfitting"></a>CH13：Hazard of Overfitting</h1><h2 id="What-is-overfitting"><a href="#What-is-overfitting" class="headerlink" title="What is overfitting"></a>What is overfitting</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124183710854.png" srcset="/img/loading.gif" alt="image-20210124183710854"></p>
 <p>比如我们现在的数据是通过一个二次曲线+noise 造出来的数据，然后我们用这个数据进行机器学习，假如你用了5次曲线（即一定可以经过上述的五个点），那么我们就会画出图中红色的曲线(且$E_{in}=0$)</p>
 <p>但是她和我们的target function蓝色线差距很大。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124184037480.png" srcset="/img/loading.gif" alt="image-20210124184037480"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124184037480.png" srcset="/img/loading.gif" alt="image-20210124184037480"></p>
 <p>一个overfitting的例子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124184123156.png" srcset="/img/loading.gif" alt="image-20210124184123156"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124184123156.png" srcset="/img/loading.gif" alt="image-20210124184123156"></p>
 <p>overfitting出现的原因：</p>
 <p>我们以出车祸为例子。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124184304069.png" srcset="/img/loading.gif" alt="image-20210124184304069"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124184304069.png" srcset="/img/loading.gif" alt="image-20210124184304069"></p>
 <ul>
 <li>用的$d_{VC}$太大，开的太快</li>
 <li>噪声，路不平</li>
 <li>资料少，路况不清楚</li>
 </ul>
-<h2 id="The-Role-of-Noise-and-Data-Size"><a href="#The-Role-of-Noise-and-Data-Size" class="headerlink" title="The Role of Noise and Data Size"></a>The Role of Noise and Data Size</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124184610253.png" srcset="/img/loading.gif" alt="image-20210124184610253"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124184714999.png" srcset="/img/loading.gif" alt="image-20210124184714999"></p>
+<h2 id="The-Role-of-Noise-and-Data-Size"><a href="#The-Role-of-Noise-and-Data-Size" class="headerlink" title="The Role of Noise and Data Size"></a>The Role of Noise and Data Size</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124184610253.png" srcset="/img/loading.gif" alt="image-20210124184610253"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124184714999.png" srcset="/img/loading.gif" alt="image-20210124184714999"></p>
 <p>我们发现10次多项式还是发生了over fitting，在$E_{out}$表现很差。</p>
 <p>我们会经常发现，有时候即使如果target function是10次的，我们用十次模型的效果竟然没有二次模型表现好，这是为什么呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124210357613.png" srcset="/img/loading.gif" alt="image-20210124210357613"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124210357613.png" srcset="/img/loading.gif" alt="image-20210124210357613"></p>
 <p>我们看右面的图，会发现在灰色部分 $E_{out}$表现非常差 ，这是一种聪明反被聪明误的特点，因为hypothesis太多了，在数据较少时很难寻出来一个好的模型。</p>
-<h2 id="Deterministic-Noise"><a href="#Deterministic-Noise" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124210959772.png" srcset="/img/loading.gif" alt="image-20210124210959772"></p>
+<h2 id="Deterministic-Noise"><a href="#Deterministic-Noise" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124210959772.png" srcset="/img/loading.gif" alt="image-20210124210959772"></p>
 <p>我们给出的数据y由两部分合成：target function+noise。这里noise符合高斯分布来看。</p>
 <p>我们想研究影响overfit的因素，首先要确定overfit的measure方法</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124211605335.png" srcset="/img/loading.gif" alt="image-20210124211605335"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124211605335.png" srcset="/img/loading.gif" alt="image-20210124211605335"></p>
 <p>这里我们想到，如果overfit的越厉害，那么反映在$E_{out}$上来看就是差距很大：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124211910008.png" srcset="/img/loading.gif" alt="image-20210124211910008"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124211910008.png" srcset="/img/loading.gif" alt="image-20210124211910008"></p>
 <p>下面我们来看不同不同影响因素造成的overift情况：</p>
 <p>注：$Q_f$代表用的target function是几次的函数。</p>
 <p>我们先看noise 和 数据量带来的影响</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124212725316.png" srcset="/img/loading.gif" alt="image-20210124212725316"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124212725316.png" srcset="/img/loading.gif" alt="image-20210124212725316"></p>
 <ul>
 <li>左上方深红色，不难理解，noise很多数据很少，差距肯定比较大，表现不好</li>
 <li>蓝色部分数据多，noise少，肯定表现得不错。</li>
 </ul>
 <p>我们看一下 target function的次数($Q_f$) 和 数据量带来的影响</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124213600549.png" srcset="/img/loading.gif" alt="image-20210124213600549"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124213600549.png" srcset="/img/loading.gif" alt="image-20210124213600549"></p>
 <ul>
 <li>深红色，我们的目标函数非常复杂时，且数据数量又少肯定我们做不好。</li>
 </ul>
 <p>从上面两个图，我们总结一下overfit的情况：</p>
 <ul>
-<li><p>数据太少，<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124213933689.png" srcset="/img/loading.gif" alt="image-20210124213933689"></p>
+<li><p>数据太少，<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124213933689.png" srcset="/img/loading.gif" alt="image-20210124213933689"></p>
 </li>
-<li><p>stochastic noise太多，<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124214021109.png" srcset="/img/loading.gif" alt="image-20210124214021109"></p>
+<li><p>stochastic noise太多，<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124214021109.png" srcset="/img/loading.gif" alt="image-20210124214021109"></p>
 </li>
 <li><p>deterministic noise 太多</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124214111834.png" srcset="/img/loading.gif" alt="image-20210124214111834"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124214111834.png" srcset="/img/loading.gif" alt="image-20210124214111834"></p>
 </li>
 <li><p>excessive power造成的overfit，因为target function的复杂度很小时，我们用一个10次的多项式去拟合，因为他的能力太强了，肯定会把noise也拟合出来，这样就造成overfit</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124214318637.png" srcset="/img/loading.gif" alt="image-20210124214318637"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124214318637.png" srcset="/img/loading.gif" alt="image-20210124214318637"></p>
 </li>
 </ul>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124215438229.png" srcset="/img/loading.gif" alt="image-20210124215438229"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124215438229.png" srcset="/img/loading.gif" alt="image-20210124215438229"></p>
 <ul>
 <li>当我们的hypothesis(红线)的复杂度小于target function(蓝线)时，他们之间肯定会有差距，即灰色的部分，我们一般称这个差距就是deterministic noise</li>
 <li>其实所有的 stochastic noise都是电脑伪随机出来的，其实本质上也是deterministic noise。</li>
 </ul>
 <h2 id="Dealing-with-Overfitting"><a href="#Dealing-with-Overfitting" class="headerlink" title="Dealing with Overfitting"></a>Dealing with Overfitting</h2><p>我们之前讨论了产生overfit的原因，我们反向思维即可，得出解决的方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124220923975.png" srcset="/img/loading.gif" alt="image-20210124220923975"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124220923975.png" srcset="/img/loading.gif" alt="image-20210124220923975"></p>
 <ul>
 <li>简单的模型</li>
 <li>数据清洗/去除</li>
@@ -310,9 +310,9 @@
 <li>validation（下一节说）</li>
 </ul>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124221352225.png" srcset="/img/loading.gif" alt="image-20210124221352225"></p>
-<p>比如左上方的<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124221410605.png" srcset="/img/loading.gif" alt="image-20210124221410605">，这个居然认作5，这肯定是错误的，因此我们想要去掉这种离谱的错误。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124221511027.png" srcset="/img/loading.gif" alt="image-20210124221511027"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124221352225.png" srcset="/img/loading.gif" alt="image-20210124221352225"></p>
+<p>比如左上方的<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124221410605.png" srcset="/img/loading.gif" alt="image-20210124221410605">，这个居然认作5，这肯定是错误的，因此我们想要去掉这种离谱的错误。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124221511027.png" srcset="/img/loading.gif" alt="image-20210124221511027"></p>
 <p>可以这样解决：</p>
 <ul>
 <li>如果监测到了5，但是他很接近1（身边都是被认作1的点），或者说这个点距离其他5的数据点太远，那么我们大概就可以认为这个数据可能是错误的。</li>
@@ -322,7 +322,7 @@
 </li>
 </ul>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210124222231925.png" srcset="/img/loading.gif" alt="image-20210124222231925"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210124222231925.png" srcset="/img/loading.gif" alt="image-20210124222231925"></p>
 <p>如果我们手上的数据有限，我们又想多一些资料，可以这么做：</p>
 <ul>
 <li>对原来的资料进行轻微的旋转/平移操作，但不改变资料的实际意义</li>
@@ -625,20 +625,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

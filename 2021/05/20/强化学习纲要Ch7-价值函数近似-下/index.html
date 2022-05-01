@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -239,13 +239,13 @@
             <h1 style="display: none">强化学习纲要Ch7-价值函数近似-下</h1>
             
             <div class="markdown-body">
-              <h1 id="价值函数近似—下"><a href="#价值函数近似—下" class="headerlink" title="价值函数近似—下"></a>价值函数近似—下</h1><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210519233158541.png" srcset="/img/loading.gif" alt="image-20210519233158541"></p>
+              <h1 id="价值函数近似—下"><a href="#价值函数近似—下" class="headerlink" title="价值函数近似—下"></a>价值函数近似—下</h1><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210519233158541.png" srcset="/img/loading.gif" alt="image-20210519233158541"></p>
 <ul>
 <li>线性组合的前提是需要我们设计出很好的feature</li>
 <li>我们可以用非线性的函数拟合，常用的方法就是：DNN（Deep Neural Network）</li>
 </ul>
 <p>现在DRL的一个大致情况：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520000418525.png" srcset="/img/loading.gif" alt="image-20210520000418525"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520000418525.png" srcset="/img/loading.gif" alt="image-20210520000418525"></p>
 <ul>
 <li><p>DNN用来拟合价值函数，策略函数和环境模型</p>
 </li>
@@ -255,7 +255,7 @@
 </ul>
 <p>Deep Q-Networks(DQN):</p>
 <p>DQN通过神经网络拟合了action-value function(q函数)，同时在Atari游戏上表现出色。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520002033890.png" srcset="/img/loading.gif" alt="image-20210520002033890"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520002033890.png" srcset="/img/loading.gif" alt="image-20210520002033890"></p>
 <ul>
 <li>端到端学习</li>
 <li>输入是四帧图像</li>
@@ -274,22 +274,22 @@
 <li>Experience replay</li>
 </ul>
 <p>Experience replay这种方法用了一个容器replay memory $D$来存储$(s<em>t,a_t,r_t.s</em>{t+1})$.</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520204931422.png" srcset="/img/loading.gif" alt="image-20210520204931422"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520204931422.png" srcset="/img/loading.gif" alt="image-20210520204931422"></p>
 <p>然后在对$D$进行采样，利用采样得到的来构建TD target，进一步就可以得到所拟合的Q函数的梯度。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520204959678.png" srcset="/img/loading.gif" alt="image-20210520204959678"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520204959678.png" srcset="/img/loading.gif" alt="image-20210520204959678"></p>
 <p>因此这种方法把不同轨迹的数据集合在一起，抽样训练，降低了相关性。</p>
 <ul>
 <li>Fixed Q targets</li>
 </ul>
 <p>解决的方法是通过一个$w^-$ 来替代TD target中的$w^-$。这个$w^-$是几轮迭代前的$w$,这样我们就可以求梯度时忽略原来TD Target第二项w不求导造成的问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520205453588.png" srcset="/img/loading.gif" alt="image-20210520205453588"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520205453588.png" srcset="/img/loading.gif" alt="image-20210520205453588"></p>
 <p>更新方法如下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520212701456.png" srcset="/img/loading.gif" alt="image-20210520212701456"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520212701456.png" srcset="/img/loading.gif" alt="image-20210520212701456"></p>
 <p>这里周博磊老师给出了一个直观的解释：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520212508908.png" srcset="/img/loading.gif" alt="image-20210520212508908"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520212508908.png" srcset="/img/loading.gif" alt="image-20210520212508908"></p>
 <p>老鼠相当于我们的target function，老鼠每动几步，猫才会行动一步，这样就可以更好的看准target来优化。原来TD Target每次都会变化，这会导致目标一致变化导致拟合困难。</p>
 <p><strong>DQN近些年的一些进步工作:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210520213637260.png" srcset="/img/loading.gif" alt="image-20210520213637260"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210520213637260.png" srcset="/img/loading.gif" alt="image-20210520213637260"></p>
 <ul>
 <li><p>Double DQN  <a href="https://arxiv.org/pdf/1509.06461.pdf" target="_blank" rel="noopener">Paper Link</a></p>
 </li>
@@ -597,20 +597,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

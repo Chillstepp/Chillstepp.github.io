@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -241,11 +241,11 @@
             <div class="markdown-body">
               <h1 id="Intro-to-Reinforcement-learning-Overview"><a href="#Intro-to-Reinforcement-learning-Overview" class="headerlink" title="Intro to Reinforcement learning-Overview"></a>Intro to Reinforcement learning-Overview</h1><p><strong>强化学习可以做什么？</strong></p>
 <p>强化学习成为近几年来的热点，强化学习这种方法再许多领域上都取得了成功，比如，强化学习可以教计算机在虚拟环境中控制机器人，控制机器手等…</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210429140100015.png" srcset="/img/loading.gif" alt="image-20210429140100015"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210429140100015.png" srcset="/img/loading.gif" alt="image-20210429140100015"></p>
 <p>(图：机器手按照规则旋转立方体)</p>
 <p>​    对于一些策略游戏来说，强化学习在近几年同样有很大的突破：比如王者荣耀的觉悟AI(AAAI2020，Mastering Complex Control in MOBA Games with Deep Reinforcement Learning)，围棋中的AlphaGo和MOBA游戏DOTA(Dota 2 with Large Scale Deep Reinforcement Learning)。这些策略游戏需要角计算机在无数的像素构成画面中学会策略游戏，并学习人类的操作。</p>
 <p><strong>强化学习的主要思想:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210429141019501.png" srcset="/img/loading.gif" alt="image-20210429141019501"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210429141019501.png" srcset="/img/loading.gif" alt="image-20210429141019501"></p>
 <p>​    强化学习中的两个重要角色是：Agent(智能体)和Environment(环境)，Environment是Agent不仅所处的地方，也是Agent进行交互的对象。在每次交互时，Agent首先观察Environment的状态，并作出一种决策后开始行动后。此时环境也由于Agent的行动开始发生变化。需要注意的是，环境的变化也可能是自己变化导致的，不一定是Agent导致的。</p>
 <p>​    环境的变化/状态会使得智能体获得激励信号(reward signal)，激励信号可以简单理解为一个数值，或者向量，它会告诉智能体此时环境的状态是好还是坏，当然这里的好坏是由你自己的目标来定义的，智能体的目标就是最大化他的累计奖励(cumulative reward)，可以简单理解为智能体所获得的回报(Return)。</p>
 <p>强化学习和监督学习的区别：</p>
@@ -255,7 +255,7 @@
 <li>Trial and error exploration，我们要平衡exploration和exploitation，exploration指我们会尝试一些新的方法，有可能效果会很好，也有可能会导致效果变差，浪费了时间，exploitation指就按照现在已经尝试过的方法中效果最好的一种接着训练。</li>
 <li>我们只有reward signal来判断我们的效果如何，而这个激励信号也是是delay的。</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210502104013675.png" srcset="/img/loading.gif" alt="image-20210502104013675"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210502104013675.png" srcset="/img/loading.gif" alt="image-20210502104013675"></p>
 <p>历史就是输入的一个序列：观测，动作，回馈这样的序列</p>
 <p>我们可以把state看成有关历史的一个函数：</p>
 <script type="math/tex; mode=display">
@@ -264,44 +264,44 @@ S_t = f(H_t)</script><p>我们一般有两个state，分别是：环境状态和
 <script type="math/tex; mode=display">
 S_t^e = f^e(H_t)\\
 S_t^a = f^a(H_t)</script><p>全观测：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503135826682.png" srcset="/img/loading.gif" alt="image-20210503135826682"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503135826682.png" srcset="/img/loading.gif" alt="image-20210503135826682"></p>
 <p>部分观测：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503135937272.png" srcset="/img/loading.gif" alt="image-20210503135937272"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503135937272.png" srcset="/img/loading.gif" alt="image-20210503135937272"></p>
 <p>对于扑克牌这种游戏，我们是无法看到对方的牌的，所以无法做到全观测。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503140159958.png" srcset="/img/loading.gif" alt="image-20210503140159958"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503140159958.png" srcset="/img/loading.gif" alt="image-20210503140159958"></p>
 <p>对于一个agent需要有下面几个内容：</p>
 <ul>
 <li>policy：策略，agent的有关动作的函数</li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503140629195.png" srcset="/img/loading.gif" alt="image-20210503140629195"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503140629195.png" srcset="/img/loading.gif" alt="image-20210503140629195"></p>
 <p>策略有随机策略和确定策略，随即策略是对于策略分布进行抽样，抽出一种策略。</p>
 <ul>
 <li><p>value  function：价值函数，评价每个状态/动作的好坏</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503140901818.png" srcset="/img/loading.gif" alt="image-20210503140901818"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503140901818.png" srcset="/img/loading.gif" alt="image-20210503140901818"></p>
 <p>价值函数就是在某一种策略下，未来的奖励在折价后的和的期望。</p>
 <p>这个折价是折价因子(Discount factor)造成的，折价因子的出现是因为我们想在较短的时间里获得较多的收益，所以时间越后面所获得的回报应该做一个折扣。</p>
 <p>value function可以用在两个方面</p>
 <p>一个是评价状态和动作的好坏：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503141826039.png" srcset="/img/loading.gif" alt="image-20210503141826039"></p>
-<p>也可以通过这个函数来选择动作：<br><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503141636082.png" srcset="/img/loading.gif" alt="image-20210503141636082"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503141826039.png" srcset="/img/loading.gif" alt="image-20210503141826039"></p>
+<p>也可以通过这个函数来选择动作：<br><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503141636082.png" srcset="/img/loading.gif" alt="image-20210503141636082"></p>
 </li>
 <li><p>model：模型，agent对环境的理解，预策环境的状态</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503142054822.png" srcset="/img/loading.gif" alt="image-20210503142054822"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503142054822.png" srcset="/img/loading.gif" alt="image-20210503142054822"></p>
 <hr>
 <p>基于策略的方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503142513005.png" srcset="/img/loading.gif" alt="image-20210503142513005"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503142513005.png" srcset="/img/loading.gif" alt="image-20210503142513005"></p>
 <p>基于价值函数的方法：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503142542637.png" srcset="/img/loading.gif" alt="image-20210503142542637"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503142542637.png" srcset="/img/loading.gif" alt="image-20210503142542637"></p>
 <p>agent有三种（基于学习方法）:</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503142732201.png" srcset="/img/loading.gif" alt="image-20210503142732201"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503142732201.png" srcset="/img/loading.gif" alt="image-20210503142732201"></p>
 <p>一种是value-based agent：它通过价值函数来做决策，就像上面的走迷宫，距离终点的距离大小就是他的决策方法。同时他<strong>隐式的学习到策略</strong>，也就是走最近的路。</p>
 <p>还有policy-based agent：直接学习策略</p>
 <p>还有Actor-Critic agent：两者都学习</p>
 <p>基于是否有模型，agent分为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210503145140412.png" srcset="/img/loading.gif" alt="image-20210503145140412"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210503145140412.png" srcset="/img/loading.gif" alt="image-20210503145140412"></p>
 
             </div>
             <hr>
@@ -599,20 +599,5 @@ S_t^a = f^a(H_t)</script><p>全观测：</p>
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

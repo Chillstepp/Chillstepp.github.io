@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,60 +240,60 @@
             
             <div class="markdown-body">
               <h1 id="CH12：Nonlinear-Transformation"><a href="#CH12：Nonlinear-Transformation" class="headerlink" title="CH12：Nonlinear Transformation"></a>CH12：Nonlinear Transformation</h1><h2 id="Quadratic-Hypotheses（二次假设）"><a href="#Quadratic-Hypotheses（二次假设）" class="headerlink" title="Quadratic Hypotheses（二次假设）"></a>Quadratic Hypotheses（二次假设）</h2><p>Linear Hypothesis </p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123141912732.png" srcset="/img/loading.gif" alt="image-20210123141912732"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123141912732.png" srcset="/img/loading.gif" alt="image-20210123141912732"></p>
 <p>线性模型可以算一个分数，它最大的好处是$d_{VC}$ 可以被控制，当然线性模型在某些数据上每条线都做不到效果很好。</p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142255944.png" srcset="/img/loading.gif" alt="image-20210123142255944"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123142255944.png" srcset="/img/loading.gif" alt="image-20210123142255944"></p>
 <p>我们这里用一个圈就可以很好地进行分类。</p>
 <p>那么我们可以设一个圆形的PLA,可是图形是千变万化的，我们不可能每个都设计出来一个PLA，那么我们可以系统化的设计一个。</p>
 <p>我们可以把式子化为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142856750.png" srcset="/img/loading.gif" alt="image-20210123142856750"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123142957261.png" srcset="/img/loading.gif" alt="image-20210123142957261"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123142856750.png" srcset="/img/loading.gif" alt="image-20210123142856750"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123142957261.png" srcset="/img/loading.gif" alt="image-20210123142957261"></p>
 <p>我们可以把$x_1$ 对应到右边的$x_1^2$,那么就想到于把以<strong>x为基地的左图</strong>转为<strong>以z为基底的右图</strong>。</p>
 <p>惊喜的发现，我们又把问题转化到了线性的问题。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143708871.png" srcset="/img/loading.gif" alt="image-20210123143708871"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123143708871.png" srcset="/img/loading.gif" alt="image-20210123143708871"></p>
 <p>不同的w赋值可以代表不同的model，这是一个很好的系统性的总结。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123143852910.png" srcset="/img/loading.gif" alt="image-20210123143852910"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123143852910.png" srcset="/img/loading.gif" alt="image-20210123143852910"></p>
 <p>那么什么样的x图像都可以用z表示吗？</p>
 <p>当然不是，如果我们细心会发新$h(x)=sign(w_0+w_1x_1^2+w_2x_2^2)$ 没用关于x的一次项，也就是说这个圆形是不可以平移的。</p>
 <p>因此只有一部分特殊可以利用这个系统：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144112039.png" srcset="/img/loading.gif" alt="image-20210123144112039"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123144112039.png" srcset="/img/loading.gif" alt="image-20210123144112039"></p>
 <p>我们想要扩展到任意图形：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123144148424.png" srcset="/img/loading.gif" alt="image-20210123144148424"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123144148424.png" srcset="/img/loading.gif" alt="image-20210123144148424"></p>
 <p>那我们就加上一次项。</p>
-<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145808828.png" srcset="/img/loading.gif" alt="image-20210123145808828"></p>
+<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123145808828.png" srcset="/img/loading.gif" alt="image-20210123145808828"></p>
 <p>因此我们想这么做一个过程：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123145849255.png" srcset="/img/loading.gif" alt="image-20210123145849255"></p>
-<p>最后一个反运算$\phi ^{-1}$虽然不一定成立，但一般不会影响我们的结果，因为我们早早建立了每个点在新的以z为基地的坐标系下的映射坐标是什么，我们既然已经算出来了下图：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123150011588.png" srcset="/img/loading.gif" alt="image-20210123150011588"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123145849255.png" srcset="/img/loading.gif" alt="image-20210123145849255"></p>
+<p>最后一个反运算$\phi ^{-1}$虽然不一定成立，但一般不会影响我们的结果，因为我们早早建立了每个点在新的以z为基地的坐标系下的映射坐标是什么，我们既然已经算出来了下图：<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123150011588.png" srcset="/img/loading.gif" alt="image-20210123150011588"></p>
 <p>我们可以直接去找他对应的点是什么，无需做反变换。图中这么表示这是为了理解。</p>
 <p>这个转化做完所有学的线性模型都可以用了。</p>
 <p>但是这么做有没有什么代价呢？</p>
 <h2 id="Price-of-Nonlinear-Transform"><a href="#Price-of-Nonlinear-Transform" class="headerlink" title="Price of Nonlinear Transform"></a>Price of Nonlinear Transform</h2><p>如果是一个Q次的多项式：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165350481.png" srcset="/img/loading.gif" alt="image-20210123165350481"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123165350481.png" srcset="/img/loading.gif" alt="image-20210123165350481"></p>
 <p>那么我们需要多少项来表示呢？</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123165631087.png" srcset="/img/loading.gif" alt="image-20210123165631087"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123165631087.png" srcset="/img/loading.gif" alt="image-20210123165631087"></p>
 <p>这个量级大概是$O（Q^d）$,即w大概要这么多项，这个w大概就是$d_{VC}$。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170213343.png" srcset="/img/loading.gif" alt="image-20210123170213343"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123170213343.png" srcset="/img/loading.gif" alt="image-20210123170213343"></p>
 <ul>
 <li>所以Q很大时，即用了一个高次的函数来划分类别，$d<em>{VC}$就会很大，这样导致了$E</em>{in}$和$E_{out}$差距就很大了，但是这种效果往往在训练的数据集上表现得很好。</li>
 <li>反之，如果我们选一个很简单的低次函数来划分，$d<em>{VC}$小一些，虽然$E</em>{in}$和$E_{out}$比较接近了,当然这会使得我们的训练效果很差。</li>
 </ul>
 <p>这是一个机器学习中很重要的trade-off(权衡)</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123170857408.png" srcset="/img/loading.gif" alt="image-20210123170857408"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171118823.png" srcset="/img/loading.gif" alt="image-20210123171118823"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123170857408.png" srcset="/img/loading.gif" alt="image-20210123170857408"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123171118823.png" srcset="/img/loading.gif" alt="image-20210123171118823"></p>
 <p>我们看上图可以发现，我们最后甚至提出了一个$d_{VC}=1$的方法，真是太好了。</p>
 <p>但其实我们仔细想想，能提出这样一个想法，是因为你看到了这个数据图：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171324613.png" srcset="/img/loading.gif" alt="image-20210123171324613"></p>
-<p>你看到长得像圆形，没有偏离原点，所以你说我们不需要<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171353444.png" srcset="/img/loading.gif" alt="image-20210123171353444"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123171324613.png" srcset="/img/loading.gif" alt="image-20210123171324613"></p>
+<p>你看到长得像圆形，没有偏离原点，所以你说我们不需要<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123171353444.png" srcset="/img/loading.gif" alt="image-20210123171353444"></p>
 <p>这种的变换。</p>
-<p>那如果是一个超高维的数据，你分类就不可能看到数据情况了，你也想象不到高维体的样子，所以你只能老老实实的用$d_{VC}$大一些的方法。而我们直接提出的<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123171536529.png" srcset="/img/loading.gif" alt="image-20210123171536529"></p>
+<p>那如果是一个超高维的数据，你分类就不可能看到数据情况了，你也想象不到高维体的样子，所以你只能老老实实的用$d_{VC}$大一些的方法。而我们直接提出的<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123171536529.png" srcset="/img/loading.gif" alt="image-20210123171536529"></p>
 <p>这种方式，是经过人human learning 学到的，不是machine leaning学到的。</p>
-<h2 id="Structed-Hypothesis-Sets"><a href="#Structed-Hypothesis-Sets" class="headerlink" title="Structed Hypothesis Sets"></a>Structed Hypothesis Sets</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172722949.png" srcset="/img/loading.gif" alt="image-20210123172722949"></p>
+<h2 id="Structed-Hypothesis-Sets"><a href="#Structed-Hypothesis-Sets" class="headerlink" title="Structed Hypothesis Sets"></a>Structed Hypothesis Sets</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123172722949.png" srcset="/img/loading.gif" alt="image-20210123172722949"></p>
 <p>我们转换到新的坐标下，新坐标下的Hypothesis肯定是有包含关系的，如下图。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123172842740.png" srcset="/img/loading.gif" alt="image-20210123172842740"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174003440.png" srcset="/img/loading.gif" alt="image-20210123174003440"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123172842740.png" srcset="/img/loading.gif" alt="image-20210123172842740"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123174003440.png" srcset="/img/loading.gif" alt="image-20210123174003440"></p>
 <p>同理我们不难推理到$E_{in}$</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210123174011453.png" srcset="/img/loading.gif" alt="image-20210123174011453"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210123174011453.png" srcset="/img/loading.gif" alt="image-20210123174011453"></p>
 <p>从上图我们可以看出转换到一个很大的$d_{VC}$，并不是很好。</p>
 <p><strong>比较安全的做法是：</strong>从$H<em>1$ 开始一个一个增加 ，直到$H_t$计算出的$E</em>{in}(g_t)$足够好</p>
 
@@ -593,20 +593,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

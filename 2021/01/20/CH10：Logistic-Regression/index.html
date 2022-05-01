@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -240,112 +240,112 @@
             
             <div class="markdown-body">
               <h1 id="CH10：Logistic-Regression"><a href="#CH10：Logistic-Regression" class="headerlink" title="CH10：Logistic Regression"></a>CH10：Logistic Regression</h1><h2 id="Logistic-Regression-Problem-逻辑回归"><a href="#Logistic-Regression-Problem-逻辑回归" class="headerlink" title="Logistic Regression Problem(逻辑回归)"></a>Logistic Regression Problem(逻辑回归)</h2><p>我先我们看两个例子，看一看 他们的不同：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119160823722.png" srcset="/img/loading.gif" alt="image-20210119160823722"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119160823722.png" srcset="/img/loading.gif" alt="image-20210119160823722"></p>
 <p>根据一些指标来预策是否会有心脏病, 很明显是一个分类的问题，我们关心的是错误率为多少。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119160940221.png" srcset="/img/loading.gif" alt="image-20210119160940221"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119160940221.png" srcset="/img/loading.gif" alt="image-20210119160940221"></p>
 <p>再看看看这个问题，求心脏病出现的可能性。</p>
 <p>这不在是一个简单的二元分类问题，而是需要给出概率，我们称之为：</p>
 <p><strong>soft binary classification</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119161131344.png" srcset="/img/loading.gif" alt="image-20210119161131344"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119161131344.png" srcset="/img/loading.gif" alt="image-20210119161131344"></p>
 <hr>
 <p>我们希望得到这种数据：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119161324056.png" srcset="/img/loading.gif" alt="image-20210119161324056"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119161324056.png" srcset="/img/loading.gif" alt="image-20210119161324056"></p>
 <p>告诉我们不同的病例，然后给一个得病的几率，然后我们去做linear regression就好了，可是现实中这个概率是不可能知道的。</p>
 <p><strong>但是现实中我们只有这种普通的病例资料：</strong></p>
 <p>即在知道病人身体状况的情况下，这个病人是否患有心脏病，但是这个患上的概率只有上帝才知道。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119161436903.png" srcset="/img/loading.gif" alt="image-20210119161436903"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119161436903.png" srcset="/img/loading.gif" alt="image-20210119161436903"></p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119161829435.png" srcset="/img/loading.gif" alt="image-20210119161829435"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119161829435.png" srcset="/img/loading.gif" alt="image-20210119161829435"></p>
 <p>​    我们想到，可以这么来做：首先计算一个 $w$ 权重向量，然后我们用这个权重算一个分数出来（即上图中的$s$）， 我们用这个得分再通过$\theta$ 函数来等价转化为概率。</p>
 <p>即：<strong>logistic hypothesis</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119180058755.png" srcset="/img/loading.gif" alt="image-20210119180058755"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119180058755.png" srcset="/img/loading.gif" alt="image-20210119180058755"></p>
 <p>其中的 $\theta$ 函数我们称之为<strong>Logistic Function:</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119180134195.png" srcset="/img/loading.gif" alt="image-20210119180134195"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119180134195.png" srcset="/img/loading.gif" alt="image-20210119180134195"></p>
 <p><strong>所以logistic regression就是在做下面的事情：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119180434704.png" srcset="/img/loading.gif" alt="image-20210119180434704"></p>
-<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119180718320.png" srcset="/img/loading.gif" alt="image-20210119180718320"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119180434704.png" srcset="/img/loading.gif" alt="image-20210119180434704"></p>
+<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119180718320.png" srcset="/img/loading.gif" alt="image-20210119180718320"></p>
 <hr>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119180804459.png" srcset="/img/loading.gif" alt="image-20210119180804459"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119180804459.png" srcset="/img/loading.gif" alt="image-20210119180804459"></p>
 <p>三个放在一起我们很容易就发现他们的区别是是error measure的不同。</p>
 <p>那么我们如何定义logistic regression的error measure呢？</p>
 <hr>
 <p>首先,target function是长如下样子的：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182123293.png" srcset="/img/loading.gif" alt="image-20210119182123293"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182209110.png" srcset="/img/loading.gif" alt="image-20210119182209110"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182123293.png" srcset="/img/loading.gif" alt="image-20210119182123293"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182209110.png" srcset="/img/loading.gif" alt="image-20210119182209110"></p>
 <p>考虑换一下后半项为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182252868.png" srcset="/img/loading.gif" alt="image-20210119182252868"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182252868.png" srcset="/img/loading.gif" alt="image-20210119182252868"></p>
 <p>我们假设h可以产生相同资料：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182331245.png" srcset="/img/loading.gif" alt="image-20210119182331245"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182331245.png" srcset="/img/loading.gif" alt="image-20210119182331245"></p>
 <p>如果h和f很接近，那么$h$和$f$产生同一批资料的几率很接近。</p>
 <p>所以我们现在想要做到：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182623005.png" srcset="/img/loading.gif" alt="image-20210119182623005"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182623005.png" srcset="/img/loading.gif" alt="image-20210119182623005"></p>
 <p>让$h$最大程度的接近$f$。</p>
 <p>同时我们注意到$h(x)$的一个性质：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182736543.png" srcset="/img/loading.gif" alt="image-20210119182736543"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182736543.png" srcset="/img/loading.gif" alt="image-20210119182736543"></p>
 <p>定义<strong>likelihood</strong>为：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182753653.png" srcset="/img/loading.gif" alt="image-20210119182753653"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182753653.png" srcset="/img/loading.gif" alt="image-20210119182753653"></p>
 <p>我们可以把$1-h(x)$换掉,即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119182844516.png" srcset="/img/loading.gif" alt="image-20210119182844516"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119182844516.png" srcset="/img/loading.gif" alt="image-20210119182844516"></p>
 <p>所以这个函数正比于h对于每笔资料的连乘：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119190413845.png" srcset="/img/loading.gif" alt="image-20210119190413845"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119190638118.png" srcset="/img/loading.gif" alt="image-20210119190638118"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119190413845.png" srcset="/img/loading.gif" alt="image-20210119190413845"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119190638118.png" srcset="/img/loading.gif" alt="image-20210119190638118"></p>
 <p>所以我们想找一个$h$使得<strong>likelihood</strong>最大。</p>
-<p>还记得：<img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119194433344.png" srcset="/img/loading.gif" alt="image-20210119194433344"></p>
+<p>还记得：<img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119194433344.png" srcset="/img/loading.gif" alt="image-20210119194433344"></p>
 <p>我们替代一下，即求w即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119190928734.png" srcset="/img/loading.gif" alt="image-20210119190928734"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119190928734.png" srcset="/img/loading.gif" alt="image-20210119190928734"></p>
 <p>我们想把连乘-&gt; 连加，那么取ln即可：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119192636703.png" srcset="/img/loading.gif" alt="image-20210119192636703"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119192846298.png" srcset="/img/loading.gif" alt="image-20210119192846298"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119193041637.png" srcset="/img/loading.gif" alt="image-20210119193041637"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119192636703.png" srcset="/img/loading.gif" alt="image-20210119192636703"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119192846298.png" srcset="/img/loading.gif" alt="image-20210119192846298"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119193041637.png" srcset="/img/loading.gif" alt="image-20210119193041637"></p>
 <p>交叉熵(cross-entropy)</p>
-<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119201700239.png" srcset="/img/loading.gif" alt="image-20210119201700239"></p>
+<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119201700239.png" srcset="/img/loading.gif" alt="image-20210119201700239"></p>
 <p>还是要求梯度：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119202635111.png" srcset="/img/loading.gif" alt="image-20210119202635111"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119202911199.png" srcset="/img/loading.gif" alt="image-20210119202911199"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119202635111.png" srcset="/img/loading.gif" alt="image-20210119202635111"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119202911199.png" srcset="/img/loading.gif" alt="image-20210119202911199"></p>
 <p>即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119203010797.png" srcset="/img/loading.gif" alt="image-20210119203010797"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119203046100.png" srcset="/img/loading.gif" alt="image-20210119203046100"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119203125096.png" srcset="/img/loading.gif" alt="image-20210119203125096"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119203010797.png" srcset="/img/loading.gif" alt="image-20210119203010797"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119203046100.png" srcset="/img/loading.gif" alt="image-20210119203046100"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119203125096.png" srcset="/img/loading.gif" alt="image-20210119203125096"></p>
 <p>我们想让这个梯度等于0</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119204405585.png" srcset="/img/loading.gif" alt="image-20210119204405585"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119204405585.png" srcset="/img/loading.gif" alt="image-20210119204405585"></p>
 <ul>
 <li>如果所有的$\theta = 0$，说明$y_nw^Tx_n&gt;&gt;0$,  翻看前面PLA的内容，这个说明了全部做都正确答案了，即 数据是线性可分的。</li>
 <li>反之，我们就需要解这个方程了，且说明了不是线性可分的，不巧的是这个方程很难解，我们需要一些别的方法找出解。</li>
 </ul>
 <p>我们回顾一下PLA：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119220610176.png" srcset="/img/loading.gif" alt="image-20210119220610176"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119220610176.png" srcset="/img/loading.gif" alt="image-20210119220610176"></p>
 <p>我们把上面两个可以写成一个式子：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119220641522.png" srcset="/img/loading.gif" alt="image-20210119220641522"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119220641522.png" srcset="/img/loading.gif" alt="image-20210119220641522"></p>
 <p>也许我们可以用PLA类似的方法更新来迭代出梯度=0的点。</p>
 <h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>迭代最优化（iterative optimization）</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119221840734.png" srcset="/img/loading.gif" alt="image-20210119221840734"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119221840734.png" srcset="/img/loading.gif" alt="image-20210119221840734"></p>
 <p>这个$v$, 是纠错的向量，这个$η$ 是修改的步伐的大小。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119223931411.png" srcset="/img/loading.gif" alt="image-20210119223931411"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119224027787.png" srcset="/img/loading.gif" alt="image-20210119224027787"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119223931411.png" srcset="/img/loading.gif" alt="image-20210119223931411"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119224027787.png" srcset="/img/loading.gif" alt="image-20210119224027787"></p>
 <p>我们把Ein拆开，可以得到下面近似等式，这其实就是当$η$足够小的时候的一阶泰勒展开。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119225439197.png" srcset="/img/loading.gif" alt="image-20210119225439197"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119230619589.png" srcset="/img/loading.gif" alt="image-20210119230619589"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119225439197.png" srcset="/img/loading.gif" alt="image-20210119225439197"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119230619589.png" srcset="/img/loading.gif" alt="image-20210119230619589"></p>
 <p>我们现在就要规定$v^T$ 的方向，怎么才能让他最快到达底部呢？很容易沿着梯度相反的方向，即：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231048105.png" srcset="/img/loading.gif" alt="image-20210119231048105"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231048105.png" srcset="/img/loading.gif" alt="image-20210119231048105"></p>
 <p>即这样更新：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231120424.png" srcset="/img/loading.gif" alt="image-20210119231120424"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231120424.png" srcset="/img/loading.gif" alt="image-20210119231120424"></p>
 <hr>
 <p><strong>$η$ 的选择：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231158061.png" srcset="/img/loading.gif" alt="image-20210119231158061"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231158061.png" srcset="/img/loading.gif" alt="image-20210119231158061"></p>
 <p>坡度大，跨的大一点，坡度小，跨的小一点。</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231245867.png" srcset="/img/loading.gif" alt="image-20210119231245867"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231245867.png" srcset="/img/loading.gif" alt="image-20210119231245867"></p>
 <p>上述说明：<strong>$η$和梯度的大小正相关是比较好的：</strong></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231324162.png" srcset="/img/loading.gif" alt="image-20210119231324162"></p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231520875.png" srcset="/img/loading.gif" alt="image-20210119231520875"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231324162.png" srcset="/img/loading.gif" alt="image-20210119231324162"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231520875.png" srcset="/img/loading.gif" alt="image-20210119231520875"></p>
 <p>我们称紫色的η为：<strong>fixed leaning rate</strong></p>
 <p>所以我们现在更新的方式是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210119231554073.png" srcset="/img/loading.gif" alt="image-20210119231554073"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210119231554073.png" srcset="/img/loading.gif" alt="image-20210119231554073"></p>
 <p>因此逻辑回归算法就是：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210120133222344.png" srcset="/img/loading.gif" alt="image-20210120133222344"></p>
-<p>这样不断迭代，就会找到一个$w$ 使得这个 <img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210120140606855.png" srcset="/img/loading.gif" alt="image-20210120140606855">等于0。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210120133222344.png" srcset="/img/loading.gif" alt="image-20210120133222344"></p>
+<p>这样不断迭代，就会找到一个$w$ 使得这个 <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210120140606855.png" srcset="/img/loading.gif" alt="image-20210120140606855">等于0。</p>
 <p>还记得我们为什么要求这个w吗？</p>
 <p>h(x)也就是给出一个身体情况，我们就可以求出他的心脏病的概率，这个$h(x)$的公式如下：</p>
-<p><img src="https://gitee.com/Chillstep/ChillstepPictures/raw/master/master/image-20210120140931168.png" srcset="/img/loading.gif" alt="image-20210120140931168"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20210120140931168.png" srcset="/img/loading.gif" alt="image-20210120140931168"></p>
 <p>这里面的$w^T$是要求出来才能用这个公式, 到此为止 我们的问题就解决了。</p>
 
             </div>
@@ -644,20 +644,5 @@
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
