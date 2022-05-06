@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -187,13 +187,19 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 10 篇文章</p>
+  <p class="h4">共计 11 篇文章</p>
   <hr>
   
   
     
       
       <p class="h5">2022</p>
+    
+    <a href="/2022/05/07/Lambda%E5%87%BD%E6%95%B0-%E7%94%A8%E6%B3%95-%E5%AE%9E%E7%8E%B0-%E5%B9%BF%E4%B9%89%E6%8D%95%E8%8E%B7/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Lambda函数-用法/实现/广义捕获</span>
+      <time style="float: right;">05-07</time>
+    </a>
+  
     
     <a href="/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">C++ 类型推导：auto和decltype</span>
@@ -251,14 +257,20 @@
       <time style="float: right;">12-20</time>
     </a>
   
-    
-    <a href="/2021/12/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8A/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">C++面向对象高级编程-上</span>
-      <time style="float: right;">12-11</time>
-    </a>
-  
 </div>
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/tags/C/page/2/">2</a><a class="extend next" rel="next" href="/tags/C/page/2/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -430,5 +442,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

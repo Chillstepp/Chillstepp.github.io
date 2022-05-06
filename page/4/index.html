@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,58 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch5-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8B/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch5-无模型价值函数估计和控制-下">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch5-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8B/">强化学习纲要Ch5-无模型价值函数估计和控制-下</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch5-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8B/">
+          
+          
+            
+          
+          无模型的价值函数估计和控制—下上一节讲了预测(prediction)问题，这一节我们来解决控制(control)问题。
+
+我们之前再policy evaluation中用的方法是动态规划迭代，而上一节提到了一种新的做法也就是通过MC方法来做在特定策略$\pi$下计算状态的价值函数。
+model-free时control问题的解决方法：
+
+在model-free中，我们首先要用MC方法来填一个表格Q
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 21:59" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -687,64 +739,6 @@ SGD还有一个缺点就是无法处理鞍点：
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/08/CS231n-CH3-%E4%BB%8B%E7%BB%8D%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_self">
-          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH3-介绍神经网络">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/08/CS231n-CH3-%E4%BB%8B%E7%BB%8D%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">CS231n-CH3-介绍神经网络</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/04/08/CS231n-CH3-%E4%BB%8B%E7%BB%8D%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-          
-          
-            
-          
-          介绍神经网络反向传播(backpropagation)梯度的计算是通过计算图 ：
-
-
-链式法则告诉我们，我们只需要把计算图上的每一段相邻的梯度算出来，我们连乘上他们就是最后一个变量对最前面一个变量的梯度。
-
-backpropagation的运行方式：
-
-一个比较复杂的例子：
-
-对于add门，求对两边梯度都是1，因此直接传过去梯度upstream gradient即可：
-
-对于max门，local 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-08 21:22" pubdate>
-              2021-04-08
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -928,5 +922,20 @@ backpropagation的运行方式：
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
