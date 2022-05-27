@@ -191,6 +191,60 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch6-价值函数近似-上">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/">强化学习纲要Ch6-价值函数近似-上</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/">
+          
+          
+            
+          
+          价值函数近似—上Plan：
+
+前面提到的状态量都很小，而许多实际环境得状态量是很多的：
+
+比如围棋局面高达：$10^{170}$, 那么这么多的状态必然是不能有概率转移矩阵的，因此状态很多的强化学习任务一般也都是model-free的。
+回想之前在model-free中我们是怎么进行policy evaluation的？ 是通过填写Q-Table。
+
+而在状态数过多时，填写Q-table根本不可能
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 21:59" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch5-%E6%97%A0%E6%A8%A1%E5%9E%8B%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%8E%A7%E5%88%B6-%E4%B8%8B/" target="_self">
           <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch5-无模型价值函数估计和控制-下">
         </a>
@@ -661,68 +715,6 @@ SGD还有一个缺点就是无法处理鞍点：
             <i class="iconfont icon-date"></i>
             <time datetime="2021-04-12 14:34" pubdate>
               2021-04-12
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_self">
-          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH4-卷积神经网络">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">CS231n-CH4-卷积神经网络</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-          
-          
-            
-          
-          卷积神经网络卷积全连接层：
-
-卷积层(convolution Layer):
-
-卷积网络就是一系列的卷积层的叠加，并加上各种各样的激活函数。
-
-随着层数的增加，所包含的信息越来越多。
-
-
-卷积计算过程：
-我们可以一步一步的来走，那么得到的就是 5*5的结果
-
-但是步长调整到2时：
-
-那么得到的就是一个3*3的结果。
-步长为3时：(7-3)/3+1 = 2.33 所以这样会导致不平衡的结果，所以步长
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-09 18:35" pubdate>
-              2021-04-09
             </time>
           </div>
         
