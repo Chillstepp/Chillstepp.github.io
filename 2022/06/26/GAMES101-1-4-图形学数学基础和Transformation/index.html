@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32
+      33
        分钟
     </span>
   
@@ -437,7 +437,8 @@ R_{\theta}^T = R_{\theta}^{-1}</script><p><img src="https://raw.githubuserconten
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220225130457579.png" srcset="/img/loading.gif" alt="image-20220225130457579"></p>
 </li>
 <li><p>随后需要做旋转，把一个向量旋转到 $-z$或是$y$都是不容易的，不妨考虑他的逆过程，从$x$轴到$g\cross t$ ，$y$轴到$t$，$z$轴到$-g$ 是有公式可用的，即$R_{view}^{-1}$ 。 </p>
-<p>这里的$R<em>{view}^{-1}$怎么得来的呢？我们希望把向量x(1,0,0,0) 向量y(0,1,0,0) 向量z(0,0,1,0) 转移到 $t,-g,g\cross t$构成的新坐标系。简单来说我们希望：从$x$轴到$g\cross t$ ，$y$轴到$t$，$z$轴到$-g$ 的映射被矩阵$R</em>{view}^{-1}$表达出来，我们可以把向量x(1,0,0,0) 向量y(0,1,0,0) 向量z(0,0,1,0) 左乘$R<em>{view}^{-1}$发现：得到的正好是对应的新轴的x的坐标。下面我举个例子，以x:$(1,0,0,0)^T$为例，左乘$R</em>{view}^{-1}$得到：</p>
+<p>这里的$R_{view}^{-1}$ 怎么得来的呢？</p>
+<p>我们希望把向量$x(1,0,0,0)$ 向量$y(0,1,0,0)$ 向量$z(0,0,1,0)$ 转移到 $t,-g,g × t$构成的新坐标系。简单来说我们希望：从$x$轴到$g\cross t$ ，$y$轴到$t$，$z$轴到$-g$ 的映射被矩阵$R<em>{view}^{-1}$表达出来，我们可以把向量$x(1,0,0,0)$ 向量$y(0,1,0,0)$ 向量$z(0,0,1,0)$ 左乘$R</em>{view}^{-1}$发现：得到的正好是对应的新轴的x的坐标。下面我举个例子，以x:$(1,0,0,0)^T$为例，左乘$ R_{view}^{-1} $得到：</p>
 <script type="math/tex; mode=display">
 \left(x_{\hat{g} \times \hat{t}}, y_{\hat{g} \times \hat{t}}, z_{\hat{g} \times \hat{t}}\right)</script><p>说明这个旋转矩阵可以把x向量经过旋转成为了$g\cross t$ 向量，也就是我们希望对应上的向量。我们可以发现这种旋转矩阵的构造十分自然美妙。</p>
 <p>在上一节提到了旋转矩阵的逆矩阵等价于转置矩阵，因此$R<em>{view}$ 等价于 ${R</em>{view}^{-1}}^T$ 。</p>
@@ -491,6 +492,11 @@ R_{\theta}^T = R_{\theta}^{-1}</script><p><img src="https://raw.githubuserconten
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220626225733597.png" srcset="/img/loading.gif" alt="image-20220626225733597"></p>
 <p><strong>在透视投影转正交投影的变换中有个反常识的现象：</strong> 也就是截头锥体的中间一点(x,y,z) 其中f&gt;z&gt;n, 这样的一点在经过透视投影转正交投影变换矩阵时，会变得更加接近f面, 更远离n，也就是变换后的坐标回会比z更小。证明如下：</p>
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220626234122473.png" srcset="/img/loading.gif" alt="image-20220626234122473"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/J(D" srcset="/img/loading.gif" alt="img">0~VJ@7QRIZ%X{}RS9KK.png)</p>
+<h2 id="视口变换-ViewPort-Transformation"><a href="#视口变换-ViewPort-Transformation" class="headerlink" title="视口变换(ViewPort Transformation)"></a>视口变换(ViewPort Transformation)</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627200006332.png" srcset="/img/loading.gif" alt="image-20220627200006332"></p>
+<p>我们希望把$[-1,1]^3$的拉伸成$[0,  width]×[0,height]$, <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627200150126.png" srcset="/img/loading.gif" alt="image-20220627200150126"></p>
+<p>我们直接做scale+偏移：宽度上原来是-1，1扩大到$[-width/2，+width/2]$, height同理，同时我们还需要做完后做一个偏移，让范围变到$[0,width]*[0,height]$</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627200423868.png" srcset="/img/loading.gif" alt="image-20220627200423868"></p>
 
             </div>
             <hr>
@@ -520,8 +526,8 @@ R_{\theta}^T = R_{\theta}^{-1}</script><p><img src="https://raw.githubuserconten
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">
-                        <span class="hidden-mobile">C++11新特性</span>
+                      <a href="/2022/06/26/GAMES101-5-6-Rasterization%E5%92%8C%E5%8F%8D%E8%B5%B0%E6%A0%B7/">
+                        <span class="hidden-mobile">GAMES101(5-6):Rasterization和反走样</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

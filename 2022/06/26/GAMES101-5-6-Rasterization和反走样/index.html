@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>GAMES101(5-6):Rasterization和反走样 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="GAMES101(5-6):Rasterization和反走样">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-26 23:45" pubdate>
+        2022年6月26日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">GAMES101(5-6):Rasterization和反走样</h1>
+            
+            <div class="markdown-body">
+              <h1 id="GAMES101-5-6-Rasterization和反走样"><a href="#GAMES101-5-6-Rasterization和反走样" class="headerlink" title="GAMES101(5-6):Rasterization和反走样"></a>GAMES101(5-6):Rasterization和反走样</h1><h2 id="Rasterization-Triangles"><a href="#Rasterization-Triangles" class="headerlink" title="Rasterization(Triangles)"></a>Rasterization(Triangles)</h2><p>简单来说光栅化的目的就是将想要展现的物体给真正现实到屏幕上的过程，因为我们的物体其实都是一个个顶点数据来表示的，如何表这些蕴含几何信息的数据转化为屏幕上的像素就是光栅化所考虑的东西。比如说一条直线，究竟该用哪些像素点去逼近它，一个三角形，又用哪些像素集合表示它，这都是光栅化的过程。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627201503729.png" srcset="/img/loading.gif" alt="image-20220627201503729"></p>
+<p>采样的方法：也就是判断每个点是不是再三角形内。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627201537420.png" srcset="/img/loading.gif" alt="image-20220627201537420"></p>
+<p>怎么计算是否在三角形内？叉积，看是不是在同一侧。我们也需要注意下在三角形边上的处理，即叉积等于0的情况，可以认为在三角形内/也可以认为在三角形外。</p>
+<p>如何加速这个过程，对于一些一定不可能的点无需判断是否在三角形内：<strong>包围盒</strong>！</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627201958345.png" srcset="/img/loading.gif" alt="image-20220627201958345"></p>
+<p>更快的方法？可以对每一行进行扫描，出了范围就不再考虑到下一行，具体如下图：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627202032627.png" srcset="/img/loading.gif" alt="image-20220627202032627"></p>
+<h2 id="Rasterzation-Antialiasing-and-Z-Buffer-，反走样和深度缓冲"><a href="#Rasterzation-Antialiasing-and-Z-Buffer-，反走样和深度缓冲" class="headerlink" title="Rasterzation(Antialiasing and Z-Buffer)，反走样和深度缓冲"></a>Rasterzation(Antialiasing and Z-Buffer)，反走样和深度缓冲</h2><h3 id="走样"><a href="#走样" class="headerlink" title="走样"></a>走样</h3><p>采样的方法会产生Artifacts(瑕疵/不真实)，如锯齿和摩尔纹</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627203211900.png" srcset="/img/loading.gif" alt="image-20220627203211900"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627203250868.png" srcset="/img/loading.gif" alt="image-20220627203250868"></p>
+<p>反走样的技术：</p>
+<ul>
+<li>模糊后再采样：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627203603753.png" srcset="/img/loading.gif" alt="image-20220627203603753"></p>
+<p>先采样再模糊效果远不如先模糊再采样：</p>
+<p>左图：先采样在模糊  右图：先模糊再采样</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627203655313.png" srcset="/img/loading.gif" alt="image-20220627203655313"></p>
+<p>傅里叶变换可以帮助我们描述一个复杂的函数：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627204724323.png" srcset="/img/loading.gif" alt="image-20220627204724323"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627204800289.png" srcset="/img/loading.gif" alt="image-20220627204800289"></p>
+<p>通过对下面不同频率的函数采样可以发现：</p>
+<ul>
+<li>采样频率高可以更好的反应函数的情况</li>
+<li>函数频率高采样不容易反应出函数的情况</li>
+<li>因此我们需要让 <strong>采样的频率  跟的上 函数的频率</strong></li>
+<li>走样本质就是 采样无法分开两种频率的函数</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220627204950010.png" srcset="/img/loading.gif" alt="image-20220627204950010"></p>
+<h3 id="滤波"><a href="#滤波" class="headerlink" title="滤波"></a>滤波</h3><p>我们对一张图片做傅里叶变换，亮的地方表示低频信号，暗的地方表示高频信号。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630120118953.png" srcset="/img/loading.gif" alt="image-20220630120118953"></p>
+<p>高通滤波：把低频信号抹去，留下高频。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630120230975.png" srcset="/img/loading.gif" alt="image-20220630120230975"></p>
+<p>低通滤波：把高频信息抹去</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630120427981.png" srcset="/img/loading.gif" alt="image-20220630120427981"></p>
+<p>下面利用卷积实现了模糊的操作，可以发现滤波器的频域主要是保留低频信息： 在频域上表现为 图像的频域和卷积的频域相乘。</p>
+<p><strong>时域的卷积等于频域的乘积，反之亦然，时域的乘积等于频域的卷积</strong></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630120747997.png" srcset="/img/loading.gif" alt="image-20220630120747997"></p>
+<p>平均滤波器的size越大，其实会越模糊，表现在频域上为低频滤波减少(白点变小)</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630122012669.png" srcset="/img/loading.gif" alt="image-20220630122012669"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630121953019.png" srcset="/img/loading.gif" alt="image-20220630121953019"></p>
+<h3 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h3><p>采样就是重复频域上的内容</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630134110852.png" srcset="/img/loading.gif" alt="image-20220630134110852"></p>
+<p>冲激函数相当于采样，冲激函数(c)和(a)相乘得到(e), 可以发现相当于对a进行了采样，反映在频域上，时域上的乘积等于频域上的卷积，得到(f)，那么采样在频域上就是重复频谱。</p>
+<p>在下图，采样频率过低会导致采样的频域间距大，频谱间隔小，导致频谱的混合，导致了走样</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630134612296.png" srcset="/img/loading.gif" alt="image-20220630134612296"></p>
+<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630134903533.png" srcset="/img/loading.gif" alt="image-20220630134903533"></p>
+<p>首先可以提高采样频率：即分辨率更高的显示器，像素点高，采样频率高。但是这种物理方法不是我们关注的方向。</p>
+<p>还记得我们前面说的反走样方法吗？<strong>先模糊，再采样。</strong></p>
+<p>模糊可以把高频信息拿走，频谱覆盖的面小一些。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630135224063.png" srcset="/img/loading.gif" alt="image-20220630135224063"></p>
+<p>我们用低通滤波器对三角形做卷积即可：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630135358262.png" srcset="/img/loading.gif" alt="image-20220630135358262"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630135439549.png" srcset="/img/loading.gif" alt="image-20220630135439549"></p>
+<p>我们希望计算一个像素里三角形部分占多少，然后算一个颜色。但实际上这件事很难。这会消耗大量时间</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630135651582.png" srcset="/img/loading.gif" alt="image-20220630135651582"></p>
+<h3 id="SSAA-SuperSampling-AntiAliasing-超采样反走样"><a href="#SSAA-SuperSampling-AntiAliasing-超采样反走样" class="headerlink" title="SSAA(SuperSampling AntiAliasing)超采样反走样"></a>SSAA(SuperSampling AntiAliasing)超采样反走样</h3><p>SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630173620785.png" srcset="/img/loading.gif" alt="image-20220630173620785"></p>
+<h3 id="MSAA-MultiSampling-Anti-Aliasing-多重采样反走样"><a href="#MSAA-MultiSampling-Anti-Aliasing-多重采样反走样" class="headerlink" title="MSAA(MultiSampling Anti-Aliasing)多重采样反走样"></a>MSAA(MultiSampling Anti-Aliasing)多重采样反走样</h3><p><strong>SSAA缺点</strong>很明显就是<strong>太慢</strong>，<strong>每个pixel需要计算4次(假设$2*2$情况时)shading</strong>。</p>
+<p>MSAA最大的特点就是per pixel shading而不是per subpixel shading，这样对gpu的压力就减少很多。</p>
+<p>下面介绍MSAA详细操作，体会下他的优势：</p>
+<p>同样第一步需要先模糊, 然后我们把一个像素分成多份：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630140419631.png" srcset="/img/loading.gif" alt="image-20220630140419631"></p>
+<p>原三角形</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630140441479.png" srcset="/img/loading.gif" alt="image-20220630140441479"></p>
+<p>$2*2$超采样</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630140503622.png" srcset="/img/loading.gif" alt="image-20220630140503622"></p>
+<p>计算加权颜色时：</p>
+<p>这里SSAA则会在pixel shader着色阶段对pixel的每个subpixel进行计算，以上面图为例子就是需要计算4次。</p>
+<p>而MSAA则只对pixel计算颜色，然后算subpixel有多少在三角形里(设为x)，$(包含的个数x/4)*pixel颜色$，然后一次pixel shading即可。</p>
+<blockquote>
+<p>作者：文刀秋二<br>链接：<a href="https://www.zhihu.com/question/20236638/answer/44821615" target="_blank" rel="noopener">https://www.zhihu.com/question/20236638/answer/44821615</a></p>
+<p>拿4xSSAA举例子，假设最终屏幕输出的分辨率是800x600, 4xSSAA就会先渲染到一个分辨率1600x1200的buffer上，然后再直接把这个放大4倍的buffer下采样致800x600。这种做法在数学上是最完美的抗锯齿。但是劣势也很明显，<strong>光栅化和着色的计算负荷都比原来多了4倍</strong>，render target的大小也涨了4倍。</p>
+<p>MSAA（Multi-Sampling AA）则很聪明的<strong>只是在光栅化阶段，判断一个三角形是否被像素覆盖的时候会计算多个覆盖样本</strong>（Coverage sample），<strong>但是在pixel shader着色阶段计算像素颜色的时候每个像素还是只计算一次</strong>。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630140534332.png" srcset="/img/loading.gif" alt="image-20220630140534332"></p>
+<p>更多的 反走样/超采样 方法：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630141703852.png" srcset="/img/loading.gif" alt="image-20220630141703852"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+                    
+                      <a class="hover-with-bg" href="/tags/GAMES101/">GAMES101</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/26/GAMES101-1-4-%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%92%8CTransformation/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GAMES101(1-4):图形学数学基础和Transformation</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">
+                        <span class="hidden-mobile">C++11新特性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/06/26/GAMES101-5-6-Rasterization%E5%92%8C%E5%8F%8D%E8%B5%B0%E6%A0%B7/';
+        this.page.identifier = '/2022/06/26/GAMES101-5-6-Rasterization%E5%92%8C%E5%8F%8D%E8%B5%B0%E6%A0%B7/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
