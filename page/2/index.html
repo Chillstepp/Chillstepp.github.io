@@ -191,6 +191,155 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++ shared_ptr循环引用问题/解决方法">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">C++ shared_ptr循环引用问题/解决方法</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+          
+          
+            
+          
+          C++ shared_ptr循环引用问题/解决方法关于shared_ptr/weak_ptr首先可以看一下这篇文章
+C++的智能指针-unique_ptr,shared_ptr,weak_ptr
+循环引用问题shared_ptr存在循环引用问题：
+考虑下面这样一个代码
+
+12345678910111213141516171819class Node&#123;public:	int _data;	
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-24 20:17" pubdate>
+              2022-02-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++拷贝构造函数和operator =的区别">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/">C++拷贝构造函数和operator =的区别</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/">
+          
+          
+            
+          
+          C++拷贝构造函数和operator =的区别起因之前感觉拷贝构造函数和operator =作用很相似，也没有细察他们的区别，今天看了一些文章实验了一下：
+比如我创造了一个Base的class，我同时编写了拷贝构造函数和operator=，那么对于下面这个代码有几个疑问:
+12Base a;Base b = a;
+Base b = a; 调用拷贝构造函数 还是 operator =呢? 是两者都可
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-15 22:16" pubdate>
+              2022-02-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++的decltype关键字">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/">C++的decltype关键字</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/">
+          
+          
+            
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-15 20:44" pubdate>
+              2022-02-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/02/15/C-%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC%E5%92%8Cstd-move%E5%92%8C%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" target="_self">
           <img src="/img/cpp.png" srcset="/img/loading.gif" alt=" C++左值右值/左右值引用/std::move()">
         </a>
@@ -535,156 +684,6 @@ const只有右边有东西，所以const修饰int成为常量整型，然后*再
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Leetcode/">Leetcode</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/23/Codeforces-Global-Round-18-A-E/" target="_self">
-          <img src="/img/acm.jpg" srcset="/img/loading.gif" alt="Codeforces Global Round 18(A-E)">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/23/Codeforces-Global-Round-18-A-E/">Codeforces Global Round 18(A-E)</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/23/Codeforces-Global-Round-18-A-E/">
-          
-          
-            
-          
-          A - Closing The Gap签到：加起来模n即可。
-1234567891011121314151617181920212223242526272829303132333435363738#include&lt;bits/stdc++.h&gt;using namespace std;#define pii pair&lt;int,int&gt;#define pll pair&lt;ll
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-23 20:07" pubdate>
-              2022-01-23
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ACM-Codeforces/">ACM-Codeforces</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/12/20/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8B/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++面向对象高级编程-下">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/20/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8B/">C++面向对象高级编程-下</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/20/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8B/">
-          
-          
-            
-          
-          C++面向对象高级编程(下)Conversion function转换函数
-12Fraction f(3,5);double d = 4 + f;
-对于double d = 4 + f;这一条语句编译器的动作是:
-1.对于上面的操作4+f有没有一个operator+可以使得  double + fraction的函数（不存在，那么下一种方法）
-2.是否存在可以让4转换为double的函数(默认存在
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-20 18:26" pubdate>
-              2021-12-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/12/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8A/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++面向对象高级编程-上">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8A/">C++面向对象高级编程-上</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B-%E4%B8%8A/">
-          
-          
-            
-          
-          C++面向对象高级编程header头文件防卫式声明
-这是一种防卫式声明，防卫式声明的作用是：防止由于同一个头文件被包含多次，而导致了重复定义。防卫式声明表示，如果__COMPLEX__没有被定义过，那么就展开定义，否则跳过。
-__COMPLEX__被称为预处理器变量一般有两种状态：已定义或未定义。
-
-#ifndef 指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-11 16:11" pubdate>
-              2021-12-11
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
             
           </div>
         

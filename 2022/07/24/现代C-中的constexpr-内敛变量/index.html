@@ -1,0 +1,628 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>现代C++中的constexpr,内敛变量 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="现代C++中的constexpr,内敛变量">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-24 14:46" pubdate>
+        2022年7月24日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">现代C++中的constexpr,内敛变量</h1>
+            
+            <div class="markdown-body">
+              <h1 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h1><h2 id="简单认识constexpr"><a href="#简单认识constexpr" class="headerlink" title="简单认识constexpr"></a>简单认识constexpr</h2><p>编译期编程很烧脑，为此有时候一个简单的计算也需要写大量代码，C++为此做了很多改进，让编译期编程简单了很多。当然对于一些没有改进的东西仍需要模板元编程，因此模板元编程仍然是很重要的一部分。</p>
+<p>考虑下面代码是否可以运行？</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sqr</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> n*n;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, sqr(3)&gt; a;<span class="hljs-comment">//error: call to non-'constexpr' function 'int sqr(int)'|</span><br>    <br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> n = sqr(<span class="hljs-number">3</span>);<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, n&gt; b;<span class="hljs-comment">//error: the value of 'n' is not usable in a constant expression|</span><br>    <br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>两条报错都提到了constexpr，constexpr在C++11引入，在C++14大幅改进，简单来说就是在编译期确定完全确定的常数。我们分两类讨论这个关键字：</p>
+<ul>
+<li>constexpr 变量</li>
+<li>constexpr 函数</li>
+</ul>
+<p>一个constexpr变量是一个编译时完全确定的常数，一个constexpr函数至少对于某一组实参可以在编译期间确定。</p>
+<p>注意一个 <strong>constexpr 函数不保证在所有情况下都会产生一个编译期常数</strong>（因而也是可以作为普通函数来使用的）。编译器也没法通用地检查这点。编译器唯一强制的是：</p>
+<ul>
+<li><strong>constexpr 变量必须立即初始化，初始化只能使用字面量或常量表达式(constexpr)</strong></li>
+</ul>
+<p>现在可以运行了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sqr</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> n*n;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> n = sqr(<span class="hljs-number">3</span>);<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, n&gt; c;<span class="hljs-comment">//ok</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>注意仅仅修改n为expr你仍然会得到编译报错，因为一个constexpr的变量需要 字面量或者constexpr来初始化他，因此sqr函数也需要改成constexpr的。</p>
+<h2 id="constexpr和编译期计算"><a href="#constexpr和编译期计算" class="headerlink" title="constexpr和编译期计算"></a>constexpr和编译期计算</h2><p>还记得模板元编程阶乘吗？有了constexpr这件事情可以做的更加简单直接：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> <span class="hljs-title">fac</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> n*fac(n<span class="hljs-number">-1</span>);<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> n = fac(<span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">cout</span>&lt;&lt;n&lt;&lt;<span class="hljs-built_in">endl</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220721104849492.png" srcset="/img/loading.gif" alt="image-20220721104849492"></p>
+<h2 id="const-constexpr，C-17的内敛变量inline"><a href="#const-constexpr，C-17的内敛变量inline" class="headerlink" title="const/constexpr，C++17的内敛变量inline"></a>const/constexpr，C++17的内敛变量inline</h2><p>早期时，const设计的理念是运行时常量，但随着C++发展后面带上了constexpr用法，也表示<strong>编译期常数</strong>。</p>
+<p>因此在有了 constexpr 之后——我们应该使用 constexpr 在这些用法中替换 const了。从编译器的角度，为了向后兼容性，const 和 constexpr 在很多情况下还是等价的。</p>
+<p>当然也有一些<strong>小区别：比如是否内联的问题。</strong></p>
+<p>在C++17出现了新的概念叫做<strong>内敛变量</strong>：</p>
+<p><a href="https://blog.csdn.net/jiemashizhen/article/details/125531625" target="_blank" rel="noopener">https://blog.csdn.net/jiemashizhen/article/details/125531625</a>  建议先看看这篇文章大致了解下<strong>内敛变量</strong></p>
+<p>看了上面的文章我们可以总结下在C++17之前：</p>
+<ul>
+<li><p>static变量是不建议定义在头文件中(注意这是定义，不是声明，声明是可以在头文件中的，写在class里只能叫做声明，类实例化后里面的东西才被定义)，因为这大概率会导致头文件被多次include会导致重复定义报错，现在有了内敛变量是可以在头文件里定义而不会导致重复定义错误了。</p>
+</li>
+<li><p>非const的static变量在C++17前必须在类外声明，这很不方便，现在有了内敛变量可以直接：<code>inline static int number = 42</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">magic</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-comment">//error: ISO C++ forbids in-class initialization of non-const static member 'magic::number'|</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">42</span>;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">magic</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">12</span>;<span class="hljs-comment">//ok，after c++ 17</span><br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">magic</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">12</span>;<span class="hljs-comment">//ok，after c++ 17</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+</li>
+<li><p>解决ODR-use的问题，如下：</p>
+</li>
+</ul>
+<p>C++17后允许在头文件中定义内联变量，然后像内联函数一样，只要所有的定义都相同，那变量的定义出现多次也没有关系。对于类的静态数据成员，<code>const</code> 缺省inline是不内联的，而 <code>constexpr</code> 缺省inline就是内联的。这种区别在你用 <code>&amp;</code>去取一个 <code>const int</code>值的地址、或将其传到一个形参类型为 <code>const int&amp;</code>的函数去的时候（这在 C++ 文档里的行话叫 <strong>ODR-use</strong>）, 如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">magic</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">42</span>;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;magic::number&lt;&lt;<span class="hljs-built_in">endl</span>;<span class="hljs-comment">//ok</span><br>    <span class="hljs-keyword">int</span> t = magic::number + <span class="hljs-number">1</span>;<span class="hljs-comment">//ok,这两种用法只是需要number的值，所以number没被定义也是可以的。</span><br>    <br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;v;<br>    <span class="hljs-comment">// 调用 push_back(const T&amp;) </span><br>    v.push_back(magic::number);<span class="hljs-comment">//undefined reference to `magic::number'| 在链接时就会报错了，说找不到 magic::number，这里需要一个左值，所以定义肯定找不到。</span><br>    <span class="hljs-built_in">cout</span>&lt;&lt;v[<span class="hljs-number">0</span>]&lt;&lt;<span class="hljs-built_in">endl</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>你会发现链接时就报错，因为找不到<code>magic::number</code>，类还没有实例化，所以肯定找不到。这是因为 <strong><code>ODR-use</code> 的类静态常量也需要有一个定义</strong>，在<strong>没有内联变量之前</strong>需要在某一个源代码文件（非头文件，头文件如果被多次include会导致重复定义报错）中这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">/* .h */</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">magic</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">42</span>;<br>&#125;;<br><br><span class="hljs-comment">/* .cpp */</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> magic::number;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;v;<br>    <span class="hljs-comment">// 调用 push_back(const T&amp;)</span><br>    v.push_back(magic::number);<span class="hljs-comment">//undefined reference to `magic::number'| 在链接时就会报错了，说找不到 magic::number</span><br>    <span class="hljs-built_in">cout</span>&lt;&lt;v[<span class="hljs-number">0</span>]&lt;&lt;<span class="hljs-built_in">endl</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>必须正正好好一个，多了少了都不行，所以叫 <strong>one definition rule</strong>。内联函数，现在又有了内联变量的新概念，以及模板，则不受这条规则限制。</p>
+<p>有了内敛变量后这个操作可以做的优雅一些：</p>
+<p><code>magic</code>里的<code>static const</code> 改成 <code>static constexpr</code> : 因为 类的静态 constexpr 成员变量默认就是内联的</p>
+<p><code>magic</code>里的<code>static const</code> 改成<code>static inline const</code>:  const 常量和类外面的 constexpr 变量不默认内联，需要手工加 <code>inline</code>关键字才会变成内联。</p>
+<p>以上两种操作都是可行的，在汇编层面也是一摸一样的。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220723154544163.png" srcset="/img/loading.gif" alt="image-20220723154544163"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220723154624043.png" srcset="/img/loading.gif" alt="image-20220723154624043"></p>
+<h2 id="constexpr变量仍是const"><a href="#constexpr变量仍是const" class="headerlink" title="constexpr变量仍是const"></a>constexpr变量仍是const</h2><p>有时候我们还是需要 constexpr和const两者一起出现的：</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> a = <span class="hljs-number">42</span>;<br><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; b = a;<span class="hljs-comment">//ok</span><br><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span>&amp; b = a;<span class="hljs-comment">//error: binding reference of type ‘int&amp;’ to ‘const int’ discards qualifiers</span><br></code></pre></div></td></tr></table></figure>
+<p>符合我们直觉可能是下面的做法，但是下面的会报错。这是因为constexpr修饰的是b是一个编译器常量。而<code>int&amp;</code>会被编译器解读为将一个普通引用绑定到const int上。</p>
+<p>因此我们可以发现constepr好像并没有const那样位置组合规则，他就是单纯的修饰一个常量, <strong>constexpr 不需要像 const 一样有复杂的组合，因此永远是写在类型前面的。</strong></p>
+<h2 id="constexpr构造函数-字面类型"><a href="#constexpr构造函数-字面类型" class="headerlink" title="constexpr构造函数/字面类型"></a>constexpr构造函数/字面类型</h2><p>constexpr在每个C++版本都会出现一些新的东西：</p>
+<ul>
+<li><p>最早，constexpr 函数里连循环都不能有，但在 C++14 放开了。</p>
+</li>
+<li><p>目前，constexpr 函数仍不能有 try … catch 语句和 asm 声明，但到 C++20 会放开。</p>
+</li>
+<li><p>constexpr 函数里不能使用 goto 语句。</p>
+</li>
+</ul>
+<p>一个有意思的情况是一个类的构造函数。如果一个类的构造函数里面只包含常量表达式、满足对 constexpr 函数的限制的话（这也意味着，里面不可以有任何动态内存分配），并且类的析构函数是平凡的，那这个类就可以被称为是一个字面类型。换一个角度想，对constexpr 函数——包括字面类型构造函数——的要求是，得让编译器能在编译期进行计算，而不会产生任何“副作用”，比如内存分配、输入、输出等等。</p>
+<p>为了全面支持编译期计算，C++14 开始，很多标准类的构造函数和成员函数已经被标为constexpr，以便在编译期使用。当然，大部分的容器类，因为用到了动态内存分配，不能成为字面类型。下面这些不使用动态内存分配的字面类型则可以在常量表达式中使用：</p>
+<ul>
+<li>array</li>
+<li>initializer_list</li>
+<li>pair</li>
+<li>tuple</li>
+<li>string_view</li>
+<li>optional</li>
+<li>variant</li>
+<li>bitset</li>
+<li>complex</li>
+<li>chrono::duration</li>
+<li>chrono::time_point</li>
+<li>shared_ptr（仅限默认构造和空指针构造）</li>
+<li>unique_ptr（仅限默认构造和空指针构造）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;array&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string_view&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">constexpr</span> string_view sv&#123;<span class="hljs-string">"hi"</span>&#125;;<br>    <span class="hljs-keyword">constexpr</span> pair pr&#123;sv[<span class="hljs-number">0</span>], sv[<span class="hljs-number">1</span>]&#125;;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-built_in">array</span> a&#123;pr.first, pr.second&#125;;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> n1 = a[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> n2 = a[<span class="hljs-number">1</span>];<br>    <span class="hljs-comment">//编译器可以在编译期即决定 n1 和 n2 的数值；</span><br>    <span class="hljs-built_in">cout</span> &lt;&lt; n1 &lt;&lt; <span class="hljs-string">' '</span> &lt;&lt; n2 &lt;&lt; <span class="hljs-string">'\n'</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220723163901451.png" srcset="/img/loading.gif" alt="image-20220723163901451"></p>
+<h2 id="C-17：-if-constexpr"><a href="#C-17：-if-constexpr" class="headerlink" title="C++17： if constexpr"></a>C++17： if constexpr</h2><p>to do</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/24/C-SFINAE/">
+                        <span class="hidden-mobile">C++: SFINAE</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/';
+        this.page.identifier = '/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

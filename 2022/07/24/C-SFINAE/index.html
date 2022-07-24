@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>C++: SFINAE - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="C++: SFINAE">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-24 14:45" pubdate>
+        2022年7月24日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++: SFINAE</h1>
+            
+            <div class="markdown-body">
+              <h1 id="SFINAE"><a href="#SFINAE" class="headerlink" title="SFINAE"></a>SFINAE</h1><h2 id="一个基本的重载协议-SFINAE最初思想来源"><a href="#一个基本的重载协议-SFINAE最初思想来源" class="headerlink" title="一个基本的重载协议(SFINAE最初思想来源)"></a>一个基本的重载协议(SFINAE最初思想来源)</h2><p>SFINAE全称为：替换失败非错（substituion failure is not an error）</p>
+<p>我们已经看了不少的模板特化，那么当一个函数名和某个函数模板名称匹配后，他的重载协议大致如此：</p>
+<ul>
+<li>根据名称找出所有适用的函数和函数模板</li>
+<li>对于适用的函数模板，要根据实际情况对模板形参进行替换；替换过程中如果发生错误，这个模板会被丢弃</li>
+<li>在上面两步生成的可行函数集合中，编译器会寻找一个最佳匹配，产生对该函数的调用</li>
+<li>如果没有找到最佳匹配，或者找到多个匹配程度相当的函数，则编译器需要报错</li>
+</ul>
+<p>在这儿，体现的是 SFINAE 设计的最初用法：<strong>如果模板实例化中发生了失败，没有理由编译就此出错终止，因为还是可能有其他可用的函数重载的。</strong></p>
+<h2 id="编译期成员检测-有效-无效"><a href="#编译期成员检测-有效-无效" class="headerlink" title="编译期成员检测(有效/无效)"></a>编译期成员检测(有效/无效)</h2><p>当然在后面人们发现了SFINAE可以有其他用处，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">has_reserve</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">good</span>&#123;</span><span class="hljs-keyword">char</span> dummy;&#125;;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">bad</span>&#123;</span><span class="hljs-keyword">char</span> dummy[<span class="hljs-number">2</span>];&#125;;<br>    <br>    <span class="hljs-comment">//第二个参数需要是第一个参数的成员函数指针,参数为size_t,返回值为void</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>, <span class="hljs-title">void</span> (<span class="hljs-title">U</span>:</span>:*)(<span class="hljs-keyword">size_t</span>)&gt;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SFINAE</span>&#123;</span>&#125;;<br>    <br>    <span class="hljs-comment">//定义一个要求 SFINAE* 类型的 reserve 成员函数模板，返回值是good</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">static</span> <span class="hljs-title">good</span> <span class="hljs-title">reserve</span>(<span class="hljs-title">SFINAE</span>&lt;U, &amp;U::reserve&gt;*);</span><br>    <br>    <span class="hljs-comment">//定义一个reserve 成员函数模板，返回值是bad, ...是variadic function</span><br>    <span class="hljs-comment">//一些资料：https://en.cppreference.com/w/c/variadic</span><br>    <span class="hljs-comment">//https://www.geeksforgeeks.org/variadic-functions-in-c/</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">static</span> <span class="hljs-title">bad</span> <span class="hljs-title">reserve</span>(...);</span><br>    <br>    <span class="hljs-comment">//结果是 true 还是 false，取决于 nullptr 能不能和 SFINAE* 匹配成功</span><br>    <span class="hljs-comment">//进一步来看，取决于模板参数 T 有没有返回类型是 void、接受一个参数并且类型为 size_t 的成员函数 reserve</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">bool</span> value = <span class="hljs-keyword">sizeof</span>(reserve&lt;T&gt;(<span class="hljs-literal">nullptr</span>)) == <span class="hljs-keyword">sizeof</span>(good);<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>上面这段代码的作用是？</p>
+<p>C++11开始出现了一个<code>enable_if</code>的模板(<code>type_traits.h</code>)，可以选择性的启用某个函数的重载：</p>
+<p>比如我们想要向容器尾部添加元素，我们希望的原型是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">append</span><span class="hljs-params">(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>reserver这个函数常常出现在容器里，表示给容器对象分配至少能容纳n个元素的内存。</p>
+<p>显然，container 有没有 reserve 成员函数，是对性能有影响的——如果有的话，我们通常应该预留好内存空间，以免产生不必要的对象移动甚至拷贝操作。利用 <code>enable_if</code>和上面的<code>has_reserve</code> 模板，我们就可以这么写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">has_reserve</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">good</span>&#123;</span><span class="hljs-keyword">char</span> dummy;&#125;;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">bad</span>&#123;</span><span class="hljs-keyword">char</span> dummy[<span class="hljs-number">2</span>];&#125;;<br><br>    <span class="hljs-comment">//第二个参数需要是第一个参数的成员函数指针,参数为size_t,返回值为void</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>, <span class="hljs-title">void</span> (<span class="hljs-title">U</span>:</span>:*)(<span class="hljs-keyword">size_t</span>)&gt;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SFINAE</span>&#123;</span>&#125;;<br><br>    <span class="hljs-comment">//定义一个要求 SFINAE* 类型的 reserve 成员函数模板，返回值是good</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">static</span> <span class="hljs-title">good</span> <span class="hljs-title">reserve</span>(<span class="hljs-title">SFINAE</span>&lt;U, &amp;U::reserve&gt;*);</span><br><br>    <span class="hljs-comment">//定义一个reserve 成员函数模板，返回值是bad, ...是variadic function</span><br>    <span class="hljs-comment">//一些资料：https://en.cppreference.com/w/c/variadic</span><br>    <span class="hljs-comment">//https://www.geeksforgeeks.org/variadic-functions-in-c/</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">static</span> <span class="hljs-title">bad</span> <span class="hljs-title">reserve</span>(...);</span><br><br>    <span class="hljs-comment">//结果是 true 还是 false，取决于 nullptr 能不能和 SFINAE* 匹配成功</span><br>    <span class="hljs-comment">//进一步来看，取决于模板参数 T 有没有返回类型是 void、接受一个参数并且类型为 size_t 的成员函数 reserve</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">bool</span> value = <span class="hljs-keyword">sizeof</span>(reserve&lt;T&gt;(<span class="hljs-literal">nullptr</span>)) == <span class="hljs-keyword">sizeof</span>(good);<br>&#125;;<br><br><span class="hljs-comment">//对于某个 type trait，添加 _t 的后缀等价于其 type 成员类型。因而，我们可以用 enable_if_t 来取到结果的类型</span><br><span class="hljs-comment">//enable_if_t&lt;has_reserve&lt;C&gt;::value, void&gt; 的意思可以理解成：如果类型 C 有成员的话，那我们启用下面的成员函数，它的返回类型为 void。</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">enable_if_t</span>&lt;has_reserve&lt;C&gt;::value, <span class="hljs-keyword">void</span>&gt;<br>append(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)<br>&#123;<br>    container.reserve(container.<span class="hljs-built_in">size</span>() + <span class="hljs-built_in">size</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i&lt; <span class="hljs-built_in">size</span>; ++i)<br>    &#123;<br>        container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">enable_if_t</span>&lt;!has_reserve&lt;C&gt;::value, <span class="hljs-keyword">void</span>&gt;<br>append(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)<br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i&lt; <span class="hljs-built_in">size</span>; ++i)<br>    &#123;<br>        container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>对于某个 <code>type trait</code>，添加 _t 的后缀等价于其 type 成员类型。因而，我们可以用 <code>enable_if_t</code> 来取到结果的类型</li>
+<li><code>enable_if_t&lt;has_reserve&lt;C&gt;::value, void&gt;</code>的意思可以理解成：如果类型 C 有成员的话，那我们启用下面的成员函数，它的返回类型为 void。</li>
+</ul>
+<p>简单来说通过<code>enable_if</code>+ 我们自己写的<code>has_reserve</code>实现了编译期选择了合适的函数。</p>
+<p>当时我们也发现了这类函数都是有返回值的，在返回值上用<code>enable_if</code>+ 我们自己写的<code>has_reserve</code>实现了编译期选择了合适的函数，如果没有返回值(比如构造函数)或者你不想手写返回值类型的时候该怎么办呢？</p>
+<p><a href="https://en.cppreference.com/w/cpp/types/enable_if" target="_blank" rel="noopener">https://en.cppreference.com/w/cpp/types/enable_if</a>  未来填坑这种解决方法。</p>
+<h2 id="编译期成员检测-仅有效"><a href="#编译期成员检测-仅有效" class="headerlink" title="编译期成员检测(仅有效)"></a>编译期成员检测(仅有效)</h2><p>如果<strong>只需要在某个操作有效的情况下启用某个函数，而不需要考虑相反的情况</strong>的话，有另外一个技巧可以用。对于上面的 append 的情况，如果我们想限制只有具有 reserve 成员函数的类可以使用这个重载，我们可以把代码简化成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br>auto append(C&amp; container, T* ptr,size_t size)-&gt; decltype(declval&lt;C&amp;&gt;().reserve(1U),void())<br>&#123;<br>    container.reserve(container.<span class="hljs-built_in">size</span>() + <span class="hljs-built_in">size</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>; ++i) <br>    &#123;<br>    	container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><code>declval</code>： 这个模板用来声明一个某个类型的参数，但这个参数<strong>只是用来参加模板的匹配</strong>，不允许实际使用。<strong>使用这个模板，我们可以在某类型没有默认构造函数的情况下，假想出一个该类的对象来进行类型推导</strong></p>
+<p>因此<code>declval&lt;C&amp;&gt;().reserve(1U)</code>就是在测试 C&amp; 类型的对象是不是可以拿 1U 作为参数来调用 reserve 成员函数， 如果不可以就是替换失败(Substitution failure) 。</p>
+<p>C++ 里的<strong>逗号表达式</strong>的意思是<strong>按顺序逐个估值，并返回最后一项</strong>。所以，上面这个<strong>函数的返回值类型是 void</strong>。</p>
+<p>再谈一下<code>declval&lt;C&amp;&gt;().reserve(1U)</code>这个方式和 <code>enable_if</code>不同，很难表示否定的条件。如果要提供一个专门给没有reserve 成员函数的 C 类型的 append 重载，这种方式就不太方便了。因而，这种方式的主要用途是避免错误的重载。因此<code>declval&lt;C&amp;&gt;().reserve(1U)</code>替换失败后发现没有其他可替换的了直接报错，避免错误的重载。</p>
+<h2 id="void-t"><a href="#void-t" class="headerlink" title="void_t"></a>void_t</h2><p>C++17引入了<code>void_t</code>， 定义很简单。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span>...&gt;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">void_t</span> = <span class="hljs-keyword">void</span>;<br></code></pre></div></td></tr></table></figure>
+<p>利用<code>decltype、declval 和模板特化</code>，我们可以把 <code>has_reserve</code> 的定义大大简化：</p>
+<p>换句话说，这个类型模板会把任意类型映射到 void。它的特殊性在于，在这个看似无聊的过程中，编译器会检查那个<code>任意类型</code>的有效性。利用 <code>decltype、declval 和模板特化</code>，我们可以把<code>has_reserve</code>的定义大大简化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T,<span class="hljs-keyword">typename</span> = <span class="hljs-keyword">void_t</span>&lt;&gt;&gt;<br>struct has_reserve : false_type &#123;&#125;;<br><br><span class="hljs-comment">//偏特化（数量偏）</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">has_reserve</span>&lt;T,void_t&lt;decltype(declval&lt;T&amp;&gt;().reserve(1U))&gt;&gt;:</span> true_type &#123;&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>当第二个模板能被满足时，编译器就会选择第二个特化的模板；而只有第二个模板不能被满足时，才会回到第一个模板的通用情况。</p>
+<p>有了这个 <code>has_reserve</code>模板，我们就可以继续使用其他的技巧，如 <code>enable_if</code>和下面的<code>标签分发</code>，来对重载进行限制。</p>
+<p>继承<code>false_type/true_type</code>我们可以查询has_reverse中的静态的value(来自<code>false_type/true_type</code>)，回想我们在最开始写的那个东西中有一个<code>has_reserve&lt;C&gt;::value</code>和这个作用就等价了，而代码量小了非常多。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">enable_if_t</span>&lt;has_reserve&lt;C&gt;::value, <span class="hljs-keyword">void</span>&gt;<br>append(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)<br>&#123;<br>    container.reserve(container.<span class="hljs-built_in">size</span>() + <span class="hljs-built_in">size</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i&lt; <span class="hljs-built_in">size</span>; ++i)<br>    &#123;<br>        container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="标签分发"><a href="#标签分发" class="headerlink" title="标签分发"></a>标签分发</h2><p>现在我们完成了<code>has_reserve&lt;C&gt;::value</code>替代.</p>
+<p>那么<code>enable_if</code>的替代有吗，当然也有，是一种叫做标签分发的技术：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C,<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">void</span> _append(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>, true_type)<br>&#123;<br>    container.reserve(container.<span class="hljs-built_in">size</span>() + <span class="hljs-built_in">size</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>. ++i)<br>    &#123;<br>        container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C,<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">void</span> _append(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>, false_type)<br>&#123;l<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>. ++i)<br>    &#123;<br>        container.push_back(ptr[i]);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">append</span><span class="hljs-params">(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    _append(container, ptr, <span class="hljs-built_in">size</span>, integral_constant&lt;<span class="hljs-keyword">bool</span>,has_reserve&lt;C&gt;::value&gt;&#123;&#125;);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>如果我们用 <code>void_t</code> 那个版本的<code>has_reserve</code> 模板的话，由于模板的实例会继承<code>false_type</code>或 <code>true_type</code> 之一，代码可以进一步简化为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T,<span class="hljs-keyword">typename</span> = <span class="hljs-keyword">void_t</span>&lt;&gt;&gt;<br>struct has_reserve : false_type &#123;&#125;;<br><br><span class="hljs-comment">//偏特化（数量偏）</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">has_reserve</span>&lt;T,void_t&lt;decltype(declval&lt;T&amp;&gt;().reserve(1U))&gt;&gt;:</span> true_type &#123;&#125;;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">append</span><span class="hljs-params">(C&amp; container, T* ptr, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    _append(container, ptr, <span class="hljs-built_in">size</span>, has_reserve&lt;C&gt;&#123;&#125;);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>标签分发并没有使用 <code>enable_if</code> 显得方便。作为一种可以替代 <code>enable_if</code>的通用惯用法，你还是需要了解一下。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">现代C++中的constexpr,内敛变量</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/24/%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97-%E5%88%9D%E6%8E%A2/">
+                        <span class="hidden-mobile">模板元编程(编译期计算)初探</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/07/24/C-SFINAE/';
+        this.page.identifier = '/2022/07/24/C-SFINAE/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
