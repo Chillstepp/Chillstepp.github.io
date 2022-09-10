@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>C++内存管理Part1: new/delete及其重载 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="C++内存管理Part1: new/delete及其重载">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-10 20:17" pubdate>
+        2022年9月10日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++内存管理Part1: new/delete及其重载</h1>
+            
+            <div class="markdown-body">
+              <h1 id="C-内存管理Part1-new-delete及其重载"><a href="#C-内存管理Part1-new-delete及其重载" class="headerlink" title="C++内存管理Part1: new/delete及其重载"></a>C++内存管理Part1: new/delete及其重载</h1><h2 id="内存分配的每一层面"><a href="#内存分配的每一层面" class="headerlink" title="内存分配的每一层面"></a>内存分配的每一层面</h2><p>这门课不会探讨到<code>O.S. API</code></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906172739707.png" srcset="/img/loading.gif" alt="image-20220906172739707"></p>
+<h2 id="C-可以分配内存的工具"><a href="#C-可以分配内存的工具" class="headerlink" title="C++可以分配内存的工具"></a>C++可以分配内存的工具</h2><p>这是一些内存的基础工具</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906172946109.png" srcset="/img/loading.gif" alt="image-20220906172946109"></p>
+<p>首先是前两个比较基础的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//CRT,C Runtime Library中的malloc/free</span><br><span class="hljs-keyword">void</span>* p1 = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">512</span>);<br><span class="hljs-built_in">free</span>(p1);<br><br><span class="hljs-comment">//new</span><br><span class="hljs-built_in">complex</span>&lt;<span class="hljs-keyword">int</span>&gt;* p2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">complex</span>&lt;<span class="hljs-keyword">int</span>&gt;;<br><span class="hljs-keyword">delete</span> p2;<br></code></pre></div></td></tr></table></figure>
+<p>然后是<code>::operator new()</code>，这里提示下<code>::</code>表示全局函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">void</span>* p3 = ::<span class="hljs-keyword">operator</span> <span class="hljs-keyword">new</span>(<span class="hljs-number">512</span>);<br>::<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(p3)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>看起来和<code>malloc/free</code>的使用方法很相似，事实上也如此，源码里他也是调用了<code>malloc/free</code></p>
+<p>最后是C++标准库提供的<code>allocator</code>：</p>
+<p>在不同编译器下使用方法略有不同，下面三个不同的编译器下的使用方法如下。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906174728663.png" srcset="/img/loading.gif" alt="image-20220906174728663"></p>
+<p>然而一般人是不会利用allocator来拿内存的，因为可以发现你分配后还需要记住当时分配了多大的内存，这是反直觉的。其实准确来说这是给stl用的，stl的容器封装后我们就可以忽略这些细节了。</p>
+<p>G2.9的时候还叫alloc，但实际在新版本中<code>alloc</code>已经没了, 换成了和其他两者一样的名字叫做allocator，用法也和另外两者一样了，如下，现在的GNU其实有多种分配器，s。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906175442703.png" srcset="/img/loading.gif" alt="image-20220906175442703"></p>
+<h2 id="基本构件：new-delete-expression"><a href="#基本构件：new-delete-expression" class="headerlink" title="基本构件：new/delete expression"></a>基本构件：new/delete expression</h2><p>new除了上一节的使用方法，new可以搭配构造函数使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">Complex* pc = <span class="hljs-keyword">new</span> Complex(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>);<br></code></pre></div></td></tr></table></figure>
+<p>面向对象那份笔记里有提到，new其实是分三步走的。我们这里讨论的更细致一些：</p>
+<ul>
+<li>首先是第1步中的operator new，这里没有加上全局的<code>::</code>(当全局变量在局部函数中与其中某个变量重名，那么就可以用<code>::</code>来区分)。这里不加上<code>::</code>的意义是可以重载这个<code>operator new</code>，按照你重载的方法来申请内存。</li>
+<li>第3步的调用方法实际上在许多编译器都是不允许的，在VC6.0中这种古老的编译器是可以的，如果你真的想直接在已有的内存上来调用构造函数，更正确的做法应该是<code>placement new</code>。当然这里都是编译器在做的事情，我们无需考虑。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906192659184.png" srcset="/img/loading.gif" alt="image-20220906192659184"></p>
+<p>其中的<code>operator new</code>函数在VC中如下：</p>
+<ul>
+<li>本质就是malloc申请内存，当申请不到内存，会调用<code>_callnewh()</code>这个方法，这个方法是留给我们自己来写的，它用来当malloc申请内存却内存不够时调用，因此这个函数主要是释放一些我们认为可以释放的内存。当释放成功我们的malloc就可以申请到内存从而跳出这个while循环。</li>
+<li>我们发现这里还有一个第二参数，其实就是保证不抛出异常，这其实现在可以用<code>noexcept</code>来代替了。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906204334985.png" srcset="/img/loading.gif" alt="image-20220906204334985"></p>
+<p>同理delete本质会转换为：先析构再调用operator delete</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906205327563.png" srcset="/img/loading.gif" alt="image-20220906205327563"></p>
+<p>所以到这里我们再来看一眼这个图，图左整理了new的调用关系：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906205549692.png" srcset="/img/loading.gif" alt="image-20220906205549692"></p>
+<p>这里有一个容易混淆的概念：</p>
+<p>我们称new叫做new operator，还有一个operator new，new operator其实是调用了operator new，这两者未免太容易混淆，其实new operator就是一个表达式，而operator new是一个函数/操作符，因此我们有时候也会把new operator叫做new expression。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906205720597.png" srcset="/img/loading.gif" alt="image-20220906205720597"></p>
+<p>delete同理。</p>
+<p>ctor和dtor是不可以直接调用的，如下图，但可以通过placement new来调用，后面我们提到placement new再细说。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906220344006.png" srcset="/img/loading.gif" alt="image-20220906220344006"></p>
+<h2 id="array-new-array-delete"><a href="#array-new-array-delete" class="headerlink" title="array new/array delete"></a>array new/array delete</h2><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">Complex* pca = <span class="hljs-keyword">new</span> Complex[<span class="hljs-number">3</span>];<br><span class="hljs-keyword">delete</span>[] pca;<br></code></pre></div></td></tr></table></figure>
+<p>我们知道如果用了array new，那么也要使用对应的array delete。但往往我们会使用了array new，却忘记使用array delete，这会造成没有对每个对象都执行析构函数dtor。然而这种行为并不总是有影响的：</p>
+<ul>
+<li>对于没有指针成员的class，依靠cookie依然可以正确的回收掉所有内存(cookie中存储了class的大小个数等信息, 是new内存时的附带产物)。</li>
+<li>对于指针成员的class，比如string。析构函数中往往写了delete 指针的逻辑，所以此时如果你忘记了使用array delete会导致指针成员指向的内存没有通过析构函数释放掉这篇内存，然而指针成员本身会被通过cookie释放掉占用的内存，因此最后指针指向的内存就泄露了。</li>
+</ul>
+<p>所以永远记得array new对应着array delete可以保证你的程序永远不会出现上述所讨论的复杂情况。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906230507396.png" srcset="/img/loading.gif" alt="image-20220906230507396"></p>
+<p><code>placement new</code>可以翻译为定点的new，即我已经有了内存，给出这个内存的指针来在这篇内存调用构造函数。如下图，我们可以发现：placement new的用法<code>new (tmp++) A(i)</code>, 即在指针处直接调用构造函数。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906233251293.png" srcset="/img/loading.gif" alt="image-20220906233251293"></p>
+<h2 id="placement-new"><a href="#placement-new" class="headerlink" title="placement new"></a>placement new</h2><p>前面我们提到过placement new可以不分配内存，直接在某一内存处处调用构造函数。</p>
+<p>他也是一种new expression所以也是经过new的三部的，只不过第一步申请内存时利用的operator new是<code>void* operator new(size_t,void* loc) {return loc;}</code>这个函数。这个函数并没有申请内存，而是直接返回了内存的地址。其他和new expression并无区别。因此我们可以认为placement new实际上是对operator new的重载。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906235254602.png" srcset="/img/loading.gif" alt="image-20220906235254602"></p>
+<h2 id="operator-new的重载-1"><a href="#operator-new的重载-1" class="headerlink" title="operator new的重载(1)"></a>operator new的重载(1)</h2><p>我们在前面提到了 <code>::operator new</code>代表全局operator new，但如果你想自己改造一下，比如每次new一个元素底层malloc都要产生一个cookie，在某些情况下这可能不是很好的一个选择，因此我们选择可以走自己的operator new的方案，你只需要在class的作用于下重载下operator new即可，如下图的Foo类下我们重载了这个类，那么就不会走全局的那条路，而是走我们自己重载的operator new这条路，因为对于同名函数总是先调用类里的，其次才是全局的：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907000726513.png" srcset="/img/loading.gif" alt="image-20220907000726513"></p>
+<p>ok，那么我们知道了new expression的3部流程(开内存，强转，调用构造函数)，我们可不可以不用new，直接malloc模仿呢？当然可以毕竟new底层就是malloc，不过这只是做个验证而已，实际中当然用new会方便许多了，况且这个模仿也并不是完美的，毕竟你还用了placement new，然而你不用这个又没法像编译器一样直接调用构造函数：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907001428577.png" srcset="/img/loading.gif" alt="image-20220907001428577"></p>
+<p>同理我们可以提前看一下容器中的allocator分配内存的途径：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907002308274.png" srcset="/img/loading.gif" alt="image-20220907002308274"></p>
+<p>其实本质和new是没什么去别的，只不过allocator自己封装了一套<code>allocate() + construct()</code>代替了<code>operator new + placement new</code>,当然他的最后底层调用的东西肯定是一样的。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907002543646.png" srcset="/img/loading.gif" alt="image-20220907002543646"></p>
+<p>为什么要在重载这一节介绍这个呢？因为allocator其实实现了自己的一套内存管理，就像new expression一样。</p>
+<p>有几种可以重载的各种new呢？</p>
+<p>首先是全局的<code>::operator new</code>，重载这个会影响很多，虽然可以，但我们很少重载全局的operator new。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907003741283.png" srcset="/img/loading.gif" alt="image-20220907003741283"></p>
+<p>我们更多的是在某个类里重载operator new，就像这一节一开始提到的那样，在类里写一个operator new就可以在这个类operator new的时候走自己的一套而不走全局的<code>::operator new</code>, 下面是一个例子，下面有几点要注意：</p>
+<ul>
+<li>重载的operator delete有个第二参数，其实可有可无。</li>
+<li>我们知道加上这两个重载的operator new/delete后，这两个函数应该在没有函数对象也可以被调用到，因此我们需要她是静态函数的。但是为什么下面没用static修饰呢？可以认为这是cpp很体贴帮助你添加上了，因为这个static修饰是必须有的，cpp帮你做了处理。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220907004557421.png" srcset="/img/loading.gif" alt="image-20220907004557421"></p>
+<p>当然全局的array new/delete和类里的array new/delete和上面也同理，加个<code>[]</code>即可。</p>
+<p><strong>例子:</strong></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220910140836353.png" srcset="/img/loading.gif" alt="image-20220910140836353"></p>
+<p>下图1，2，3，4对应着看，虚函数仅仅只是为了改变class大小而已。经过验证确实如我们上面所讲的内容一致。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220910140914771.png" srcset="/img/loading.gif" alt="image-20220910140914771"></p>
+<p>调用全局的new/delete：会在下一步自动调用到全局的<code>::operator new/::operator delete</code></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220910141133249.png" srcset="/img/loading.gif" alt="image-20220910141133249"></p>
+<h2 id="operator-new的重载-2"><a href="#operator-new的重载-2" class="headerlink" title="operator new的重载(2)"></a>operator new的重载(2)</h2><p>我们在placement new中提到了，<strong>placement new也是一种new expression</strong>所以也是经过new的三部的，只不过第一步申请内存时利用的operator new是<code>void* operator new(size_t,void* loc) {return loc;}</code>这个函数。这个函数并没有申请内存，而是直接返回了内存的地址。其他和new expression并无区别。因此我们可以认为placement new实际上是对operator new的重载。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220906235254602.png" srcset="/img/loading.gif" alt="image-20220906235254602"></p>
+<p>new expression可以有多个形式，比如placement  new就是一种，还有自带new class()这种，我们可以写出一种像placement new一样新的new expression吗？当然可以，就像placement new一样通过重载operator new即可。cpp里对这个概念没有那么准确，这种new我们其实也可以称之为placement new，也就是说这种带括号的我们都可以称为placement new, 当然此时的placement不能再翻译成定点了，翻译成放置也许比较好，因为括号里可以放不同的参数类型。</p>
+<p>比如我们希望如下可以成立：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">Foo* pf = <span class="hljs-keyword">new</span>(<span class="hljs-number">300</span>,<span class="hljs-string">'c'</span>) Foo;<br></code></pre></div></td></tr></table></figure>
+<p>那么下面第四个版本可以实现。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220910144057367.png" srcset="/img/loading.gif" alt="image-20220910144057367"></p>
+<ul>
+<li>首先要注意第一参数必须是<code>size_t</code>，不然就会报错，如(5)</li>
+<li>(1)中是一般的operator new</li>
+<li>(2)中标准库提供的一种是placement new，不申请内存，直接返回内存的指针。</li>
+<li>(3)(4)都是全新的placement new，自己实现的。</li>
+</ul>
+<p>operator new一般来说应该有着对应的operator delete，但是对于operator delete来说:</p>
+<ul>
+<li><p><strong>你自己写的非默认参数的operator delete版本 永远不会被 delete 直接调用的</strong>， <strong>他的出现仅仅是为了处理异常</strong>： 即当一个new expression出现错误后，比如operator new分配空间后，调用构造函数出错，此时 要处理异常回收内存才会调用到你写的对应的operator delete版本。如果正常永远是调用的是基本的delete类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br> <br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">X</span></span><br><span class="hljs-class">&#123;</span><br>    X() &#123; <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::runtime_error(<span class="hljs-string">""</span>); &#125;<br> <br>    <span class="hljs-comment">// custom placement new</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>* <span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> sz, <span class="hljs-keyword">bool</span> b)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"custom placement new called, b = "</span> &lt;&lt; b &lt;&lt; <span class="hljs-string">'\n'</span>;<br>        <span class="hljs-keyword">return</span> ::<span class="hljs-keyword">operator</span> <span class="hljs-keyword">new</span>(sz);<br>    &#125;<br> <br>    <span class="hljs-comment">// custom placement delete</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* ptr, <span class="hljs-keyword">bool</span> b)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"custom placement delete called, b = "</span> &lt;&lt; b &lt;&lt; <span class="hljs-string">'\n'</span>;<br>        ::<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(ptr)</span></span>;<br>    &#125;<br>&#125;;<br> <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        X* p1 = <span class="hljs-keyword">new</span> (<span class="hljs-literal">true</span>) X;<span class="hljs-comment">//custom placement new called, b = 1</span><br>    &#125;<br>    <span class="hljs-keyword">catch</span> (<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::exception&amp;) &#123;&#125;<span class="hljs-comment">//custom placement delete called, b = 1</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><strong>不写operator delete也是被允许的，前提是你的 <code>ctor</code> 和<code>operator new</code>都是<code>noexcept</code>的。</strong>那么是可以不写对应的operator delete的。</p>
+</li>
+<li><p><strong>无论是new还是delete，当你重载了以后，默认给出的版本就失效了</strong>，需要你自己写。当然你<strong>也可以用<code>::new/::delete</code>调用全局的默认版本</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>, <span class="hljs-keyword">char</span>)</span> </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">size</span>);&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* pdead, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>, <span class="hljs-keyword">char</span> c)</span> </span>&#123; <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"whysb1"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;<span class="hljs-built_in">free</span>(pdead);&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* pdead, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span> </span>&#123; <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"whysb2"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;<span class="hljs-built_in">free</span>(pdead);&#125;<br>    A() &#123; &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <br>	A* a = <span class="hljs-keyword">new</span>(<span class="hljs-string">'c'</span>) A();<span class="hljs-comment">//OK, 调用了void* operator new(size_t size, char)</span><br>    <br>    A* a = <span class="hljs-keyword">new</span> A();<span class="hljs-comment">//error: no matching function for call to 'A::operator new(sizetype)'</span><br>    <br>    A* a = ::<span class="hljs-keyword">new</span> A();<span class="hljs-comment">// ok,调用全局的默认版本</span><br>    <br>    <span class="hljs-comment">//delete永远是调用默认参数版本的operator delete(即operator delete(void* pdead, size_t size))的，是</span><br>    <span class="hljs-comment">//不会调用到重载的operator delete版本的。</span><br>    <span class="hljs-keyword">delete</span> a;<span class="hljs-comment">//输出whysb2</span><br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220910173909879.png" srcset="/img/loading.gif" alt="image-20220910173909879"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">内存管理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/24/GAMES101-7-9-Shading/">
+                        <span class="hidden-mobile">GAMES101(7-9):Shading</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/09/10/C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86Part1-new-delete%E5%8F%8A%E5%85%B6%E9%87%8D%E8%BD%BD/';
+        this.page.identifier = '/2022/09/10/C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86Part1-new-delete%E5%8F%8A%E5%85%B6%E9%87%8D%E8%BD%BD/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
