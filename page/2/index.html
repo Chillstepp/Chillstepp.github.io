@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -186,6 +186,55 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++11新特性">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">C++11新特性</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">
+          
+          
+            
+          
+          ariadic Templates数量不定的模板参数下面是一个数量不定的模板参数的例子，print()函数做得是一个将一堆参数输出的动作。
+每次取出第一个参数输出，剩下的参数包递归下去每次输出参数的第一个。但请不要忘记写void print(){ }，因为当参数空的时候，你需要一个无参的print来结束print的递归。
+如果你想知道 后面那一部分参数包有几个，你可以使用sizeof...(arg
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-27 23:44" pubdate>
+              2022-05-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -642,57 +691,6 @@ Base b = a; 调用拷贝构造函数 还是 operator =呢? 是两者都可
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="const关键字修饰 相关问题">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">const关键字修饰 相关问题</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/const%E5%85%B3%E9%94%AE%E5%AD%97%E4%BF%AE%E9%A5%B0-%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
-          
-          
-            
-          
-          const关键字修饰 相关问题const修饰问题很麻烦，一个不错的识别方式是：const默认作用于其左边的东西，否则作用于其右边的东西：
-辨别方法
-const int* 
-
-const只有右边有东西，所以const修饰int成为常量整型，然后*再作用于常量整型。所以这是a pointer to a constant integer（指向一个整型，不可通过该指针改变其指向的内容，但可改变指针本身所指
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 19:48" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -876,20 +874,5 @@ const只有右边有东西，所以const修饰int成为常量整型，然后*再
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

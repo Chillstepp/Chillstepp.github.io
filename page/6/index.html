@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -186,6 +186,68 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_self">
+          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH4-卷积神经网络">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">CS231n-CH4-卷积神经网络</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+          
+          
+            
+          
+          卷积神经网络卷积全连接层：
+
+卷积层(convolution Layer):
+
+卷积网络就是一系列的卷积层的叠加，并加上各种各样的激活函数。
+
+随着层数的增加，所包含的信息越来越多。
+
+
+卷积计算过程：
+我们可以一步一步的来走，那么得到的就是 5*5的结果
+
+但是步长调整到2时：
+
+那么得到的就是一个3*3的结果。
+步长为3时：(7-3)/3+1 = 2.33 所以这样会导致不平衡的结果，所以步长
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-09 18:35" pubdate>
+              2021-04-09
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -684,62 +746,6 @@ random forest是两部分组成：
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH9：Decision Tree">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/">机器学习技法CH9：Decision Tree</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/22/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH9%EF%BC%9ADecision-Tree/">
-          
-          
-            
-          
-          CH9：Decision TreeDecision Tree Hypothesis
-一个decision tree的例子：
-
-
-$g_t(x)$：称为base hypothesis，叶子节点，一个常数，代表路径$t$的终点的常量，也就是最后做的决定。
-$q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
-
-我们可以把一棵树看成如下的样式：
-
-那么上图这种一个节点对应着三
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-22 23:35" pubdate>
-              2021-02-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -923,20 +929,5 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
