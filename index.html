@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -208,13 +208,13 @@
           
             
           
-          列表初始化的作用列表初始化是初始化行为
+          列表初始化的作用列表初始化是初始化行为:
 1complex(double r=0,double i=0):re(r),im(i)&#123;&#125;
-大括号里写叫做赋值行为
+大括号里写叫做赋值行为:
 1complex(double r=0,double i=0)&#123;re=r;im=i;&#125;
 首先要搞清楚他俩并不是等价的。
 没有了列表初始化，仅仅依靠大括号很难解决下面几个问题：
-在大括号内无法初始化父类子对
+在大括号内无法初始化父类
         </a>
       </p>
 
@@ -901,5 +901,20 @@ $\vec{a}$，代表一个方向，因此向
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

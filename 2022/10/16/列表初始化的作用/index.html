@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -239,9 +239,9 @@
             <h1 style="display: none">C++列表初始化的存在意义</h1>
             
             <div class="markdown-body">
-              <h1 id="列表初始化的作用"><a href="#列表初始化的作用" class="headerlink" title="列表初始化的作用"></a>列表初始化的作用</h1><p>列表初始化是初始化行为</p>
+              <h1 id="列表初始化的作用"><a href="#列表初始化的作用" class="headerlink" title="列表初始化的作用"></a>列表初始化的作用</h1><p>列表初始化是初始化行为:</p>
 <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">complex</span>(<span class="hljs-keyword">double</span> r=<span class="hljs-number">0</span>,<span class="hljs-keyword">double</span> i=<span class="hljs-number">0</span>):re(r),im(i)&#123;&#125;<br></code></pre></div></td></tr></table></figure>
-<p>大括号里写叫做赋值行为</p>
+<p>大括号里写叫做赋值行为:</p>
 <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">complex</span>(<span class="hljs-keyword">double</span> r=<span class="hljs-number">0</span>,<span class="hljs-keyword">double</span> i=<span class="hljs-number">0</span>)&#123;re=r;im=i;&#125;<br></code></pre></div></td></tr></table></figure>
 <p>首先要搞清楚他俩并不是等价的。</p>
 <p>没有了列表初始化，仅仅依靠大括号很难解决下面几个问题：</p>
@@ -544,5 +544,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
