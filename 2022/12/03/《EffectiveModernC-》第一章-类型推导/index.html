@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>《EffectiveModernC++》第一章:类型推导 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《EffectiveModernC++》第一章:类型推导">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-12-03 21:24" pubdate>
+        2022年12月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      76
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《EffectiveModernC++》第一章:类型推导</h1>
+            
+            <div class="markdown-body">
+              <h1 id="第一章-类型推导"><a href="#第一章-类型推导" class="headerlink" title="第一章 类型推导"></a>第一章 类型推导</h1><h2 id="item1-理解模板类型推导"><a href="#item1-理解模板类型推导" class="headerlink" title="item1:理解模板类型推导"></a>item1:理解模板类型推导</h2><p>考虑这样一个函数模板：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(ParamType param)</span></span>;<br><br><span class="hljs-comment">//调用:</span><br>f(expr)  <span class="hljs-comment">//从expr中推导T和ParamType</span><br></code></pre></div></td></tr></table></figure>
+<p>我们可以给T加上一些修饰，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp; param)</span></span>;         <span class="hljs-comment">//ParamType是const T&amp;</span><br><br><span class="hljs-comment">//调用：</span><br><span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;<br>f(x);                           <span class="hljs-comment">//用一个int类型的变量调用f</span><br></code></pre></div></td></tr></table></figure>
+<p>在编译期间，编译器使用<code>expr</code>进行两个类型推导：<strong>一个是针对<code>T</code>的，另一个是针对<code>ParamType</code>的</strong>。这两个类型通常是不同的，因为<code>ParamType</code>包含一些修饰，比如<code>const</code>和引用修饰符。</p>
+<p>我们期望传入参数的类型和T是一致的(就像上面的传入的int参数，T也会被推导出int)，但有时情况并非总是如此，<code>T</code>的类型推导不仅取决于<code>expr</code>的类型，也取决于<code>ParamType</code>的类型。这里有三种情况：</p>
+<ul>
+<li><strong>情景一: <code>ParamType</code>是一个指针或引用，但不是通用引用</strong></li>
+</ul>
+<p>最简单的情况是<code>ParamType</code>是一个指针或者引用，但非通用引用。在这种情况下，类型推导会这样进行：</p>
+<ol>
+<li>如果<code>expr</code>的类型是一个引用，忽略引用部分</li>
+<li>然后<code>expr</code>的类型与<code>ParamType</code>进行模式匹配来决定<code>T</code></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T&amp; param)</span></span>;               <span class="hljs-comment">//param是一个引用</span><br><br><span class="hljs-keyword">int</span> x=<span class="hljs-number">27</span>;                       <span class="hljs-comment">//x是int</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cx=x;                 <span class="hljs-comment">//cx是const int</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; rx=x;                <span class="hljs-comment">//rx是指向作为const int的x的引用</span><br><br><span class="hljs-comment">//调用：</span><br>f(x);                           <span class="hljs-comment">//T是int，param的类型是int&amp;</span><br>f(cx);                          <span class="hljs-comment">//T是const int，param的类型是const int&amp;</span><br>f(rx);                          <span class="hljs-comment">//T是const int，param的类型是const int&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p>后两个的调用中，变量<code>cx</code>是一个<code>const value</code>，<code>rx</code>是<code>a reference to a const value</code>，也就是都不允许改变变量的值，这两者T推导出来的信息也包含<code>const</code>，都是<code>const int</code>，这是十分有道理的，考虑一下当你传入一个<code>const value</code>的值, 这个值/对象也是期望不可以被改变，那么T理应推导出常量性的信息，即也包含<code>constness</code>常量性。</p>
+<p><strong>这也是为什么将一个<code>const</code>对象传递给以<code>T&amp;</code>类型为形参的模板安全的：对象的常量性<code>const</code>ness会被保留为<code>T</code>的一部分。</strong></p>
+<p>在第三个例子中，注意即使<code>rx</code>的类型是一个引用，<code>T</code>也会被推导为一个非引用 ，这是因为<code>rx</code>的引用性（reference-ness）在类型推导中会被忽略。</p>
+<p>如果我们将<code>f</code>的形参类型<code>T&amp;</code>改为<code>const T&amp;</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp; param)</span></span>;         <span class="hljs-comment">//param现在是reference-to-const</span><br><br><span class="hljs-keyword">int</span> x = <span class="hljs-number">27</span>;                     <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cx = x;               <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; rx = x;              <span class="hljs-comment">//如之前一样</span><br><br>f(x);                           <span class="hljs-comment">//T是int，param的类型是const int&amp;</span><br>f(cx);                          <span class="hljs-comment">//T是int，param的类型是const int&amp;</span><br>f(rx);                          <span class="hljs-comment">//T是int，param的类型是const int&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p><code>cx</code>和<code>rx</code>的<code>const</code>ness依然被遵守(<code>param</code>变量依然是一个<code>constness</code>的)。但是因为现在我们假设<code>param</code>是reference-to-<code>const</code>，<code>const</code>不再被推导为<code>T</code>的一部分.</p>
+<p>如果<code>param</code>是一个指针（或者指向<code>const</code>的指针）而不是引用，情况本质上也同理：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T* param)</span></span>;               <span class="hljs-comment">//param现在是指针</span><br><br><span class="hljs-keyword">int</span> x = <span class="hljs-number">27</span>;                     <span class="hljs-comment">//同之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *px = &amp;x;             <span class="hljs-comment">//px是指向作为const int的x的指针</span><br><br>f(&amp;x);                          <span class="hljs-comment">//T是int，param的类型是int*</span><br>f(px);                          <span class="hljs-comment">//T是const int，param的类型是const int*</span><br></code></pre></div></td></tr></table></figure>
+<ul>
+<li><strong>情景二：<code>ParamType</code>是一个通用引用</strong></li>
+</ul>
+<ol>
+<li>如果<code>expr</code>是左值，<code>T</code>和<code>ParamType</code>都会被推导为左值引用。</li>
+<li>如果<code>expr</code>是右值，就使用正常的（也就是<strong>情景一</strong>）推导规则。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T&amp;&amp; param)</span></span>;              <span class="hljs-comment">//param现在是一个通用引用类型</span><br>        <br><span class="hljs-keyword">int</span> x=<span class="hljs-number">27</span>;                       <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cx=x;                 <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp; rx=cx;              <span class="hljs-comment">//如之前一样</span><br><br>f(x);                           <span class="hljs-comment">//x是左值，所以T是int&amp;，</span><br>                                <span class="hljs-comment">//param类型也是int&amp;</span><br><br>f(cx);                          <span class="hljs-comment">//cx是左值，所以T是const int&amp;，</span><br>                                <span class="hljs-comment">//param类型也是const int&amp;</span><br><br>f(rx);                          <span class="hljs-comment">//rx是左值，所以T是const int&amp;，</span><br>                                <span class="hljs-comment">//param类型也是const int&amp;</span><br><br>f(<span class="hljs-number">27</span>);                          <span class="hljs-comment">//27是右值，所以T是int，</span><br>                                <span class="hljs-comment">//param类型就是int&amp;&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p><code>Item24</code>详细解释了为什么这些例子是像这样发生的。这里关键在于通用引用的类型推导规则是不同于普通的左值或者右值引用的。尤其是，当通用引用被使用时，类型推导会区分左值实参和右值实参，但是对非通用引用时不会区分。</p>
+<ul>
+<li><strong>情景三：ParamType既不是指针也不是引用</strong></li>
+</ul>
+<p>当<code>ParamType</code>既不是指针也不是引用时，我们通过<strong>传值（pass-by-value）的方式处理</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T param)</span></span>;                <span class="hljs-comment">//以传值的方式处理param</span><br><br><span class="hljs-keyword">int</span> x=<span class="hljs-number">27</span>;                       <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cx=x;                 <span class="hljs-comment">//如之前一样</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp; rx=cx;              <span class="hljs-comment">//如之前一样</span><br><br>f(x);                           <span class="hljs-comment">//T和param的类型都是int</span><br>f(cx);                          <span class="hljs-comment">//T和param的类型都是int</span><br>f(rx);                          <span class="hljs-comment">//T和param的类型都是int</span><br></code></pre></div></td></tr></table></figure>
+<p>这意味着无论传递什么<code>param</code>都会成为它的一份拷贝——<strong>一个完整的新对象</strong>。事实上<code>param</code>成为一个新对象这一行为会影响<code>T</code>如何从<code>expr</code>中推导出结果。</p>
+<ol>
+<li>和之前一样，如果<code>expr</code>的类型是一个引用，忽略这个引用部分</li>
+<li>如果忽略<code>expr</code>的引用性（reference-ness）之后，<strong><code>expr</code>是一个<code>const</code></strong>，那就再忽略<code>const</code>。如果它是<code>volatile</code>，也忽略<code>volatile</code>（<code>volatile</code>对象不常见，它通常用于驱动程序的开发中。</li>
+</ol>
+<p>考虑这样的一个情况：</p>
+<p><code>expr</code>是一个<code>const</code>指针，指向<code>const</code>对象，<code>expr</code>通过传值传递给<code>param</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T param)</span></span>;                <span class="hljs-comment">//仍然以传值的方式处理param</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> ptr =         <span class="hljs-comment">//ptr是一个常量指针，指向常量对象 </span><br>    <span class="hljs-string">"Fun with pointers"</span>;<br><br>f(ptr);                         <span class="hljs-comment">//传递const char * const类型的实参</span><br></code></pre></div></td></tr></table></figure>
+<p>在这里，解引用符号（*）的右边的<code>const</code>表示<code>ptr</code>本身是一个<code>const</code>：<code>ptr</code>不能被修改为指向其它地址，也不能被设置为null。</p>
+<p>当<code>ptr</code>作为实参传给<code>f</code>，组成这个指针的每一比特都被拷贝进<code>param</code>。像这种情况，<code>ptr</code><strong>自身的值会被传给形参</strong>，根据类型推导的第三条规则，<strong><code>ptr</code>自身的常量性<code>const</code>ness将会被省略</strong>，所以<code>param</code>是<code>const char*</code>，也就是<strong>一个可变指针指向<code>const</code>字符串。</strong> 这一条看似有些奇怪，但是我们观察第三条中的</p>
+<blockquote>
+<p><strong><code>expr</code>是一个<code>const</code></strong>，那就再忽略<code>const</code>。</p>
+</blockquote>
+<p><strong>这里强调的是expr的const，</strong>这里expr是一个指针 ，忽略的是指针的const，即忽略指针的常量性，指针指向的内容的常量性不应该被忽略 。</p>
+<p>现在我们再来讨论<strong>数组实参</strong>：</p>
+<p>上面的内容几乎覆盖了模板类型推导的大部分内容，但这里还有一些小细节值得注意，比如数组类型不同于指针类型，虽然它们两个有时候是可互换的。</p>
+<p>在很多上下文中数组会退化为指向它的第一个元素的指针。这样的退化允许像这样的代码可以被编译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> name[] = <span class="hljs-string">"J. P. Briggs"</span>;     <span class="hljs-comment">//name的类型是const char[13]</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * ptrToName = name;          <span class="hljs-comment">//数组退化为指针</span><br></code></pre></div></td></tr></table></figure>
+<p>在这里<code>const char*</code>指针<code>ptrToName</code>会由<code>name</code>初始化，而<code>name</code>的类型为<code>const char[13]</code>，这两种类型（<code>const char*</code>和<code>const char[13]</code>）是不一样的，但是由于数组退化为指针的规则，编译器允许这样的代码。</p>
+<p>但要是一个数组传值给一个模板会怎样？会发生什么？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T param)</span></span>;   <span class="hljs-comment">//传值形参的模板</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> name[] = <span class="hljs-string">"J. P. Briggs"</span>;<br>f(name);        <span class="hljs-comment">//name是一个数组，但是T被推导为const char*</span><br></code></pre></div></td></tr></table></figure>
+<p>但是现在难题来了，虽然函数不能声明形参为真正的数组，但是<strong>可以</strong>接受指向数组的<strong>引用</strong>！所以我们修改<code>f</code>为传引用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T&amp; param)</span></span>;                       <span class="hljs-comment">//传引用形参的模板</span><br><br>f(name);                                <span class="hljs-comment">//传数组给f</span><br></code></pre></div></td></tr></table></figure>
+<p><code>T</code>被推导为了真正的数组！这个类型包括了数组的大小，在这个例子中<code>T</code>被推导为<code>const char[13]</code>，<code>f</code>的形参（对这个数组的引用）的类型则为<code>const char (&amp;)[13]</code>。</p>
+<p>这也是一个小trick知识。</p>
+<p>有趣的是，可声明指向数组的引用的能力，使得我们可以创建一个模板函数来推导出数组的大小：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">//在编译期间返回一个数组大小的常量值（//数组形参没有名字，</span><br><span class="hljs-comment">//因为我们只关心数组的大小）</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> N&gt;                     <span class="hljs-comment">//关于</span><br><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> <span class="hljs-title">arraySize</span><span class="hljs-params">(T (&amp;)[N])</span> <span class="hljs-keyword">noexcept</span>      <span class="hljs-comment">//constexpr</span></span><br><span class="hljs-function"></span>&#123;                                                       <span class="hljs-comment">//和noexcept</span><br>    <span class="hljs-keyword">return</span> N;                                           <span class="hljs-comment">//的信息</span><br>&#125;                                                       <span class="hljs-comment">//请看下面</span><br></code></pre></div></td></tr></table></figure>
+<p>在Item15提到将一个函数声明为<code>constexpr</code>使得结果在编译期间可用。这使得我们可以用一个花括号声明一个数组，然后第二个数组可以使用第一个数组的大小作为它的大小，就像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> keyVals[] = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">22</span>, <span class="hljs-number">35</span> &#125;;             <span class="hljs-comment">//keyVals有七个元素</span><br><br><span class="hljs-keyword">int</span> mappedVals[arraySize(keyVals)];                     <span class="hljs-comment">//mappedVals也有七个</span><br></code></pre></div></td></tr></table></figure>
+<p>当然作为一个现代C++程序员，你自然应该想到使用<code>std::array</code>而不是内置的数组：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">array</span>&lt;<span class="hljs-keyword">int</span>, arraySize(keyVals)&gt; mappedVals;         <span class="hljs-comment">//mappedVals的大小为7</span><br></code></pre></div></td></tr></table></figure>
+<p>至于<code>arraySize</code>被声明为<code>noexcept</code>，会使得编译器生成更好的代码，具体的细节请参见Item14</p>
+<p>再来讨论<strong>函数实参</strong>：</p>
+<p>在C++中不只是数组会退化为指针，函数类型也会退化为一个函数指针，我们对于数组类型推导的全部讨论都可以应用到函数类型推导和退化为函数指针上来。结果是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">someFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">double</span>)</span></span>;         <span class="hljs-comment">//someFunc是一个函数，</span><br>                                    <span class="hljs-comment">//类型是void(int, double)</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f1</span><span class="hljs-params">(T param)</span></span>;                   <span class="hljs-comment">//传值给f1</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f2</span><span class="hljs-params">(T &amp; param)</span></span>;                 <span class="hljs-comment">//传引用给f2</span><br><br>f1(someFunc);                       <span class="hljs-comment">//param被推导为指向函数的指针，</span><br>                                    <span class="hljs-comment">//类型是void(*)(int, double)</span><br>f2(someFunc);                       <span class="hljs-comment">//param被推导为指向函数的引用，</span><br>                                    <span class="hljs-comment">//类型是void(&amp;)(int, double)</span><br></code></pre></div></td></tr></table></figure>
+<p>这里你需要知道：<code>auto</code>依赖于模板类型推导。正如我在开始谈论的，在大多数情况下它们的行为很直接。在通用引用中对于左值的特殊处理使得本来很直接的行为变得有些污点，然而，数组和函数退化为指针把这团水搅得更浑浊。</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>在模板类型推导时，有引用的实参会被视为无引用，他们的引用会被忽略</li>
+<li>对于通用引用的推导，左值实参会被特殊对待，即推导出左值引用</li>
+<li>对于传值类型推导，<code>const</code>和/或<code>volatile</code>实参会被认为是non-<code>const</code>的和non-<code>volatile</code>的</li>
+<li>在模板类型推导时，数组名或者函数名实参会退化为指针，除非它们被用于初始化引用（即<code>T&amp;</code>作为实参时会被理解为数组/函数的引用）</li>
+</ul>
+<h2 id="item2-理解auto类型推导"><a href="#item2-理解auto类型推导" class="headerlink" title="item2:理解auto类型推导"></a>item2:理解<code>auto</code>类型推导</h2><p>auto在绝大多数情况是和模板一致的，T和auto等价。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> x = <span class="hljs-number">27</span>;<br></code></pre></div></td></tr></table></figure>
+<p>这里<code>x</code>的类型说明符是<code>auto</code>自己，另一方面，在这个声明中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> cx = x;<br></code></pre></div></td></tr></table></figure>
+<p>类型说明符是<code>const auto</code>。另一个：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> &amp; rx=cx;<br></code></pre></div></td></tr></table></figure>
+<p>类型说明符是<code>const auto&amp;</code>。在这里例子中要推导<code>x</code>，<code>rx</code>和<code>cx</code>的类型，编译器的行为看起来就像是认为这里每个声明都有一个模板，然后使用合适的初始化表达式进行调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;            <span class="hljs-comment">//概念化的模板用来推导x的类型</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_for_x</span><span class="hljs-params">(T param)</span></span>;<br><br>func_for_x(<span class="hljs-number">27</span>);                 <span class="hljs-comment">//概念化调用：</span><br>                                <span class="hljs-comment">//param的推导类型是x的类型</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;            <span class="hljs-comment">//概念化的模板用来推导cx的类型</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_for_cx</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T param)</span></span>;<br><br>func_for_cx(x);                 <span class="hljs-comment">//概念化调用：</span><br>                                <span class="hljs-comment">//param的推导类型是cx的类型</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;            <span class="hljs-comment">//概念化的模板用来推导rx的类型</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_for_rx</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T &amp; param)</span></span>;<br><br>func_for_rx(x);                 <span class="hljs-comment">//概念化调用：</span><br>                                <span class="hljs-comment">//param的推导类型是rx的类型</span><br></code></pre></div></td></tr></table></figure>
+<p>正如我说的，<code>auto</code>类型推导除了一个例外（我们很快就会讨论），其他情况都和模板类型推导一样。</p>
+<p>因此Item1描述的三个情景稍作修改就能适用于auto：</p>
+<ul>
+<li>情景一：类型说明符是一个指针或引用但不是通用引用</li>
+<li>情景二：类型说明符一个通用引用</li>
+<li>情景三：类型说明符既不是指针也不是引用</li>
+</ul>
+<p>我们早已看过情景一和情景三的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> x = <span class="hljs-number">27</span>;                    <span class="hljs-comment">//情景三（x既不是指针也不是引用）</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> cx = x;              <span class="hljs-comment">//情景三（cx也一样）</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> &amp; rx=cx;             <span class="hljs-comment">//情景一（rx是非通用引用）</span><br></code></pre></div></td></tr></table></figure>
+<p>情景二像你期待的一样运作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span>&amp;&amp; uref1 = x;               <span class="hljs-comment">//x是int左值，</span><br>                                <span class="hljs-comment">//所以uref1类型为int&amp;</span><br><span class="hljs-keyword">auto</span>&amp;&amp; uref2 = cx;              <span class="hljs-comment">//cx是const int左值，</span><br>                                <span class="hljs-comment">//所以uref2类型为const int&amp;</span><br><span class="hljs-keyword">auto</span>&amp;&amp; uref3 = <span class="hljs-number">27</span>;              <span class="hljs-comment">//27是int右值，</span><br>                                <span class="hljs-comment">//所以uref3类型为int&amp;&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p>Item1讨论并总结了对于non-reference类型说明符，数组和函数名如何退化为指针。那些内容也同样适用于<code>auto</code>类型推导：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> name[] =             <span class="hljs-comment">//name的类型是const char[13]</span><br> <span class="hljs-string">"R. N. Briggs"</span>;<br><br><span class="hljs-keyword">auto</span> arr1 = name;               <span class="hljs-comment">//arr1的类型是const char*</span><br><span class="hljs-keyword">auto</span>&amp; arr2 = name;              <span class="hljs-comment">//arr2的类型是const char (&amp;)[13]</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">someFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">double</span>)</span></span>;     <span class="hljs-comment">//someFunc是一个函数，</span><br>                                <span class="hljs-comment">//类型为void(int, double)</span><br><br><span class="hljs-keyword">auto</span> func1 = someFunc;          <span class="hljs-comment">//func1的类型是void (*)(int, double)</span><br><span class="hljs-keyword">auto</span>&amp; func2 = someFunc;         <span class="hljs-comment">//func2的类型是void (&amp;)(int, double)</span><br></code></pre></div></td></tr></table></figure>
+<p>就像你看到的那样，<code>auto</code>类型推导和模板类型推导几乎一样的工作，它们就像一个硬币的两面。</p>
+<p>下面说一下auto和模板类型推导的一些小区别：</p>
+<p>如果你想声明一个带有初始值27的<code>int</code>，C++98提供两种语法选择：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> x1 = <span class="hljs-number">27</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">x2</span><span class="hljs-params">(<span class="hljs-number">27</span>)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>C++11由于也添加了用于支持统一初始化（<strong>uniform initialization</strong>）的语法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> x3 = &#123; <span class="hljs-number">27</span> &#125;;<br><span class="hljs-keyword">int</span> x4&#123; <span class="hljs-number">27</span> &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>把上面声明中的<code>int</code>替换为<code>auto</code>，我们会得到这样的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> x1 = <span class="hljs-number">27</span>;                   <span class="hljs-comment">//类型是int，值是27</span><br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">x2</span><span class="hljs-params">(<span class="hljs-number">27</span>)</span></span>;                    <span class="hljs-comment">//同上</span><br><span class="hljs-keyword">auto</span> x3 = &#123; <span class="hljs-number">27</span> &#125;;               <span class="hljs-comment">//类型是std::initializer_list&lt;int&gt;，</span><br>                                <span class="hljs-comment">//值是&#123; 27 &#125;</span><br><span class="hljs-keyword">auto</span> x4&#123; <span class="hljs-number">27</span> &#125;;                  <span class="hljs-comment">//同上</span><br></code></pre></div></td></tr></table></figure>
+<p>这些声明都能通过编译，但是他们不像替换之前那样有相同的意义。前面两个语句确实声明了一个类型为<code>int</code>值为27的变量，但是后面两个声明了一个存储一个元素27的 <code>std::initializer_list&lt;int&gt;</code>类型的变量。</p>
+<p>如果这样的一个类型不能被成功推导（比如花括号里面包含的是不同类型的变量），编译器会拒绝这样的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> x5 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3.0</span> &#125;;        <span class="hljs-comment">//错误！无法推导std::initializer_list&lt;T&gt;中的T</span><br></code></pre></div></td></tr></table></figure>
+<p>对于花括号的处理是<code>auto</code>类型推导和模板类型推导唯一不同的地方。当使用<code>auto</code>声明的变量使用花括号的语法进行初始化的时候，会推导出<code>std::initializer_list&lt;T&gt;</code>的实例化，但是对于模板类型推导这样就行不通：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> x = &#123; <span class="hljs-number">11</span>, <span class="hljs-number">23</span>, <span class="hljs-number">9</span> &#125;;         <span class="hljs-comment">//x的类型是std::initializer_list&lt;int&gt;</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;            <span class="hljs-comment">//带有与x的声明等价的</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T param)</span></span>;                <span class="hljs-comment">//形参声明的模板</span><br><br>f(&#123; <span class="hljs-number">11</span>, <span class="hljs-number">23</span>, <span class="hljs-number">9</span> &#125;);               <span class="hljs-comment">//错误！不能推导出T</span><br></code></pre></div></td></tr></table></figure>
+<p>然而如果在模板中指定<code>T</code>是<code>std::initializer_list&lt;T&gt;</code>而留下未知<code>T</code>,模板类型推导就能正常工作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">initializer_list</span>&lt;T&gt; initList)</span></span>;<br><br>f(&#123; <span class="hljs-number">11</span>, <span class="hljs-number">23</span>, <span class="hljs-number">9</span> &#125;);               <span class="hljs-comment">//T被推导为int，initList的类型为</span><br>                                <span class="hljs-comment">//std::initializer_list&lt;int&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p>对于C++11故事已经说完了。但是对于C++14故事还在继续，<strong>C++14允许<code>auto</code>用于函数返回值并会被推导</strong>（参见<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item3.md" target="_blank" rel="noopener">Item3</a>），而且C++14的<em>lambda</em>函数也允许在形参声明中使用<code>auto</code>。但是在这些情况下<code>auto</code>实际上使用<strong>模板类型推导</strong>的那一套规则在工作，而不是<code>auto</code>类型推导，所以说下面这样的代码不会通过编译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">createInitList</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> &#125;;         <span class="hljs-comment">//错误！不能推导&#123; 1, 2, 3 &#125;的类型</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>同样在C++14的lambda函数中这样使用auto也不能通过编译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v;<br>…<br><span class="hljs-keyword">auto</span> resetV = <br>    [&amp;v](<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; newValue)&#123; v = newValue; &#125;;        <span class="hljs-comment">//C++14</span><br>…<br>resetV(&#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> &#125;);            <span class="hljs-comment">//错误！不能推导&#123; 1, 2, 3 &#125;的类型</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="item3：理解decltype"><a href="#item3：理解decltype" class="headerlink" title="item3：理解decltype"></a>item3：理解decltype</h2><p><code>decltype</code>是一个奇怪的东西。给它一个名字或者表达式<code>decltype</code>就会告诉你这个名字或者表达式的类型。通常，它会精确的告诉你你想要的结果。但有时候它得出的结果也会让你挠头半天，最后只能求助网上问答或参考资料寻求启示。</p>
+<p>我们将从一个简单的情况开始，没有任何令人惊讶的情况。相比模板类型推导和<code>auto</code>类型推导（参见<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item1.md" target="_blank" rel="noopener">Item1</a>和<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item2.md" target="_blank" rel="noopener">Item2</a>），<code>decltype</code>只是简单的返回名字或者表达式的类型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;                <span class="hljs-comment">//decltype(i)是const int</span><br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Widget&amp; w)</span></span>;        <span class="hljs-comment">//decltype(w)是const Widget&amp;</span><br>                                <span class="hljs-comment">//decltype(f)是bool(const Widget&amp;)</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span>&#123;</span><br>    <span class="hljs-keyword">int</span> x,y;                    <span class="hljs-comment">//decltype(Point::x)是int</span><br>&#125;;                              <span class="hljs-comment">//decltype(Point::y)是int</span><br><br>Widget w;                       <span class="hljs-comment">//decltype(w)是Widget</span><br><br><span class="hljs-keyword">if</span> (f(w))…                      <span class="hljs-comment">//decltype(f(w))是bool</span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;            <span class="hljs-comment">//std::vector的简化版本</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">vector</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    …<br>    T&amp; <span class="hljs-keyword">operator</span>[](<span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> index);<br>    …<br>&#125;;<br><br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v;                  <span class="hljs-comment">//decltype(v)是vector&lt;int&gt;</span><br>…<br><span class="hljs-keyword">if</span> (v[<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>)…                 <span class="hljs-comment">//decltype(v[0])是int&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p>看见了吧？没有任何奇怪的东西。</p>
+<p>这是我们写的第一个版本，使用<code>decltype</code>计算返回类型，这个模板需要改良，我们把这个推迟到后面：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Container, <span class="hljs-keyword">typename</span> Index&gt;    <span class="hljs-comment">//可以工作，</span><br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">authAndAccess</span><span class="hljs-params">(Container&amp; c, Index i)</span>       <span class="hljs-comment">//但是需要改良</span></span><br>    -&gt;decltype(c[i])<br>&#123;<br>    authenticateUser();<br>    <span class="hljs-keyword">return</span> c[i];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>在这种声明中，<code>authAndAccess</code>函数返回<code>operator[]</code>应用到容器中返回的对象的类型，这也正是我们期望的结果。</p>
+<p>C++11允许自动推导单一语句的<em>lambda</em>表达式的返回类型， C++14扩展到允许自动推导所有的<em>lambda</em>表达式和函数，甚至它们内含多条语句。甚至它们内含多条语句。对于<code>authAndAccess</code>来说这<strong>意味着在C++14标准下我们可以忽略尾置返回类型</strong>，<strong>只留下一个<code>auto</code></strong>。使用这种声明形式，auto标示这里会发生类型推导。更准确的说，编译器将会从函数实现中推导出函数的返回类型。</p>
+<p><a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item2.md" target="_blank" rel="noopener">Item2</a>解释了函数返回类型中使用<code>auto</code>，编译器实际上是使用的模板类型推导的那套规则。如果那样的话这里就会有一些问题。正如我们之前讨论的，<code>operator[]</code>对于大多数<code>T</code>类型的容器会返回一个<code>T&amp;</code>，但是<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/1.DeducingTypes/item1.md" target="_blank" rel="noopener">Item1</a>解释了在模板类型推导期间，表达式的引用性（reference-ness）会被忽略。基于这样的规则，考虑它会对下面用户的代码有哪些影响：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; d;<br>…<br>authAndAccess(d, <span class="hljs-number">5</span>) = <span class="hljs-number">10</span>;               <span class="hljs-comment">//认证用户，返回d[5]，</span><br>                                        <span class="hljs-comment">//然后把10赋值给它</span><br>                                        <span class="hljs-comment">//无法通过编译器！</span><br></code></pre></div></td></tr></table></figure>
+<p>在这里<code>d[5]</code>本该返回一个<code>int&amp;</code>，但是模板类型推导会剥去引用的部分，因此产生了<code>int</code>返回类型。函数返回的那个<code>int</code>是一个右值，上面的代码尝试把10赋值给右值<code>int</code>，C++11禁止这样做，所以代码无法编译。</p>
+<p>要想让<code>authAndAccess</code>像我们期待的那样工作，我们需要使用<code>decltype</code>类型推导来推导它的返回值，即指定<code>authAndAccess</code>应该返回一个和<code>c[i]</code>表达式类型一样的类型。C++期望在某些情况下当类型被暗示时需要使用<code>decltype</code>类型推导的规则，C++14通过使用<code>decltype(auto)</code>说明符使得这成为可能。我们第一次看见<code>decltype(auto)</code>可能觉得非常的矛盾（到底是<code>decltype</code>还是<code>auto</code>？），实际上<strong>我们可以这样解释它的意义：<code>auto</code>说明符表示这个类型将会被推导，<code>decltype</code>说明<code>decltype</code>的规则将会被用到这个推导过程中。因此我们可以这样写<code>authAndAccess</code>：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Container, <span class="hljs-keyword">typename</span> Index&gt;    <span class="hljs-comment">//C++14版本，</span><br><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>)                                  <span class="hljs-comment">//可以工作，</span><br>authAndAccess(Container&amp; c, Index i)            <span class="hljs-comment">//但是还需要</span><br>&#123;                                               <span class="hljs-comment">//改良</span><br>    authenticateUser();<br>    <span class="hljs-keyword">return</span> c[i];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><code>decltype(auto)</code>的使用不仅仅局限于函数返回类型，当你想对初始化表达式使用<code>decltype</code>推导的规则，你也可以使用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">Widget w;<br><br><span class="hljs-keyword">const</span> Widget&amp; cw = w;<br><br><span class="hljs-keyword">auto</span> myWidget1 = cw;                    <span class="hljs-comment">//auto类型推导</span><br>                                        <span class="hljs-comment">//myWidget1的类型为Widget</span><br><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>) myWidget2 = cw;          <span class="hljs-comment">//decltype类型推导</span><br>                                        <span class="hljs-comment">//myWidget2的类型是const Widget&amp;</span><br></code></pre></div></td></tr></table></figure>
+<p>再看看C++14版本的<code>authAndAccess</code>声明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Container, <span class="hljs-keyword">typename</span> Index&gt;<br><span class="hljs-function"><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>) <span class="hljs-title">authAndAccess</span><span class="hljs-params">(Container&amp; c, Index i)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>容器通过传引用的方式传递非常量左值引用（lvalue-reference-to-non-<strong>const</strong>），因为返回一个引用允许用户可以修改容器。但是这意味着在不能给这个函数传递右值容器，右值不能被绑定到左值引用上（除非这个左值引用是一个const（lvalue-references-to-<strong>const</strong>），但是这里明显不是）。</p>
+<p>公认的向<code>authAndAccess</code>传递一个右值是一个<a href="https://en.wikipedia.org/wiki/Edge_case" target="_blank" rel="noopener">edge case</a>（译注：在极限操作情况下会发生的事情，类似于会发生但是概率较小的事情）。一个右值容器，是一个临时对象，通常会在<code>authAndAccess</code>调用结束被销毁，这意味着<code>authAndAccess</code>返回的引用将会成为一个<strong>悬置的（dangle）引用。</strong>但有时候用户可能只是想简单的获得临时容器中的一个元素的拷贝，比如这样：</p>
+<p>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">deque</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">makeStringDeque</span><span class="hljs-params">()</span></span>;      <span class="hljs-comment">//工厂函数</span><br><br><span class="hljs-comment">//从makeStringDeque中获得第五个元素的拷贝并返回</span><br><span class="hljs-keyword">auto</span> s = authAndAccess(makeStringDeque(), <span class="hljs-number">5</span>);<br></code></pre></div></td></tr></table></figure>
+<p>要想支持这样使用<code>authAndAccess</code>我们就得修改一下当前的声明使得它支持左值和右值。</p>
+<p>1.重载是一个不错的选择（一个函数重载声明为左值引用，另一个声明为右值引用），但是我们就不得不维护两个重载函数。</p>
+<p>2.另一个方法是使<code>authAndAccess</code>的引用可以绑定左值和右值，<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/5.RRefMovSemPerfForw/item24.md" target="_blank" rel="noopener">Item24</a>解释了那正是通用引用能做的，所以我们这里可以使用通用引用进行声明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Containter, <span class="hljs-keyword">typename</span> Index&gt;   <span class="hljs-comment">//现在c是通用引用</span><br><span class="hljs-function"><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>) <span class="hljs-title">authAndAccess</span><span class="hljs-params">(Container&amp;&amp; c, Index i)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>在这个模板中，我们不知道我们操纵的容器的类型是什么，那意味着我们同样不知道它使用的索引对象（index objects）的类型，对一个未知类型的对象使用传值通常会造成不必要的拷贝，对程序的性能有极大的影响，还会造成对象切片行为（参见<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/8.Tweaks/item41.md" target="_blank" rel="noopener">item41</a>），以及给同事落下笑柄。但是就容器索引来说，我们遵照标准模板库对于索引的处理是有理由的（比如<code>std::string</code>，<code>std::vector</code>和<code>std::deque</code>的<code>operator[]</code>），所以我们坚持传值调用。</p>
+<p>然而，我们还需要更新一下模板的实现，让它能听从<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/5.RRefMovSemPerfForw/item25.md" target="_blank" rel="noopener">Item25</a>的告诫应用<code>std::forward</code>实现通用引用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Container, <span class="hljs-keyword">typename</span> Index&gt;    <span class="hljs-comment">//最终的C++14版本</span><br><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>)<br>authAndAccess(Container&amp;&amp; c, Index i)<br>&#123;<br>    authenticateUser();<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::forward&lt;Container&gt;(c)[i];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这样就能对我们的期望交上一份满意的答卷，但是这要求编译器支持C++14。如果你没有这样的编译器，你还需要使用C++11版本的模板，它看起来和C++14版本的极为相似，除了你不得不指定函数返回类型之外：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Container, <span class="hljs-keyword">typename</span> Index&gt;    <span class="hljs-comment">//最终的C++11版本</span><br><span class="hljs-keyword">auto</span><br>authAndAccess(Container&amp;&amp; c, Index i)<br>-&gt;<span class="hljs-keyword">decltype</span>(<span class="hljs-built_in">std</span>::forward&lt;Container&gt;(c)[i])<br>&#123;<br>    authenticateUser();<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::forward&lt;Container&gt;(c)[i];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>decltype还有很多奇怪的规则，比如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>) <span class="hljs-title">f1</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;<br>    …<br>    <span class="hljs-keyword">return</span> x;                            <span class="hljs-comment">//decltype(x）是int，所以f1返回int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">decltype</span>(<span class="hljs-keyword">auto</span>) <span class="hljs-title">f2</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">return</span> (x);                          <span class="hljs-comment">//decltype((x))是int&amp;，所以f2返回int&amp;</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>注意不仅<code>f2</code>的返回类型不同于<code>f1</code>，而且它还引用了一个局部变量！这样的代码将会称为未定义行为，这是一种非常不好的情况。</p>
+<p>其实本质是 (x)会被认为是一个表达式，而x会被认为是一个变量，更多推导规则可以看：</p>
+<p><a href="https://chillstepp.github.io/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/#decltype">https://chillstepp.github.io/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/#decltype</a></p>
+<p>我们这里只是像教给你怎么用decltype写一个合理的用法。</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li><code>decltype</code>总是不加修改的产生变量或者表达式的类型(表达式为右值正常返回，表达式是左值会返回左值引用)。</li>
+<li>对于<code>T</code>类型的不是单纯的变量名的左值表达式，<code>decltype</code>总是产出<code>T</code>的引用即<code>T&amp;</code>。</li>
+<li>C++14支持<code>decltype(auto)</code>，就像<code>auto</code>一样，推导出类型，但是它使用<code>decltype</code>的规则进行推导。</li>
+</ul>
+<h2 id="item4：学会查看类型推导结果"><a href="#item4：学会查看类型推导结果" class="headerlink" title="item4：学会查看类型推导结果"></a>item4：学会查看类型推导结果</h2><ul>
+<li><p>第一种方法就是通过IDE来查看</p>
+</li>
+<li><p>第二种通过编译器报错来查看：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">using</span> FunType = <span class="hljs-keyword">int</span>(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;,<span class="hljs-keyword">int</span>);<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; x,<span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">" "</span>&lt;&lt;y&lt;&lt;<span class="hljs-built_in">endl</span>;<br>    <span class="hljs-keyword">return</span> x+y;<br>&#125;;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TD</span>;</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    TD&lt;<span class="hljs-keyword">decltype</span>(fun)&gt;xtype;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br>Copy<br></code></pre></div></td></tr></table></figure>
+<p>报错：<code>error: aggregate &#39;TD&lt;int(const int&amp;, int)&gt; xtype&#39; has incomplete type and cannot be defined|</code>,可以得知：<code>fun</code>是<code>int(const int&amp;, int)</code>类型。</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EffectiveModernCPP/">EffectiveModernCPP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AB%A0-auto/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《EffectiveModernC++》第二章:auto</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/16/%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8/">
+                        <span class="hidden-mobile">C++列表初始化的存在意义</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC/';
+        this.page.identifier = '/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,593 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>《EffectiveModernC++》第二章:auto - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《EffectiveModernC++》第二章:auto">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-12-03 21:24" pubdate>
+        2022年12月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《EffectiveModernC++》第二章:auto</h1>
+            
+            <div class="markdown-body">
+              <h1 id="第二章-auto"><a href="#第二章-auto" class="headerlink" title="第二章 auto"></a>第二章 <code>auto</code></h1><h2 id="item5：优先考虑auto而非显式类型声明"><a href="#item5：优先考虑auto而非显式类型声明" class="headerlink" title="item5：优先考虑auto而非显式类型声明"></a>item5：优先考虑<code>auto</code>而非显式类型声明</h2><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> It&gt;           <span class="hljs-comment">//对从b到e的所有元素使用</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dwim</span><span class="hljs-params">(It b, It e)</span>           <span class="hljs-comment">//dwim（“do what I mean”）算法</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span> (b != e) &#123;<br>        <span class="hljs-keyword">typename</span> <span class="hljs-built_in">std</span>::iterator_traits&lt;It&gt;::value_type currValue = *b;<span class="hljs-comment">//auto currValue = *b;即可</span><br>        …<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><code>typename std::iterator_traits&lt;It&gt;::value_type</code>是想表达迭代器指向的元素的值的类型，然而我们即使写出 <code>typename std::iterator_traits&lt;It&gt;::value_type</code>也不知道他具体是一个什么类型，只不过是萃取器帮我们找到了对应的valuetype，此时不妨直接使用auto。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> derefUPLess = <br>    [](<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;p1,       <span class="hljs-comment">//用于std::unique_ptr</span><br>       <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;p2)       <span class="hljs-comment">//指向的Widget类型的</span><br>    &#123; <span class="hljs-keyword">return</span> *p1 &lt; *p2; &#125;;                      <span class="hljs-comment">//比较函数</span><br></code></pre></div></td></tr></table></figure>
+<p>很酷对吧，如果使用C++14，将会变得更酷，<strong>因为<em>lambda</em>表达式中的形参也可以使用<code>auto</code>：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> derefLess =                                <span class="hljs-comment">//C++14版本</span><br>    [](<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; p1,                          <span class="hljs-comment">//被任何像指针一样的东西</span><br>       <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; p2)                          <span class="hljs-comment">//指向的值的比较函数</span><br>    &#123; <span class="hljs-keyword">return</span> *p1 &lt; *p2; &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>但是你可能会想我们完全不需要使用<code>auto</code>声明局部变量来保存一个闭包，因为我们可以使用<code>std::function</code>对象。<code>std::function</code>对象到底是什么？</p>
+<p><code>std::function</code>是一个C++11标准模板库中的一个模板，它泛化了函数指针的概念。与函数指针只能指向函数不同，<code>std::function</code>可以指向任何可调用对象，也就是那些像函数一样能进行调用的东西。当你声明函数指针时你必须指定函数类型（即函数签名），同样当你创建<code>std::function</code>对象时你也需要提供函数签名，由于它是一个模板所以你需要在它的模板参数里面提供。举个例子，假设你想声明一个<code>std::function</code>对象<code>func</code>使它指向一个可调用对象，比如一个具有这样函数签名的函数，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">bool</span>(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;,           <span class="hljs-comment">//C++11</span><br>     <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;)           <span class="hljs-comment">//std::unique_ptr&lt;Widget&gt;</span><br>                                                <span class="hljs-comment">//比较函数的签名</span><br></code></pre></div></td></tr></table></figure>
+<p>你就得这么写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">bool</span>(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;,<br>                   <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;)&gt; func;<br></code></pre></div></td></tr></table></figure>
+<p>因为<em>lambda</em>表达式能产生一个可调用对象，所以我们现在可以把闭包存放到<code>std::function</code>对象中。这意味着我们可以不使用<code>auto</code>写出C++11版的<code>derefUPLess</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">bool</span>(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;,<br>                   <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;)&gt;<br>derefUPLess = [](<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;p1,<br>                 <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt; &amp;p2)<br>                &#123; <span class="hljs-keyword">return</span> *p1 &lt; *p2; &#125;;<br></code></pre></div></td></tr></table></figure>
+<p><strong>一个持有闭包(closure)的<code>auto</code>变量具有和闭包(closure)一样的类型</strong>，并且因此<strong>仅消耗闭包(closure)所需求的内存空间。</strong></p>
+<p><strong>一个持有闭包(closure)的<code>std::function</code>变量的类型是<code>std::function</code>模板的一个具现(instantiation)</strong>，并且它对于任意的函数signature都有固定的内存空间。这个内存空间的大小也许并不满足闭包(closure)的需求，<strong>所以<code>std::function</code>的构造函数可能会申请堆内存来存储闭包(closure)。因此，<code>std::function</code>对象通常会比<code>auto</code>对象消耗更多的内存空间。</strong></p>
+<p>另外，实现细节禁用inline，会导致间接地函数调用。因此，通过<code>std::function</code>对象调用闭包(closure)几乎肯定会比通过<code>auto</code>对象调用慢。</p>
+<p>总之，<code>std::function</code>方法会比<code>auto</code>方法消耗更多空间且执行更慢，并且<code>std::function</code>方法还可能产生out-of-memory的异常。<br>因此auto几乎在这场竞争中全面胜利，更好写，更好的性能。</p>
+<p>我们再来讨论下<strong>类型快捷方式（type shortcuts）</strong>有关的问题:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v;<br>…<br><span class="hljs-keyword">unsigned</span> sz = v.size();<br></code></pre></div></td></tr></table></figure>
+<p><code>v.size()</code>的标准返回类型是<code>std::vector&lt;int&gt;::size_type</code>，但是只有少数开发者意识到这点。<code>std::vector&lt;int&gt;::size_type</code>实际上被指定为无符号整型，所以很多人都认为用<code>unsigned</code>就足够了，写下了上述的代码。这会造成一些有趣的结果。举个例子，在<strong>Windows 32-bit</strong>上<code>std::vector&lt;int&gt;::size_type</code>和<code>unsigned</code>是一样的大小，但是在<strong>Windows 64-bit</strong>上<code>std::vector&lt;int&gt;::size_type</code>是64位，<code>unsigned</code>是32位。这意味着这段代码在Windows 32-bit上正常工作，但是当把应用程序移植到Windows 64-bit上时就可能会出现一些问题。谁愿意花时间处理这些细枝末节的问题呢？</p>
+<p>所以使用<code>auto</code>可以确保你不需要浪费时间：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> sz =v.size();                      <span class="hljs-comment">//sz的类型是std::vector&lt;int&gt;::size_type</span><br></code></pre></div></td></tr></table></figure>
+<p>你还是不相信使用<code>auto</code>是多么明智的选择？考虑下面的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>, <span class="hljs-keyword">int</span>&gt; m;<br>…<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::pair&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>, <span class="hljs-keyword">int</span>&gt;&amp; p : m)<br>&#123;<br>    …                                   <span class="hljs-comment">//用p做一些事</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>看起来好像很合情合理的表达，但是这里有一个问题，你看到了吗？</p>
+<p>要想看到错误你就得知道<code>std::unordered_map</code>的<em>key</em>是<code>const</code>的，所以<code>hash table</code>（<code>std::unordered_map</code>本质上的东西）中的<code>std::pair</code>的类型不是<code>std::pair&lt;std::string, int&gt;</code>，而是<code>std::pair&lt;const std::string, int&gt;</code>。</p>
+<p>所以不放直接用auto，避免这些很难被意识到的类型不匹配的错误：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; p : m)<br>&#123;<br>    …                                   <span class="hljs-comment">//用p做一些事</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="item6：auto推导若非己愿，使用显式类型初始化惯用法"><a href="#item6：auto推导若非己愿，使用显式类型初始化惯用法" class="headerlink" title="item6：auto推导若非己愿，使用显式类型初始化惯用法"></a>item6：<code>auto</code>推导若非己愿，使用显式类型初始化惯用法</h2><p>有些时候auto并不会如你所愿，考虑下面一个例子：</p>
+<p><code>features</code>函数返回一个<code>std::vector&lt;bool&gt;</code>，这里的<code>bool</code>表示<code>Widget</code>是否提供一个独有的特性。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">features</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Widget&amp; w)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>假设第5个<em>bit</em>表示<code>Widget</code>是否具有高优先级，我们可以写这样的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">Widget w;<br>…<br><span class="hljs-keyword">bool</span> highPriority = features(w)[<span class="hljs-number">5</span>];     <span class="hljs-comment">//w高优先级吗？</span><br>…<br>processWidget(w, highPriority);         <span class="hljs-comment">//根据它的优先级处理w</span><br></code></pre></div></td></tr></table></figure>
+<p>这段代码没什么问题，work的很好。</p>
+<p><strong>如果我们使用<code>auto</code>代替<code>highPriority</code>的显式指定类型做一些看起来很无害的改变：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> highPriority = features(w)[<span class="hljs-number">5</span>];     <span class="hljs-comment">//w高优先级吗？</span><br></code></pre></div></td></tr></table></figure>
+<p>情况变了。所有代码仍然可编译，但是行为不再可预测：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">processWidget(w,highPriority);          <span class="hljs-comment">//未定义行为！</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>使用<code>auto</code>后<code>highPriority</code>不再是<code>bool</code>类型</strong>。为什么呢？这里面主要的原因就是vector自身的问题：</p>
+<p>虽然从概念上来说<code>std::vector&lt;bool&gt;</code>意味着存放<code>bool</code>，但是<code>std::vector&lt;bool&gt;</code>的<code>operator[]</code>不会返回容器中元素的引用（这就是<code>std::vector::operator[]</code>可返回<strong>除了<code>bool</code>以外</strong>的任何类型），取而代之它<strong>返回一个<code>std::vector&lt;bool&gt;::reference</code>的对象（一个嵌套于<code>std::vector&lt;bool&gt;</code>中的类）。</strong></p>
+<p><code>std::vector&lt;bool&gt;::reference</code>之所以存在是因为<code>std::vector&lt;bool&gt;</code>规定了使用一个打包形式（packed form）表示它的<code>bool</code>，每个<code>bool</code>占一个<code>bit</code>。那给<code>std::vector</code>的<code>operator[]</code>带来了问题，因为<code>std::vector&lt;T&gt;</code>的<code>operator[]</code>应当返回一个<code>T&amp;</code>，<strong>但是C++禁止对<code>bit</code>s的引用。无法返回一个<code>bool&amp;</code>，</strong><code>std::vector&lt;bool&gt;</code>的<code>operator[]</code>返回一个<strong>行为类似于</strong><code>bool&amp;</code>的对象。要想成功扮演这个角色，<code>bool&amp;</code>适用的上下文<code>std::vector&lt;bool&gt;::reference</code>也必须一样能适用。<strong>在<code>std::vector&lt;bool&gt;::reference</code>的特性中，使这个原则可行的特性是一个可以向<code>bool</code>的隐式转化。</strong>（不是<code>bool&amp;</code>，是<strong><code>bool</code></strong>。要想完整的解释<code>std::vector&lt;bool&gt;::reference</code>能模拟<code>bool&amp;</code>的行为所使用的一堆技术可能扯得太远了，所以这里简单地说隐式类型转换只是这个大型马赛克的一小块）</p>
+<p>对于可以正常运行的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">bool</span> highPriority = features(w)[<span class="hljs-number">5</span>];     <span class="hljs-comment">//显式的声明highPriority的类型</span><br></code></pre></div></td></tr></table></figure>
+<p>这里，<code>features</code>返回一个<code>std::vector&lt;bool&gt;</code>对象后再调用<code>operator[]</code>，<code>operator[]</code>将会返回一个<code>std::vector&lt;bool&gt;::reference</code>对象，然后再通过隐式转换赋值给<code>bool</code>变量<code>highPriority</code>。<code>highPriority</code>因此表示的是<code>features</code>返回的<code>std::vector&lt;bool&gt;</code>中的第五个<em>bit</em>，这也正如我们所期待的那样。</p>
+<p>然后再对照一下当使用<code>auto</code>时发生了什么：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> highPriority = features(w)[<span class="hljs-number">5</span>];     <span class="hljs-comment">//推导highPriority的类型</span><br></code></pre></div></td></tr></table></figure>
+<p>同样的，<code>features</code>返回一个<code>std::vector&lt;bool&gt;</code>对象，再调用<code>operator[]</code>，<code>operator[]</code>将会返回一个<code>std::vector&lt;bool&gt;::reference</code>对象，但是现在这里有一点变化了，<code>auto</code>推导<code>highPriority</code>的类型为<code>std::vector&lt;bool&gt;::reference</code>，但是<code>highPriority</code>对象没有第五<em>bit</em>的值。</p>
+<p>这个值取决于<code>std::vector&lt;bool&gt;::reference</code>的具体实现。其中的一种实现是这样的（<code>std::vector&lt;bool&gt;::reference</code>）对象包含一个指向机器字（<em>word</em>）的指针，然后加上方括号中的偏移实现被引用<em>bit</em>这样的行为。然后再来考虑<code>highPriority</code>初始化表达的意思，注意这里假设<code>std::vector&lt;bool&gt;::reference</code>就是刚提到的实现方式。</p>
+<p>调用<code>features</code>将返回一个<code>std::vector&lt;bool&gt;</code>临时对象，这个对象没有名字，为了方便我们的讨论，我这里叫他<code>temp</code>。<code>operator[]</code>在<code>temp</code>上调用，它返回的<code>std::vector&lt;bool&gt;::reference</code>包含一个指向存着这些<em>bit</em>s的一个数据结构中的一个<em>word</em>的指针（<code>temp</code>管理这些<em>bit</em>s），还有相应于第5个<em>bit</em>的偏移。<code>highPriority</code>是这个<code>std::vector&lt;bool&gt;::reference</code>的拷贝，所以<code>highPriority</code>也包含一个指针，指向<code>temp</code>中的这个<em>word</em>，加上相应于第5个<em>bit</em>的偏移。在这个语句结束的时候<code>temp</code>将会被销毁，因为它是一个临时变量。因此<code>highPriority</code>包含一个悬置的（<em>dangling</em>）指针，如果用于<code>processWidget</code>调用中将会造成未定义行为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">processWidget(w, highPriority);         <span class="hljs-comment">//未定义行为！</span><br>                                        <span class="hljs-comment">//highPriority包含一个悬置指针！</span><br></code></pre></div></td></tr></table></figure>
+<p><code>std::vector&lt;bool&gt;::reference</code>是一个代理类（<em>proxy class</em>）的例子：所谓代理类就是以模仿和增强一些类型的行为为目的而存在的类。很多情况下都会使用代理类，<code>std::vector&lt;bool&gt;::reference</code>展示了对<code>std::vector&lt;bool&gt;</code>使用<code>operator[]</code>来实现引用<em>bit</em>这样的行为。另外，C++标准模板库中的智能指针（见<a href="https://github.com/kelthuzadx/EffectiveModernCppChinese/blob/master/4.SmartPointers/item18.md" target="_blank" rel="noopener">第4章</a>）也是用代理类实现了对原始指针的资源管理行为。代理类的功能已被大家广泛接受。</p>
+<p>一些代理类被设计于用以对客户可见。比如<code>std::shared_ptr</code>和<code>std::unique_ptr</code>。其他的代理类则或多或少不可见，比如<code>std::vector&lt;bool&gt;::reference</code>就是不可见代理类的一个例子，还有它在<code>std::bitset</code>的胞弟<code>std::bitset::reference</code>。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EffectiveModernCPP/">EffectiveModernCPP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A7%BB%E6%AD%A5%E7%8E%B0%E4%BB%A3C/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《EffectiveModernC++》第三章:移步现代C++</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC/">
+                        <span class="hidden-mobile">《EffectiveModernC++》第一章:类型推导</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AB%A0-auto/';
+        this.page.identifier = '/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AB%A0-auto/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
