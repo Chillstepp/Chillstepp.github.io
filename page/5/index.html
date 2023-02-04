@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,62 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch10-策略优化进阶">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/">强化学习纲要Ch10-策略优化进阶</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/07/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch10-%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E8%BF%9B%E9%98%B6/">
+          
+          
+            
+          
+          策略优化进阶——上本次的内容：
+
+首先还是先回顾一下Value-based RL和Policy-based RL区别：
+
+策略目标和策略梯度：
+
+策略梯度(Policy gradient)有下面几种常见的算法：
+
+这里要说一下这四个优化方法的关系：
+首先是REINFORCE使用的是$G_t$,是由MC方法获得的，他其实就是Q Actor-Critic方法中$Q^w$的采样。Advantage Ac
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-07 18:59" pubdate>
+              2021-06-07
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -685,57 +741,6 @@ model-free就是指无模型，MDP不是已知的。也就是说我们不知道$
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch1-Overview/" target="_self">
-          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch1-Overview">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch1-Overview/">强化学习纲要Ch1-Overview</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch1-Overview/">
-          
-          
-            
-          
-          Intro to Reinforcement learning-Overview强化学习可以做什么？
-强化学习成为近几年来的热点，强化学习这种方法再许多领域上都取得了成功，比如，强化学习可以教计算机在虚拟环境中控制机器人，控制机器手等…
-
-(图：机器手按照规则旋转立方体)
-​    对于一些策略游戏来说，强化学习在近几年同样有很大的突破：比如王者荣耀的觉悟AI(AAAI2020，Mastering
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 21:51" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -919,5 +924,20 @@ model-free就是指无模型，MDP不是已知的。也就是说我们不知道$
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

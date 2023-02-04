@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,54 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97-%E5%88%9D%E6%8E%A2/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="模板元编程(编译期计算)初探">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97-%E5%88%9D%E6%8E%A2/">模板元编程(编译期计算)初探</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97-%E5%88%9D%E6%8E%A2/">
+          
+          
+            
+          
+          模板元编程(编译期计算)初探编译期求Fib什么是编译期计算：
+123456789101112131415161718192021222324template&lt;int n&gt;struct fib&#123;    static_assert(n&gt;=0, "Argument must be non-negative");    static const int value = fib&
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 14:44" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -652,53 +700,6 @@ Base b = a; 调用拷贝构造函数 还是 operator =呢? 是两者都可
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++的decltype关键字">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/">C++的decltype关键字</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/02/15/C-%E7%9A%84decltype%E5%85%B3%E9%94%AE%E5%AD%97/">
-          
-          
-            
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-15 20:44" pubdate>
-              2022-02-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -882,5 +883,20 @@ Base b = a; 调用拷贝构造函数 还是 operator =呢? 是两者都可
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
