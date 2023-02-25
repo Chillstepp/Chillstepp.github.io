@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>《EffectiveModernC-》第六章-Lambda表达式 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="《EffectiveModernC-》第六章-Lambda表达式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-02-25 23:36" pubdate>
+        2023年2月25日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      65
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《EffectiveModernC-》第六章-Lambda表达式</h1>
+            
+            <div class="markdown-body">
+              <h1 id="第六章-lambda表达式"><a href="#第六章-lambda表达式" class="headerlink" title="第六章 lambda表达式"></a>第六章 lambda表达式</h1><h2 id="Item31：避免使用默认捕获模式"><a href="#Item31：避免使用默认捕获模式" class="headerlink" title="Item31：避免使用默认捕获模式"></a>Item31：避免使用默认捕获模式</h2><p>lambda一大作用就是简化了谓词繁琐的创建</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">std</span>::find_if(container.<span class="hljs-built_in">begin</span>(), container.<span class="hljs-built_in">end</span>(),[](<span class="hljs-keyword">int</span> val)&#123; <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> &lt; val &amp;&amp; val &lt; <span class="hljs-number">10</span>; &#125;);<br></code></pre></div></td></tr></table></figure>
+<p>​    标题提到: 避免使用默认捕获模式，lambda中有两种默认捕获模式，按引用捕获和按值捕获。</p>
+<p>​    其中按引用捕获很容易造成悬空引用的问题，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">using</span> FilterContainer = <span class="hljs-built_in">vector</span>&lt;function&lt;<span class="hljs-keyword">bool</span>(<span class="hljs-keyword">int</span>)&gt;&gt;;<br>FilterContainer filters;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">AddFilterToContainer</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> Divisor = GetDivsor();<br>    filters.emplace_back(<br>		[&amp;](<span class="hljs-keyword">int</span> value)&#123;<br>			<span class="hljs-keyword">return</span> value % Divisor == <span class="hljs-number">0</span>;<br>		&#125;<br>	);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>​    Divisor会在函数<code>AddFilterToContainer()</code>结束后生命周期结束，如果后面再使用到filters里的这个闭包，此时默认捕获的Divisor会造成悬空引用。</p>
+<p>​    从长期来看，显式列出<em>lambda</em>依赖的局部变量和形参，是更加符合软件工程规范的做法。</p>
+<p>额外提一下，<strong>C++14支持了在<em>lambda</em>中使用<code>auto</code>来声明变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">std</span>::all_of(<span class="hljs-built_in">begin</span>(container), <span class="hljs-built_in">end</span>(container),<br>               [&amp;](<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; value)               <span class="hljs-comment">// C++14</span><br>               &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;))<br></code></pre></div></td></tr></table></figure>
+<p>假设在一个<code>Widget</code>类，可以实现向过滤器的容器添加条目：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Widget</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    …                       <span class="hljs-comment">//构造函数等</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>; <span class="hljs-comment">//向filters添加条目</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">int</span> divisor;            <span class="hljs-comment">//在Widget的过滤器使用</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>这是<code>Widget::addFilter</code>的定义：</p>
+<p>下面代码做法看起来是安全的代码。<em>lambda</em>依赖于<code>divisor</code>，但默认的按值捕获确保<code>divisor</code>被拷贝进了<em>lambda</em>对应的所有闭包中，但却有很大问题。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    filters.emplace_back(<br>        [=](<span class="hljs-keyword">int</span> value) &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;<br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>实际上上面的用法是错的，因为 <strong>捕获只能应用于<em>lambda</em>被创建时所在作用域里的non-<code>static</code>局部变量（包括形参）</strong>。在<code>Widget::addFilter</code>的视线里，<code>divisor</code>并不是一个局部变量，而是<code>Widget</code>类的一个成员变量。它不能被捕获。</p>
+<p>而如果默认捕获模式被删除，代码就不能编译了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    filters.emplace_back(                               <span class="hljs-comment">//错误！</span><br>        [](<span class="hljs-keyword">int</span> value) &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;  <span class="hljs-comment">//divisor不可用</span><br>    ); <br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>另外，如果尝试去显式地捕获<code>divisor</code>变量（或者按引用或者按值——这不重要），也一样会编译失败，因为<code>divisor</code>不是一个局部变量或者形参。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    filters.emplace_back(<br>        [divisor](<span class="hljs-keyword">int</span> value)                <span class="hljs-comment">//错误！没有名为divisor局部变量可捕获</span><br>        &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;<br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>所以如果默认按值捕获不能捕获<code>divisor</code>，而不用默认按值捕获代码就不能编译，这是为什么？</p>
+<p>在默认按值捕获的<code>Widget::addFilter</code>版本中，</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    filters.emplace_back(<br>        [=](<span class="hljs-keyword">int</span> value) &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;<br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>真正被捕获的是<code>Widget</code>的<code>this</code>指针，而不是<code>divisor</code>。</strong>编译器会将上面的代码看成以下的写法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> currentObjectPtr = <span class="hljs-keyword">this</span>;<br><br>    filters.emplace_back(<br>        [currentObjectPtr](<span class="hljs-keyword">int</span> value)<br>        &#123; <span class="hljs-keyword">return</span> value % currentObjectPtr-&gt;divisor == <span class="hljs-number">0</span>; &#125;<br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>也就是说使用=这种值捕获this，其实还是拿到了对象的指针来做操作，而往往你会认为你这是在对值捕获的对象做操作，这种误用可能会让你不小心修改了对象的成员而自己却不知道。</p>
+<p>我们不想用引用的divisor，如何解决上面那个问题呢？其实拷贝出来一份副本就好了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> divisorCopy = divisor;                 <span class="hljs-comment">//拷贝数据成员</span><br><br>    filters.emplace_back(<br>        [divisorCopy](<span class="hljs-keyword">int</span> value)                <span class="hljs-comment">//捕获副本</span><br>        &#123; <span class="hljs-keyword">return</span> value % divisorCopy == <span class="hljs-number">0</span>; &#125;	<span class="hljs-comment">//使用副本</span><br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>在C++14的广义捕获(generalized lambda capture)可以更简单的来写成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Widget::addFilter</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> divisorCopy = divisor;                 <span class="hljs-comment">//拷贝数据成员</span><br><br>    filters.emplace_back(<br>        [=](<span class="hljs-keyword">int</span> value)                          <span class="hljs-comment">//捕获副本</span><br>        &#123; <span class="hljs-keyword">return</span> value % divisorCopy == <span class="hljs-number">0</span>; &#125;	<span class="hljs-comment">//使用副本</span><br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>关于更多的广义捕获可以看 <a href="https://chillstepp.github.io/2022/05/07/Lambda%E5%87%BD%E6%95%B0-%E7%94%A8%E6%B3%95-%E5%AE%9E%E7%8E%B0-%E5%B9%BF%E4%B9%89%E6%8D%95%E8%8E%B7/">https://chillstepp.github.io/2022/05/07/Lambda%E5%87%BD%E6%95%B0-%E7%94%A8%E6%B3%95-%E5%AE%9E%E7%8E%B0-%E5%B9%BF%E4%B9%89%E6%8D%95%E8%8E%B7/</a></p>
+<p>我们再次强调 ：<em>lambda</em>可能会依赖<strong>静态存储生命周期</strong>（static storage duration）的对象。这些对象定义在全局空间或者命名空间，或者在类、函数、文件中声明为<code>static</code>。<strong>这些对象也能在<em>lambda</em>里使用，但它们不能被捕获。</strong></p>
+<p>一些初学者会认为能使用static或者全局变量是因为<code>[=]</code>值捕获到了，但其实你还是引用的这些全局变量，即使你不写=，什么都不捕获依然可以使用这些<strong>静态存储生命周期</strong>的对象，如下面这份代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addDivisorFilter</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">auto</span> calc1 = computeSomeValue1();    <span class="hljs-comment">//现在是static</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">auto</span> calc2 = computeSomeValue2();    <span class="hljs-comment">//现在是static</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">auto</span> divisor =                       <span class="hljs-comment">//现在是static</span><br>    computeDivisor(calc1, calc2);<br><br>    filters.emplace_back(<br>        [=](<span class="hljs-keyword">int</span> value)                          <span class="hljs-comment">//什么也没捕获到！</span><br>        &#123; <span class="hljs-keyword">return</span> value % divisor == <span class="hljs-number">0</span>; &#125;        <span class="hljs-comment">//引用上面的static</span><br>    );<br><br>    ++divisor;                                  <span class="hljs-comment">//调整divisor</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>​    这个<em>lambda</em>没有使用任何的non-<code>static</code>局部变量，所以它没有捕获任何东西。然而<em>lambda</em>的代码引用了<code>static</code>变量<code>divisor</code>，在每次调用<code>addDivisorFilter</code>的结尾，<code>divisor</code>都会递增，通过这个函数添加到<code>filters</code>的所有<em>lambda</em>都展示新的行为（分别对应新的<code>divisor</code>值）。这个<em>lambda</em>是通过引用捕获<code>divisor</code>，这和默认的按值捕获表示的含义有着直接的矛盾。如果你一开始就避免使用默认的按值捕获模式，你就能解除代码的风险。</p>
+<p>说了这么多规则，可以发现，你写默认捕获的代价是很大的，你需要仔细检查你到底犯没犯这些错误，那不如直接少用按值捕获模式或是按引用捕获模式。</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>默认的按引用捕获可能会导致悬空引用。</li>
+<li>默认的按值捕获对于悬空指针很敏感（尤其是<code>this</code>指针），并且它会误导人产生<em>lambda</em>是独立的想法。</li>
+</ul>
+<h2 id="Item32：使用初始化捕获来移动对象到闭包中-C-14后"><a href="#Item32：使用初始化捕获来移动对象到闭包中-C-14后" class="headerlink" title="Item32：使用初始化捕获来移动对象到闭包中(C++14后)"></a>Item32：使用初始化捕获来移动对象到闭包中(C++14后)</h2><p>这一节要讲的是 初始化捕获/广义捕获（generalized lambda capture）</p>
+<p>考虑这样一段代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Widget</span> &#123;</span>                          <span class="hljs-comment">//一些有用的类型</span><br><span class="hljs-keyword">public</span>:<br>    …<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValidated</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isProcessed</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isArchived</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;<br><span class="hljs-keyword">private</span>:<br>    …<br>&#125;;<br><br><span class="hljs-keyword">auto</span> pw = <span class="hljs-built_in">std</span>::make_unique&lt;Widget&gt;();   <span class="hljs-comment">//创建Widget；使用std::make_unique</span><br>                                        <span class="hljs-comment">//的有关信息参见条款21</span><br><br>…                                       <span class="hljs-comment">//设置*pw</span><br><br><span class="hljs-keyword">auto</span> func = [pw = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(pw)]        <span class="hljs-comment">//使用std::move(pw)初始化闭包数据成员</span><br>            &#123; <span class="hljs-keyword">return</span> pw-&gt;isValidated()<br>                     &amp;&amp; pw-&gt;isArchived(); &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>里面使用了<code>pw = std::move(pw)</code>初始化闭包数据成员，这个就称为Generalized lambda capture</p>
+<p>对于初学者来说，可能会认为 等号左右边的pw是一个东西，但其实并不，“<code>=</code>”左侧的名称<code>pw</code>表示闭包类中的数据成员，而右侧的名称<code>pw</code>表示在<em>lambda</em>上方声明的对象，即由调用<code>std::make_unique</code>去初始化的变量。因此，“<code>pw = std::move(pw)</code>”的意思是“在闭包中创建一个数据成员<code>pw</code>，并使用将<code>std::move</code>应用于局部变量<code>pw</code>的结果来初始化该数据成员”。</p>
+<p>再简单点来说 , 更直观来看, 这么写一样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> func = [pw_moved = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(pw)]        <span class="hljs-comment">//使用std::move(pw)初始化闭包数据成员</span><br>            &#123; <span class="hljs-keyword">return</span> pw_moved-&gt;isValidated()<br>                     &amp;&amp; pw_moved-&gt;isArchived(); &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>题目中也提到了广义捕获/初始化捕获在C++14后才推出，如果低于这个版本怎么使用呢？其实有很多种思路</p>
+<ul>
+<li><p>一种是扔到花括号里再用move转成右值即可</p>
+</li>
+<li><p>另一种是: lambda本质就是个仿函数(C++insight这个网站可以试一下)，因此自己写一下即可</p>
+</li>
+</ul>
+  <figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IsValAndArch</span> &#123;</span>                            <span class="hljs-comment">//“is validated and archived”</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">using</span> DataType = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;Widget&gt;;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">IsValAndArch</span><span class="hljs-params">(DataType&amp;&amp; ptr)</span>       <span class="hljs-comment">//条款25解释了std::move的使用</span></span><br><span class="hljs-function">    : <span class="hljs-title">pw</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(ptr))</span> </span>&#123;&#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function">    </span>&#123; <span class="hljs-keyword">return</span> pw-&gt;isValidated() &amp;&amp; pw-&gt;isArchived(); &#125;<br>    <br><span class="hljs-keyword">private</span>:<br>    DataType pw;<br>&#125;;<br><br><span class="hljs-keyword">auto</span> func = IsValAndArch(<span class="hljs-built_in">std</span>::make_unique&lt;Widget&gt;());<br></code></pre></div></td></tr></table></figure>
+<p>除了上面两种，我们还可以使用<code>std::bind</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt; data;               <span class="hljs-comment">//同上</span><br><br>…                                       <span class="hljs-comment">//同上</span><br><br><span class="hljs-keyword">auto</span> func =<br>    <span class="hljs-built_in">std</span>::bind(                              <span class="hljs-comment">//C++11模拟初始化捕获</span><br>        [](<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt;&amp; data) <span class="hljs-comment">//译者注：本行高亮</span><br>        &#123; <span class="hljs-comment">/*使用data*/</span> &#125;,<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(data)                     <span class="hljs-comment">//译者注：本行高亮</span><br>    );<br></code></pre></div></td></tr></table></figure>
+<p>​    如<em>lambda</em>表达式一样，<code>std::bind</code>产生函数对象。我将由<code>std::bind</code>返回的函数对象称为<strong>bind对象</strong>（<em>bind objects</em>）。<code>std::bind</code>的第一个实参是可调用对象，后续实参表示要传递给该对象的值。</p>
+<p>​    一个bind对象包含了传递给<code>std::bind</code>的所有实参的副本。<strong>对于每个左值实参，bind对象中的对应对象都是复制构造的。对于每个右值，它都是移动构造的。</strong> 在上面的代码中，我们用了<code>std::move(data)</code>，因此将<code>data</code>移动构造到Bind对象中去，这其实就是移动捕获，做到了和generalized lambda capture一样的功能。意味着当调用<code>func</code>（bind对象）时，<code>func</code>中所移动构造的<code>data</code>副本将作为实参传递给<code>std::bind</code>中的<em>lambda</em>。</p>
+<p>​    另外要提示的一点是：<strong>默认情况下，从lambda生成的闭包类中的<code>operator()</code>成员函数为<code>const</code>的</strong>。这具有在lambda主体内把闭包中的所有数据成员渲染为<code>const</code>的效果。但是，<strong>bind对象内部的移动构造的<code>data</code>副本不是<code>const</code>的</strong>，因此，为了防止在lambda内修改该<code>data</code>副本，<em>lambda</em>的形参应声明为reference-to-<code>const</code>。 这就是我们班在上面的代码中<code>const std::vector&lt;double&gt;&amp; data</code>是const的原因。</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>使用C++14的初始化捕获将对象移动到闭包中。</li>
+<li>在C++11中，通过手写类或<code>std::bind</code>的方式来模拟初始化捕获。</li>
+</ul>
+<h2 id="Item33：对auto-amp-amp-形参使用decltype以std-forward它们"><a href="#Item33：对auto-amp-amp-形参使用decltype以std-forward它们" class="headerlink" title="Item33：对auto&amp;&amp;形参使用decltype以std::forward它们"></a>Item33：对auto&amp;&amp;形参使用decltype以std::forward它们</h2><p>从泛型lambda说起：</p>
+<p><strong>泛型lambda（generic lambdas）</strong>是C++14中最值得期待的特性之一——因为在<em>lambda</em>的形参中可以使用<code>auto</code>关键字。这个特性的实现是非常直截了当的：即在闭包类中的<code>operator()</code>函数是一个函数模版。例如存在这么一个<em>lambda</em>，</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> f = [](<span class="hljs-keyword">auto</span> x)&#123; <span class="hljs-keyword">return</span> func(normalize(x)); &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>对应的闭包类中的函数调用操作符看来就变成这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SomeCompilerGeneratedClassName</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;                <span class="hljs-comment">//auto返回类型见条款3</span><br>    <span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(T x)</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function">    </span>&#123; <span class="hljs-keyword">return</span> func(normalize(x)); &#125;<br>    …                                   <span class="hljs-comment">//其他闭包类功能</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>​    那么这里有个问题就是: 如果函数<code>normalize</code>对待左值右值的方式不一样，这个<em>lambda</em>的实现方式就不大合适了，因为即使传递到<em>lambda</em>的实参是一个右值，<em>lambda</em>传递进<code>normalize</code>的总是一个左值（形参<code>x</code>）。</p>
+<p>​    可以看出泛型lambda固然方便，但是要记得完美转发哦。</p>
+<p>改成这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> f = [](<span class="hljs-keyword">auto</span>&amp;&amp; x)&#123; <br>    <span class="hljs-keyword">return</span> func(normalize(<span class="hljs-built_in">std</span>::forward&lt;???&gt;(x))); <br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>这里还是有个疑问点，<code>???</code>填写什么类型呢？ </p>
+<p>​    一般来说，当你在使用完美转发时，从上面的仿函数类来看，你是在一个接受类型参数为<code>T</code>的模版函数里，所以你可以写<code>std::forward&lt;T&gt;</code>。但在泛型<em>lambda</em>中，没有可用的类型参数<code>T</code>，auto替代了T。</p>
+<p><a href="https://cntransgroup.github.io/EffectiveModernCppChinese/5.RRefMovSemPerfForw/item28.html" target="_blank" rel="noopener">    Item28</a>解释过如果一个左值实参被传给通用引用的形参，那么形参类型会变成左值引用。传递的是右值，形参就会变成右值引用。这意味着在这个<em>lambda</em>中，可以通过检查形参<code>x</code>的类型来确定传递进来的实参是一个左值还是右值，<code>decltype</code>就可以实现这样的效果(看item3)。</p>
+<p>​    也就是说<strong>传递给<em>lambda</em>的是一个左值，<code>decltype(x)</code>就能产生一个左值引用；如果传递的是一个右值，<code>decltype(x)</code>就会产生右值引用。</strong></p>
+<p>​    上次我们提到了forward的实现原理如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;                        <span class="hljs-comment">//在std命名空间</span><br><span class="hljs-function">T&amp;&amp; <span class="hljs-title">forward</span><span class="hljs-params">(<span class="hljs-keyword">remove_reference_t</span>&lt;T&gt;&amp; param)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;T&amp;&amp;&gt;(param);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>当你要转发的是一个右值，产生以下的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function">Widget&amp;&amp; &amp;&amp; <span class="hljs-title">forward</span><span class="hljs-params">(Widget&amp; param)</span>          <span class="hljs-comment">//当T是Widget&amp;&amp;时的std::forward实例</span></span><br><span class="hljs-function"></span>&#123;                                           <span class="hljs-comment">//（引用折叠之前）</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;Widget&amp;&amp; &amp;&amp;&gt;(param);<br>&#125;<br><br><span class="hljs-comment">//应用了引用折叠之后（右值引用的右值引用变成单个右值引用），代码会变成：</span><br><br><span class="hljs-function">Widget&amp;&amp; <span class="hljs-title">forward</span><span class="hljs-params">(Widget&amp; param)</span>             <span class="hljs-comment">//当T是Widget&amp;&amp;时的std::forward实例</span></span><br><span class="hljs-function"></span>&#123;                                           <span class="hljs-comment">//（引用折叠之后）</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;Widget&amp;&amp;&gt;(param);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>左值同理：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function">Widget&amp; &amp;&amp; <span class="hljs-title">forward</span><span class="hljs-params">(Widget&amp; param)</span>          <span class="hljs-comment">//当T是Widget&amp;时的std::forward实例</span></span><br><span class="hljs-function"></span>&#123;                                           <span class="hljs-comment">//（引用折叠之前）</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;Widget&amp; &amp;&amp;&gt;(param);<br>&#125;<br><br><span class="hljs-comment">//应用了引用折叠之后（右值引用的右值引用变成单个右值引用），代码会变成：</span><br><br><span class="hljs-function">Widget&amp; <span class="hljs-title">forward</span><span class="hljs-params">(Widget&amp; param)</span>             <span class="hljs-comment">//当T是Widget&amp;时的std::forward实例</span></span><br><span class="hljs-function"></span>&#123;                                           <span class="hljs-comment">//（引用折叠之后）</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;Widget&amp;&gt;(param);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>对比这个实例和用<code>Widget</code>设置<code>T</code>去实例化产生的结果，它们完全相同。话句话说：<strong>用右值引用类型和用非引用类型去初始化<code>std::forward</code>产生的相同的结果。</strong>这是个很重要的等价定理。</p>
+<p>现在我们这么写即可：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> f =<br>    [](<span class="hljs-keyword">auto</span>&amp;&amp; param)<br>    &#123;<br>        <span class="hljs-keyword">return</span><br>            func(normalize(<span class="hljs-built_in">std</span>::forward&lt;<span class="hljs-keyword">decltype</span>(param)&gt;(param)));<br>    &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>如果你害怕上面的代码可读性不高，给同事解释起来比较麻烦，不妨这样做: </p>
+<p>其实一般来说，我们常会在<code>forward&lt;T&gt;</code>中的T希填写为非引用类型，因此除了上面的做法我们也可以直接<code>remove_refernce</code>拿到非引用类型即可:</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> f =<br>	[](<span class="hljs-keyword">auto</span>&amp;&amp; param)<br>	&#123;<br>	  <span class="hljs-keyword">return</span><br>		  func(normalize(<span class="hljs-built_in">std</span>::forward&lt;<span class="hljs-keyword">decltype</span>(<span class="hljs-built_in">std</span>::remove_reference(param))&gt;(param)));<br>	&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>对<code>auto&amp;&amp;</code>形参使用<code>decltype</code>以<code>std::forward</code>它们。</li>
+</ul>
+<h2 id="Item34：考虑lambda而非std-bind"><a href="#Item34：考虑lambda而非std-bind" class="headerlink" title="Item34：考虑lambda而非std::bind"></a>Item34：考虑lambda而非<code>std::bind</code></h2><p>​    在C++11中，<em>lambda</em>几乎总是比<code>std::bind</code>更好的选择。 从C++14开始，<em>lambda</em>的作用不仅强大，而且是完全值得使用的。但是我们仍要学习<code>std::bind</code>, 原因很简单：别人可能会使用，而你有可能要阅读/维护别人代码，所以需要了解。下面我们说明为何lambda优于<code>std::bind</code>。</p>
+<p>​    考虑我们给一个闹钟添加</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//一个时间点的类型定义（语法见条款9）</span><br><span class="hljs-keyword">using</span> Time = <span class="hljs-built_in">std</span>::chrono::steady_clock::time_point;<br><span class="hljs-comment">//“enum class”见条款10</span><br><span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Sound</span> &#123;</span> Beep, Siren, Whistle &#125;;<br><span class="hljs-comment">//时间段的类型定义</span><br><span class="hljs-keyword">using</span> Duration = <span class="hljs-built_in">std</span>::chrono::steady_clock::duration;<br><span class="hljs-comment">//在时间t，使用s声音响铃时长d</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setAlarm</span><span class="hljs-params">(Time t, Sound s, Duration d)</span></span>;<br><br><span class="hljs-comment">//setSoundL（“L”指代“lambda”）是个函数对象，允许指定一小时后响30秒的警报器的声音</span><br><span class="hljs-keyword">auto</span> setSoundL =<br>    [](Sound s) <br>    &#123;<br>        <span class="hljs-comment">//使std::chrono部件在不指定限定的情况下可用</span><br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::chrono;<br><br>        setAlarm(steady_clock::now() + hours(<span class="hljs-number">1</span>),    <span class="hljs-comment">//一小时后响30秒的闹钟</span><br>                 s,                                 <span class="hljs-comment">//译注：setAlarm三行高亮</span><br>                 seconds(<span class="hljs-number">30</span>)); <span class="hljs-comment">//30s也可以，C++后支持了用户自定义字面量</span><br>    &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>由于C++11后支持了用户自定义字面量，我们通过使用标准后缀如秒（<code>s</code>），毫秒（<code>ms</code>）和小时（<code>h</code>）等简化在C++14中的代码，其中标准后缀基于C++11对用户自定义常量的支持。</p>
+<p>因此<code>hours(1)</code>和<code>seconds(30)</code>也可以写成1h，30s:</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> setSoundL =<br>    [](Sound s)<br>    &#123;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::chrono;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::literals;      <span class="hljs-comment">//对于C++14后缀</span><br><br>        setAlarm(steady_clock::now() + <span class="hljs-number">1</span>h,	<span class="hljs-comment">//C++14写法，但是含义同上</span><br>                 s,<br>                 <span class="hljs-number">30</span>s);<br>    &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>考虑写一个bind的版本：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::chrono;                <span class="hljs-comment">//同上</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::literals;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::placeholders;          <span class="hljs-comment">//“_1”使用需要</span><br><br><span class="hljs-keyword">auto</span> setSoundB =                            <span class="hljs-comment">//“B”代表“bind”</span><br>    <span class="hljs-built_in">std</span>::bind(setAlarm,<br>              steady_clock::now() + <span class="hljs-number">1</span>h,     <span class="hljs-comment">//不正确！见下</span><br>              _1,<br>              <span class="hljs-number">30</span>s);<br></code></pre></div></td></tr></table></figure>
+<p>​    代码并不完全正确。在<em>lambda</em>中，表达式<code>steady_clock::now() + 1h</code>显然是<code>setAlarm</code>的实参。调用<code>setAlarm</code>时将对其进行计算。可以理解：我们希望在调用<code>setAlarm</code>后一小时响铃。但是，在<code>std::bind</code>调用中，将<code>steady_clock::now() + 1h</code>作为实参传递给了<code>std::bind</code>，而不是<code>setAlarm</code>。这意味着将在调用<code>std::bind</code>时对表达式进行求值，并且该表达式产生的时间将存储在产生的bind对象中。结果，警报器将被设置为在<strong>调用<code>std::bind</code>后一小时</strong>发出声音，而不是在调用<code>setAlarm</code>一小时后发出。</p>
+<p>​    所以我们希望<code>std::bind</code>推迟对表达式的求值，直到调用<code>setAlarm</code>为止，而这样做的方法是将对<code>std::bind</code>的第二个调用嵌套在第一个调用中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> setSoundB =<br>    <span class="hljs-built_in">std</span>::bind(setAlarm,<br>              <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::plus&lt;&gt;(), <span class="hljs-built_in">std</span>::bind(steady_clock::now), <span class="hljs-number">1</span>h),<span class="hljs-comment">//c++14</span><br>              _1,<br>              <span class="hljs-number">30</span>s);<br></code></pre></div></td></tr></table></figure>
+<p>就是把这个计算式再用bind嵌套一下，我们同时发现了：</p>
+<p>尖括号之间未指定任何类型，即该代码包含“<code>std::plus&lt;&gt;</code>”，而不是“<code>std::plus&lt;type&gt;</code>”。 <strong>在C++14中，通常可以省略标准运算符模板的模板类型实参</strong>，因此无需在此处提供。</p>
+<p>到现在我们应该很容易看出来bind很是繁琐且易错，lambda是更好的选择，因此bind在表达式推迟计算上很容易造成错误，不如lambda好用。</p>
+<p>现在考虑第二段代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Volume</span> &#123;</span> Normal, Loud, LoudPlusPlus &#125;;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setAlarm</span><span class="hljs-params">(Time t, Sound s, Duration d)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setAlarm</span><span class="hljs-params">(Time t, Sound s, Duration d, Volume v)</span></span>;<span class="hljs-comment">//新加的重载函数</span><br><br><span class="hljs-keyword">auto</span> setSoundL =                            <span class="hljs-comment">//和之前一样</span><br>    [](Sound s)<br>    &#123;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::chrono;<br>        setAlarm(steady_clock::now() + <span class="hljs-number">1</span>h,  <span class="hljs-comment">//可以，调用三实参版本的setAlarm</span><br>                 s,<br>                 <span class="hljs-number">30</span>s);<br>    &#125;;<br><br><span class="hljs-keyword">auto</span> setSoundB =                            <span class="hljs-comment">//错误！哪个setAlarm？</span><br>    <span class="hljs-built_in">std</span>::bind(setAlarm,<br>              <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::plus&lt;&gt;(),<br>                        steady_clock::now(),<br>                        <span class="hljs-number">1</span>h),<br>              _1,<br>              <span class="hljs-number">30</span>s);<br></code></pre></div></td></tr></table></figure>
+<p>​    bind版本出错的原因是编译器无法确定应将两个<code>setAlarm</code>函数中的哪一个传递给<code>std::bind</code>。 它们仅有的是一个函数名称，而这个单一个函数名称是有歧义的。</p>
+<p>要使对<code>std::bind</code>的调用能编译，必须将<code>setAlarm</code>强制转换为适当的函数指针类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">using</span> SetAlarm3ParamType = <span class="hljs-keyword">void</span>(*)(Time t, Sound s, Duration d);<br><br><span class="hljs-keyword">auto</span> setSoundB =                                            <span class="hljs-comment">//现在可以了</span><br>    <span class="hljs-built_in">std</span>::bind(<span class="hljs-keyword">static_cast</span>&lt;SetAlarm3ParamType&gt;(setAlarm),<br>              <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::plus&lt;&gt;(),<br>                        steady_clock::now(),<br>                        <span class="hljs-number">1</span>h), <br>              _1,<br>              <span class="hljs-number">30</span>s);<br></code></pre></div></td></tr></table></figure>
+<p>在这个case上造成bind和lambda的区别的原因是：</p>
+<ul>
+<li><p>在<code>setSoundL</code>的函数调用操作符（即<em>lambda</em>的闭包类对应的函数调用操作符）内部，对<code>setAlarm</code>的调用是正常的函数调用，编译器可以按常规方式进行内联。好比在调用处那行代码内联成:<code>setSoundL(Sound::Siren);</code></p>
+</li>
+<li><p>但是，对<code>std::bind</code>的调用是将函数指针传递给<code>setAlarm</code>，这意味着在<code>setSoundB</code>的函数调用操作符（即绑定对象的函数调用操作符）内部，对<code>setAlarm</code>的调用是通过一个函数指针。 编译器不太可能通过函数指针内联函数。因此，使用<em>lambda</em>还可能会比使用<code>std::bind</code>能生成更快的代码</p>
+</li>
+</ul>
+<p><code>setAlarm</code>示例仅涉及一个简单的函数调用。如果你想做更复杂的事情，使用<em>lambda</em>会更有利。 例如，考虑以下C++14的<em>lambda</em>使用，它返回其实参是否在最小值（<code>lowVal</code>）和最大值（<code>highVal</code>）之间的结果，其中<code>lowVal</code>和<code>highVal</code>是局部变量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> betweenL =<br>    [lowVal, highVal]<br>    (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; val)                           <span class="hljs-comment">//C++14</span><br>    &#123; <span class="hljs-keyword">return</span> lowVal &lt;= val &amp;&amp; val &lt;= highVal; &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>使用<code>std::bind</code>可以表达相同的内容，但是该构造是一个通过晦涩难懂的代码来保证工作安全性的示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::placeholders;              <span class="hljs-comment">//同上</span><br><span class="hljs-keyword">auto</span> betweenB =<br>    <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::logical_and&lt;&gt;(),             <span class="hljs-comment">//C++14</span><br>              <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::less_equal&lt;&gt;(), lowVal, _1),<br>              <span class="hljs-built_in">std</span>::bind(<span class="hljs-built_in">std</span>::less_equal&lt;&gt;(), _1, highVal));<br></code></pre></div></td></tr></table></figure>
+<p>再考虑到lambda还有初始化捕获/广义捕获，泛型lambda等，lambda确实是更好的选择。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CompLevel</span> &#123;</span> Low, Normal, High &#125;; <span class="hljs-comment">//压缩等级</span><br><br><span class="hljs-function">Widget <span class="hljs-title">compress</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Widget&amp; w,            <span class="hljs-comment">//制作w的压缩副本</span></span></span><br><span class="hljs-function"><span class="hljs-params">                CompLevel lev)</span></span>;<br><br>Widget w;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>::placeholders;<br><span class="hljs-keyword">auto</span> compressRateB = <span class="hljs-built_in">std</span>::bind(compress, w, _1);<br></code></pre></div></td></tr></table></figure>
+<p>当我们将<code>w</code>传递给<code>std::bind</code>时，必须将其存储起来，以便以后进行压缩。它存储在对象<code>compressRateB</code>中，但是它是如何被存储的呢？答案是bind中都是按值捕获的，他总会拷贝他的实参。如果想用引用捕获需要一个<code>std::ref</code>的东西<code>auto compressRateB = std::bind(compress, std::ref(w), _1);</code>即可。 </p>
+<p><code>std::ref</code>的原理是什么呢？看了下源码发现返回的就是一个<code>`reference_wrapper</code>， <code>reference_wrapper</code>不妨简单理解成里面装着指针的一个引用包装。所以bind拷贝实参的时候会拷贝<code>reference_wrapper</code>,即拷贝了变量的指针。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230225231751899.png" srcset="/img/loading.gif" alt="image-20230225231751899"></p>
+<p>只有在C++11下，那是lambda的初始化捕获和泛型lambda还没有出现时，可以用bind来替代：</p>
+<p><strong>初始化捕获：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt; data;      <br><br><span class="hljs-keyword">auto</span> func =<br>    <span class="hljs-built_in">std</span>::bind(                              <span class="hljs-comment">//C++11模拟初始化捕获</span><br>        [](<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt;&amp; data) <span class="hljs-comment">//译者注：本行高亮</span><br>        &#123; <span class="hljs-comment">/*使用data*/</span> &#125;,<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(data)                     <span class="hljs-comment">//译者注：本行高亮</span><br>    );<br></code></pre></div></td></tr></table></figure>
+<p><strong>泛型lambda：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PolyWidget</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp; param)</span></span>;<br>    …<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><code>std::bind</code>可以如下绑定一个<code>PolyWidget</code>对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">PolyWidget pw;<br><span class="hljs-keyword">auto</span> boundPW = <span class="hljs-built_in">std</span>::bind(pw, _1);<br></code></pre></div></td></tr></table></figure>
+<p><code>boundPW</code>可以接受任意类型的对象了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">boundPW(<span class="hljs-number">1930</span>);              <span class="hljs-comment">//传int给PolyWidget::operator()</span><br>boundPW(<span class="hljs-literal">nullptr</span>);           <span class="hljs-comment">//传nullptr给PolyWidget::operator()</span><br>boundPW(<span class="hljs-string">"Rosebud"</span>); 		<span class="hljs-comment">//传字面值给PolyWidget::operator()</span><br></code></pre></div></td></tr></table></figure>
+<p>这一点无法使用C++11的<em>lambda</em>做到。 但是，在C++14中，可以通过带有<code>auto</code>形参的<em>lambda</em>轻松实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">auto</span> boundPW = [pw](<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; param)  <span class="hljs-comment">//C++14 </span><br>               &#123; pw(param); &#125;;<br></code></pre></div></td></tr></table></figure>
+<p>话说回来谁还只用c++11编译器呢？lambda几乎总是更好的选择。</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>与使用<code>std::bind</code>相比，<em>lambda</em>更易读，更具表达力并且可能更高效。</li>
+<li>只有在C++11中，<code>std::bind</code>可能对实现移动捕获或绑定带有模板化函数调用运算符的对象时会很有用。</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EffectiveModernCPP/">EffectiveModernCPP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/05/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">
+                        <span class="hidden-mobile">《EffectiveModernC-》第五章-移动语义，完美转发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2023/02/25/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E5%85%AD%E7%AB%A0-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/';
+        this.page.identifier = '/2023/02/25/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E5%85%AD%E7%AB%A0-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
