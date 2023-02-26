@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -186,6 +186,54 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/02/26/%E4%BB%8EC-%E7%9A%84POD%E8%B0%88%E8%B5%B7%EF%BC%8C%E5%88%B0memcpy-memmove%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="从C++的POD谈起，到memcpy/memmove的安全性">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/02/26/%E4%BB%8EC-%E7%9A%84POD%E8%B0%88%E8%B5%B7%EF%BC%8C%E5%88%B0memcpy-memmove%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/">从C++的POD谈起，到memcpy/memmove的安全性</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/02/26/%E4%BB%8EC-%E7%9A%84POD%E8%B0%88%E8%B5%B7%EF%BC%8C%E5%88%B0memcpy-memmove%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/">
+          
+          
+            
+          
+          C++中的POD类型(Plain Old Data)谈起，到memcpy的安全性​    最近在写代码时恰巧看了下GMP的源码，发现了里面对委托函数的参数类型规定为指针，引用或是pod，其中pod的判断是std::is_pod，那么什么是POD类型呢？ 
+​    我们知道C++在一定程度上可以说是C的超集，在C中struct不过是一堆数据的合集，但是在c++中，类的概念出现了，它不仅仅是简单的把
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-02-26 22:37" pubdate>
+              2023-02-26
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -658,55 +706,6 @@ shading 基本理论我们可以认为材质影响着物体的着色
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="现代C++中的constexpr,内敛变量">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">现代C++中的constexpr,内敛变量</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">
-          
-          
-            
-          
-          constexpr简单认识constexpr编译期编程很烧脑，为此有时候一个简单的计算也需要写大量代码，C++为此做了很多改进，让编译期编程简单了很多。当然对于一些没有改进的东西仍需要模板元编程，因此模板元编程仍然是很重要的一部分。
-考虑下面代码是否可以运行？
-1234567891011121314int sqr(int n)&#123;    return n*n;&#125;int main(
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-24 14:46" pubdate>
-              2022-07-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -890,20 +889,5 @@ shading 基本理论我们可以认为材质影响着物体的着色
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -186,6 +186,61 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/" target="_self">
+          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH1-图像分类">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/">CS231n-CH1-图像分类</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/06/CS231n-CH1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/">
+          
+          
+            
+          
+          CS231n：Computer Science图像分类数据驱动方法
+800*600*3, 其中3代表三个channels（R,G,B）。
+我们可以把图像分类想成这两个大的部分：
+
+第一个是训练部分：放进去(图像,label)，训练得到模型
+
+123def train(imgs, labels):    #Machine Learning    return model
+
+第二个是预策部分：有了模型
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-06 20:57" pubdate>
+              2021-04-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -690,61 +745,6 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH6：Support Vector Regression">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/">机器学习技法CH6：Support Vector Regression</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH6%EF%BC%9ASupport-Vector-Regression/">
-          
-          
-            
-          
-          CH6：Support Vector RegressionKernel Ridge Regression
-如上一节所说，我们可以把最优解的$w_*$看作$z_n$的线性组合
-
-因此我们可以解最优的$\beta$即可求出$w_*$.
-
-这部分我们怎么求来的呢？
-首先第一部分：
-
-我们可以化为矩阵的形式来表达这个式子：$\beta K\beta$, 其中$\beta$是一个$1N$矩阵，$K$是一个$
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-18 22:29" pubdate>
-              2021-02-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -928,20 +928,5 @@ $q_t(x)$:  称为condition，  判断$x$是否在路径$t$上。
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

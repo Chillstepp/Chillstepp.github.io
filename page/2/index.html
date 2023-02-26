@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -186,6 +186,55 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="现代C++中的constexpr,内敛变量">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">现代C++中的constexpr,内敛变量</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">
+          
+          
+            
+          
+          constexpr简单认识constexpr编译期编程很烧脑，为此有时候一个简单的计算也需要写大量代码，C++为此做了很多改进，让编译期编程简单了很多。当然对于一些没有改进的东西仍需要模板元编程，因此模板元编程仍然是很重要的一部分。
+考虑下面代码是否可以运行？
+1234567891011121314int sqr(int n)&#123;    return n*n;&#125;int main(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 14:46" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -650,58 +699,6 @@ $\vec{a}$，代表一个方向，因此向
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++ shared_ptr循环引用问题/解决方法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">C++ shared_ptr循环引用问题/解决方法</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
-          
-          
-            
-          
-          C++ shared_ptr循环引用问题/解决方法关于shared_ptr/weak_ptr首先可以看一下这篇文章
-C++的智能指针-unique_ptr,shared_ptr,weak_ptr
-循环引用问题shared_ptr存在循环引用问题：
-考虑下面这样一个代码
-
-12345678910111213141516171819class Node&#123;public:	int _data;	
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-24 20:17" pubdate>
-              2022-02-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -885,20 +882,5 @@ C++的智能指针-unique_ptr,shared_ptr,weak_ptr
 
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
