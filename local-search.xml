@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>记录一个由于GMP参数类型不匹配导致的BUG</title>
+    <link href="/2023/03/22/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%94%B1%E4%BA%8EGMP%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E5%AF%BC%E8%87%B4%E7%9A%84BUG/"/>
+    <url>/2023/03/22/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%94%B1%E4%BA%8EGMP%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E5%AF%BC%E8%87%B4%E7%9A%84BUG/</url>
+    
+    <content type="html"><![CDATA[<h1 id="记录一个由于GMP参数类型不匹配导致的BUG"><a href="#记录一个由于GMP参数类型不匹配导致的BUG" class="headerlink" title="记录一个由于GMP参数类型不匹配导致的BUG"></a>记录一个由于GMP参数类型不匹配导致的BUG</h1><p>原因在于一次用GMP的<code>SendObjectMessage</code>时我写了如下代码：</p><p>其中<code>SourceActo</code>r是一个<code>Actor*</code>类型, <code>Character</code>是一个<code>Character*</code>类型, 代表着 <strong>SourceActor把Character的盾击碎。</strong></p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322202648972.png" srcset="/img/loading.gif" alt="image-20230322202648972"></p><p>而在声明这个<code>MessageKey</code>时，由于想到这个<code>MessageKey</code>会被其他两个物体用到，比如炮台A击碎了炮塔B的护盾，那么这个Message的两个参数类型如果分别设置为Actor和Character显然是不合理的，因此选择了声明为两个Actor，如下图：</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322202956837.png" srcset="/img/loading.gif" alt="image-20230322202956837"></p><p>把<code>Character*</code>类型UpCast传给<code>Actor*</code>显然是正确的，是常用的多态特性而已。</p><p>在编辑器中一切正常，而打包出来的游戏却异常，表现为：<strong>GMP在Listen到Message后没有执行后续的操作</strong></p><p>这太奇怪了，看Log发现了一些事情：</p><p><code>UGMPManager::IsSignatureCompatible</code>这个函数报错，发现了签名不匹配导致了后续操作被拒绝：</p><p>不匹配具体表现为：下面这两个if没有一个可以通过</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322204100306.png" srcset="/img/loading.gif" alt="image-20230322204100306"></p><p>rhsName就是(Actor，Actor)即MessageKey中的类型，lhsName就是SendObject中参数的类型(Actor，Character)。</p><p>在这rhs和lhs匹配时，他们的第二个参数分别为Actor和Character，Actor和Character出现了不是IsDerivedFrom的关系，可是这俩事实上确实是继承关系，为什么会检测不到呢？更奇怪的是在编辑器中却可以检测到有继承关系。</p><p>接着看继承关系的信息怎么来的：</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322204543503.png" srcset="/img/loading.gif" alt="image-20230322204543503"></p><p>查看这个Info怎么来的：存储在静态数据中</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322204606070.png" srcset="/img/loading.gif" alt="image-20230322204606070"></p><p>再看静态数据怎么被维护的：在调用GetClassName/GetNativeClassName中被维护到</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322204653247.png" srcset="/img/loading.gif" alt="image-20230322204653247"></p><p>以GetNativeClassName为例：再看谁调用了GetNativeClassName</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322203830445.png" srcset="/img/loading.gif" alt="image-20230322203830445"></p><p>可以看到在Edtior宏包围了这个GetNativeClassName，这导致了：<strong>在编辑器中继承链上的继承信息可以被收集到，而在打包出来的游戏中无法收集到, 从而导致了最开始的类型不匹配。</strong></p><p>GMP作者肯定是认为<strong>继承关系信息的收集是很耗费时间的，所以包了一层Editor的宏，防止在游戏包体中做这种耗时操作</strong>，但是这却导致了一个令人困惑的Bug，即文章一开始所说的在打包和编辑器中的差异。</p><p>回到最开始的问题，我还是希望MessageKey的参数是(Actor,Actor)，怎么办呢？希望这么做的原因在文章开头提到了(即希望这个MessageKey可以被其他非Character的Actor类型复用)，我们直接在发消息前UpCast一下即可，提前做一个转换。</p><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230322202539766.png" srcset="/img/loading.gif" alt="image-20230322202539766"></p><p>到此问题解决。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>UE</tag>
+      
+      <tag>GMP</tag>
+      
+      <tag>UE杂记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>从C++的POD谈起，到memcpy/memmove的安全性</title>
     <link href="/2023/02/26/%E4%BB%8EC-%E7%9A%84POD%E8%B0%88%E8%B5%B7%EF%BC%8C%E5%88%B0memcpy-memmove%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/"/>
     <url>/2023/02/26/%E4%BB%8EC-%E7%9A%84POD%E8%B0%88%E8%B5%B7%EF%BC%8C%E5%88%B0memcpy-memmove%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/</url>

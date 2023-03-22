@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,60 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/03/22/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%94%B1%E4%BA%8EGMP%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E5%AF%BC%E8%87%B4%E7%9A%84BUG/" target="_self">
+          <img src="/img/UE.jpg" srcset="/img/loading.gif" alt="记录一个由于GMP参数类型不匹配导致的BUG">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/22/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%94%B1%E4%BA%8EGMP%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E5%AF%BC%E8%87%B4%E7%9A%84BUG/">记录一个由于GMP参数类型不匹配导致的BUG</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/22/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%94%B1%E4%BA%8EGMP%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8C%B9%E9%85%8D%E5%AF%BC%E8%87%B4%E7%9A%84BUG/">
+          
+          
+            
+          
+          记录一个由于GMP参数类型不匹配导致的BUG原因在于一次用GMP的SendObjectMessage时我写了如下代码：
+其中SourceActor是一个Actor*类型, Character是一个Character*类型, 代表着 SourceActor把Character的盾击碎。
+
+而在声明这个MessageKey时，由于想到这个MessageKey会被其他两个物体用到，比如炮台A击碎了炮塔B
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-22 22:30" pubdate>
+              2023-03-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/UE/">UE</a>
+            
+              <a href="/tags/GMP/">GMP</a>
+            
+              <a href="/tags/UE%E6%9D%82%E8%AE%B0/">UE杂记</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -647,70 +701,11 @@ C++可以分配内存的工具这是一些内存的基础工具
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/24/GAMES101-7-9-Shading/" target="_self">
-          <img src="/img/GAMES101.png" srcset="/img/loading.gif" alt="GAMES101(7-9):Shading">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/24/GAMES101-7-9-Shading/">GAMES101(7-9):Shading</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/07/24/GAMES101-7-9-Shading/">
-          
-          
-            
-          
-          GAMES101-ShadingVisibility/occlusion(可见性/遮盖)z-buffer算法
-
-本质就是对一个物体的三角形面片的每个像素维护深度最浅处。
-
-图示：
-
-复杂度：假设每个三角形覆盖的像素数都是一个常数值，那么n个三角形复杂度就是$O(n)$
-shading 基本理论我们可以认为材质影响着物体的着色
-我们看一个图：
-
-我们认为决定材质的三种光为：高光，漫反射，间接光照(环
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-24 14:50" pubdate>
-              2022-07-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
-            
-              <a href="/tags/GAMES101/">GAMES101</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
@@ -889,5 +884,20 @@ shading 基本理论我们可以认为材质影响着物体的着色
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
