@@ -191,6 +191,59 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/10/16/%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++列表初始化的存在意义">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/16/%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8/">C++列表初始化的存在意义</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/10/16/%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8/">
+          
+          
+            
+          
+          列表初始化的作用列表初始化是初始化行为:
+1complex(double r=0,double i=0):re(r),im(i)&#123;&#125;
+大括号里写叫做赋值行为:
+1complex(double r=0,double i=0)&#123;re=r;im=i;&#125;
+首先要搞清楚他俩并不是等价的。
+没有了列表初始化，仅仅依靠大括号很难解决下面几个问题：
+在大括号内无法初始化父类
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-16 21:30" pubdate>
+              2022-10-16
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/09/10/C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86Part1-new-delete%E5%8F%8A%E5%85%B6%E9%87%8D%E8%BD%BD/" target="_self">
           <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++内存管理Part1: new/delete及其重载">
         </a>
@@ -658,55 +711,6 @@ $\vec{a}$，代表一个方向，因此向
               <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
             
               <a href="/tags/GAMES101/">GAMES101</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++11新特性">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">C++11新特性</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/05/27/C-11%E6%96%B0%E7%89%B9%E6%80%A7/">
-          
-          
-            
-          
-          ariadic Templates数量不定的模板参数下面是一个数量不定的模板参数的例子，print()函数做得是一个将一堆参数输出的动作。
-每次取出第一个参数输出，剩下的参数包递归下去每次输出参数的第一个。但请不要忘记写void print(){ }，因为当参数空的时候，你需要一个无参的print来结束print的递归。
-如果你想知道 后面那一部分参数包有几个，你可以使用sizeof...(arg
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-05-27 23:44" pubdate>
-              2022-05-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
             
           </div>
         
