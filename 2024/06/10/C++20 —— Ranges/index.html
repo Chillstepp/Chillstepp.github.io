@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      627 字
+      631 字
     </span>
   
 
@@ -262,12 +262,22 @@
 <li><p><strong>Ranges</strong></p>
 <ul>
 <li><p>is a <strong>concept</strong>, has begin(t) and end(t) </p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-class"><span class="hljs-title">concept</span> <span class="hljs-title">range</span> = <span class="hljs-title">requires</span>(<span class="hljs-title">T</span>&amp; <span class="hljs-title">t</span>)&#123;</span><br>    ranges::<span class="hljs-built_in">begin</span>(t);<br>    ranges::<span class="hljs-built_in">end</span>(t);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 </li>
-<li><p>```c++<br>template<class T><br>concept range = requires(T&amp; t){</p>
-<div class="hljs code-wrapper"><pre><code>ranges::begin(t);
-ranges::end(t);
-</code></pre></div><p>}</p>
-<figure class="highlight arduino"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs arduino"><br>  - <span class="hljs-built_in">array</span>/<span class="hljs-built_in">set</span>/<span class="hljs-built_in">list</span>/<span class="hljs-built_in">vector</span>/... STL容器 和 C数组  都是Ranges<br><br>- **Views**<br><br>  - A view is a range<br><br>  - Created  via **Range Factories** <span class="hljs-keyword">or</span> **Range Adaptors**<br><br>  - **懒惰求值**，这意味着在没用到之前不会计算，且计算是最小化，不会多计算。<br><br>  - 不拥有数据，但不是只读的！<br><br>    ```c++<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span> vec&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;;<br>    <span class="hljs-keyword">auto</span> v = <span class="hljs-built_in">std</span>::views::reverse(vec);<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; *(v.<span class="hljs-built_in">begin</span>() + <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-string">"\n"</span>;<span class="hljs-comment">//5</span><br>    *v.<span class="hljs-built_in">begin</span>() = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x: vec) <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">" "</span>;<span class="hljs-comment">// &#123;1, 2, 3, 4, 5, 0&#125;</span><br></code></pre></div></td></tr></table></figure>
+<li><p>array/set/list/vector/… STL容器 和 C数组  都是Ranges</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Views</strong></p>
+<ul>
+<li><p>A view is a range</p>
+</li>
+<li><p>Created  via <strong>Range Factories</strong> or <strong>Range Adaptors</strong></p>
+</li>
+<li><p><strong>懒惰求值</strong>，这意味着在没用到之前不会计算，且计算是最小化，不会多计算。</p>
+</li>
+<li><p>不拥有数据，但不是只读的！</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span> vec&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;;<br><span class="hljs-keyword">auto</span> v = <span class="hljs-built_in">std</span>::views::reverse(vec);<br><span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; *(v.<span class="hljs-built_in">begin</span>() + <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-string">"\n"</span>;<span class="hljs-comment">//5</span><br>*v.<span class="hljs-built_in">begin</span>() = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x: vec) <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">" "</span>;<span class="hljs-comment">// &#123;1, 2, 3, 4, 5, 0&#125;</span><br></code></pre></div></td></tr></table></figure>
 </li>
 </ul>
 </li>
