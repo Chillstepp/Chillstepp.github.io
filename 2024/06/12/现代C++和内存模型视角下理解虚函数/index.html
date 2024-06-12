@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>现代C++和内存模型视角下理解虚函数 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="现代C++和内存模型视角下理解虚函数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-06-12 16:30" pubdate>
+        2024年6月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      62
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">现代C++和内存模型视角下理解虚函数</h1>
+            
+            <div class="markdown-body">
+              <h1 id="现代C-和内存模型视角下理解虚函数"><a href="#现代C-和内存模型视角下理解虚函数" class="headerlink" title="现代C++和内存模型视角下理解虚函数"></a>现代C++和内存模型视角下理解虚函数</h1><h2 id="虚函数速度慢在哪里"><a href="#虚函数速度慢在哪里" class="headerlink" title="虚函数速度慢在哪里"></a>虚函数速度慢在哪里</h2><ul>
+<li><strong>函数调用多一层:</strong> 虚函数调用比普通函数多了一个查询虚表，获取虚函数入口的步骤，比普通的函数调用要更耗时。</li>
+<li><strong>难做编译器优化:</strong>  具体调用哪个虚函数是运行时状态决定的，编译器很难做一些优化，比如PGO，自动inline，RVO等，当然这个在某些特殊情况下不是的，可以看”<code>2.虚函数不一定是运行期才绑定</code>“<ul>
+<li>虚函数真的就那么慢吗？它的开销究竟在哪里？来看这4段代码！ - 程序喵大人的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/345799727" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/345799727</a></li>
+<li>虚函数一定是运行期才绑定么？ - IceBear的回答 - 知乎 <a href="https://www.zhihu.com/question/491602524/answer/2165605549" target="_blank" rel="noopener">https://www.zhihu.com/question/491602524/answer/2165605549</a></li>
+</ul>
+</li>
+<li><strong>Cache Miss:</strong> 调用虚函数的过程，要访问虚表的内存，这部分内存很可能距离局部数据较远，会导致更高概率的cache miss，影响部分性能<ul>
+<li>cache miss:<a href="https://hazelcast.com/glossary/cache-miss/" target="_blank" rel="noopener">https://hazelcast.com/glossary/cache-miss/</a></li>
+</ul>
+</li>
+<li><strong>分支预测失败:</strong> 查找虚函数表时，需要根据函数指针去匹配对应的函数是否是目标虚函数，匹配的过程带来了分支，这会导致分支预测器预测失败概率变高，从而引发CPU流水线被冲刷。<ul>
+<li>深入理解CPU的分支预测(Branch Prediction)模型 - 杨超越的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/22469702" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22469702</a></li>
+<li>如果没有分支预测器，处理器将会等待分支指令通过了指令流水线的执行阶段，才把下一条指令送入流水线的第一个阶段—取指令阶段（fetch stage）。这种技术叫做流水线停顿（pipeline stalled）或者流水线冒泡（pipeline bubbling）或者<a href="https://zh.wikipedia.org/wiki/延迟间隙" target="_blank" rel="noopener">分支延迟间隙</a>。这是早期的<a href="https://zh.wikipedia.org/wiki/RISC" target="_blank" rel="noopener">RISC</a>体系结构处理器采用的应对分支指令的流水线执行的办法。<strong>而分支预测器猜测<a href="https://zh.wikipedia.org/wiki/條件運算式" target="_blank" rel="noopener">条件表达式</a>两路分支中哪一路最可能发生，然后<a href="https://zh.wikipedia.org/wiki/推测执行" target="_blank" rel="noopener">推测执行</a>这一路的指令，来避免流水线停顿造成的时间浪费。如果后来发现分支预测错误，那么流水线中推测执行的那些中间结果全部放弃，重新获取正确的分支路线上的指令开始执行，这招致了程序执行的延迟。</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="虚函数不一定是运行期绑定"><a href="#虚函数不一定是运行期绑定" class="headerlink" title="虚函数不一定是运行期绑定"></a>虚函数不一定是运行期绑定</h2><p>编译器很聪明，会帮你做静态</p>
+<ul>
+<li><p><strong>虚函数运行期绑定的性质只有在指针或者引用下能用，通过值调用的虚函数是编译器静态绑定，是没有运行期绑定的性质的。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        f();<br>    &#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Derived</span> :</span> Base<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        g();<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(Base b)</span></span><br><span class="hljs-function"></span>&#123;<br>    b.virtualFun(); <br>&#125;<br></code></pre></div></td></tr></table></figure>
+</li>
+<li><p><strong>final关键字：当对一个final关键字定义的类对象进行虚函数调用，此时虚函数也是确定的，即进行了静态绑定</strong></p>
+</li>
+<li><p>指定了限定符：<code>p-&gt;Base::virtualFun();</code> 此时也不表现多态，故是不会在运行期去查找虚表的。</p>
+</li>
+<li><p>生命周期比较局部的对象，从理论上讲，其虚函数调用完全可以在编译期就得到确定，一些编译器优化下也可以做到静态绑定</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        f();<br>    &#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Derived</span> :</span> Base<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        g();<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>   Derived * p = <span class="hljs-keyword">new</span> Derived();<br>   Base * pb = p;<br>   pb-&gt;virtualFun(); <br>   <span class="hljs-keyword">delete</span> p;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612125401736.png" srcset="/img/loading.gif" alt="image-20240612125401736"></p>
+</li>
+<li><p>C++20 constexpr放宽了 new/delete 和虚函数，这意味着虚函数更不一定动态绑定了</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">virtual</span> ~Base() &#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">int</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Derived</span> :</span> Base<br>&#123;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">virtual</span> ~Derived() &#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">int</span> <span class="hljs-title">virtualFun</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Base * p = <span class="hljs-keyword">new</span> Derived();<br>    <span class="hljs-keyword">int</span> r = p-&gt;virtualFun();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-keyword">return</span> r;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> r = f();<br>    <span class="hljs-keyword">static_assert</span>(r == <span class="hljs-number">2</span>, <span class="hljs-string">""</span>); <span class="hljs-comment">// 静态断言通过！</span><br>    <span class="hljs-keyword">return</span> r;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+</li>
+</ul>
+<p>简单来说动态类型确定了就没必要运行期绑定哦，相信编译器优化。</p>
+<h2 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h2><p>解决菱形继承问题：</p>
+<p>有这样一份代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> &#123;</span><br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mammal</span> :</span> <span class="hljs-keyword">public</span> Animal &#123;<br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">breathe</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WingedAnimal</span> :</span> <span class="hljs-keyword">public</span> Animal &#123;<br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flap</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-comment">// A bat is a winged mammal</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bat</span> :</span> <span class="hljs-keyword">public</span> Mammal, <span class="hljs-keyword">public</span> WingedAnimal &#123;<br>&#125;;<br><br>Bat bat;<br></code></pre></div></td></tr></table></figure>
+<p>​    按照上面的定义，调用<code>bat.eat()</code>是有歧义的，因为在<code>Bat</code>中有两个<code>Animal</code>基类（间接的），所以所有的<code>Bat</code>对象都有两个不同的<code>Animal</code>基类的子对象。因此，尝试直接引用<code>Bat</code>对象的<code>Animal</code>子对象会导致错误，因为该继承是有歧义的：</p>
+<p>使用虚继承：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> &#123;</span><br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-comment">// Two classes virtually inheriting Animal:</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mammal</span> :</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> Animal &#123;<br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">breathe</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WingedAnimal</span> :</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> Animal &#123;<br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flap</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-comment">// A bat is still a winged mammal</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bat</span> :</span> <span class="hljs-keyword">public</span> Mammal, <span class="hljs-keyword">public</span> WingedAnimal &#123;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>​    <code>Bat::WingedAnimal</code>中的<code>Animal</code>部分现在和<code>Bat::Mammal</code>中的<code>Animal</code>部分是相同的了，这也就是说<strong><code>Bat</code>现在有且只有一个共享的<code>Animal</code>部分</strong>，所以对于<code>Bat::eat()</code>的调用就不再有歧义了。另外，直接将<code>Bat</code>实例分派给<code>Animal</code>实例的过程也不会产生歧义了，因为现在只存在一种可以转换为<code>Animal</code>的<code>Bat</code>实体了。</p>
+<p>​    因为<code>Mammal</code>实例的起始地址和其<code>Animal</code>部分的内存偏移量直到程序运行分配内存时才会明确，所以虚继承应用给<code>Mammal</code>和<code>WingedAnimal</code>建立了<a href="https://zh.wikipedia.org/w/index.php?title=虚表&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">虚表</a>（vtable）指针（“vpointer”）。因此“Bat”包含<code>vpointer</code>, <code>Mammal</code>, <code>vpointer</code>, <code>WingedAnimal</code>, <code>Bat</code>, <code>Animal</code>。这里共有两个虚表指针，其中最派生类的对象地址所指向的虚表指针，指向了最派生类的虚表；另一个虚表指针指向了<code>WingedAnimal</code>的类的虚表。<code>Animal</code>虚继承而来。在上面的例子里，一个分配给<code>Mammal</code>，另一个分配给<code>WingedAnimal</code>。因此每个对象占用的内存增加了两个指针的大小，但却解决了<code>Animal</code>的歧义问题。所有<code>Bat</code>类的对象都包含这两个虚指针，但是每一个对象都包含唯一的<code>Animal</code>对象。假设一个类<code>Squirrel</code>声明继承了<code>Mammal</code>，那么<code>Squirrel</code>中的<code>Mammal</code>对象的虚指针和<code>Bat</code>中的<code>Mammal</code>对象的虚指针是不同的，尽管他们占用的内存空间大小是相同的。这是因为在内存中<code>Mammal</code>到<code>Animal</code>的距离是相同的。虚表不同而实际上占用的空间相同</p>
+<h2 id="构造函数可以为虚函数吗"><a href="#构造函数可以为虚函数吗" class="headerlink" title="构造函数可以为虚函数吗"></a>构造函数可以为虚函数吗</h2><p>肯定是<strong>不可以的</strong>，因为虚表指针也是在构造函数里面初始化的，没有初始化的虚表指针无法调用虚函数。</p>
+<h2 id="析构函数可以为虚函数吗？"><a href="#析构函数可以为虚函数吗？" class="headerlink" title="析构函数可以为虚函数吗？"></a>析构函数可以为虚函数吗？</h2><p><strong>可以，更是应该被提倡。</strong> 如果我们需要删除一个指向派生类的基类指针时，应该把析构函数声明为虚函数。事实上，只要一个类有可能会被其它类所继承，就应该声明虚析构函数(哪怕该析构函数不执行任何操作)。</p>
+<h2 id="构造函数可以调用虚函数吗"><a href="#构造函数可以调用虚函数吗" class="headerlink" title="构造函数可以调用虚函数吗"></a>构造函数可以调用虚函数吗</h2><p><strong>不建议，但是可以：</strong></p>
+<p>派生类对象构造期间进入基类的构造函数时，对象类型变成了基类类型，而不是派生类类型。即<strong>在构造函数中调用虚函数，这个虚函数不会呈现出多态</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    Base()<br>    &#123;<br>       Fuction();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fuction</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Base::Fuction"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> :</span> <span class="hljs-keyword">public</span> Base<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    A()<br>    &#123;<br>      Fuction();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fuction</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"A::Fuction"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">// 这样定义一个A的对象，会输出什么？</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    A a;<br>&#125;<br><span class="hljs-comment">//output:</span><br><span class="hljs-comment">//Base::Fuction</span><br><span class="hljs-comment">//A::Fuction</span><br></code></pre></div></td></tr></table></figure>
+<h2 id="析构函数可以调用虚函数吗"><a href="#析构函数可以调用虚函数吗" class="headerlink" title="析构函数可以调用虚函数吗"></a>析构函数可以调用虚函数吗</h2><p><strong>不建议，但是可以：</strong></p>
+<ul>
+<li>当调用继承层次中某一层次的类的析构函数时其派生类部分已经析构掉，所以也不会呈现出多态。</li>
+</ul>
+<ul>
+<li><strong>从派生类析构函数调用基类析构函数时，这个对象的派生类数据成员就被视为未定义的值，因此析构是按照从派生类到基类进行析构，派生类的析构函数中可能已经销毁了某些数据成员</strong>， 基类析构函数里要是用到这些值就很可能会出现问题。</li>
+</ul>
+<h2 id="关于虚表"><a href="#关于虚表" class="headerlink" title="关于虚表"></a>关于虚表</h2><h3 id="一些需要知道的事情"><a href="#一些需要知道的事情" class="headerlink" title="一些需要知道的事情"></a>一些需要知道的事情</h3><p>1、<strong>虚函数表是Class Specific的</strong>，也就是针对一个类来说的，即它是属于一个类所有对象的，不是属于某一个对象特有的，是一个类所有对象共有的。</p>
+<p>2、<strong>虚函数表是编译器来选择实现的，编译器的种类不同，可能实现方式不一样。</strong> 比如vptr放在内向内存布局中的何处并不确定，不过目前GCC 和MSVC编译器都是将vptr放在对象内存布局的最前面。所以下文只能给出一个实现的指导，而不是所有编译器都是这样的。</p>
+<p>3、虚函数表vtable在Linux/Unix中存放在可执行文件的只读数据段中(.rodata)，这与微软的编译器将虚函数表存放在常量段存在一些差别。<strong>虚函数表在编译期生成</strong>，<strong>在.rodata只读数据段</strong>，在C++概念中五大分区的<strong>常量区</strong>。  虚函数表指针是在对象的内存里的，sizeof就会发现有虚函数就有虚表的类会大上 <strong>8 字节(64位下)</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20230905232747852.png" srcset="/img/loading.gif" alt="image-20230905232747852"></p>
+<h3 id="虚表结构"><a href="#虚表结构" class="headerlink" title="虚表结构"></a>虚表结构</h3><p>先讨论一些常见例子中 对象是如何调用到对应的虚函数。</p>
+<p><strong>1.单继承且本身不存在虚函数的派生类内存布局:</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> base1_1, base1_2;<br><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;  <span class="hljs-comment">//  定义虚函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derive1</span> :</span> <span class="hljs-keyword">public</span> Base1 &#123; <span class="hljs-comment">// Derive1 中不存在虚函数</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> derive1_1, derive1_2;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612150350130.png" srcset="/img/loading.gif" alt="image-20240612150350130"></p>
+<p><strong>2.单继承且存在基类虚函数重写的派生类内存布局</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> base1_1, base1_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derive1</span> :</span> <span class="hljs-keyword">public</span> Base1 &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> derive1_1, derive1_2;<br><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125; <span class="hljs-comment">// 派生类函数覆盖基类中同名函数</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612150452989.png" srcset="/img/loading.gif" alt="image-20240612150452989"></p>
+<p><strong>3.单继承且派生类存在属于自己的虚函数</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> base1_1, base1_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derive1</span> :</span> <span class="hljs-keyword">public</span> Base1 &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> derive1_1, derive1_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">derive1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125; <span class="hljs-comment">// 派生类存在属于自己的虚函数</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612150521213.png" srcset="/img/loading.gif" alt="image-20240612150521213"></p>
+<p><strong>4.多继承且存在虚函数覆盖同时又存在自身定义的虚函数的派生类对象布局</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> base1_1, base1_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base2</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> base2_1, base2_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base2_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base2_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derive1</span> :</span> <span class="hljs-keyword">public</span> Base1, <span class="hljs-keyword">public</span> Base2 &#123; <span class="hljs-comment">// Derive 1 分别从 Base 1 和 Base2 继承过来</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> derive1_1, derive1_2;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">base2_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">derive1_fun1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">derive1_fun2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612150659233.png" srcset="/img/loading.gif" alt="image-20240612150659233"></p>
+<p>上文中只是简单的告诉大家虚函数是分布在哪儿个虚表中，实际上虚表的内容远不止virtual function pointers这些内容。</p>
+<p><strong>虚表中包含的内容有：</strong></p>
+<ul>
+<li>紫色线框中的内容仅限于虚拟继承的情形（若无虚拟继承，则无此内容）<ul>
+<li>Virtual call offset：虚拟调用偏移。当一个class存在虚基类时，编译器便会在vtable中插入vcall offset，针对在虚基类或者虚基类的基类中声明的virtual function，为了通过虚基类调用virtual function所执行的this指针调整</li>
+<li>virtual base offset：当一个class存在虚基类时，编译器便会在primary virtual table中安插相应的vbase offset，用于访问对象的虚基类子对象</li>
+</ul>
+</li>
+<li>“offset to top”是指到对象起始地址的偏移值，只有多重继承的情形才有可能不为0，单继承或无继承的情形都为0。</li>
+<li>“RTTI information”是一个对象指针，它用于唯一地标识该类型。</li>
+<li>“virtual function pointers”也就是我们之前理解的虚函数表，其中存放着虚函数指针列表。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240612160451725.png" srcset="/img/loading.gif" alt="image-20240612160451725"></p>
+<p>下面会介绍一些场景，来解释虚表结构中的各个部分是如何被应用的。</p>
+<h4 id="多继承又是如何找到虚函数的——Offset-to-top-与-Thunk"><a href="#多继承又是如何找到虚函数的——Offset-to-top-与-Thunk" class="headerlink" title="多继承又是如何找到虚函数的——Offset to top 与 Thunk"></a>多继承又是如何找到虚函数的——Offset to top 与 Thunk</h4><p>上面我们提到了offset to top，是指到对象起始地址的偏移值，只有多重继承的情形才有可能不为0，单继承或无继承的情形都为0。这也说明了多继承找到虚函数是通过offset to top实现的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> ax;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> bx;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f1</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">C</span> :</span> <span class="hljs-keyword">public</span> A, <span class="hljs-keyword">public</span> B<br>&#123;<br>    <span class="hljs-keyword">int</span> cx;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f1</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">                                                C Vtable (7 entities)<br>                                                +--------------------+<br>struct C                                        | offset_to_top (0)  |<br>object                                          +--------------------+<br>    0 - struct A (primary base)                 |     RTTI for C     |<br>    0 -   vptr_A -----------------------------&gt; +--------------------+       <br>    8 -   int ax                                |       C::f0()      |<br>   16 - struct B                                +--------------------+<br>   16 -   vptr_B ----------------------+        |       C::f1()      |<br>   24 -   int bx                       |        +--------------------+<br>   28 - int cx                         |        | offset_to_top (-16)|<br>sizeof(C): 32    align: 8              |        +--------------------+<br>                                       |        |     RTTI for C     |<br>                                       +------&gt; +--------------------+<br>                                                |    Thunk C::f1()   |<br>                                                +--------------------+<br></code></pre></div></td></tr></table></figure>
+<p>​    在上图所示的布局中，<code>C</code>将<code>A</code>作为主基类，也就是<strong>C将它虚函数“并入”<code>A</code>的虚函数表之中</strong>，并将<code>A</code>的虚指针作为<code>C</code>的内存起始地址。而类型<code>B</code>的虚指针<code>vptr_B</code>并不能直接指向虚表中的第4个实体，这是因为<code>vptr_B</code>所指向的虚表区域，在格式上必须也是一个完整的虚表。因此，需要为<code>vptr_B</code>创建对应的虚表放在虚表<code>A</code>的部分之后 。</p>
+<p>​    至此，如果一个类型<code>A</code> 的引用持有了实际类型为<code>C</code>的变量，调用虚函数时直接调用虚表指针A所至即可。</p>
+<p>​    但如果一个类型<code>B</code> 的引用持有了实际类型为<code>C</code>的变量，这个引用的起始地址在<code>C+16</code>处。当它调用由类型<code>C</code>重写的函数<code>f1()</code>时，如果直接使用<code>this</code>指针调用<code>C::f1()</code>会由于<code>this</code>指针的地址多出<code>16</code>字节的偏移量导致错误，所以这里还需要一个<strong>Thunk</strong>。</p>
+<p>​     即在调用之前，<code>this</code>指针必须要被调整至正确的位置 。这里的<code>Thunk</code>起到的就是这个作用：<strong>首先将<code>this</code> 指针调整到正确的位置</strong>，即减少<code>16</code>字节偏移量，然后再去调用函数<code>C::f1()</code>。</p>
+<p>​    到此我们说明了Thunk的作用，也知道了OffsetToTop表示实际类型起始地址到当前这个形式类型起始地址的偏移量。</p>
+<h4 id="虚拟继承——Virtual-call-offset-Virtual-base-offsets"><a href="#虚拟继承——Virtual-call-offset-Virtual-base-offsets" class="headerlink" title="虚拟继承——Virtual call offset/Virtual base offsets"></a>虚拟继承——Virtual call offset/Virtual base offsets</h4><p>​    上述的模型中，对于派生类对象，它的基类相对于它的偏移量总是确定的，因此动态向下转换并不需要依赖额外的运行时信息。而虚继承破坏了这一条件。它表示<strong>虚基类相对于派生类的偏移量可以依实际类型不同而不同，且仅有一份拷贝，这使得虚基类的偏移量在运行时才可以确定</strong>。因此，我们需要对继承了虚基类的类型的虚表进行扩充，使其包含关于虚基类偏移量的信息。</p>
+<p>​    <strong>虚拟继承下，class B 的内存布局不再是 class A 的内容在最前面然后紧接着 class B 的内容，而是先是 class B 的内容，然后再接着 class A 的内容</strong> 。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> ax;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">B</span> :</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">public</span> A           <span class="hljs-comment">/****************************/</span><br>&#123;                                     <span class="hljs-comment">/*                          */</span><br>    <span class="hljs-keyword">int</span> bx;                           <span class="hljs-comment">/*             A            */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;             <span class="hljs-comment">/*           v/ \v          */</span><br>&#125;;                                    <span class="hljs-comment">/*           /   \          */</span> <br>                                      <span class="hljs-comment">/*          B     C         */</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">C</span> :</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">public</span> A           <span class="hljs-comment">/*           \   /          */</span><br>&#123;                                     <span class="hljs-comment">/*            \ /           */</span><br>    <span class="hljs-keyword">int</span> cx;                           <span class="hljs-comment">/*             D            */</span> <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;             <span class="hljs-comment">/*                          */</span><br>&#125;;                                    <span class="hljs-comment">/****************************/</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">D</span> :</span> <span class="hljs-keyword">public</span> B, <span class="hljs-keyword">public</span> C<br>&#123;<br>    <span class="hljs-keyword">int</span> dx;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f0</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>首先对类型<code>A</code>的内存模型进行分析。由于虚继承影响的是子类，不会对父类造成影响，因此<code>A</code>的内存布局和虚表都没有改变。</p>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">                                                   A VTable<br>                                                   +------------------+<br>                                                   | offset_to_top(0) |<br>struct A                                           +------------------+<br> object                                            |    RTTI for A    |<br>     0 - vptr_A --------------------------------&gt;  +------------------+<br>     8 - int ax                                    |      A::f0()     |<br>sizeof(A): 16    align: 8                          +------------------+<br>                                                   |      A::bar()    |<br>                                                   +------------------+<br></code></pre></div></td></tr></table></figure>
+<p>B，C内存模型一样，这里以B为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">                                          B VTable<br>                                          +---------------------+<br>                                          |   vbase_offset(16)  |<br>                                          +---------------------+<br>                                          |   offset_to_top(0)  |<br>struct B                                  +---------------------+<br>object                                    |      RTTI for B     |<br>    0 - vptr_B -------------------------&gt; +---------------------+<br>    8 - int bx                            |       B::f0()       |<br>   16 - struct A                          +---------------------+<br>   16 -   vptr_A --------------+          |   vcall_offset(0)   |x--------+<br>   24 -   int ax               |          +---------------------+         |<br>                               |          |   vcall_offset(-16) |o----+   |<br>                               |          +---------------------+     |   |<br>                               |          |  offset_to_top(-16) |     |   |<br>                               |          +---------------------+     |   |<br>                               |          |      RTTI for B     |     |   |<br>                               +--------&gt; +---------------------+     |   |<br>                                          |     Thunk B::f0()   |o----+   |<br>                                          +---------------------+         |<br>                                          |       A::bar()      |x--------+<br>                                          +---------------------+<br></code></pre></div></td></tr></table></figure>
+<p>​    对于形式类型为<code>B</code>的引用，在编译时，无法确定它的基类<code>A</code>在内存中的偏移量。 因此，需要在虚表中额外再提供一个实体，表明运行时它的基类所在的位置，这个实体称为<code>vbase_offset</code>，位于<code>offset_to_top</code>上方。</p>
+<p>​    这个的作用在于，当D构造时，先构造A，然后是BC，在这个过程中：轮到构造B的时候怎么去找到已经构造好的A呢？通过virtual-base offset，告诉 this 指针偏移多少字节去拿。</p>
+<p>​    除此之外，如果在<code>B</code>中调用<code>A</code>声明且<code>B</code>没有重写的函数，由于<code>A</code>的偏移量无法在编译时确定，而这些函数的调用由必须在<code>A</code>的偏移量确定之后进行， 因此这些函数的调用相当于使用<code>A</code>的引用调用。也因此，当使用虚基类<code>A</code>的引用调用重载函数时 ，每一个函数对<code>this</code>指针的偏移量调整都可能不同，它们被记录在镜像位置的<code>vcall_offset</code>中。例如，调用<code>A::bar()</code>时，<code>this</code>指针指向的是<code>vptr_A</code>，正是函数所属的类<code>A</code>的位置，因此不需要调整，即<code>vcall_offset(0)</code>；而<code>B::f0()</code>是由类型<code>B</code>实现的， 因此需要将<code>this</code>指针向前调整<code>16</code>字节。</p>
+<ul>
+<li>在派生类调用没有重写的虚基类中函数，需要用到<code>vcall_offset</code></li>
+<li>virtual-base offset 用于获取虚基类，在构造派生类时，可以通过这个信息告诉 this 指针偏移多少字节去拿已经构造好的虚基类。</li>
+</ul>
+<p>​    对于类型<code>D</code>，它的虚表更为复杂，但虚表中的实体我们都已熟悉。 以下为<code>D</code>的内存模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">                                          D VTable<br>                                          +---------------------+<br>                                          |   vbase_offset(32)  |<br>                                          +---------------------+<br>struct D                                  |   offset_to_top(0)  |<br>object                                    +---------------------+<br>    0 - struct B (primary base)           |      RTTI for D     |<br>    0 -   vptr_B  ----------------------&gt; +---------------------+<br>    8 -   int bx                          |       D::f0()       |<br>   16 - struct C                          +---------------------+<br>   16 -   vptr_C  ------------------+     |   vbase_offset(16)  |<br>   24 -   int cx                    |     +---------------------+<br>   28 - int dx                      |     |  offset_to_top(-16) |<br>   32 - struct A (virtual base)     |     +---------------------+<br>   32 -   vptr_A --------------+    |     |      RTTI for D     |<br>   40 -   int ax               |    +---&gt; +---------------------+<br>sizeof(D): 48    align: 8      |          |       D::f0()       |<br>                               |          +---------------------+<br>                               |          |   vcall_offset(0)   |x--------+<br>                               |          +---------------------+         |<br>                               |          |   vcall_offset(-32) |o----+   |<br>                               |          +---------------------+     |   |<br>                               |          |  offset_to_top(-32) |     |   |<br>                               |          +---------------------+     |   |<br>                               |          |      RTTI for D     |     |   |<br>                               +--------&gt; +---------------------+     |   |<br>                                          |     Thunk D::f0()   |o----+   |<br>                                          +---------------------+         |<br>                                          |       A::bar()      |x--------+<br>                                          +---------------------+<br></code></pre></div></td></tr></table></figure>
+<h4 id=""><a href="#" class="headerlink" title=" "></a> </h4><h4 id="RTTI与虚表—RTTI-Information"><a href="#RTTI与虚表—RTTI-Information" class="headerlink" title="RTTI与虚表—RTTI Information"></a>RTTI与虚表—RTTI Information</h4><p>RTTI是编译器提供的功能。打开RTTI编译选项，编译器的行为如下：</p>
+<p>启用RTTI（默认设置）</p>
+<ul>
+<li>有虚函数的类，编译器自动生成RTTI相关的全局变量（符号为typeinfo for ClassName）；</li>
+<li>没有虚函数的类，但使用了typeid和dynamic_cast, 编译器也会生成RTTI相关的全局变量；</li>
+</ul>
+<p>其中RTTI对于有虚函数的类生成的全局变量typeinfo存储与虚表中, 虚表里面存放着 typeinfo 指针，指向实际的 typeinfo 内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">typeinfo for Child*:<br>        .xword  _ZTVN10__cxxabiv119__pointer_type_infoE+16<br>        .xword  typeinfo name for Child*<br>        .word   0<br>        .zero   4<br>        .xword  typeinfo for Child<br>typeinfo name for Child*:<br>        .string &quot;P5Child&quot;<br>typeinfo for Child:<br>        .xword  _ZTVN10__cxxabiv121__vmi_class_type_infoE+16<br>        .xword  typeinfo name for Child<br>        .word   0<br>        .word   2<br>        .xword  typeinfo for Mother<br>        .xword  2<br>        .xword  typeinfo for Father<br>        .xword  2050<br>typeinfo name for Child:<br>        .string &quot;5Child&quot;<br>typeinfo for Father:<br>        .xword  _ZTVN10__cxxabiv117__class_type_infoE+16<br>        .xword  typeinfo name for Father<br>typeinfo name for Father:<br>        .string &quot;6Father&quot;<br>typeinfo for Mother:<br>        .xword  _ZTVN10__cxxabiv117__class_type_infoE+16<br>        .xword  typeinfo name for Mother<br>typeinfo name for Mother:<br>        .string &quot;6Mother&quot;<br></code></pre></div></td></tr></table></figure>
+<p>这部分内容是紧接在虚表后面的。</p>
+<p>正常的编译后，只会有第 9 行及之后的内容，这些是用来在运行时获取描述类的信息的。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h2><ul>
+<li><p>虚函数一定是运行期才绑定么？ - IceBear的回答 - 知乎 <a href="https://www.zhihu.com/question/491602524/answer/2165605549" target="_blank" rel="noopener">https://www.zhihu.com/question/491602524/answer/2165605549</a></p>
+</li>
+<li><p>c++ vtable 深入解析 - 左沙的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/268324735" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/268324735</a></p>
+</li>
+<li><p>C++虚函数的实现基本原理 <a href="https://jacktang816.github.io/post/virtualfunction/#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90" target="_blank" rel="noopener">https://jacktang816.github.io/post/virtualfunction/#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90</a></p>
+</li>
+<li>C++ 多态实现的机制 - 虚函数表 - 自由技艺的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/365765942" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/365765942</a></li>
+<li>Effective C++</li>
+<li>C++中虚函数、虚继承内存模型 - Holy Chen的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/41309205" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41309205</a></li>
+<li>C++ vtables - Part 1 - Basics：<a href="https://shaharmike.com/cpp/vtable-part1/" target="_blank" rel="noopener">https://shaharmike.com/cpp/vtable-part1/</a></li>
+<li>C++ vtables - Part 2 - Multiple Inheritance：<a href="https://shaharmike.com/cpp/vtable-part2/" target="_blank" rel="noopener">https://shaharmike.com/cpp/vtable-part2/</a></li>
+<li>C++ vtables - Part 3 - Virtual Inheritance：<a href="https://shaharmike.com/cpp/vtable-part3/" target="_blank" rel="noopener">https://shaharmike.com/cpp/vtable-part3/</a></li>
+<li>C++ vtables - Part 4 - Compiler-Generated Code：<a href="https://shaharmike.com/cpp/vtab" target="_blank" rel="noopener">https://shaharmike.com/cpp/vtab</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">现代C++和内存模型视角下理解虚函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/11/C++20%20%E2%80%94%E2%80%94%20Constraints&amp;Concepts/">
+                        <span class="hidden-mobile">C++20 —— Constraints&Concepts</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/';
+        this.page.identifier = '/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

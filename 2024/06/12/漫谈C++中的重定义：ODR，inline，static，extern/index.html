@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>现代C++和内存模型视角下理解虚函数 - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="现代C++和内存模型视角下理解虚函数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-06-12 16:30" pubdate>
+        2024年6月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">现代C++和内存模型视角下理解虚函数</h1>
+            
+            <div class="markdown-body">
+              <h1 id="漫谈C-中的重定义：ODR，inline，static，extern"><a href="#漫谈C-中的重定义：ODR，inline，static，extern" class="headerlink" title="漫谈C++中的重定义：ODR，inline，static，extern"></a>漫谈C++中的重定义：ODR，inline，static，extern</h1><p>​    <strong>首先加了inline不会一定内敛，甚至inline原本的建议内联的作用已经没什么作用了</strong>，现在的编译器已经足够智能，能够自己决定是否内联。</p>
+<h2 id="先了解ODR-和-extern-static"><a href="#先了解ODR-和-extern-static" class="headerlink" title="先了解ODR  和 extern/static"></a>先了解ODR  和 extern/static</h2><p>这一节主要理解一下几个概念</p>
+<ul>
+<li>什么是ODR </li>
+<li>什么是一个翻译单元</li>
+<li>定义和声明的区别</li>
+<li>extern关键字帮助我们把definition变为declaration</li>
+<li>函数声明默认带extern</li>
+<li>static关键字的local definition</li>
+</ul>
+<p>​    <a href="https://en.cppreference.com/w/cpp/language/definition" target="_blank" rel="noopener">https://en.cppreference.com/w/cpp/language/definition</a></p>
+<p>​    One Definition Rule意味着只能被定义一次，即任何变量、函数、类类型、枚举类型、<a href="https://zh.cppreference.com/w/cpp/language/constraints" target="_blank" rel="noopener">概念</a> (C++20 起)或模板，在每个<strong>翻译单元</strong>中都只允许有一个定义（其中部分可以有多个声明，但只允许有一个定义）。</p>
+<p>​    在C++中， 一个翻译单元由一个实现文件及其直接或间接包含的所有标头组成。 实现文件通常具有文件扩展名 <code>.cpp</code> 或 <code>.cxx</code>。 头文件通常具有扩展名 <code>.h</code> 或 <code>.hpp</code>。 每个翻译单元由编译器独立编译。 编译完成后，链接器会将编译后的<strong>翻译单元合并到单个程序中</strong>。 </p>
+<blockquote>
+<p>According to <a href="http://www.efnetcpp.org/wiki/ISO/IEC_14882" target="_blank" rel="noopener">standard C++</a> (<a href="http://web.archive.org/web/20070403232333/http://www.efnetcpp.org/wiki/ISO/IEC_14882" target="_blank" rel="noopener">wayback machine link</a>) : A translation unit is the basic unit of compilation in C++. It consists of the contents of a single source file, plus the contents of any header files directly or indirectly included by it, minus those lines that were ignored using conditional preprocessing statements.</p>
+<p>A single translation unit can be compiled into an object file, library, or executable program.</p>
+<p>The notion of a translation unit is most often mentioned in the contexts of the One Definition Rule, and templates.</p>
+</blockquote>
+<p>首先要区分定义和声明</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; <span class="hljs-comment">// 声明但不定义 f</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> a;     <span class="hljs-comment">// 声明但不定义 a</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> b = <span class="hljs-number">1</span>; <span class="hljs-comment">// 定义 b</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> n;               <span class="hljs-comment">// 定义 S::n</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> i;        <span class="hljs-comment">// 声明但不定义 S::i</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> x; <span class="hljs-comment">// 定义 S::x</span><br>&#125;;                       <span class="hljs-comment">// 定义 S</span><br> <br><span class="hljs-keyword">int</span> S::i;                <span class="hljs-comment">// 定义 S::i</span><br></code></pre></div></td></tr></table></figure>
+<p>考虑这种情况</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//2.cpp</span><br><span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>;<span class="hljs-comment">//definition</span><br><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">int</span> i;<span class="hljs-comment">//definition</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>会出现问题，因为不符合ODR原则，两个对i的definition。 </p>
+<blockquote>
+<p>我们也许会疑惑 这不是两个cpp两个翻译单元吗？ 每个翻译单元有各自的i这有什么问题呢？</p>
+<p>我们对翻译单元的理解有误</p>
+<p>看一下cmake</p>
+<figure class="highlight cmake"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.22</span>)<br><span class="hljs-keyword">project</span>(<br>        untitled1<br>        LANGUAGES CXX C<br>)<br><br><span class="hljs-keyword">set</span>(CMAKE_CXX_STANDARD <span class="hljs-number">20</span>)<br><br><span class="hljs-keyword">add_executable</span>(MAIN main.cpp b.h <span class="hljs-number">2</span>.cpp)<br><span class="hljs-keyword">TARGET_COMPILE_FEATURES</span>(MAIN PRIVATE cxx_std_17)<br></code></pre></div></td></tr></table></figure>
+<p>这里最后把<strong>main.cpp 和2.cpp扔到一起合并到单个程序中，所以这是一个翻译单元哦</strong></p>
+</blockquote>
+<p>那怎么办？用extern把main里的i变成declaration即可，这下就是一个definition了</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//1.cpp</span><br><span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>;<span class="hljs-comment">//definition</span><br><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> i;<span class="hljs-comment">//declaration</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这就一个definition了，可以通过编译了，反过来也是可以的 <code>main.cpp</code>里是<code>int i = 3;</code>, <code>1.cpp</code>里是<code>extern int i;</code>，不论怎样我们需要保证只有一个定义。</p>
+<p>所以总结下extern：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-keyword">int</span> i; <span class="hljs-comment">//definition</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> i;<span class="hljs-comment">//declaration</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//declration, it's equal to extern void foo()，使得如果没有函数定义会自动给函数加上extern使他成为一个声明。</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>&#123;&#125;;<span class="hljs-comment">//definition</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>没有函数定义会自动给函数加上extern使他成为一个声明。</strong></p>
+<p>我们上面都在说的都是全局的definition，那么<strong>static这个关键字是一个局部的definition</strong>，只在自己的这个.cpp里有用。这样也不会造成重定义。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//1.cpp</span><br><span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>;<span class="hljs-comment">//definition</span><br><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">5</span>;<span class="hljs-comment">//local definition</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// output 5</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="inline变量"><a href="#inline变量" class="headerlink" title="inline变量"></a>inline变量</h2><p>根据上文的知识，在C++17的inline 变量出现前，要想在多个cpp中用同一个变量，我们需要extern 声明变量+只有一个定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//1.cpp</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> i;<span class="hljs-comment">//declaration</span><br><span class="hljs-comment">//2.cpp</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> i;<span class="hljs-comment">//declaration</span><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>;<span class="hljs-comment">//defination</span><br></code></pre></div></td></tr></table></figure>
+<p>​    由于inline现在的作用其实和内敛没什么关系了，他是为了让多个翻译单元可以共用一个变量，c++17后对inline的解释是“允许重复定义”。而内敛与否完全是编译器的优化行为了。</p>
+<p>​    如果有多个编译单元拒绝了内联，就会生成多份函数/变量定义，为了在链接时不报错，由inline修饰的函数会生成弱符号，所以inline帮助我们在多个翻译单元中可以重复定义，帮助我们突破了ODR规则。</p>
+<p>​    因此我们可以这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//1.cpp</span><br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> i;<br><span class="hljs-comment">//2.cpp</span><br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> i;<br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>;<br></code></pre></div></td></tr></table></figure>
+<p>但是请注意它带来的一些UB行为，常常多个inline不同的初始值会导致</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//1.cpp</span><br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>;<span class="hljs-comment">//definition</span><br><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">5</span>;<span class="hljs-comment">//definition</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// output 2 or 5, it's ub </span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>总结一下：</p>
+<ul>
+<li><p>突破了ODR规则，不再用多个extern+一个定义来实现，减少了思维负担。</p>
+</li>
+<li><p>注意inline变量的不同初始化会带来的UB行为</p>
+</li>
+<li><p>constexpr函数和constexpr static变量默认隐含了inline。 (<a href="http://eel.is/c++draft/dcl.constexpr#1.sentence-3" target="_blank" rel="noopener">[dcl.constexpr]/1</a>).</p>
+</li>
+</ul>
+<h2 id="inline函数"><a href="#inline函数" class="headerlink" title="inline函数"></a>inline函数</h2><ul>
+<li>加了inline关键字这个函数不一定是内敛函数，但是可以防止odr</li>
+</ul>
+<ul>
+<li>类成员函数默认是inline的</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">//dog.h</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span></span><br><span class="hljs-class">&#123;</span><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">say</span><span class="hljs-params">()</span></span>&#123;<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"wof"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;&#125;<br>&#125;;<br><br><span class="hljs-comment">//middle.h</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"dog.h"</span></span><br><br><span class="hljs-comment">//main.cpp</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"dog.h"</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"middle.h"</span></span><br></code></pre></div></td></tr></table></figure>
+<h2 id="内敛函数-指编译器优化行为"><a href="#内敛函数-指编译器优化行为" class="headerlink" title="内敛函数(指编译器优化行为)"></a>内敛函数(指编译器优化行为)</h2><p>注意下面说的是如果一个函数被内敛了 ，就会有以下的故事，而不是一个函数加了inline关键字就会有以下的故事。</p>
+<h3 id="内联函数语法"><a href="#内联函数语法" class="headerlink" title="内联函数语法"></a>内联函数语法</h3><p>inline要起作用,必须要与<strong>函数定义</strong>放在一起，而不是函数的声明</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">Foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> y)</span> <span class="hljs-comment">// 函数定义&#123;    return x+y;&#125;</span></span><br></code></pre></div></td></tr></table></figure>
+<h3 id="内联函数的作用"><a href="#内联函数的作用" class="headerlink" title="内联函数的作用"></a>内联函数的作用</h3><p>​    当编译器处理调用内联函数的语句时，不会将该语句编译成函数调用的指令，而是直接将整个函数体的代码插人调用语句处，就像整个函数体在调用处被重写了一遍一样，<strong>在执行时是顺序执行，而不会进行跳转</strong>。</p>
+<h3 id="内联函数的优缺点"><a href="#内联函数的优缺点" class="headerlink" title="内联函数的优缺点"></a>内联函数的优缺点</h3><p><strong>优点</strong>：内联函数没有执行函数调用的开销，加快了程序运行时间；</p>
+<p><strong>缺点</strong>：内联函数是将整个函数体的代码插入到调用语句处，会增大代码的大小，增大内存的占用。不过这个缺点几乎可以忽略，代码膨胀怪不到内敛上。</p>
+<h3 id="类与内联函数"><a href="#类与内联函数" class="headerlink" title="类与内联函数"></a>类与内联函数</h3><ol>
+<li>类内定义的函数都是内联函数，无论是否有inline修饰符（虚函数单独考虑）</li>
+<li>类外定义的没有inline修饰的函数不是内联函数</li>
+</ol>
+<h3 id="内联函数和宏的区别"><a href="#内联函数和宏的区别" class="headerlink" title="内联函数和宏的区别"></a>内联函数和宏的区别</h3><ol>
+<li>宏是由预处理器对宏进行替换的，而内联函数是通过编译器控制实现的。</li>
+<li>宏调用并不执行类型检查甚至连正常参数也不检查，但是函数调用却要检查。</li>
+<li>C语言的宏使用的是文本替换，可能导致无法预料的后果</li>
+<li>在宏中的编译错误很难发现，因为它们引用的是扩展的代码，而不是程序员键入的</li>
+</ol>
+<h3 id="虚函数可以标为inline吗"><a href="#虚函数可以标为inline吗" class="headerlink" title="虚函数可以标为inline吗"></a>虚函数可以标为inline吗</h3><p>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联（因为无法知道具体将哪一部分代码插入到调用位置），具体内联与否由编译器决定。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ODR/">ODR</a>
+                    
+                      <a class="hover-with-bg" href="/tags/inline/">inline</a>
+                    
+                      <a class="hover-with-bg" href="/tags/static/">static</a>
+                    
+                      <a class="hover-with-bg" href="/tags/extern/">extern</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/">
+                        <span class="hidden-mobile">现代C++和内存模型视角下理解虚函数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/';
+        this.page.identifier = '/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

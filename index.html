@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -186,6 +186,119 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="现代C++和内存模型视角下理解虚函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/">现代C++和内存模型视角下理解虚函数</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/">
+          
+          
+            
+          
+          漫谈C++中的重定义：ODR，inline，static，extern​    首先加了inline不会一定内敛，甚至inline原本的建议内联的作用已经没什么作用了，现在的编译器已经足够智能，能够自己决定是否内联。
+先了解ODR  和 extern/static这一节主要理解一下几个概念
+
+什么是ODR 
+什么是一个翻译单元
+定义和声明的区别
+extern关键字帮助我们把definition变为
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-12 16:30" pubdate>
+              2024-06-12
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+              <a href="/tags/ODR/">ODR</a>
+            
+              <a href="/tags/inline/">inline</a>
+            
+              <a href="/tags/static/">static</a>
+            
+              <a href="/tags/extern/">extern</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="现代C++和内存模型视角下理解虚函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/">现代C++和内存模型视角下理解虚函数</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2024/06/12/%E7%8E%B0%E4%BB%A3C++%E5%92%8C%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92%E4%B8%8B%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0/">
+          
+          
+            
+          
+          现代C++和内存模型视角下理解虚函数虚函数速度慢在哪里
+函数调用多一层: 虚函数调用比普通函数多了一个查询虚表，获取虚函数入口的步骤，比普通的函数调用要更耗时。
+难做编译器优化:  具体调用哪个虚函数是运行时状态决定的，编译器很难做一些优化，比如PGO，自动inline，RVO等，当然这个在某些特殊情况下不是的，可以看”2.虚函数不一定是运行期才绑定“
+虚函数真的就那么慢吗？它的开销究竟在哪里？来
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-12 16:30" pubdate>
+              2024-06-12
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+              <a href="/tags/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -598,108 +711,6 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/02/05/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" target="_self">
-          <img src="/img/emc.png" srcset="/img/loading.gif" alt="《EffectiveModernC-》第五章-移动语义，完美转发">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/02/05/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">《EffectiveModernC-》第五章-移动语义，完美转发</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/02/05/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">
-          
-          
-            
-          
-          第五章 右值引用，移动语义，完美转发Item 23:理解std::move和std::forward这里是一个C++11的std::move的示例实现。它并不完全满足标准细则，但是它已经非常接近了。
-123456789template&lt;typename T&gt;                            //在std命名空间typename remove_reference&l
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-05 02:48" pubdate>
-              2023-02-05
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-              <a href="/tags/EffectiveModernCPP/">EffectiveModernCPP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
-          <img src="/img/emc.png" srcset="/img/loading.gif" alt="《EffectiveModernC++》第四章:智能指针">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">《EffectiveModernC++》第四章:智能指针</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/12/03/%E3%80%8AEffectiveModernC-%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
-          
-          
-            
-          
-          第四章 智能指针item18：对于独占资源使用std::unique_ptr对于auto_ptr这个C++98的产物，已经被移除了，他的升级版其实就是unique_ptr, 
-auto_ptr的失败是由于缺少移动语义，具体可以看：
-https://zhuanlan.zhihu.com/p/551883955
-这一节这里不过多描述，以前读过很多相关的了，这里基本的不再提起。这里提几个原文中几个有趣的
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-03 21:25" pubdate>
-              2022-12-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-              <a href="/tags/EffectiveModernCPP/">EffectiveModernCPP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -883,5 +894,20 @@ https://zhuanlan.zhihu.com/p/551883955
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
