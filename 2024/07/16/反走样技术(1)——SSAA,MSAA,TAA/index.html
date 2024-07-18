@@ -1,0 +1,666 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>反走样技术(1)——SSAA,MSAA,TAA - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="反走样技术(1)——SSAA,MSAA,TAA">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-07-16 23:30" pubdate>
+        2024年7月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">反走样技术(1)——SSAA,MSAA,TAA</h1>
+            
+            <div class="markdown-body">
+              <h2 id="SSAA-SuperSampling-AntiAliasing-超采样反走样"><a href="#SSAA-SuperSampling-AntiAliasing-超采样反走样" class="headerlink" title="SSAA(SuperSampling AntiAliasing)超采样反走样"></a>SSAA(SuperSampling AntiAliasing)超采样反走样</h2><p>​    SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。相当于渲染了一个4倍大小的RT，最后降采样，这被认为是数学上最正确的反走样，可以看做一个GroundTruth。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630173620785.png" srcset="/img/loading.gif" alt="image-20220630173620785"></p>
+<h2 id="MSAA-MultiSampling-Anti-Aliasing-多重采样反走样"><a href="#MSAA-MultiSampling-Anti-Aliasing-多重采样反走样" class="headerlink" title="MSAA(MultiSampling Anti-Aliasing)多重采样反走样"></a>MSAA(MultiSampling Anti-Aliasing)多重采样反走样</h2><p>​    4xMSAA也是按照4x分辨率大小来进行渲染计算，只不过它只运行1x的PS，并有一个Coverage mask来记录子Sample是否被三角形覆盖。在4x分辨率下进行深度与模板测试，然后将PS的输出颜色复制到Coverage mask为1的采样点的颜色缓冲之中。最后得到了4x分辨率的颜色缓冲，附加一个对高层透明的pass，通过插值获取到1x的最终输出帧缓冲，这也是我们只用做一次ps的原因。具体如下：</p>
+<ol>
+<li>光栅化阶段，对四个X位置的Sample执行三角形Coverage Test，在一个四倍分辨率大小的Coverage Mask中记录每个Sample被覆盖的情况(需要N倍的内存)。</li>
+<li>像素着色阶段，在像素中心圆点处执行像素着色器。该点的位置、深度、法线、纹理坐标等信息由三角形三个顶点重心插值得到。图中计算得到像素颜色为紫色。</li>
+<li>对四个Sample点执行模板测试与深度测试，并将经过测试通过的Sample数据写入四倍分辨率的模板缓冲与深度缓冲。每个Sample都拥有自己的深度值，依然是重心插值得到。</li>
+<li>上图中左下两个Sample通过了深度测试，并且Coverage Mask为1，因此将紫色复制到这两个Sample对应的颜色缓冲中（依然是每个Sample一个颜色，共四倍大小）。其他两个Sample暂为背景色。</li>
+<li>重复上述流程绘制第二个黄色三角形，将跑一次像素着色器获得的黄色复制到右上角的Sample中。</li>
+<li>所有绘制结束之后，通过一个对上层不可见的PASS，将四个Sample的颜色resolve获得最终输出的像素颜色。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715212113520.png" srcset="/img/loading.gif" alt="image-20240715212113520"></p>
+<p>MSAA到底能不能在延迟管线上使用？</p>
+<ul>
+<li><p><strong>MSAA对显存和显存带宽的消耗过大，在性能上无法实现：</strong>假设1个RT是$x$ MB，用上4x MSAA你的内存消耗就是$4x$MB。GBuffer我们按depth，normal，basecolor给3张RT好了，我们前面可知4x msaa的内存消耗是4x的关系，假设我们按照2k的原生分辨率来做，一个RT就是64 MB，用来做MSAA的那个RT就会是不低于256MB。那三个MSAA RT就是768MB, 这东西有点离谱了，太不适合DeferRendering了。</p>
+</li>
+<li><p><strong>延迟渲染在计算光照时已经无法获取像素的几何信息，因此很难使用MSAA：</strong>在前向渲染中，每个DrawCall的几何阶段与光照阶段是有依赖关系的，在计算光照时，GPU能知道着色像素的深度、法线信息（从顶点插值出来的），也知道计算结果应该复制到哪几个子Sample上去（顶点插值得到子Sample的深度，可以知道哪几个子Sample有效，因为我们只需要属于这个mesh的sample）。 但在延迟渲染中，计算光照阶段我们能拿到的只有GBuffer，而不知道每个子Sample属于哪个mesh，因为Gbuffer就一个整体，那怎么加入Resulting Samples呢？ 这就成为了一个无解的问题。一种简单的思想史gbuffer什么都记录，记录下来4x的分辨率记录material以判断是不是一个mesh等，但这个太耗了。</p>
+</li>
+</ul>
+<p>​    不过话说回来，MSAA实际上是个巨大的浪费，很多不需要重复计算的fragment都被算了多遍，反观各种post-process AA，在几乎不损失性能的情况下也能达到非常接近4x MSAA的效果，FXAA挺香的，TAA也很好用，没必要在延迟渲染中纠结MSAA。</p>
+<h2 id="TAA"><a href="#TAA" class="headerlink" title="TAA"></a>TAA</h2><h3 id="历史逐帧Blend"><a href="#历史逐帧Blend" class="headerlink" title="历史逐帧Blend"></a>历史逐帧Blend</h3><p>静态场景中我们可以使用<strong>Halton序列</strong>来实现<strong>抖动(jitter)</strong>, 从而在<strong>一个像素内进行多次偏移进行多次采样</strong>，他的原理与SSAA相似，都采用一个像素中多次采样，不同的是<strong>TAA中是逐帧进行采样，根据历史像素进行Blend。</strong></p>
+<p><strong>Halton序列</strong>如下图</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715194450853.png" srcset="/img/loading.gif" alt="image-20240715194450853"></p>
+<p>实现Jitter可以对透视投影做一些操作，如下红色框的两项分别代表偏移大小，即一个齐次坐标左乘这个矩阵后再做透视除法即可发现这两项正好是偏移大小：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715195402022.png" srcset="/img/loading.gif" alt="image-20240715195402022"></p>
+<h3 id="重投影：解决相机移动"><a href="#重投影：解决相机移动" class="headerlink" title="重投影：解决相机移动"></a>重投影：解决相机移动</h3><p>上述我们没有考虑镜头会移动，我们需要考虑镜头移动带来的变化：</p>
+<p>​    即历史帧混合时首先要找到上一帧的位置，假设场景所有内容静止，对于当前帧一像素点$pixel<em>{current}$，我们只需记录上一帧投影矩阵$M</em>{LastFrame}$即可，我们把当前$pixel<em>{current}$通过$M</em>{CurrentFrame}$的逆矩阵计算出世界空间的坐标，再计算这一点在上一帧的相机下应该位于何处，计算方法是把世界坐标左乘$M_{LastFrame}$矩阵即可。这样我们就获得了上一帧应该在哪儿里。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715195718026.png" srcset="/img/loading.gif" alt="image-20240715195718026"></p>
+<h3 id="Motion-Vector：-解决动态物体"><a href="#Motion-Vector：-解决动态物体" class="headerlink" title="Motion Vector： 解决动态物体"></a>Motion Vector： 解决动态物体</h3><p>​    在渲染物体时，我们需要用到上一帧的投影矩阵和上一帧该物体的位置信息，这样可以得到当前帧和上一帧的位置差，并写入到 Motion Vector。对于带蒙皮动画的物体，我们同时需要上一帧的骨骼的位置，来计算处上一帧中投影到的位置。计算上一帧位置和当前帧位置的方法是一样的，都是从 VS 中输出裁剪空间的齐次坐标，在 PS 中读取，然后就可以做差求得 Motion 值。为了使 Motion 的值比较精确，我们在计算 Motion 时，<strong>不会</strong>添加抖动(在计算前先减去jitter)。</p>
+<p>​    因为 Motion Vector 的精度要求比较高，因此用RG16格式来存储。Motion Vector 可以作为延迟渲染的 GBuffer 的一部分，除了用了实现 TAA，还可以实现移动模糊/Motion Blur 等效果。</p>
+<p>​    <strong>同时我们在去上一帧的帧缓冲里寻找时需要判断上一帧位置所在处是否是我们当前所需要的物体id，深度信息是否匹配，防止是上一帧该点还被遮挡，从而拿到了错误的信息。</strong></p>
+<h3 id="解决鬼影和闪烁"><a href="#解决鬼影和闪烁" class="headerlink" title="解决鬼影和闪烁"></a>解决鬼影和闪烁</h3><p>TAA中，还需要注意<strong>鬼影和闪烁</strong>：</p>
+<p>鬼影具体分析有以下原因：</p>
+<ul>
+<li><p>上一帧对应的点被前一个物体遮挡了，但是仍然用了前一个物体的点。</p>
+<ul>
+<li>可以用我们上述提到的解决方法，是不是同一个物体id或者深度判断，比如鸣潮中就使用了1bit来记录CharacterMask以保障角色的高质量。</li>
+</ul>
+</li>
+<li><p>在进行深度筛选的时候，条件过于宽松，引入了错误的点。</p>
+<ul>
+<li>调整合适的系数</li>
+<li>使用其他更准确的方法记录，同第一条解决方法</li>
+</ul>
+</li>
+<li><p>光照条件发生了变化，导致同一点前后帧颜色差异很大</p>
+<ul>
+<li>颜色Clip / Clamp</li>
+</ul>
+</li>
+</ul>
+<p>解决方法一般是：</p>
+<ul>
+<li>一种比较复杂的方法是：用当前数据颜色值及其周围八个点的颜色值，在 RGB 颜色空间计算一个凸包，如果历史数据颜色值在凸包里面，则直接使用，如果在凸包外面，则连接两个颜色值得到一根线，并求这根线与凸包的交点，使用交点处的颜色值进行混合。可预想的是，计算凸包以及连线与凸包的交点这两个操作十分复杂。</li>
+</ul>
+<ul>
+<li>另一种近似的方法是：将计算凸包转化为计算 AABB，并且计算连线与 AABB 的交点。</li>
+</ul>
+<ul>
+<li><p><a href="https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf" target="_blank" rel="noopener">改进1</a>中进一步改进：不在 RGB 空间计算，而是在 YCoCg 亮度颜色空间操作，但是有可能点的颜色分布很散，导致 AABB 范围很大，不能很好的修正历史颜色。</p>
+</li>
+<li><p><a href="https://developer.download.nvidia.com/gameworks/events/GDC2016/msalvi_temporal_supersampling.pdf" target="_blank" rel="noopener">改进2</a>中进一步改进, 如上面所说：如果周围颜色分布很广，则AABB范围大，不能很好修正历史颜色，NV提出了Variance Clipping (VC) : 不直接使用近邻点颜色的最大值和最小值来确定 AABB，而是用均值和标准差，统计学意义上进行分析：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701012338244.png" srcset="/img/loading.gif" alt="image-20240701012338244"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701010629181.png" srcset="/img/loading.gif" alt="image-20240701010629181"></p>
+<p>另外有两种做法去修正颜色，上面提到的是clip，还有简单的clamp，即<code>Clamp(color, AABBmin,AABBmax)</code>一半来说clip效果更好一些。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701012703302.png" srcset="/img/loading.gif" alt="image-20240701012703302"></p>
+<h3 id="TAA中的ToneMapping"><a href="#TAA中的ToneMapping" class="headerlink" title="TAA中的ToneMapping"></a>TAA中的ToneMapping</h3><p>​    如果使用 HDR 颜色作为输入，得到的抗锯齿效果不佳。所以需要把 TAA 放到 Tonemapping 之后。但是这样又会影响后续需要 HDR 的 Bloom 等特效的计算。</p>
+<p>​    需要注意的时TAA做的时候需要进行两次Tonemapping，分别是tonemapping和InvertTonemapping：而在色调映射时，常用的操作是进行 Reinhard 操作$ 1/(1+x)$，因为开销便宜。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715170545001.png" srcset="/img/loading.gif" alt="image-20240715170545001"></p>
+<h3 id="实践：鸣潮TAA优化"><a href="#实践：鸣潮TAA优化" class="headerlink" title="实践：鸣潮TAA优化"></a>实践：鸣潮TAA优化</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701013343629.png" srcset="/img/loading.gif" alt="image-20240701013343629"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701013818074.png" srcset="/img/loading.gif" alt="image-20240701013818074"></p>
+<p>鸣潮TAA的方案做了几个改进和技术选型：</p>
+<ul>
+<li><p>采样时<strong>只采样十字星</strong>，周围八个像素都采太耗</p>
+</li>
+<li><p>做Bound Box没有用上面提到的Variance Clipping，而是AABB</p>
+</li>
+<li><p>Color space选择在低配机器RGB，高配机器YCocg来做。因为多了一次颜色空间转换。</p>
+</li>
+<li><p>对于motion vector的Gbuffer(VelocityBuffer)除了记录基本的速度，还会用一个bit记录是不是角色，<strong>这样就可以更精确的判断上一帧某个像素点是不是角色，减少鬼影。</strong></p>
+</li>
+<li><p>由于对于卡渲一个角色需要好多个Pass渲染，单纯的对basepass的本体做一次VelocityBuffer pass是不够的，还需要对勾边也作一次velocitybuffer pass，然而鸣潮为了减少一个勾边velocitybuffer pass，就没有做这个操作。</p>
+</li>
+<li><p>由于不对勾边做velocitybuffer pass，导致再寻找上一帧历史时勾边不认做是角色的一部分，导致产生闪烁(Flicker)。因此采用一个低通滤波减少闪烁</p>
+</li>
+<li><p>TAA存在的问题是：历史帧权重高会导致有模糊或者鬼影，历史帧权重低自然就是画面闪烁，我们往往需要调解历史权重来trade-off。其实我们希望的是，动态物体像素要清晰，不要糊有鬼影，静态的不要闪烁。这样对于动静就可以区别对待使其拥有不同的历史权重。可以根据Velocity的大小从静态权重到动态权重进行插值。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240701015347159.png" srcset="/img/loading.gif" alt="image-20240701015347159"></p>
+</li>
+<li><p>考虑动态物体容易糊，还加入了锐化算法，使用unsharp masking kernel，因为他和十字星采样点是匹配的，可以复用。</p>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p><a href="https://zhuanlan.zhihu.com/p/425233743" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/425233743</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/366494818" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/366494818</a></p>
+</li>
+<li><p><a href="https://docs.unrealengine.com/4.27/zh-CN/RenderingAndGraphics/ScreenPercentage/" target="_blank" rel="noopener">https://docs.unrealengine.com/4.27/zh-CN/RenderingAndGraphics/ScreenPercentage/</a></p>
+</li>
+<li><p>很全面的MSAA解释 <a href="https://www.zhihu.com/question/496212252/answer/2632706776" target="_blank" rel="noopener">https://www.zhihu.com/question/496212252/answer/2632706776</a> </p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%8D%E8%B5%B0%E6%A0%B7/">反走样</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SSAA/">SSAA</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MSAA/">MSAA</a>
+                    
+                      <a class="hover-with-bg" href="/tags/TAA/">TAA</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/16/GPU-DrivenRenderingPipeline/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">阴影技术(1)——朴素Shadowmap,PCF,PCSS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/12/%E6%BC%AB%E8%B0%88C++%E4%B8%AD%E7%9A%84%E9%87%8D%E5%AE%9A%E4%B9%89%EF%BC%9AODR%EF%BC%8Cinline%EF%BC%8Cstatic%EF%BC%8Cextern/">
+                        <span class="hidden-mobile">漫谈C++中的重定义：ODR，inline，static，extern</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/07/16/%E5%8F%8D%E8%B5%B0%E6%A0%B7%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94SSAA,MSAA,TAA/';
+        this.page.identifier = '/2024/07/16/%E5%8F%8D%E8%B5%B0%E6%A0%B7%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94SSAA,MSAA,TAA/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

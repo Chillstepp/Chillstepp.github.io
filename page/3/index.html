@@ -191,6 +191,166 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/GAMES101-7-9-Shading/" target="_self">
+          <img src="/img/GAMES101.png" srcset="/img/loading.gif" alt="GAMES101(7-9):Shading">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/GAMES101-7-9-Shading/">GAMES101(7-9):Shading</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/GAMES101-7-9-Shading/">
+          
+          
+            
+          
+          GAMES101-ShadingVisibility/occlusion(可见性/遮盖)z-buffer算法
+
+本质就是对一个物体的三角形面片的每个像素维护深度最浅处。
+
+图示：
+
+复杂度：假设每个三角形覆盖的像素数都是一个常数值，那么n个三角形复杂度就是$O(n)$
+shading 基本理论我们可以认为材质影响着物体的着色
+我们看一个图：
+
+我们认为决定材质的三种光为：高光，漫反射，间接光照(环
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 14:50" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+            
+              <a href="/tags/GAMES101/">GAMES101</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="现代C++中的constexpr,内敛变量">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">现代C++中的constexpr,内敛变量</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/%E7%8E%B0%E4%BB%A3C-%E4%B8%AD%E7%9A%84constexpr-%E5%86%85%E6%95%9B%E5%8F%98%E9%87%8F/">
+          
+          
+            
+          
+          constexpr简单认识constexpr编译期编程很烧脑，为此有时候一个简单的计算也需要写大量代码，C++为此做了很多改进，让编译期编程简单了很多。当然对于一些没有改进的东西仍需要模板元编程，因此模板元编程仍然是很重要的一部分。
+考虑下面代码是否可以运行？
+1234567891011121314int sqr(int n)&#123;    return n*n;&#125;int main(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 14:46" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/C-SFINAE/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++: SFINAE">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/C-SFINAE/">C++: SFINAE</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/C-SFINAE/">
+          
+          
+            
+          
+          SFINAE一个基本的重载协议(SFINAE最初思想来源)SFINAE全称为：替换失败非错（substituion failure is not an error）
+我们已经看了不少的模板特化，那么当一个函数名和某个函数模板名称匹配后，他的重载协议大致如此：
+
+根据名称找出所有适用的函数和函数模板
+对于适用的函数模板，要根据实际情况对模板形参进行替换；替换过程中如果发生错误，这个模板会被丢弃
+在上
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 14:45" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/07/24/%E6%A8%A1%E6%9D%BF%E5%85%83%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97-%E5%88%9D%E6%8E%A2/" target="_self">
           <img src="/img/cpp.png" srcset="/img/loading.gif" alt="模板元编程(编译期计算)初探">
         </a>
@@ -550,161 +710,11 @@ $\vec{a}$，代表一个方向，因此向
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++ 类型推导：auto和decltype">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/">C++ 类型推导：auto和decltype</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/03/11/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%9Aauto%E5%92%8Cdecltype/">
-          
-          
-            
-          
-          类型推导：auto和decltypeauto基本用法使用它来做自动类型推导，可以和其他操作符（&amp;，*，const），一般来说auto 是根据变量的初始值来推导出变量类型的，比如一些容器的迭代器完整写下来就很长，使用auto就很方便
-1234567int a = 5 , b = 3;auto* pointer = &amp;b;//和*一起用cout&lt;&lt;*pointer&lt;&
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-11 00:03" pubdate>
-              2022-03-11
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++ shared_ptr循环引用问题/解决方法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">C++ shared_ptr循环引用问题/解决方法</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/02/24/C-shared-ptr%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
-          
-          
-            
-          
-          C++ shared_ptr循环引用问题/解决方法关于shared_ptr/weak_ptr首先可以看一下这篇文章
-C++的智能指针-unique_ptr,shared_ptr,weak_ptr
-循环引用问题shared_ptr存在循环引用问题：
-考虑下面这样一个代码
-
-12345678910111213141516171819class Node&#123;public:	int _data;	
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-24 20:17" pubdate>
-              2022-02-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++拷贝构造函数和operator =的区别">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/">C++拷贝构造函数和operator =的区别</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/02/15/C-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8Coperator-%E7%9A%84%E5%8C%BA%E5%88%AB/">
-          
-          
-            
-          
-          C++拷贝构造函数和operator =的区别起因之前感觉拷贝构造函数和operator =作用很相似，也没有细察他们的区别，今天看了一些文章实验了一下：
-比如我创造了一个Base的class，我同时编写了拷贝构造函数和operator=，那么对于下面这个代码有几个疑问:
-12Base a;Base b = a;
-Base b = a; 调用拷贝构造函数 还是 operator =呢? 是两者都可
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-15 22:16" pubdate>
-              2022-02-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

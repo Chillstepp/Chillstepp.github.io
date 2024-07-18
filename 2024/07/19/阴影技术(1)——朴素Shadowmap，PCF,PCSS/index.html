@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>GPU-Driven Rendering Pipeline - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="GPU-Driven Rendering Pipeline">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-07-19 23:33" pubdate>
+        2024年7月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">GPU-Driven Rendering Pipeline</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Shadow-Mapping与常见问题"><a href="#Shadow-Mapping与常见问题" class="headerlink" title="Shadow Mapping与常见问题"></a>Shadow Mapping与常见问题</h1><h2 id="The-Most-Basic-Method-Of-Shadow-Mapping"><a href="#The-Most-Basic-Method-Of-Shadow-Mapping" class="headerlink" title="The Most Basic Method Of Shadow Mapping"></a>The Most Basic Method Of Shadow Mapping</h2><p>​    对于阴影生成, 首先需要额外设置一个摄像机在光源位置（Light Camera，光源摄像机），并且朝光照方向看去。用一张纹理贴图(也称阴影贴图，Shadow Map)来记录Light Camera所看到的像素深度。</p>
+<p>​    在主渲染流程时，对每一个着色点进行着色时，需要比较这一点在Light Camera视角下的深度是否大于Light Camera记录在纹理上的深度值。如果大于则说明这一点在光照时被其他更近于光源的物体遮挡住，我们需要这里对颜色进行衰减以形成阴影的效果。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Depth Buffer（In Light View）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231129161027212.png" srcset="/img/loading.gif" alt="image-20231129161027212" style="zoom: 25%;" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>With Shadow</th>
+<th>Without Shadow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231129173100355.png" srcset="/img/loading.gif" alt="image-20231129173100355" style="zoom:67%;" /></td>
+<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231128150403640.png" srcset="/img/loading.gif" alt="image-20231128150403640" style="zoom:67%;" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这两部分就是实时渲染中阴影技术的核心，但其在实际应用中有着诸多问题需要解决。</p>
+<p>会出现的几个问题：</p>
+<ul>
+<li><strong>阴影失真与自遮挡(Shadow Acne)</strong></li>
+<li><strong>阴影悬浮(Shadow Peter-panning)</strong></li>
+<li><p><strong>阴影锯齿(Shadow Aliasing)</strong></p>
+</li>
+<li><p>大场景中Shadow Map找不到对应的点(CSM)</p>
+</li>
+</ul>
+<h2 id="Shadow-Acne和自遮挡"><a href="#Shadow-Acne和自遮挡" class="headerlink" title="Shadow Acne和自遮挡"></a>Shadow Acne和自遮挡</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202229441.png" srcset="/img/loading.gif" alt="image-20231224202229441" style="zoom: 67%;" /></p>
+<p>上图出现了条状的阴影:</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202314452.png" srcset="/img/loading.gif" alt="image-20231224202314452"></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs asciidoc">以方向光源为例，一般认为方向光是平行光，在光源处渲染时使用正交投影。因为Shadow Map的分辨率有限，Shadow Map上面的*<span class="hljs-strong">*一个片段*</span><span class="hljs-strong">*对应场景中的*</span><span class="hljs-strong">*一块区域*</span><span class="hljs-strong">*，又因为很多情况下光源与物体存在夹角，因此记录的深度通常与物体的实际深度存在偏差。</span><br></code></pre></div></td></tr></table></figure>
+<p>​    上图中蓝色片段即为ShadowMap中记录的深度。在纹理中像素为最小单位，一个像素只能记录一个值，图中每个像素记录的是箭头处的深度。这就导致了明明本该整块被照亮的地板，会出现明暗相间的条纹：黑线处的地板由于在光源视角中深度小于记录的值，因此不在阴影中。红线处的地板深度大于记录的值，没有通过阴影测试。</p>
+<p>​     解决办法有些许trick，我们可以用一个叫做<strong>阴影偏移</strong>（shadow bias）的技巧来解决这个问题，我们简单的对表面的深度（或深度贴图）应用一个偏移量，这样片元就不会被错误地认为在表面之下了。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202630631.png" srcset="/img/loading.gif" alt="image-20231224202630631"></p>
+<p>我们这里添加一个bias， 阴影基本正常：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202923283.png" srcset="/img/loading.gif" alt="image-20231224202923283" style="zoom:67%;" /></p>
+<p>因为阴影失真的问题是由于光线和物体表面的夹角导致的，光线越垂直于物体，失真的影响就越小，因此通常会将bias与光线和物体表面法线的夹角挂钩：</p>
+<p>$\text { bias }=k \cdot(1.0-\operatorname{dot}(\text { normal, lightDir }))$</p>
+<h2 id="阴影悬浮-Shadow-Peter-panning-和Shadow-Bias"><a href="#阴影悬浮-Shadow-Peter-panning-和Shadow-Bias" class="headerlink" title="阴影悬浮(Shadow Peter-panning)和Shadow Bias"></a>阴影悬浮(Shadow Peter-panning)和Shadow Bias</h2><p>这其实是由于ShdowBias导致的：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224204404293.png" srcset="/img/loading.gif" alt="image-20231224204404293"></p>
+<p>本来不能通过阴影测试，bias设置过大，导致本该被遮挡的物体，因为减去了bias导致深度值变小，通过了阴影测试。</p>
+<p>解决方法：</p>
+<p>1.其实bias设置合理一点即可，不要太大。</p>
+<p>2.也可以当渲染深度贴图时候使用正面剔除（front face culling），我们只利用背面，这样阴影失真也解决了，不再需要bias的辅助。使用这个方法可以免去反复调整bias，并且也不会导致悬浮的问题。但使用该方法的前提是<strong>场景中的物体必须是一个体（有正面和反面）而非原先的一个面</strong>。</p>
+<h2 id="阴影走样Shadow-Aliasing"><a href="#阴影走样Shadow-Aliasing" class="headerlink" title="阴影走样Shadow Aliasing"></a>阴影走样Shadow Aliasing</h2><p>我们上述的阴影有的锯齿：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224211837915.png" srcset="/img/loading.gif" alt="image-20231224211837915"></p>
+<ul>
+<li>锯齿本质是采样频率不够，最直接的解决方法就是 提高采样频率，但也会带来时间/空间的开销</li>
+<li>使用PCF/PCSS等各种效果更好的阴影算法</li>
+</ul>
+<h1 id="PCF-Percentage-Closer-Filtering"><a href="#PCF-Percentage-Closer-Filtering" class="headerlink" title="PCF(Percentage Closer Filtering)"></a>PCF(Percentage Closer Filtering)</h1><p>​    注意这里不是对shadowMap做模糊，而是如果有一点是ShadowMap对其周围泊松分布采样算出其被遮挡的比例作为阴影系数。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240311133328519.png" srcset="/img/loading.gif" alt="image-20240311133328519" style="zoom:50%;" /></p>
+<p>​    Shadow Map采样不足，也就是分辨率不够会导致阴影锯齿，一种名为（Percentage Closer Filtering）的算法，主要优化阴影测试时的采样方式，对一个Shadow Map上的点的周围采样，这相当于做了模糊滤波，以解决阴影锯齿的问题。</p>
+<p>​    PCF中采样方式有很多，比较好的采样方式是通过泊松圆盘分布采样，下图左边是通过均匀圆盘分布采样，右边是泊松圆盘分布采样。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/clip_image004.jpg" srcset="/img/loading.gif" alt="img"></p>
+<ul>
+<li>均匀圆盘分布采样（Uniform-Disk Sample）：圆范围内随机取一系列坐标作为采样点；看上去比较杂乱无章，采样效果的噪声比较严重。</li>
+<li>泊松圆盘分布采样（Poisson-Disk Sample）：圆范围内随机取一系列坐标作为采样点，但是这些坐标还需要满足一定约束，即坐标与坐标之间至少有一定距离间隔。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717021707409.png" srcset="/img/loading.gif" alt="image-20240717021707409"></p>
+<p>​     上图中右图为应用PCF后的效果，可以看到锯齿明显减轻，PCF是软化阴影的主要方法。</p>
+<p>​    硬件支持上，现在的硬件都直接提供周围四点采样的加权PCF深度测试，比如OpenGL中的sampler2DShadow，DirectX中的SampleCmp。这种采样的加权方式类似于普通像素采样时的双线性采样，在目标位置附近2×2像素中，逐像素进行深度比较，得到结果值0或1，然后将结果按照相对周围像素位置进行加权平均。</p>
+<div class="hljs code-wrapper"><pre><code> 如果希望更大的采样可以使用多次进一步利用硬件 PCF 技术，我们进行更多次这样的硬件采样，就可以得到更多采样的结果。例如，进行 4 次硬件采样就可以获得 4×4 个采样的结果：
+</code></pre></div><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022323387.png" srcset="/img/loading.gif" alt="image-20240717022323387"></p>
+<h1 id="PCSS-Percentage-Closer-Soft-Shadows"><a href="#PCSS-Percentage-Closer-Soft-Shadows" class="headerlink" title="PCSS(Percentage-Closer Soft Shadows)"></a>PCSS(Percentage-Closer Soft Shadows)</h1><p>PCF虽然“软化”了阴影，但是我们阴影往往是由硬阴影+软阴影组成，PCF这种全软化的方式算不上很好的效果。</p>
+<p>现实中的阴影往往是如下图，沿着红线越来越“软”</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231228171039621.png" srcset="/img/loading.gif" alt="image-20231228171039621"></p>
+<p>PCSS就是动态适应的选择PCF模糊的size：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231228171344785.png" srcset="/img/loading.gif" alt="image-20231228171344785"></p>
+<p>如上图，只需要光源到遮挡物体表面的平均距离$d<em>{Blocker}$, 投射阴影处到光源处的竖直距离$d</em>{Receiver}$，还需要一个光源大小$W_{Light}$(可以理解为调整软阴影边界宽度的系数)。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240102214451107.png" srcset="/img/loading.gif" alt="image-20240102214451107"></p>
+<p>​    可以发现法线过度生硬，这是因为$d<em>{Blocker}$出现了突变，即我们计算average $d</em>{Blocker}$的时候选择的采样半径太小，导致变化不够平滑，我们<strong>调整计算平均$d<em>{Blocker}$的采样大小为40，$W</em><br>{light}$大小为50</strong>，此时过度平滑了很多</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240102215517557.png" srcset="/img/loading.gif" alt="image-20240102215517557"></p>
+<h2 id="优化1：-Blocker-Search与PCF采样开销"><a href="#优化1：-Blocker-Search与PCF采样开销" class="headerlink" title="优化1：  Blocker Search与PCF采样开销"></a>优化1：  Blocker Search与PCF采样开销</h2><p>​    PCSS中计算最耗时的部分在于Blocker Search部分计算光源到遮挡物体表面的平均距离和PCF的采样。这些耗时的计算都是服务于计算软阴影，可以考虑只在软阴影附近才进行这两部耗时的计算。有几种优化手段：</p>
+<ol>
+<li><p>进行Block Search操作后就会得知：若比较结果为部分样本被遮蔽而另一部分样本不被遮蔽，则说明这是半影区。若全被遮挡说明是全阴影区，对于全阴影区在后续PCF中无需采样。</p>
+</li>
+<li><p>先生成一张Shadow Map，然后对其进行边缘检测，对边缘附近的才进行Block Search和后续PCF采样。</p>
+</li>
+<li><p>边缘检测本身就是比较耗时的 Pass，所以可能还得想个性能更优的方式，一个基于Tile的边缘检测想法：先根据 Tile 内各个像素的 Shadow mask 情况来判断出当前 Tile 属于完全遮蔽区，完全不遮蔽区或半影区；接着每个 Tile 读取周围 8 个 Tiles 的 Mask，如果本 Tile 为 Shadowed 而存在相邻 Tile 为 Unshadowed（亦或相反的情况），则本 Tile 也应该为半影区。最后我们只对 Penumbra Tiles 里的像素进行昂贵的 PCF/PCSS 计算。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022126259.png" srcset="/img/loading.gif" alt="image-20240717022126259"></p>
+</li>
+</ol>
+<h2 id="优化2：解决漏光"><a href="#优化2：解决漏光" class="headerlink" title="优化2：解决漏光"></a>优化2：解决漏光</h2><p>​        我们使用上述的两种软阴影方法PCF/PCSS中，不难发现因为做高斯模糊导致在脚趾处有一定的漏光，这是因为对于脚趾边缘的阴影点在计算时高斯模糊导致了边缘很软，解决漏光的方法也很直接，<strong>使用带权的高斯模糊</strong>，而不是权重相同，权重可以以两个点之间的世界空间距离的倒数作为权重，即两个点差距很大(一点在地板的阴影上，另一个点在脚趾上)，这个点的权重贡献会很小。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022420415.png" srcset="/img/loading.gif" alt="image-20240717022420415"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+                    
+                      <a class="hover-with-bg" href="/tags/GPU-Driven-Rendering-Pipeline/">GPU-Driven-Rendering-Pipeline</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/16/GPU-DrivenRenderingPipeline/">
+                        <span class="hidden-mobile">阴影技术(1)——朴素Shadowmap,PCF,PCSS</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/';
+        this.page.identifier = '/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

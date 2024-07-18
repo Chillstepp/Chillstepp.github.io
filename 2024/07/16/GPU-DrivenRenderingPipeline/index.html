@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>阴影技术(1)——朴素Shadowmap,PCF,PCSS - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="阴影技术(1)——朴素Shadowmap,PCF,PCSS">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-07-16 23:31" pubdate>
+        2024年7月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">阴影技术(1)——朴素Shadowmap,PCF,PCSS</h1>
+            
+            <div class="markdown-body">
+              <h2 id="CPU在管线中一般做些什么？"><a href="#CPU在管线中一般做些什么？" class="headerlink" title="CPU在管线中一般做些什么？"></a>CPU在管线中一般做些什么？</h2><p>​    GPU算力提升后远超CPU，我们希望把CPU端的计算放在GPU端，这也是行业一直在努力的方向。</p>
+<p>​    考虑一个传统管线，往往是一个个object来渲染，而在CPU端意味着你需要做这么几件事情：</p>
+<ul>
+<li>选择LOD</li>
+<li>根据object的AABB/Sphere Bounding等进行<strong>视锥剔除/远距离剔除/遮挡剔除</strong>。</li>
+<li>设置PSO</li>
+<li>最后做一次DrawCall</li>
+</ul>
+<h2 id="传统下怎么减少Draw-call"><a href="#传统下怎么减少Draw-call" class="headerlink" title="传统下怎么减少Draw call"></a>传统下怎么减少Draw call</h2><p>虽然这个过程往往会有优化，也就是常说的怎么减少DrawCall： </p>
+<ul>
+<li><p>比如Mesh合批，虽然预计算不影响运行时，但是<strong>Mesh大了后剔除粒度出现了问题，部分Mesh即使不在相机视线内也不会被剔除。</strong></p>
+</li>
+<li><p>GPU Instance一次绘制多个相同物体，把相同Mesh的物体batch起来等。我们需要一个单独的<strong>Instance buffer</strong>记录每个instance特有的数据比如Transfrom，MatId等，在VS中我们根据<code>instance_Id</code>来获取这些数据。<strong>缺点就是不支持不同Mesh之间的Instance合并。</strong></p>
+</li>
+</ul>
+<h2 id="Merge-Instancing"><a href="#Merge-Instancing" class="headerlink" title="Merge-Instancing"></a>Merge-Instancing</h2><p>GPU Instance的问题在于不能不同Mesh间的Instance合并，Merge-Instancing技术就是为了解决这个问题提出的。即把Mesh合并在一起，一次DrawInstance但是会每次对缓冲区数据指针进行移动，以不断渲染下一个Mesh。如何知道当前渲染到哪儿个mesh了？如果我们可以让每个Mesh都有一样的顶点数$PerObjectVertexNum$，那么就可以直接 $当前定点数/PerObjectVertexNum$获取渲染到哪儿个Object了。</p>
+<p>​    然而我们每个物体显然不可能有有着一样的顶点数，因此我们需要Mesh Cluster，把一个物体拆成一堆有着相同定点数的Meshlet，下节我们会介绍。</p>
+<p>​    理论上讲使用Merge-Instancing可以使用一次DrawCall渲染整个场景(不考虑shader，贴图，其他渲染状态的限制)。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718173809671.png" srcset="/img/loading.gif" alt="image-20240718173809671"></p>
+<h2 id="MeshCluster"><a href="#MeshCluster" class="headerlink" title="MeshCluster"></a>MeshCluster</h2><p>​    上文提到了Merge-instancing的问题主要在于每个Object定点数不一样，这节我们介绍MeshCluster，他把每个Object切分成了多个定点数相同的MeshCluster。有了MeshCluster我们获得了以下好处：</p>
+<ul>
+<li>可以使用Merge-Instancing，实现减少大量DrawCall，理论上可以1次DrawCall渲染完成整个场景。</li>
+<li>有了MeshCluster剔除粒度更细腻</li>
+</ul>
+<p>​    由于物体的粒度不同，对于一个超大的物体你往往很难剔除，并且物体大部分表面还很可能不再视锥空间中，粒度的不够导致了大量的浪费，我们希望粒度缩小一些从而剔除可以更加细，这个操作在CPU完全不可接受，因此GPU-Driven pipeline出现了。</p>
+<p>​    我们把mesh分为meshlet或者叫做MeshCluster，可以得到更精细的剔除效果，同时由于MeshCluster的顶点数相同，这意味着可以利用GPU Instancing(Merge-Instancing)一次Draw call解决。甚至你可以利用MultiRenderTarget分成几个不同的顶点数的Cluster分割。</p>
+<p>​    <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718171743886.png" srcset="/img/loading.gif" alt="image-20240718171743886"></p>
+<p>​    现在我们就可以把LOD/剔除利用ComputeShader这种gpu通用计算能力来解决。</p>
+<h2 id="GPU-Driven-Rendering-Pipeline"><a href="#GPU-Driven-Rendering-Pipeline" class="headerlink" title="GPU-Driven Rendering Pipeline"></a>GPU-Driven Rendering Pipeline</h2><p>现在我们有了前置知识，发现很多事情都可以在GPU做，现在我们来提出GPU-Driven管线并梳理下。刺客信条大革命提出的GPU Driven Render Pipeline如下</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718194042855.png" srcset="/img/loading.gif" alt="image-20240718194042855"></p>
+<h3 id="COARSE-FRUSTUM-CULLING视锥粗剔除"><a href="#COARSE-FRUSTUM-CULLING视锥粗剔除" class="headerlink" title="COARSE FRUSTUM CULLING视锥粗剔除"></a>COARSE FRUSTUM CULLING视锥粗剔除</h3><p>​    <strong>这一步剔除的单位是：实例物体Instance。</strong>育碧在这一步使用<strong>coarse quad tree culling</strong>放在了CPU上做，当然也可以放在GPU上做，主要还是根据项目实际情况来trade-off。</p>
+<p>​    通常这一步具体会做的剔除是：<strong>视锥体剔除</strong>和<strong>遮挡剔除</strong></p>
+<ul>
+<li><strong>视锥体剔除</strong>，我们的场景都会被组织成四叉树，八叉树或者BVH树，我们可以利用这些加速结构快速的剔除不在视锥体内的instance。以前这一步都会在CPU端做，现在也可以使用<strong>ComputeShader</strong>在GPU中处理。</li>
+<li><strong>遮挡剔除</strong><ul>
+<li>高端渲染引擎都会在CPU端实现一个<strong>软光栅化器</strong>，这样就可以在CPU端做遮挡剔除。</li>
+<li>现代渲染引擎通常在GPU端利用<strong>Hierarchical Z-Buffering</strong>做遮挡剔除。</li>
+</ul>
+</li>
+</ul>
+<h3 id="INSTANCE-CULLING"><a href="#INSTANCE-CULLING" class="headerlink" title="INSTANCE CULLING"></a>INSTANCE CULLING</h3><p>​    <strong>这一步剔除的单位是：实例物体Instance。</strong>前面的视锥/遮挡剔除在GPU做时就需要在这里做。</p>
+<p>​    同时这一步通过的instance生成Cluster chunk，因为instance中包含cluster的数量<strong>相差比较大</strong>，直接处理会造成<strong>wavefront/warp</strong>的浪费。GPU的warp/wavefront需要同步执行，而不同的工作负载导致线程间计算时间不均匀，进而降低了整体计算效率。因此大革命在上面又加了一层<strong>Chunk</strong>，先拆分成Chunk再拆分成Cluster。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718204050467.png" srcset="/img/loading.gif" alt="image-20240718204050467"></p>
+<h3 id="CLUSTER-CHUNK-EXPANSION"><a href="#CLUSTER-CHUNK-EXPANSION" class="headerlink" title="CLUSTER CHUNK EXPANSION"></a>CLUSTER CHUNK EXPANSION</h3><p>每个Chunk包含不同Cluster</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718204147822.png" srcset="/img/loading.gif" alt="image-20240718204147822"></p>
+<h3 id="Cluster-culling"><a href="#Cluster-culling" class="headerlink" title="Cluster culling"></a>Cluster culling</h3><p>​    <strong>这一步剔除的单位是：Mesh Cluster</strong></p>
+<p>做了视锥剔除/遮挡剔除/背面剔除(即NormalCone剔除，如下图，对法线表示为一个范围)</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718212834938.png" srcset="/img/loading.gif" alt="image-20240718212834938"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718205142437.png" srcset="/img/loading.gif" alt="image-20240718205142437"></p>
+<h3 id="三角面片剔除"><a href="#三角面片剔除" class="headerlink" title="三角面片剔除"></a>三角面片剔除</h3><p>每个Warp处理一个Mesh Cluster，每个Warp是64线程，所以在MeshCluster时我们也设置为64个顶点MeshCluster。</p>
+<p>每个线程对一个三角形进行Culling：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718211851567.png" srcset="/img/loading.gif" alt="image-20240718211851567"></p>
+<ul>
+<li><strong>Orientation and Zero Area Culling</strong>：先是做<strong>背面剔除</strong>和<strong>零区域剔除</strong>(退化三角形)，然后做<strong>透视除法</strong>，转换到<strong>NDC</strong>空间。</li>
+<li><strong>Depth Culling-Hi-z</strong>：这一步是做<strong>Hierarchical Z test</strong> ，快速对三角形面元做深度剔除。</li>
+<li><strong>Small Primitive Culling</strong>：硬件在Fine Raster他会以quad进行测试，小三角形在以quad进行raster时，造成3倍ps性能的浪费，这里我们提前剔除掉小三角形。</li>
+<li><strong>Frustum Culling</strong>：三角形面元级别的视锥剔除</li>
+</ul>
+<h3 id="Index-buffer-compaction"><a href="#Index-buffer-compaction" class="headerlink" title="Index buffer compaction"></a>Index buffer compaction</h3><p>删除不需要的Instance drawcall调用</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215445281.png" srcset="/img/loading.gif" alt="image-20240718215445281"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215459469.png" srcset="/img/loading.gif" alt="image-20240718215459469"></p>
+<h2 id="Multi-draw-间接绘制"><a href="#Multi-draw-间接绘制" class="headerlink" title="Multi-draw 间接绘制"></a>Multi-draw 间接绘制</h2><p>​    一切剔除完成，index buffer包含了我们想要回值的数据，接下来我们来提交DrawCall开始绘制吧！</p>
+<p>​    我们肯定不希望通过GPU将DrawCall参数<strong>回传</strong>给CPU，DX12提供了<strong>间接调用函数ExecuteIndirect</strong>，这个函数可以从<strong>command buffer</strong>中读取参数调用drawcall，这样我们只需要将drawcall的参数存储到command buffer中，然后在C++端调用ExecuteIndirect即可。</p>
+<p>​    <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215811862.png" srcset="/img/loading.gif" alt="image-20240718215811862"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215705931.png" srcset="/img/loading.gif" alt="image-20240718215705931"></p>
+<p>​    </p>
+<p>​    考虑去除无用drawcall，我们不希望这些<strong>被剔除</strong>的instance也被调用，因此我们需要对drawcall进行压缩，删除那些不需要调用的drawcall。这个需要配合ExecuteIndirect函数的<strong>pCountBuffer参数</strong>来实现，pCountBuffer参数指定了ExecuteIndirect会调用<strong>多少次</strong>Drawcall。</p>
+<p>​    当然我们可以对每个instance做一次drawcall，也可以使用给indexbuffer索引标记下对应的instancing id，如果相同可以用一个drawcall，不过意义不大。</p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><p>GPU Driven Render Pipeline - 安柏霖的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/37084925" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/37084925</a></p>
+</li>
+<li><p>《天涯明月刀》手游中用GPU Driven优化渲染效果 - 安柏霖的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/335325149" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/335325149</a></p>
+</li>
+<li><p>现代渲染引擎开发-GPU Driven Render Pipeline - mike的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/409244895" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/409244895</a></p>
+</li>
+<li><p>剔除：从软件到硬件 - 洛城的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/66407205" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/66407205</a></p>
+</li>
+<li>理解Nanite（一）：遮挡剔除 - GuardHei的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/583245401" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/583245401</a></li>
+<li>Sig2015GPU-Driven Rendering Pipelines—<a href="https://advances.realtimerendering.com/s2015/aaltonenhaar_siggraph2015_combined_final_footer_220dpi.pdf" target="_blank" rel="noopener">https://advances.realtimerendering.com/s2015/aaltonenhaar_siggraph2015_combined_final_footer_220dpi.pdf</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Shadowmap/">Shadowmap</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PCF/">PCF</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PCSS/">PCSS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GPU-Driven Rendering Pipeline</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/16/%E5%8F%8D%E8%B5%B0%E6%A0%B7%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94SSAA,MSAA,TAA/">
+                        <span class="hidden-mobile">反走样技术(1)——SSAA,MSAA,TAA</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/07/16/GPU-DrivenRenderingPipeline/';
+        this.page.identifier = '/2024/07/16/GPU-DrivenRenderingPipeline/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
