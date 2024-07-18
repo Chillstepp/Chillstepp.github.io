@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.8k 字
+      3.1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      30
+      33
        分钟
     </span>
   
@@ -239,26 +239,55 @@
             <h1 style="display: none">反走样技术(1)——SSAA,MSAA,TAA</h1>
             
             <div class="markdown-body">
-              <h2 id="SSAA-SuperSampling-AntiAliasing-超采样反走样"><a href="#SSAA-SuperSampling-AntiAliasing-超采样反走样" class="headerlink" title="SSAA(SuperSampling AntiAliasing)超采样反走样"></a>SSAA(SuperSampling AntiAliasing)超采样反走样</h2><p>​    SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。相当于渲染了一个4倍大小的RT，最后降采样，这被认为是数学上最正确的反走样，可以看做一个GroundTruth。</p>
+              <h2 id="SSAA-SuperSampling-AntiAliasing-超采样反走样"><a href="#SSAA-SuperSampling-AntiAliasing-超采样反走样" class="headerlink" title="SSAA(SuperSampling AntiAliasing)超采样反走样"></a>SSAA(SuperSampling AntiAliasing)超采样反走样</h2><p>SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。</p>
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20220630173620785.png" srcset="/img/loading.gif" alt="image-20220630173620785"></p>
-<h2 id="MSAA-MultiSampling-Anti-Aliasing-多重采样反走样"><a href="#MSAA-MultiSampling-Anti-Aliasing-多重采样反走样" class="headerlink" title="MSAA(MultiSampling Anti-Aliasing)多重采样反走样"></a>MSAA(MultiSampling Anti-Aliasing)多重采样反走样</h2><p>​    4xMSAA也是按照4x分辨率大小来进行渲染计算，只不过它只运行1x的PS，并有一个Coverage mask来记录子Sample是否被三角形覆盖。在4x分辨率下进行深度与模板测试，然后将PS的输出颜色复制到Coverage mask为1的采样点的颜色缓冲之中。最后得到了4x分辨率的颜色缓冲，附加一个对高层透明的pass，通过插值获取到1x的最终输出帧缓冲，这也是我们只用做一次ps的原因。具体如下：</p>
+<h2 id="MSAA-MultiSampling-Anti-Aliasing-多重采样反走样"><a href="#MSAA-MultiSampling-Anti-Aliasing-多重采样反走样" class="headerlink" title="MSAA(MultiSampling Anti-Aliasing)多重采样反走样"></a>MSAA(MultiSampling Anti-Aliasing)多重采样反走样</h2><p>很全面的MSAA解释 <a href="https://zhuanlan.zhihu.com/p/135444145" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/135444145</a></p>
+<p>​    4xMSAA也是按照4x分辨率大小来进行渲染计算，只不过它只运行1x的PS，并有一个Coverage mask来记录子Sample是否被三角形覆盖。在4x分辨率下进行深度与模板测试，然后将PS的输出颜色复制到Coverage mask为1的采样点的颜色缓冲之中。最后得到了4x分辨率的颜色缓冲，附加一个对高层透明的pass，通过插值获取到1x的最终输出帧缓冲，这也是我们只用做一次ps的原因。具体如下：</p>
 <ol>
-<li>光栅化阶段，对四个X位置的Sample执行三角形Coverage Test，在一个四倍分辨率大小的Coverage Mask中记录每个Sample被覆盖的情况(需要N倍的内存)。</li>
+<li><strong>覆盖测试Coverage Test：</strong>光栅化阶段，对四个X位置的Sample执行三角形Coverage Test，在一个四倍分辨率大小的Coverage Mask中记录每个Sample被覆盖的情况(需要N倍的内存)。</li>
 <li>像素着色阶段，在像素中心圆点处执行像素着色器。该点的位置、深度、法线、纹理坐标等信息由三角形三个顶点重心插值得到。图中计算得到像素颜色为紫色。</li>
-<li>对四个Sample点执行模板测试与深度测试，并将经过测试通过的Sample数据写入四倍分辨率的模板缓冲与深度缓冲。每个Sample都拥有自己的深度值，依然是重心插值得到。</li>
+<li><strong>遮挡测试：</strong>对四个Sample点执行模板测试与深度测试，并将经过测试通过的Sample数据写入四倍分辨率的模板缓冲与深度缓冲。每个Sample都拥有自己的深度值，依然是重心插值得到。</li>
 <li>上图中左下两个Sample通过了深度测试，并且Coverage Mask为1，因此将紫色复制到这两个Sample对应的颜色缓冲中（依然是每个Sample一个颜色，共四倍大小）。其他两个Sample暂为背景色。</li>
 <li>重复上述流程绘制第二个黄色三角形，将跑一次像素着色器获得的黄色复制到右上角的Sample中。</li>
 <li>所有绘制结束之后，通过一个对上层不可见的PASS，将四个Sample的颜色resolve获得最终输出的像素颜色。</li>
 </ol>
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715212113520.png" srcset="/img/loading.gif" alt="image-20240715212113520"></p>
+<p>不论什么Deferred还是Forwarding，MSAA都会使得Z-buffer和颜色缓冲区 增大。</p>
+<ul>
+<li>Z-buffer：三角形的深度在每一个覆盖的子采样点的位置进行插值，并且跟z-buffer中的深度信息进行比较。由于深度测试是在每个子采样点的级别而不是像素级别进行的，深度buffer必须相应的增大以来存储额外的深度值。在实现中，这意味着深度缓冲区是非MSAA情况下的n倍。</li>
+<li>颜色缓冲区：需要额外的空间来存储每个子采样点的颜色值。所以，颜色缓冲区的大小也为非MSAA下的n倍。</li>
+</ul>
 <p>MSAA到底能不能在延迟管线上使用？</p>
 <ul>
-<li><p><strong>MSAA对显存和显存带宽的消耗过大，在性能上无法实现：</strong>假设1个RT是$x$ MB，用上4x MSAA你的内存消耗就是$4x$MB。GBuffer我们按depth，normal，basecolor给3张RT好了，我们前面可知4x msaa的内存消耗是4x的关系，假设我们按照2k的原生分辨率来做，一个RT就是64 MB，用来做MSAA的那个RT就会是不低于256MB。那三个MSAA RT就是768MB, 这东西有点离谱了，太不适合DeferRendering了。</p>
+<li><p><strong>延迟渲染在计算光照时已经无法获取像素的几何信息，因此很难使用MSAA：</strong></p>
+<ul>
+<li>在前向渲染可以插值出子sample处的法线/颜色信息，而Deferred管线中无法插值出对应信息，因为deferred管线丢失了连续性，即因为可能存在覆盖，我们并不知道某处上面有几个mesh叠在一起，为了拿到准确的信息，只能Gbuffer扩大。</li>
+</ul>
 </li>
-<li><p><strong>延迟渲染在计算光照时已经无法获取像素的几何信息，因此很难使用MSAA：</strong>在前向渲染中，每个DrawCall的几何阶段与光照阶段是有依赖关系的，在计算光照时，GPU能知道着色像素的深度、法线信息（从顶点插值出来的），也知道计算结果应该复制到哪几个子Sample上去（顶点插值得到子Sample的深度，可以知道哪几个子Sample有效，因为我们只需要属于这个mesh的sample）。 但在延迟渲染中，计算光照阶段我们能拿到的只有GBuffer，而不知道每个子Sample属于哪个mesh，因为Gbuffer就一个整体，那怎么加入Resulting Samples呢？ 这就成为了一个无解的问题。一种简单的思想史gbuffer什么都记录，记录下来4x的分辨率记录material以判断是不是一个mesh等，但这个太耗了。</p>
+<li><p><strong>MSAA对显存和显存带宽的消耗过大，在性能上无法实现： </strong></p>
+<ul>
+<li><p>前面提到：”在前向渲染可以插值出子sample处的法线/颜色信息，而Deferred管线中无法插值出对应信息，因为deferred管线丢失了连续性，即因为可能存在覆盖，我们并不知道某处上面有几个mesh叠在一起，为了拿到准确的信息，只能Gbuffer扩大。”。 可是GBuffer扩大后显存占用将变得很大，这往往也不能接受</p>
+</li>
+<li><p>假设1个RT是$x$ MB，用上4x MSAA你的内存消耗就是$4x$MB。GBuffer我们按depth，normal，basecolor给3张RT好了，我们前面可知4x msaa的内存消耗是4x的关系，假设我们按照2k的原生分辨率来做，一个RT就是64 MB，用来做MSAA的那个RT就会是不低于256MB。那三个MSAA RT就是768MB, 这东西有点离谱了，太不适合DeferRendering了。</p>
 </li>
 </ul>
-<p>​    不过话说回来，MSAA实际上是个巨大的浪费，很多不需要重复计算的fragment都被算了多遍，反观各种post-process AA，在几乎不损失性能的情况下也能达到非常接近4x MSAA的效果，FXAA挺香的，TAA也很好用，没必要在延迟渲染中纠结MSAA。</p>
+</li>
+</ul>
+<p>​    </p>
+<p>最后我们总结下：</p>
+<ol>
+<li><p>MSAA本质上是一种发生在光栅化阶段的技术，也就是几何阶段后，着色阶段前，用这个技术需要用到场景中的几何信息</p>
+</li>
+<li><p>延迟渲染因为需要节省光照计算的原因，事先把所有信息都放在了GBuffer上，着色计算的时候已经丢失了几何信息</p>
+</li>
+<li><p>解决方法，扩大四倍GBuffer，但是太耗了，没人会这么干</p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/507230189" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/507230189</a> 这个paper提出了：不是所有地方都需要四倍信息，只在边缘地方才需要，所以我们对边缘地方做一个的GBuffer生成一个对应的链表，记录着边缘的几何信息，这个在Z-Prepass中可以完成。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718154353871.png" srcset="/img/loading.gif" alt="image-20240718154353871"></p>
+</li>
+<li><p>不过话说回来，各种post-process AA，在几乎不损失性能的情况下也能达到非常接近4x MSAA的效果，FXAA挺香的，TAA也很好用，没必要在延迟渲染中纠结MSAA。</p>
+</li>
+</ol>
 <h2 id="TAA"><a href="#TAA" class="headerlink" title="TAA"></a>TAA</h2><h3 id="历史逐帧Blend"><a href="#历史逐帧Blend" class="headerlink" title="历史逐帧Blend"></a>历史逐帧Blend</h3><p>静态场景中我们可以使用<strong>Halton序列</strong>来实现<strong>抖动(jitter)</strong>, 从而在<strong>一个像素内进行多次偏移进行多次采样</strong>，他的原理与SSAA相似，都采用一个像素中多次采样，不同的是<strong>TAA中是逐帧进行采样，根据历史像素进行Blend。</strong></p>
 <p><strong>Halton序列</strong>如下图</p>
 <p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240715194450853.png" srcset="/img/loading.gif" alt="image-20240715194450853"></p>
@@ -373,7 +402,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/16/GPU-DrivenRenderingPipeline/">
+                      <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">阴影技术(1)——朴素Shadowmap,PCF,PCSS</span>
                         <span class="visible-mobile">上一篇</span>

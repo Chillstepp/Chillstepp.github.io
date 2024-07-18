@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>阴影技术(1)——朴素Shadowmap,PCF,PCSS - Chillstep</title>
+  <title>阴影技术(2)——CSM - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="阴影技术(1)——朴素Shadowmap,PCF,PCSS">
+            <span class="h2" id="subtitle" title="阴影技术(2)——CSM">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2024-07-16 23:31" pubdate>
-        2024年7月16日 晚上
+      <time datetime="2024-07-19 23:34" pubdate>
+        2024年7月19日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.5k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20
+      16
        分钟
     </span>
   
@@ -236,89 +236,55 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">阴影技术(1)——朴素Shadowmap,PCF,PCSS</h1>
+            <h1 style="display: none">阴影技术(2)——CSM</h1>
             
             <div class="markdown-body">
-              <h2 id="CPU在管线中一般做些什么？"><a href="#CPU在管线中一般做些什么？" class="headerlink" title="CPU在管线中一般做些什么？"></a>CPU在管线中一般做些什么？</h2><p>​    GPU算力提升后远超CPU，我们希望把CPU端的计算放在GPU端，这也是行业一直在努力的方向。</p>
-<p>​    考虑一个传统管线，往往是一个个object来渲染，而在CPU端意味着你需要做这么几件事情：</p>
+              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>​    在传统的shadow map方法下，如果场景很大，一眼过去可能几百米都零散分布着阴影，若shadow map贴图太小，则锯齿很明显，想提高精度就要增大shadow map贴图，然而内存开销就会过大。</p>
+<p>​    <strong>Cascade Shadow Map（CSM）</strong> 借鉴了 LOD 的思想，对主摄像机的视锥体范围进行了划分，然后对每个划分区域采用相同分辨率大小的 Shadow Map，这意味着：离主摄像机比较近的地方往往区域面积是比较小的，这样 Shadow Map 能够表示的深度信息就更精确些，看到的阴影效果也更真实；离主摄像机比较远的地方往往区域面积是比较大的，虽然使用相同分辨率的 Shadow Map 能够表示的深度信息比较不精确，但对于远处的物体来说，这种不准确是可以接受的。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/202205192153105.png" srcset="/img/loading.gif" alt="img"></p>
+<h2 id="视锥分割"><a href="#视锥分割" class="headerlink" title="视锥分割"></a>视锥分割</h2><p>把视锥体分为若干层的方法主要有两种：</p>
 <ul>
-<li>选择LOD</li>
-<li>根据object的AABB/Sphere Bounding等进行<strong>视锥剔除/远距离剔除/遮挡剔除</strong>。</li>
-<li>设置PSO</li>
-<li>最后做一次DrawCall</li>
+<li>一种是项目组自己设置一个比例</li>
+<li>另一种方法是利用对数比例分割，能够减少 Shadow Perspective Alias 问题的出现，同时可以保证各级阴影看起来质量差异不大</li>
 </ul>
-<h2 id="传统下怎么减少Draw-call"><a href="#传统下怎么减少Draw-call" class="headerlink" title="传统下怎么减少Draw call"></a>传统下怎么减少Draw call</h2><p>虽然这个过程往往会有优化，也就是常说的怎么减少DrawCall： </p>
+<p>下面我们来介绍这个方法：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240625214831122.png" srcset="/img/loading.gif" alt="image-20240625214831122"></p>
+<p>n为主摄像机近平面距离，f 为主摄像机远平面距离， θ为物体平面法线的角度参数</p>
+<p>我们期望各级阴影看起来质量差异不大，<strong>因此需要保证摄像机近平面上的一小段距离$dp$</strong> 和  <strong>ShadowMap 平面上的一小段距离$ds$</strong>之比应该是一个固定值$C_0$。我们可以假设如果有一个物体在z处，如上图，dp也可以从这一点导出，算出$\tan\theta dz$代表这一点在截面上的长度，根据比例$z/n$可以反算出$dp = \frac {n\tan\theta dz} {z}$ </p>
+<script type="math/tex; mode=display">
+\frac{dp}{ds} = \frac{n\tan(\theta)dz}{z}/ ds =C_0</script><p>可以把$\tan\theta dz$看作截面上一段距离，我们把这个整体当作新的$dz$, 又因为n是常量，移动到$C_0$那边即可，可得：</p>
+<script type="math/tex; mode=display">
+\frac{1}{z}\frac{dz}{ds} = C</script><p>这是一个微分方程，其中 z=n,s=0 和 z=f, s=1，可解：</p>
+<script type="math/tex; mode=display">
+z=n \cdot \left(\frac{f}{n}\right)^{s}</script><p>即保证这个式子可以获得更好的阴影效果，每一个s和z相对应着，然而CSM级联次数有限，通常做3-4级。</p>
+<p>我们希望知道均匀的分布s下，z的分布，因此把S平均分成N份时，对应每段z为：</p>
+<script type="math/tex; mode=display">
+z_i=n \cdot (\frac{f}{n})^{\frac{i}{N}},i=1,...,N</script><p>这就是<strong>对数分割</strong>。</p>
+<p>对数分割的问题在于<strong>第一层的shadowmap覆盖内容很小</strong>，会造成一定浪费，因此可以将对数分割出的结果z和线性做一个混合：</p>
+<script type="math/tex; mode=display">
+z_{i}=\operatorname{lerp}\left(n *(\frac{f}{n})^{\frac{i}{N}}, n+\frac{i*(f-n)}{N}, \lambda\right), i=1, \ldots, N \  , \lambda \in [0,1]</script><p>$\lambda$是一个 $[0,1]$区间的控制参数，用以在对数和线性之间进行插值。</p>
+<h2 id="计算包围盒"><a href="#计算包围盒" class="headerlink" title="计算包围盒"></a>计算包围盒</h2><p>​    分割好各层视锥体后，我们需要选择对应的 Shadow Map 来恰好包围住视锥体（即各层的 Light Camera 的光锥体刚好包围住视锥体）。</p>
 <ul>
-<li><p>比如Mesh合批，虽然预计算不影响运行时，但是<strong>Mesh大了后剔除粒度出现了问题，部分Mesh即使不在相机视线内也不会被剔除。</strong></p>
+<li><p>OBB(Oriented Bounding Box)：这种看起来shadowmap利用率更高，但是考虑当视锥体变化时，容易阴影闪烁</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240626160004977.png" srcset="/img/loading.gif" alt="image-20240626160004977"></p>
 </li>
-<li><p>GPU Instance一次绘制多个相同物体，把相同Mesh的物体batch起来等。我们需要一个单独的<strong>Instance buffer</strong>记录每个instance特有的数据比如Transfrom，MatId等，在VS中我们根据<code>instance_Id</code>来获取这些数据。<strong>缺点就是不支持不同Mesh之间的Instance合并。</strong></p>
+<li><p>AABB(Axis-Aligned Bounding Box)：利用率较低，但是层级之间有重合，方便插值过度。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240626155919579.png" srcset="/img/loading.gif" alt="image-20240626155919579"></p>
+</li>
+<li><p>以上两种都会有抖动问题，实际上应用时，会选择Stable Cascaded Shadow Maps，最后一节会介绍</p>
 </li>
 </ul>
-<h2 id="Merge-Instancing"><a href="#Merge-Instancing" class="headerlink" title="Merge-Instancing"></a>Merge-Instancing</h2><p>GPU Instance的问题在于不能不同Mesh间的Instance合并，Merge-Instancing技术就是为了解决这个问题提出的。即把Mesh合并在一起，一次DrawInstance但是会每次对缓冲区数据指针进行移动，以不断渲染下一个Mesh。如何知道当前渲染到哪儿个mesh了？如果我们可以让每个Mesh都有一样的顶点数$PerObjectVertexNum$，那么就可以直接 $当前定点数/PerObjectVertexNum$获取渲染到哪儿个Object了。</p>
-<p>​    然而我们每个物体显然不可能有有着一样的顶点数，因此我们需要Mesh Cluster，把一个物体拆成一堆有着相同定点数的Meshlet，下节我们会介绍。</p>
-<p>​    理论上讲使用Merge-Instancing可以使用一次DrawCall渲染整个场景(不考虑shader，贴图，其他渲染状态的限制)。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718173809671.png" srcset="/img/loading.gif" alt="image-20240718173809671"></p>
-<h2 id="MeshCluster"><a href="#MeshCluster" class="headerlink" title="MeshCluster"></a>MeshCluster</h2><p>​    上文提到了Merge-instancing的问题主要在于每个Object定点数不一样，这节我们介绍MeshCluster，他把每个Object切分成了多个定点数相同的MeshCluster。有了MeshCluster我们获得了以下好处：</p>
+<h2 id="层级选择"><a href="#层级选择" class="headerlink" title="层级选择"></a>层级选择</h2><p>有了若干层 Shadow Map 后，渲染某个shading poing时该如何判断点在哪个层级：</p>
 <ul>
-<li>可以使用Merge-Instancing，实现减少大量DrawCall，理论上可以1次DrawCall渲染完成整个场景。</li>
-<li>有了MeshCluster剔除粒度更细腻</li>
+<li>直接通过视锥分割的z值范围来判断所在是哪个层级</li>
+<li>通过各层 Light Camera 的 View 变换和 Projection 变换，得到点在该层 Shadow Map 的 UV 坐标，当 UV 坐标在 [0,1] 范围内时则说明在该层级内。选择更底层的层级</li>
 </ul>
-<p>​    由于物体的粒度不同，对于一个超大的物体你往往很难剔除，并且物体大部分表面还很可能不再视锥空间中，粒度的不够导致了大量的浪费，我们希望粒度缩小一些从而剔除可以更加细，这个操作在CPU完全不可接受，因此GPU-Driven pipeline出现了。</p>
-<p>​    我们把mesh分为meshlet或者叫做MeshCluster，可以得到更精细的剔除效果，同时由于MeshCluster的顶点数相同，这意味着可以利用GPU Instancing(Merge-Instancing)一次Draw call解决。甚至你可以利用MultiRenderTarget分成几个不同的顶点数的Cluster分割。</p>
-<p>​    <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718171743886.png" srcset="/img/loading.gif" alt="image-20240718171743886"></p>
-<p>​    现在我们就可以把LOD/剔除利用ComputeShader这种gpu通用计算能力来解决。</p>
-<h2 id="GPU-Driven-Rendering-Pipeline"><a href="#GPU-Driven-Rendering-Pipeline" class="headerlink" title="GPU-Driven Rendering Pipeline"></a>GPU-Driven Rendering Pipeline</h2><p>现在我们有了前置知识，发现很多事情都可以在GPU做，现在我们来提出GPU-Driven管线并梳理下。刺客信条大革命提出的GPU Driven Render Pipeline如下</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718194042855.png" srcset="/img/loading.gif" alt="image-20240718194042855"></p>
-<h3 id="COARSE-FRUSTUM-CULLING视锥粗剔除"><a href="#COARSE-FRUSTUM-CULLING视锥粗剔除" class="headerlink" title="COARSE FRUSTUM CULLING视锥粗剔除"></a>COARSE FRUSTUM CULLING视锥粗剔除</h3><p>​    <strong>这一步剔除的单位是：实例物体Instance。</strong>育碧在这一步使用<strong>coarse quad tree culling</strong>放在了CPU上做，当然也可以放在GPU上做，主要还是根据项目实际情况来trade-off。</p>
-<p>​    通常这一步具体会做的剔除是：<strong>视锥体剔除</strong>和<strong>遮挡剔除</strong></p>
-<ul>
-<li><strong>视锥体剔除</strong>，我们的场景都会被组织成四叉树，八叉树或者BVH树，我们可以利用这些加速结构快速的剔除不在视锥体内的instance。以前这一步都会在CPU端做，现在也可以使用<strong>ComputeShader</strong>在GPU中处理。</li>
-<li><strong>遮挡剔除</strong><ul>
-<li>高端渲染引擎都会在CPU端实现一个<strong>软光栅化器</strong>，这样就可以在CPU端做遮挡剔除。</li>
-<li>现代渲染引擎通常在GPU端利用<strong>Hierarchical Z-Buffering</strong>做遮挡剔除。</li>
-</ul>
-</li>
-</ul>
-<h3 id="INSTANCE-CULLING"><a href="#INSTANCE-CULLING" class="headerlink" title="INSTANCE CULLING"></a>INSTANCE CULLING</h3><p>​    <strong>这一步剔除的单位是：实例物体Instance。</strong>前面的视锥/遮挡剔除在GPU做时就需要在这里做。</p>
-<p>​    同时这一步通过的instance生成Cluster chunk，因为instance中包含cluster的数量<strong>相差比较大</strong>，直接处理会造成<strong>wavefront/warp</strong>的浪费。GPU的warp/wavefront需要同步执行，而不同的工作负载导致线程间计算时间不均匀，进而降低了整体计算效率。因此大革命在上面又加了一层<strong>Chunk</strong>，先拆分成Chunk再拆分成Cluster。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718204050467.png" srcset="/img/loading.gif" alt="image-20240718204050467"></p>
-<h3 id="CLUSTER-CHUNK-EXPANSION"><a href="#CLUSTER-CHUNK-EXPANSION" class="headerlink" title="CLUSTER CHUNK EXPANSION"></a>CLUSTER CHUNK EXPANSION</h3><p>每个Chunk包含不同Cluster</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718204147822.png" srcset="/img/loading.gif" alt="image-20240718204147822"></p>
-<h3 id="Cluster-culling"><a href="#Cluster-culling" class="headerlink" title="Cluster culling"></a>Cluster culling</h3><p>​    <strong>这一步剔除的单位是：Mesh Cluster</strong></p>
-<p>做了视锥剔除/遮挡剔除/背面剔除(即NormalCone剔除，如下图，对法线表示为一个范围)</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718212834938.png" srcset="/img/loading.gif" alt="image-20240718212834938"></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718205142437.png" srcset="/img/loading.gif" alt="image-20240718205142437"></p>
-<h3 id="三角面片剔除"><a href="#三角面片剔除" class="headerlink" title="三角面片剔除"></a>三角面片剔除</h3><p>每个Warp处理一个Mesh Cluster，每个Warp是64线程，所以在MeshCluster时我们也设置为64个顶点MeshCluster。</p>
-<p>每个线程对一个三角形进行Culling：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718211851567.png" srcset="/img/loading.gif" alt="image-20240718211851567"></p>
-<ul>
-<li><strong>Orientation and Zero Area Culling</strong>：先是做<strong>背面剔除</strong>和<strong>零区域剔除</strong>(退化三角形)，然后做<strong>透视除法</strong>，转换到<strong>NDC</strong>空间。</li>
-<li><strong>Depth Culling-Hi-z</strong>：这一步是做<strong>Hierarchical Z test</strong> ，快速对三角形面元做深度剔除。</li>
-<li><strong>Small Primitive Culling</strong>：硬件在Fine Raster他会以quad进行测试，小三角形在以quad进行raster时，造成3倍ps性能的浪费，这里我们提前剔除掉小三角形。</li>
-<li><strong>Frustum Culling</strong>：三角形面元级别的视锥剔除</li>
-</ul>
-<h3 id="Index-buffer-compaction"><a href="#Index-buffer-compaction" class="headerlink" title="Index buffer compaction"></a>Index buffer compaction</h3><p>删除不需要的Instance drawcall调用</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215445281.png" srcset="/img/loading.gif" alt="image-20240718215445281"></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215459469.png" srcset="/img/loading.gif" alt="image-20240718215459469"></p>
-<h2 id="Multi-draw-间接绘制"><a href="#Multi-draw-间接绘制" class="headerlink" title="Multi-draw 间接绘制"></a>Multi-draw 间接绘制</h2><p>​    一切剔除完成，index buffer包含了我们想要回值的数据，接下来我们来提交DrawCall开始绘制吧！</p>
-<p>​    我们肯定不希望通过GPU将DrawCall参数<strong>回传</strong>给CPU，DX12提供了<strong>间接调用函数ExecuteIndirect</strong>，这个函数可以从<strong>command buffer</strong>中读取参数调用drawcall，这样我们只需要将drawcall的参数存储到command buffer中，然后在C++端调用ExecuteIndirect即可。</p>
-<p>​    <img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215811862.png" srcset="/img/loading.gif" alt="image-20240718215811862"></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240718215705931.png" srcset="/img/loading.gif" alt="image-20240718215705931"></p>
-<p>​    </p>
-<p>​    考虑去除无用drawcall，我们不希望这些<strong>被剔除</strong>的instance也被调用，因此我们需要对drawcall进行压缩，删除那些不需要调用的drawcall。这个需要配合ExecuteIndirect函数的<strong>pCountBuffer参数</strong>来实现，pCountBuffer参数指定了ExecuteIndirect会调用<strong>多少次</strong>Drawcall。</p>
-<p>​    当然我们可以对每个instance做一次drawcall，也可以使用给indexbuffer索引标记下对应的instancing id，如果相同可以用一个drawcall，不过意义不大。</p>
-<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
-<li><p>GPU Driven Render Pipeline - 安柏霖的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/37084925" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/37084925</a></p>
-</li>
-<li><p>《天涯明月刀》手游中用GPU Driven优化渲染效果 - 安柏霖的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/335325149" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/335325149</a></p>
-</li>
-<li><p>现代渲染引擎开发-GPU Driven Render Pipeline - mike的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/409244895" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/409244895</a></p>
-</li>
-<li><p>剔除：从软件到硬件 - 洛城的文章 - 知乎<a href="https://zhuanlan.zhihu.com/p/66407205" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/66407205</a></p>
-</li>
-<li>理解Nanite（一）：遮挡剔除 - GuardHei的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/583245401" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/583245401</a></li>
-<li>Sig2015GPU-Driven Rendering Pipelines—<a href="https://advances.realtimerendering.com/s2015/aaltonenhaar_siggraph2015_combined_final_footer_220dpi.pdf" target="_blank" rel="noopener">https://advances.realtimerendering.com/s2015/aaltonenhaar_siggraph2015_combined_final_footer_220dpi.pdf</a></li>
-</ul>
+<p>​    前面我们在视锥分割已经确定了z值划分范围，直接简单根据shading point的z值来判断层级不是更好吗？这是因为每一层的 Shadow Map 其实多多少少包含了更远一层的部分阴影信息，但是它的精准度明显要比更远层的 Shadow Map 要好，因此通过uv坐标判断点所属层，就可以尽量命中较近层的 Shadow Map。</p>
+<h2 id="如何处理层级间的过度"><a href="#如何处理层级间的过度" class="headerlink" title="如何处理层级间的过度"></a>如何处理层级间的过度</h2><p>​    如果仅选择单个层级，会容易出现各层级阴影交界处出现阴影效果剧变的问题，这时候也可以混合上下两层 Shadow Map 来让交界可以过渡变化。</p>
+<h2 id="分帧策略"><a href="#分帧策略" class="headerlink" title="分帧策略"></a>分帧策略</h2><p>常见的做法是越远的cascade更新速度越慢，保证8帧更新完一轮。</p>
+<h2 id="Stablize-CSM"><a href="#Stablize-CSM" class="headerlink" title="Stablize CSM"></a>Stablize CSM</h2><p>​    由于 CSM 的阴影矩阵是随视锥体变化而变化的，而矩阵的数值精度问题可能会导致阴影计算的结果产生抖动。<strong>Stablize CSM</strong> 会将相机的变化拆解为旋转和平移。</p>
+<p>​    视锥体旋转时，stablize CSM 会对视锥切割部分建立一个固定大小的圆形包围盒（如图 c），这样无论视锥体如何旋转，切割部分都不会超出其所在的包围盒；接着，我们就对圆形包围盒建立 AABB，该 AABB 将作为 light camera 的远平面。因为该 AABB 的大小也同样是固定大小，并且 AABB 并不会和 OBB 那样随意旋转，因此 stablize CSM 的阴影矩阵就不会每帧产生新的旋转，而只会转化成平移并叠加上相机的平移。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240626161131716.png" srcset="/img/loading.gif" alt="image-20240626161131716"></p>
 
             </div>
             <hr>
@@ -333,11 +299,7 @@
                     
                       <a class="hover-with-bg" href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
                     
-                      <a class="hover-with-bg" href="/tags/Shadowmap/">Shadowmap</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PCF/">PCF</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PCSS/">PCSS</a>
+                      <a class="hover-with-bg" href="/tags/CSM/">CSM</a>
                     
                   </div>
                 
@@ -350,18 +312,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GPU-Driven Rendering Pipeline</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/16/%E5%8F%8D%E8%B5%B0%E6%A0%B7%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94SSAA,MSAA,TAA/">
-                        <span class="hidden-mobile">反走样技术(1)——SSAA,MSAA,TAA</span>
+                      <a href="/2024/07/19/GPU-DrivenRenderingPipeline/">
+                        <span class="hidden-mobile">GPU-Driven Rendering Pipeline</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -380,8 +336,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2024/07/16/GPU-DrivenRenderingPipeline/';
-        this.page.identifier = '/2024/07/16/GPU-DrivenRenderingPipeline/';
+        this.page.url = 'https://chillstepp.github.io/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/';
+        this.page.identifier = '/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');

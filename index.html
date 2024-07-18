@@ -191,7 +191,59 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/" target="_self">
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/" target="_self">
+          <img src="/img/UE.jpg" srcset="/img/loading.gif" alt="阴影技术(2)——CSM">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/">阴影技术(2)——CSM</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/">
+          
+          
+            
+          
+          背景​    在传统的shadow map方法下，如果场景很大，一眼过去可能几百米都零散分布着阴影，若shadow map贴图太小，则锯齿很明显，想提高精度就要增大shadow map贴图，然而内存开销就会过大。
+​    Cascade Shadow Map（CSM） 借鉴了 LOD 的思想，对主摄像机的视锥体范围进行了划分，然后对每个划分区域采用相同分辨率大小的 Shadow Map，这意味着
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-07-19 23:34" pubdate>
+              2024-07-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+            
+              <a href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
+            
+              <a href="/tags/CSM/">CSM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/07/19/GPU-DrivenRenderingPipeline/" target="_self">
           <img src="/img/UE.jpg" srcset="/img/loading.gif" alt="GPU-Driven Rendering Pipeline">
         </a>
       </div>
@@ -199,17 +251,24 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">GPU-Driven Rendering Pipeline</a>
+        <a href="/2024/07/19/GPU-DrivenRenderingPipeline/">GPU-Driven Rendering Pipeline</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
+        <a href="/2024/07/19/GPU-DrivenRenderingPipeline/">
           
           
             
           
-          Shadow Mapping与常见问题The Most Basic Method Of Shadow Mapping​    对于阴影生成, 首先需要额外设置一个摄像机在光源位置（Light Camera，光源摄像机），并且朝光照方向看去。用一张纹理贴图(也称阴影贴图，Shadow Map)来记录Light Camera所看到的像素深度。
-​    在主渲染流程时，对每一个着色点进行着色时，需要比
+          CPU在管线中一般做些什么？​    GPU算力提升后远超CPU，我们希望把CPU端的计算放在GPU端，这也是行业一直在努力的方向。
+​    考虑一个传统管线，往往是一个个object来渲染，而在CPU端意味着你需要做这么几件事情：
+
+选择LOD
+根据object的AABB/Sphere Bounding等进行视锥剔除/远距离剔除/遮挡剔除。
+设置PSO
+最后做一次DrawCall
+
+传统下怎么
         </a>
       </p>
 
@@ -241,7 +300,7 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/07/16/GPU-DrivenRenderingPipeline/" target="_self">
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/" target="_self">
           <img src="/img/UE.jpg" srcset="/img/loading.gif" alt="阴影技术(1)——朴素Shadowmap,PCF,PCSS">
         </a>
       </div>
@@ -249,24 +308,17 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2024/07/16/GPU-DrivenRenderingPipeline/">阴影技术(1)——朴素Shadowmap,PCF,PCSS</a>
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">阴影技术(1)——朴素Shadowmap,PCF,PCSS</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2024/07/16/GPU-DrivenRenderingPipeline/">
+        <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
           
           
             
           
-          CPU在管线中一般做些什么？​    GPU算力提升后远超CPU，我们希望把CPU端的计算放在GPU端，这也是行业一直在努力的方向。
-​    考虑一个传统管线，往往是一个个object来渲染，而在CPU端意味着你需要做这么几件事情：
-
-选择LOD
-根据object的AABB/Sphere Bounding等进行视锥剔除/远距离剔除/遮挡剔除。
-设置PSO
-最后做一次DrawCall
-
-传统下怎么
+          Shadow Mapping与常见问题The Most Basic Method Of Shadow Mapping​    对于阴影生成, 首先需要额外设置一个摄像机在光源位置（Light Camera，光源摄像机），并且朝光照方向看去。用一张纹理贴图(也称阴影贴图，Shadow Map)来记录Light Camera所看到的像素深度。
+​    在主渲染流程时，对每一个着色点进行着色时，需要比
         </a>
       </p>
 
@@ -274,8 +326,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-07-16 23:31" pubdate>
-              2024-07-16
+            <time datetime="2024-07-19 23:33" pubdate>
+              2024-07-19
             </time>
           </div>
         
@@ -288,11 +340,11 @@
             
               <a href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
             
-              <a href="/tags/Shadowmap/">Shadowmap</a>
-            
               <a href="/tags/PCF/">PCF</a>
             
               <a href="/tags/PCSS/">PCSS</a>
+            
+              <a href="/tags/ShadowMap/">ShadowMap</a>
             
           </div>
         
@@ -321,7 +373,9 @@
           
             
           
-          SSAA(SuperSampling AntiAliasing)超采样反走样​    SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。相当于渲染了一个4倍大小的RT，最后降采样，这被认为是数学上最正确的反走样，可以看做一个GroundTruth
+          SSAA(SuperSampling AntiAliasing)超采样反走样SSAA首先是模糊，然后把一个像素分成多份(比如$2*2$四份)，会对每一个pixel的subpixel都进行shading(着色计算)。 最后这个pixel的颜色等于四个subpixel的颜色的加权和。
+
+MSAA(MultiSampling Anti-Aliasing)多重采样反走样很全面的MSAA解释 https:/
         </a>
       </p>
 
@@ -666,59 +720,6 @@ extern关键字帮助我们把definition变为
               <a href="/tags/C/">C++</a>
             
               <a href="/tags/C-14/">C++14</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/06/10/C++17%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++17特性汇总">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/06/10/C++17%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/">C++17特性汇总</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2024/06/10/C++17%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/">
-          
-          
-            
-          
-          C++17特性汇总这里只挑取一些比较感兴趣的话题
-结构化绑定Structured Binding
-类/结构体：
-
-1234567891011struct B &#123;    int a = 1;    int b = 2;&#125;;struct D1 : B &#123;&#125;;auto [x, y] = D1&#123;&#125;; // OKstruct D2 : B &#12
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-06-10 16:30" pubdate>
-              2024-06-10
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-              <a href="/tags/C-17/">C++17</a>
             
           </div>
         
