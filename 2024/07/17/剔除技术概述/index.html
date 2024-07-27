@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>阴影技术(1)——朴素Shadowmap,PCF,PCSS - Chillstep</title>
+  <title>游戏中的剔除技术 - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="阴影技术(1)——朴素Shadowmap,PCF,PCSS">
+            <span class="h2" id="subtitle" title="游戏中的剔除技术">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2024-07-19 23:33" pubdate>
-        2024年7月19日 晚上
+      <time datetime="2024-07-17 22:17" pubdate>
+        2024年7月17日 晚上
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      2k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      22
        分钟
     </span>
   
@@ -236,109 +236,82 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">阴影技术(1)——朴素Shadowmap,PCF,PCSS</h1>
+            <h1 style="display: none">游戏中的剔除技术</h1>
             
             <div class="markdown-body">
-              <h1 id="Shadow-Mapping与常见问题"><a href="#Shadow-Mapping与常见问题" class="headerlink" title="Shadow Mapping与常见问题"></a>Shadow Mapping与常见问题</h1><h2 id="The-Most-Basic-Method-Of-Shadow-Mapping"><a href="#The-Most-Basic-Method-Of-Shadow-Mapping" class="headerlink" title="The Most Basic Method Of Shadow Mapping"></a>The Most Basic Method Of Shadow Mapping</h2><p>​    对于阴影生成, 首先需要额外设置一个摄像机在光源位置（Light Camera，光源摄像机），并且朝光照方向看去。用一张纹理贴图(也称阴影贴图，Shadow Map)来记录Light Camera所看到的像素深度。</p>
-<p>​    在主渲染流程时，对每一个着色点进行着色时，需要比较这一点在Light Camera视角下的深度是否大于Light Camera记录在纹理上的深度值。如果大于则说明这一点在光照时被其他更近于光源的物体遮挡住，我们需要这里对颜色进行衰减以形成阴影的效果。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>Depth Buffer（In Light View）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231129161027212.png" srcset="/img/loading.gif" alt="image-20231129161027212" style="zoom: 25%;" /></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>With Shadow</th>
-<th>Without Shadow</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231129173100355.png" srcset="/img/loading.gif" alt="image-20231129173100355" style="zoom:67%;" /></td>
-<td><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231128150403640.png" srcset="/img/loading.gif" alt="image-20231128150403640" style="zoom:67%;" /></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>这两部分就是实时渲染中阴影技术的核心，但其在实际应用中有着诸多问题需要解决。</p>
-<p>会出现的几个问题：</p>
+              <h1 id="游戏中的剔除技术"><a href="#游戏中的剔除技术" class="headerlink" title="游戏中的剔除技术"></a>游戏中的剔除技术</h1><p>​    剔除是个比较大的工程，方法众多，同时剔除的目标的粒度也不同，下面我们介绍一下常见的提出技术，有些是软件上的技术(ComputeShader也算软件，非专用硬件电路剔除的都算软件剔除)，有些是硬件上的技术，我们会分开来介绍。</p>
+<p>一般来看，我们是根据粗粒度逐渐进行剔除的，这一点在GPU-Driven pipeline中可以很明显看出，我们从粗粒度上大概分成以下几种:</p>
 <ul>
-<li><strong>阴影失真与自遮挡(Shadow Acne)</strong></li>
-<li><strong>阴影悬浮(Shadow Peter-panning)</strong></li>
-<li><p><strong>阴影锯齿(Shadow Aliasing)</strong></p>
-</li>
-<li><p>大场景中Shadow Map找不到对应的点(CSM)</p>
+<li>对object/instance的剔除通常在CPU进行，目的是减少物体的Draw Call</li>
+<li>对cluster/chunk的剔除通常用Compute Shader在GPU进行，目的是为了减少光栅化三角形的数量</li>
+<li>对triangle的剔除通常通过硬件或者Compute Shader在GPU进行，目的是为了减少光栅化次数以及shading次数</li>
+</ul>
+<h2 id="视锥剔除"><a href="#视锥剔除" class="headerlink" title="视锥剔除"></a>视锥剔除</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719141116331.png" srcset="/img/loading.gif" alt="image-20240719141116331" style="zoom:67%;" /></p>
+<p>这个可以对<strong>MeshCluster或者Instance</strong>进行剔除，一般用BVH作为空间数据结构，空间加速结构的遍历存在三种情况。</p>
+<ul>
+<li>如果包围盒完全位于视锥之内，则其所有子节点都不需要做相交测试了。</li>
+<li>如果包围盒部分处于视锥体之内，其子节点都需要进行相交测试。</li>
+<li>如果包围盒处于视锥体之外则不会对其子节点进行进一步处理，直接对这颗树进行裁剪</li>
+</ul>
+<p>其实对于一个AABB和视锥体是否相交的检测并不是特别直接：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195950072.png" srcset="/img/loading.gif" alt="image-20240727195950072"></p>
+<h2 id="遮挡剔除"><a href="#遮挡剔除" class="headerlink" title="遮挡剔除"></a>遮挡剔除</h2><h3 id="PVS预计算遮挡剔除"><a href="#PVS预计算遮挡剔除" class="headerlink" title="PVS预计算遮挡剔除"></a>PVS预计算遮挡剔除</h3><p>​    离线方案，对动态物体无法处理，对室内，建筑等十分合适。</p>
+<p>​    这个东西除了客户端上减少渲染物体从而减少drawcall外，《生死狙击2》中在服务器端做了一套这个方案，主要参考了瓦洛兰特的这篇Blog <a href="https://technology.riotgames.com/news/demolishing-wallhacks-valorants-fog-war。在不可见时不同步敌军数据，直接从根源上防止了外挂。" target="_blank" rel="noopener">https://technology.riotgames.com/news/demolishing-wallhacks-valorants-fog-war。在不可见时不同步敌军数据，直接从根源上防止了外挂。</a></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727200552672.png" srcset="/img/loading.gif" alt="image-20240727200552672"></p>
+<h3 id="硬件遮挡查询Occlusion-Query"><a href="#硬件遮挡查询Occlusion-Query" class="headerlink" title="硬件遮挡查询Occlusion Query"></a>硬件遮挡查询Occlusion Query</h3><p>​    简单来说就是对查询物体做一次draw看看通过depth test的有多少，如果全不通过直接剔除即可。可以配合PVS使用，PVS剔除静态，硬件遮挡查询剔除动态物体。</p>
+<p>主要问题在于：</p>
+<ul>
+<li>查询本身是一种drawcall</li>
+<li>虚拟内存VRAM回读到系统内存System RAM</li>
+</ul>
+<h3 id="Hi-Z"><a href="#Hi-Z" class="headerlink" title="Hi-Z"></a>Hi-Z</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719201733599.png" srcset="/img/loading.gif" alt="image-20240719201733599"></p>
+<p>​    做一个z-buffer mipmap，但是不做深度平均而是只存储深度最大的。</p>
+<p>​    常用的方式是：对每个物体的AABB做测试即可，如果构建了OCTree也可以从根向下遍历八叉树，这样可以利用树结构的特性剪枝一部分。</p>
+<p>​    但大多数场景都不会用上面完整版本的Hi-Z算法，hi-z的深度需要提前知道当前帧每处深度才能去生成，然而直接一个大的z-prepass对所有物体做是很耗的</p>
+<h4 id="《刺客信条大革命》的Hi-z方案：部分物体z-prepass-上一帧z-buffer重投影"><a href="#《刺客信条大革命》的Hi-z方案：部分物体z-prepass-上一帧z-buffer重投影" class="headerlink" title="《刺客信条大革命》的Hi-z方案：部分物体z-prepass+上一帧z-buffer重投影"></a>《刺客信条大革命》的Hi-z方案：部分物体z-prepass+上一帧z-buffer重投影</h4><ul>
+<li><p>《刺客信条大革命》中使用了：首先对部分遮挡物做做一次光栅化，将光栅化结果与前一帧深度1/16分辨率的重投影结果结合起来再构建z-buffer金字塔。</p>
+<ul>
+<li>只对最近最大的300个物体做一个z-prepass，这个开销很低</li>
+<li>剩下没深度的地方用上一帧reprojection来的信息</li>
+<li>这个结合的信息肯定是有问题的，因为一些快速移动物体可能会导致错误(很好理解缺失了TAA中的motion buffer)，不过概率低，他们能接受。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240726111055315.png" srcset="/img/loading.gif" alt="image-20240726111055315"></p>
 </li>
 </ul>
-<h2 id="Shadow-Acne和自遮挡"><a href="#Shadow-Acne和自遮挡" class="headerlink" title="Shadow Acne和自遮挡"></a>Shadow Acne和自遮挡</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202229441.png" srcset="/img/loading.gif" alt="image-20231224202229441" style="zoom: 67%;" /></p>
-<p>上图出现了条状的阴影:</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202314452.png" srcset="/img/loading.gif" alt="image-20231224202314452"></p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs asciidoc">以方向光源为例，一般认为方向光是平行光，在光源处渲染时使用正交投影。因为Shadow Map的分辨率有限，Shadow Map上面的*<span class="hljs-strong">*一个片段*</span><span class="hljs-strong">*对应场景中的*</span><span class="hljs-strong">*一块区域*</span><span class="hljs-strong">*，又因为很多情况下光源与物体存在夹角，因此记录的深度通常与物体的实际深度存在偏差。</span><br></code></pre></div></td></tr></table></figure>
-<p>​    上图中蓝色片段即为ShadowMap中记录的深度。在纹理中像素为最小单位，一个像素只能记录一个值，图中每个像素记录的是箭头处的深度。这就导致了明明本该整块被照亮的地板，会出现明暗相间的条纹：黑线处的地板由于在光源视角中深度小于记录的值，因此不在阴影中。红线处的地板深度大于记录的值，没有通过阴影测试。</p>
-<p>​     解决办法有些许trick，我们可以用一个叫做<strong>阴影偏移</strong>（shadow bias）的技巧来解决这个问题，我们简单的对表面的深度（或深度贴图）应用一个偏移量，这样片元就不会被错误地认为在表面之下了。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202630631.png" srcset="/img/loading.gif" alt="image-20231224202630631"></p>
-<p>我们这里添加一个bias， 阴影基本正常：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224202923283.png" srcset="/img/loading.gif" alt="image-20231224202923283" style="zoom:67%;" /></p>
-<p>因为阴影失真的问题是由于光线和物体表面的夹角导致的，光线越垂直于物体，失真的影响就越小，因此通常会将bias与光线和物体表面法线的夹角挂钩：</p>
-<p>$\text { bias }=k \cdot(1.0-\operatorname{dot}(\text { normal, lightDir }))$</p>
-<h2 id="阴影悬浮-Shadow-Peter-panning-和Shadow-Bias"><a href="#阴影悬浮-Shadow-Peter-panning-和Shadow-Bias" class="headerlink" title="阴影悬浮(Shadow Peter-panning)和Shadow Bias"></a>阴影悬浮(Shadow Peter-panning)和Shadow Bias</h2><p>这其实是由于ShdowBias导致的：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224204404293.png" srcset="/img/loading.gif" alt="image-20231224204404293"></p>
-<p>本来不能通过阴影测试，bias设置过大，导致本该被遮挡的物体，因为减去了bias导致深度值变小，通过了阴影测试。</p>
-<p>解决方法：</p>
-<p>1.其实bias设置合理一点即可，不要太大。</p>
-<p>2.也可以当渲染深度贴图时候使用正面剔除（front face culling），我们只利用背面，这样阴影失真也解决了，不再需要bias的辅助。使用这个方法可以免去反复调整bias，并且也不会导致悬浮的问题。但使用该方法的前提是<strong>场景中的物体必须是一个体（有正面和反面）而非原先的一个面</strong>。</p>
-<h2 id="阴影走样Shadow-Aliasing"><a href="#阴影走样Shadow-Aliasing" class="headerlink" title="阴影走样Shadow Aliasing"></a>阴影走样Shadow Aliasing</h2><p>我们上述的阴影有的锯齿：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231224211837915.png" srcset="/img/loading.gif" alt="image-20231224211837915"></p>
-<ul>
-<li>锯齿本质是采样频率不够，最直接的解决方法就是 提高采样频率，但也会带来时间/空间的开销</li>
-<li>使用PCF/PCSS等各种效果更好的阴影算法</li>
+<h4 id="《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图"><a href="#《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图" class="headerlink" title="《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图"></a>《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图</h4><p>​    <strong>hi-z在cpu上做需要低分辨率渲染一个深度图：</strong>比如寒霜引擎在做战地3时用了这个方法，只对大物体做一个简单深度图渲染。不过那是2011年，现在有ComputeShader可以更好的做这件事。如果项目cpu有多余算力可以考虑，天刀貌似也用上了这个方法。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719210527891.png" srcset="/img/loading.gif" alt="image-20240719210527891"></p>
+<h4 id="GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案"><a href="#GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案" class="headerlink" title="GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案"></a>GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案</h4><h4 id="Hi-z最好不要回读"><a href="#Hi-z最好不要回读" class="headerlink" title="Hi-z最好不要回读"></a>Hi-z最好不要回读</h4><p>注意Hi-z 如果要异步回读不太靠谱，有滞后性，要么cpu上软光栅，要么Compute Shader不要回读，下面是《星球重启》GDC talk中遇到的回读导致的滞后问题</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/v2-116028dd7b41df7d6252a1da7540bc94_b.webp" srcset="/img/loading.gif" alt="动图"></p>
+<h3 id="Two-Phase-occlusion-culling"><a href="#Two-Phase-occlusion-culling" class="headerlink" title="Two-Phase occlusion culling"></a>Two-Phase occlusion culling</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240726111609479.png" srcset="/img/loading.gif" alt="image-20240726111609479"></p>
+<div class="hljs code-wrapper"><pre><code> 所有物体先用上一帧的ZBuffer测试一遍，得到可见的物体拿到这一帧相机画一遍。因为是上帧的z-buffer那么剩下的我们认为被遮挡的有些其实并没被遮挡怎么办呢？在本帧完成后生成了新的DepthBuffer后，然后拿这个DepthBuffer测试一遍刚才认为遮挡不可见的物体，如果发现有新的物体可见，则给他们打上标记，下一帧渲染回来。 （这个技术在sig2015刺客信条大革命那个gpu-driven talk里提出的，这里的是Instance 和 Cluster）
+</code></pre></div><h2 id="GPU-Driven-rendering-pipeline"><a href="#GPU-Driven-rendering-pipeline" class="headerlink" title="GPU-Driven rendering pipeline"></a>GPU-Driven rendering pipeline</h2><p>​    GDC2015刺客信条大革命提出，其实也是遮挡剔除，但是他用了mesh cluster来做表达，还是单独开一个博客讲讲： 链接</p>
+<h2 id="Pre-z-Pass"><a href="#Pre-z-Pass" class="headerlink" title="Pre-z Pass"></a>Pre-z Pass</h2><p>​    提前做一个深度Pass， Pre-Z虽然只写入深度不做shading计算，Pre-Z即提前进行一次代价很小的渲染，这次渲染不做shading只写入深度，有了Pre-Z的深度图就可以用这个深度图去做提前深度测试了，这样虽然会导致DrawCall数量翻倍但是配合Early-Z使用能确保下一个Pass的shading数量和屏幕空间的Pixel数量是一致的，并不会带来多余的shading浪费。Pre-Z主要功耗产生在DrawCall，但却能保证只有1x倍Pixel的shading，<strong>相当于用更多的Draw Call去节省Overdraw的时间</strong></p>
+<p><strong>局限性：</strong></p>
+<p>​    可以缓解大量的SM压力，但在移动端，功耗的瓶颈在于Draw Call数量，这个时候需要综合考虑是否需要使用Pre-Z以及对Pre-Z做一些额外出来等操作来评估<strong>是否值得用double draw call(深度一次pass，绘制一次pass)去减少pixel shading次数。</strong></p>
+<h2 id="硬件单元-Z-cull-硬件"><a href="#硬件单元-Z-cull-硬件" class="headerlink" title="硬件单元 Z-cull(硬件)"></a>硬件单元 Z-cull(硬件)</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195325451.png" srcset="/img/loading.gif" alt="image-20240727195325451"></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727215102686.png" srcset="/img/loading.gif" alt="image-20240727215102686"></p>
+<h2 id="Early-z（硬件）"><a href="#Early-z（硬件）" class="headerlink" title="Early-z（硬件）"></a>Early-z（硬件）</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719193203898.png" srcset="/img/loading.gif" alt="image-20240719193203898"></p>
+<p>最后深度测试会使得很多像素被overdraw，于是我们考虑：Early-z在Pixel shader前做。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719193257174.png" srcset="/img/loading.gif" alt="image-20240719193257174"></p>
+<p><strong>early-z失效：</strong></p>
+<p>​    但这里有个坑点， 一旦进行了<strong>手动写入深度值、开启alpha test或者丢弃像素等操作</strong>，那么<strong>GPU就会关闭early-z</strong>直到下次Clear Z-Buffer后才会重新开启。 原因是：<strong>AlphaTest会导致在前面的透明物体z值被写入但是其本身其实不会渲染，这导致后面的物体本来该被渲染但没被渲染。</strong></p>
+<p><strong>early-z的问题：</strong></p>
+<p>​    <strong>early-z在物体从远到近渲染是没有意义的，这也是主要问题。</strong> 最好<strong>在CPU按照距离做一个排序</strong>决定渲染顺序再提交渲染。</p>
+<h2 id="裁剪Clipping-硬件"><a href="#裁剪Clipping-硬件" class="headerlink" title="裁剪Clipping(硬件)"></a>裁剪Clipping(硬件)</h2><p>硬件上的操作，在Clip Space完成，Sutherland–Hodgman算法：</p>
+<p><a href="https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm</a></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719211834005.png" srcset="/img/loading.gif" alt="image-20240719211834005"></p>
+<h2 id="背面剔除-硬件"><a href="#背面剔除-硬件" class="headerlink" title="背面剔除(硬件)"></a>背面剔除(硬件)</h2><p>硬件中做，管线中配置下即可。</p>
+<h2 id="小三角形剔除"><a href="#小三角形剔除" class="headerlink" title="小三角形剔除"></a>小三角形剔除</h2><p>这是一个为了速度牺牲质量的剔除方法：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195325451.png" srcset="/img/loading.gif" alt="image-20240727195325451"></p>
+<p>​    在光栅化后，并不是直接就派发到PS执行，而是有一个Z-Cull单元。在进行逐像素光栅化之前，GPU首先会对块进行粗糙光栅化，一般为<code>4*4</code>。Z-Cull单元负责维护每个块的深度最大值。</p>
+<p>​    Z-Cull后会进行Fine Raster，以<code>2*2</code>个pixel进行光栅化，这对于小三角形有了很多不必要的开销，会多三倍开销。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195420394.png" srcset="/img/loading.gif" alt="image-20240727195420394"></p>
+<p>这也就是Visibility Buffer的诞生的主要动机，后来用Compute Shader做软件光栅化。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719232914953.png" srcset="/img/loading.gif" alt="image-20240719232914953"></p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li>为什么要剔除小三角形？ - Vinluo46的回答 - 知乎<a href="https://www.zhihu.com/question/656578487/answer/3504812003" target="_blank" rel="noopener">https://www.zhihu.com/question/656578487/answer/3504812003</a></li>
+<li>TODO</li>
 </ul>
-<h1 id="PCF-Percentage-Closer-Filtering"><a href="#PCF-Percentage-Closer-Filtering" class="headerlink" title="PCF(Percentage Closer Filtering)"></a>PCF(Percentage Closer Filtering)</h1><p>​    注意这里不是对shadowMap做模糊，而是如果有一点是ShadowMap对其周围泊松分布采样算出其被遮挡的比例作为阴影系数。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240311133328519.png" srcset="/img/loading.gif" alt="image-20240311133328519" style="zoom:50%;" /></p>
-<p>​    Shadow Map采样不足，也就是分辨率不够会导致阴影锯齿，一种名为（Percentage Closer Filtering）的算法，主要优化阴影测试时的采样方式，对一个Shadow Map上的点的周围采样，这相当于做了模糊滤波，以解决阴影锯齿的问题。</p>
-<p>​    PCF中采样方式有很多，比较好的采样方式是通过泊松圆盘分布采样，下图左边是通过均匀圆盘分布采样，右边是泊松圆盘分布采样。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/clip_image004.jpg" srcset="/img/loading.gif" alt="img"></p>
-<ul>
-<li>均匀圆盘分布采样（Uniform-Disk Sample）：圆范围内随机取一系列坐标作为采样点；看上去比较杂乱无章，采样效果的噪声比较严重。</li>
-<li>泊松圆盘分布采样（Poisson-Disk Sample）：圆范围内随机取一系列坐标作为采样点，但是这些坐标还需要满足一定约束，即坐标与坐标之间至少有一定距离间隔。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717021707409.png" srcset="/img/loading.gif" alt="image-20240717021707409"></p>
-<p>​     上图中右图为应用PCF后的效果，可以看到锯齿明显减轻，PCF是软化阴影的主要方法。</p>
-<p>​    硬件支持上，现在的硬件都直接提供周围四点采样的加权PCF深度测试，比如OpenGL中的sampler2DShadow，DirectX中的SampleCmp。这种采样的加权方式类似于普通像素采样时的双线性采样，在目标位置附近2×2像素中，逐像素进行深度比较，得到结果值0或1，然后将结果按照相对周围像素位置进行加权平均。</p>
-<div class="hljs code-wrapper"><pre><code> 如果希望更大的采样可以使用多次进一步利用硬件 PCF 技术，我们进行更多次这样的硬件采样，就可以得到更多采样的结果。例如，进行 4 次硬件采样就可以获得 4×4 个采样的结果：
-</code></pre></div><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022323387.png" srcset="/img/loading.gif" alt="image-20240717022323387"></p>
-<h1 id="PCSS-Percentage-Closer-Soft-Shadows"><a href="#PCSS-Percentage-Closer-Soft-Shadows" class="headerlink" title="PCSS(Percentage-Closer Soft Shadows)"></a>PCSS(Percentage-Closer Soft Shadows)</h1><p>PCF虽然“软化”了阴影，但是我们阴影往往是由硬阴影+软阴影组成，PCF这种全软化的方式算不上很好的效果。</p>
-<p>现实中的阴影往往是如下图，沿着红线越来越“软”</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231228171039621.png" srcset="/img/loading.gif" alt="image-20231228171039621"></p>
-<p>PCSS就是动态适应的选择PCF模糊的size：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20231228171344785.png" srcset="/img/loading.gif" alt="image-20231228171344785"></p>
-<p>如上图，只需要光源到遮挡物体表面的平均距离$d<em>{Blocker}$, 投射阴影处到光源处的竖直距离$d</em>{Receiver}$，还需要一个光源大小$W_{Light}$(可以理解为调整软阴影边界宽度的系数)。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240102214451107.png" srcset="/img/loading.gif" alt="image-20240102214451107"></p>
-<p>​    可以发现法线过度生硬，这是因为$d<em>{Blocker}$出现了突变，即我们计算average $d</em>{Blocker}$的时候选择的采样半径太小，导致变化不够平滑，我们<strong>调整计算平均$d<em>{Blocker}$的采样大小为40，$W</em><br>{light}$大小为50</strong>，此时过度平滑了很多</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240102215517557.png" srcset="/img/loading.gif" alt="image-20240102215517557"></p>
-<h2 id="优化1：-Blocker-Search与PCF采样开销"><a href="#优化1：-Blocker-Search与PCF采样开销" class="headerlink" title="优化1：  Blocker Search与PCF采样开销"></a>优化1：  Blocker Search与PCF采样开销</h2><p>​    PCSS中计算最耗时的部分在于Blocker Search部分计算光源到遮挡物体表面的平均距离和PCF的采样。这些耗时的计算都是服务于计算软阴影，可以考虑只在软阴影附近才进行这两部耗时的计算。有几种优化手段：</p>
-<ol>
-<li><p>进行Block Search操作后就会得知：若比较结果为部分样本被遮蔽而另一部分样本不被遮蔽，则说明这是半影区。若全被遮挡说明是全阴影区，对于全阴影区在后续PCF中无需采样。</p>
-</li>
-<li><p>先生成一张Shadow Map，然后对其进行边缘检测，对边缘附近的才进行Block Search和后续PCF采样。</p>
-</li>
-<li><p>边缘检测本身就是比较耗时的 Pass，所以可能还得想个性能更优的方式，一个基于Tile的边缘检测想法：先根据 Tile 内各个像素的 Shadow mask 情况来判断出当前 Tile 属于完全遮蔽区，完全不遮蔽区或半影区；接着每个 Tile 读取周围 8 个 Tiles 的 Mask，如果本 Tile 为 Shadowed 而存在相邻 Tile 为 Unshadowed（亦或相反的情况），则本 Tile 也应该为半影区。最后我们只对 Penumbra Tiles 里的像素进行昂贵的 PCF/PCSS 计算。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022126259.png" srcset="/img/loading.gif" alt="image-20240717022126259"></p>
-</li>
-</ol>
-<h2 id="优化2：解决漏光"><a href="#优化2：解决漏光" class="headerlink" title="优化2：解决漏光"></a>优化2：解决漏光</h2><p>​        我们使用上述的两种软阴影方法PCF/PCSS中，不难发现因为做高斯模糊导致在脚趾处有一定的漏光，这是因为对于脚趾边缘的阴影点在计算时高斯模糊导致了边缘很软，解决漏光的方法也很直接，<strong>使用带权的高斯模糊</strong>，而不是权重相同，权重可以以两个点之间的世界空间距离的倒数作为权重，即两个点差距很大(一点在地板的阴影上，另一个点在脚趾上)，这个点的权重贡献会很小。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240717022420415.png" srcset="/img/loading.gif" alt="image-20240717022420415"></p>
 
             </div>
             <hr>
@@ -351,13 +324,7 @@
                     
                       <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
                     
-                      <a class="hover-with-bg" href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PCF/">PCF</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PCSS/">PCSS</a>
-                    
-                      <a class="hover-with-bg" href="/tags/ShadowMap/">ShadowMap</a>
+                      <a class="hover-with-bg" href="/tags/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF/">剔除技术</a>
                     
                   </div>
                 
@@ -370,9 +337,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/19/GPU-DrivenRenderingPipeline/">
+                      <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GPU-Driven Rendering Pipeline</span>
+                        <span class="hidden-mobile">阴影技术(1)——朴素Shadowmap,PCF,PCSS</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -380,8 +347,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/17/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/">
-                        <span class="hidden-mobile">游戏中的剔除技术</span>
+                      <a href="/2024/07/16/%E5%8F%8D%E8%B5%B0%E6%A0%B7%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94SSAA,MSAA,TAA/">
+                        <span class="hidden-mobile">反走样技术(1)——SSAA,MSAA,TAA</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -400,8 +367,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/';
-        this.page.identifier = '/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(1)%E2%80%94%E2%80%94%E6%9C%B4%E7%B4%A0Shadowmap%EF%BC%8CPCF,PCSS/';
+        this.page.url = 'https://chillstepp.github.io/2024/07/17/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/';
+        this.page.identifier = '/2024/07/17/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');

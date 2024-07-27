@@ -191,6 +191,67 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch7-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8B/" target="_self">
+          <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch7-价值函数近似-下">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch7-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8B/">强化学习纲要Ch7-价值函数近似-下</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch7-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8B/">
+          
+          
+            
+          
+          价值函数近似—下
+
+线性组合的前提是需要我们设计出很好的feature
+我们可以用非线性的函数拟合，常用的方法就是：DNN（Deep Neural Network）
+
+现在DRL的一个大致情况：
+
+
+DNN用来拟合价值函数，策略函数和环境模型
+
+Loss function可以通过SGD来做梯度下降
+
+目前的挑战：1.效率问题，参数太多  2.deadly triad
+
+Deep Q-Network
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 21:59" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/05/20/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81Ch6-%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC-%E4%B8%8A/" target="_self">
           <img src="/img/rl_zbl.png" srcset="/img/loading.gif" alt="强化学习纲要Ch6-价值函数近似-上">
         </a>
@@ -661,60 +722,6 @@ SGD还有一个缺点就是无法处理鞍点：
             <i class="iconfont icon-date"></i>
             <time datetime="2021-04-13 22:21" pubdate>
               2021-04-13
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/" target="_self">
-          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH5-训练神经网络(上)">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/">CS231n-CH5-训练神经网络(上)</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/">
-          
-          
-            
-          
-          训练神经网络(上)激活函数 
-
-问题：
-
-当x是一个很大/很小的区域时，梯度是一个十分接近0的数值，这会导致upstream如果是0，那么返回值就会十分小。这会使得梯度逐渐消失。
-
-
-比如这个方程的对$x$的梯度是一堆$w$,我们假设数据的x要么都是大于0/要么都是小于0的，那么$\Sigma w_ix_i+b$这个式子对$w$求梯度是一堆$x$,我们上面假设了这里都是大于0，那么这个梯度也都大于
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-12 14:34" pubdate>
-              2021-04-12
             </time>
           </div>
         

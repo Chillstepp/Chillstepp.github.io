@@ -191,6 +191,60 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/" target="_self">
+          <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH5-训练神经网络(上)">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/">CS231n-CH5-训练神经网络(上)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/12/CS231n-CH5-%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8A/">
+          
+          
+            
+          
+          训练神经网络(上)激活函数 
+
+问题：
+
+当x是一个很大/很小的区域时，梯度是一个十分接近0的数值，这会导致upstream如果是0，那么返回值就会十分小。这会使得梯度逐渐消失。
+
+
+比如这个方程的对$x$的梯度是一堆$w$,我们假设数据的x要么都是大于0/要么都是小于0的，那么$\Sigma w_ix_i+b$这个式子对$w$求梯度是一堆$x$,我们上面假设了这里都是大于0，那么这个梯度也都大于
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-12 14:34" pubdate>
+              2021-04-12
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89CV/">计算机视觉CV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/04/09/CS231n-CH4-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_self">
           <img src="/img/cs213n.png" srcset="/img/loading.gif" alt="CS231n-CH4-卷积神经网络">
         </a>
@@ -670,66 +724,6 @@ AND运算：
             <i class="iconfont icon-date"></i>
             <time datetime="2021-02-28 17:47" pubdate>
               2021-02-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/" target="_self">
-          <img src="/img/ml_twu2.png" srcset="/img/loading.gif" alt="机器学习技法CH10：Random Forest">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/">机器学习技法CH10：Random Forest</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%B3%95CH10%EF%BC%9ARandom-Forest/">
-          
-          
-            
-          
-          CH10：Random ForestRandom Forest Algorithm首先回顾：
-
-random forest是两部分组成：
-
-
-流程是：
-
-首先对数据做bootstrap，处理数据
-然后用处理完的数据去跑decision tree，获得很多个$g_t$
-最后uniform的合并这些树，也就是uniform的合并$g_t$
-
-这个算法的特点：
-
-我们可以看到用decision tree
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-25 22:04" pubdate>
-              2021-02-25
             </time>
           </div>
         
