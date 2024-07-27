@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Chillstep">
   <meta name="keywords" content="">
-  <title>游戏中的剔除技术 - Chillstep</title>
+  <title>球谐函数SH与PRT - Chillstep</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="游戏中的剔除技术">
+            <span class="h2" id="subtitle" title="球谐函数SH与PRT">
               
             </span>
 
@@ -184,7 +184,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2024-07-27 22:17" pubdate>
+      <time datetime="2024-07-27 22:18" pubdate>
         2024年7月27日 晚上
       </time>
     </span>
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      1.5k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      19
        分钟
     </span>
   
@@ -236,82 +236,81 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">游戏中的剔除技术</h1>
+            <h1 style="display: none">球谐函数SH与PRT</h1>
             
             <div class="markdown-body">
-              <h1 id="游戏中的剔除技术"><a href="#游戏中的剔除技术" class="headerlink" title="游戏中的剔除技术"></a>游戏中的剔除技术</h1><p>​    剔除是个比较大的工程，方法众多，同时剔除的目标的粒度也不同，下面我们介绍一下常见的提出技术，有些是软件上的技术(ComputeShader也算软件，非专用硬件电路剔除的都算软件剔除)，有些是硬件上的技术，我们会分开来介绍。</p>
-<p>一般来看，我们是根据粗粒度逐渐进行剔除的，这一点在GPU-Driven pipeline中可以很明显看出，我们从粗粒度上大概分成以下几种:</p>
+              <h1 id="函数分解和SH"><a href="#函数分解和SH" class="headerlink" title="函数分解和SH"></a>函数分解和SH</h1><p>对于任意函数 $f(x)$，不管是连续的还是不连续的，我们可以展开成一系列基函数（每项都带某个系数）的线性组合：</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i} c_{i} \cdot B_{i}(x)</script><p>​    比如傅里叶变换是利用不同频率余弦波近似一个函数的，还有一种球谐的方法，听到他的球字我们就知道它非常适合拟合球面内容，这非常适合拟合环境光贴图或者其他球形分布的内容。</p>
+<p>​    SH有不同阶数，阶数越高拟合程度越高，但是其很难拟合高频信息，我们一般用三阶(1+3+5=9个基函数)拟合环境光照。</p>
 <ul>
-<li>对object/instance的剔除通常在CPU进行，目的是减少物体的Draw Call</li>
-<li>对cluster/chunk的剔除通常用Compute Shader在GPU进行，目的是为了减少光栅化三角形的数量</li>
-<li>对triangle的剔除通常通过硬件或者Compute Shader在GPU进行，目的是为了减少光栅化次数以及shading次数</li>
+<li>在第0阶（l=0）有1个基函数（m=0）</li>
+<li>在第1阶（l=1）有3个基函数（m=-1,0,1）</li>
+<li>…</li>
+<li>在第n阶（l=n）有2n+1个基函数（m=-n,…,0,…,n）。</li>
 </ul>
-<h2 id="视锥剔除"><a href="#视锥剔除" class="headerlink" title="视锥剔除"></a>视锥剔除</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719141116331.png" srcset="/img/loading.gif" alt="image-20240719141116331" style="zoom:67%;" /></p>
-<p>这个可以对<strong>MeshCluster或者Instance</strong>进行剔除，一般用BVH作为空间数据结构，空间加速结构的遍历存在三种情况。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725103034837.png" srcset="/img/loading.gif" alt="image-20240725103034837" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725103409394.png" srcset="/img/loading.gif" alt="image-20240725103409394"></p>
+<p>我们转换到实数形式：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725103545873.png" srcset="/img/loading.gif" alt="image-20240725103545873"></p>
+<p>到此我们获得了基函数，对于不同的环境光照前三阶SH基函数都是一样的，那是靠什么来拟合出不同环境光照的呢？是SH系数！</p>
+<p>我们了解下这些SH基函数到底有什么特点:</p>
 <ul>
-<li>如果包围盒完全位于视锥之内，则其所有子节点都不需要做相交测试了。</li>
-<li>如果包围盒部分处于视锥体之内，其子节点都需要进行相交测试。</li>
-<li>如果包围盒处于视锥体之外则不会对其子节点进行进一步处理，直接对这颗树进行裁剪</li>
+<li><p>正交性，基函数之间相乘在球面积分是0</p>
+<script type="math/tex; mode=display">
+\int_{\Omega} B_{i}(\omega) \cdot B_{j}(\omega) \mathrm{d} \omega=\mathbf{1} \quad(i=j)
+\\\int_{\Omega} B_{i}(\omega) \cdot B_{j}(\omega) \mathrm{d} \omega=\mathbf{0} \quad(i\neq j)</script></li>
+<li><p>求SH系数很方便，我们刚才说到SH系数一求出来就直接可以表达环境光了：相当于把环境光和基函数方向做卷积，落实到代码中就是对于每个bi，采样环境光和bi做积分。</p>
+<script type="math/tex; mode=display">
+f_i = \int_{\Omega}f(\omega)\cdot B_i(\omega)d\omega</script></li>
+<li><p>最后通过系数向量组与基函数组的点积（前n阶的基函数/系数共有 n*n 个）可以很方便重建球面函数！</p>
+<script type="math/tex; mode=display">
+f(\omega)\approx \sum^{n^2}_{i=1} f_{i} B_{i}(\mathbf{\omega})</script></li>
 </ul>
-<p>其实对于一个AABB和视锥体是否相交的检测并不是特别直接：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195950072.png" srcset="/img/loading.gif" alt="image-20240727195950072"></p>
-<h2 id="遮挡剔除"><a href="#遮挡剔除" class="headerlink" title="遮挡剔除"></a>遮挡剔除</h2><h3 id="PVS预计算遮挡剔除"><a href="#PVS预计算遮挡剔除" class="headerlink" title="PVS预计算遮挡剔除"></a>PVS预计算遮挡剔除</h3><p>​    离线方案，对动态物体无法处理，对室内，建筑等十分合适。</p>
-<p>​    这个东西除了客户端上减少渲染物体从而减少drawcall外，《生死狙击2》中在服务器端做了一套这个方案，主要参考了瓦洛兰特的这篇Blog <a href="https://technology.riotgames.com/news/demolishing-wallhacks-valorants-fog-war。在不可见时不同步敌军数据，直接从根源上防止了外挂。" target="_blank" rel="noopener">https://technology.riotgames.com/news/demolishing-wallhacks-valorants-fog-war。在不可见时不同步敌军数据，直接从根源上防止了外挂。</a></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727200552672.png" srcset="/img/loading.gif" alt="image-20240727200552672"></p>
-<h3 id="硬件遮挡查询Occlusion-Query"><a href="#硬件遮挡查询Occlusion-Query" class="headerlink" title="硬件遮挡查询Occlusion Query"></a>硬件遮挡查询Occlusion Query</h3><p>​    简单来说就是对查询物体做一次draw看看通过depth test的有多少，如果全不通过直接剔除即可。可以配合PVS使用，PVS剔除静态，硬件遮挡查询剔除动态物体。</p>
-<p>主要问题在于：</p>
+<h1 id="回到PRT"><a href="#回到PRT" class="headerlink" title="回到PRT"></a>回到PRT</h1><p>如何shading一点在环境光照中？</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725105112417.png" srcset="/img/loading.gif" alt="image-20240725105112417"></p>
+<script type="math/tex; mode=display">
+L(r)=\int_{\Omega^+} L_e(\mathbf{\omega})\cdot  \rho(r,w) \cdot V(\mathbf{\omega}) \max (0, n\cdot \mathbf{\omega}) \mathrm{d} \mathbf{\omega}=\int_{\Omega^+} L_e(\mathbf{\omega})\cdot  T(r,w) \mathrm{d} \mathbf{\omega}</script><p>我们分两部分考虑，光照和光传输</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725105141161.png" srcset="/img/loading.gif" alt="image-20240725105141161"></p>
+<p>Light部分就是我们刚才一直在推导的环境光，直接算出球谐表达：</p>
+<script type="math/tex; mode=display">
+L_e(\mathbf{\omega}) \approx \sum l_{i} B_{i}(\mathbf{\omega})</script><p>下面考虑光照传输部分，对于漫反射和镜面反射要分开解决：</p>
+<h3 id="Diffuse部分"><a href="#Diffuse部分" class="headerlink" title="Diffuse部分"></a>Diffuse部分</h3><p>漫反射部分传输方程如下：</p>
+<script type="math/tex; mode=display">
+T(\omega)=V(\mathbf{\omega}) \max (0, n\cdot \mathbf{\omega})</script><p>我们也用SH表示可以：</p>
+<script type="math/tex; mode=display">
+T(\omega) \approx \sum T_j B_j(\omega)</script><p>带入整理：注意利用基函数正交性</p>
+<script type="math/tex; mode=display">
+\begin{align} L(r) &\approx \rho \int_{\Omega^+} \sum_{i=1}^{n^2}l_{i}B_i(\omega) \sum_{j=1}^{n^2}T_j\mathrm{B}_{j}(\mathbf{\omega}) \mathrm{d} \mathbf{\omega} \\ &=  \rho\sum_{i=1}^{n^2} \sum_{j=1}^{n^2} l_{i}T_j\int_{\Omega^+} B_i(\omega) \mathrm{B}_{j}(\mathbf{\omega})d\omega \\ &=   \rho\sum_{i=1}^{n^2}  l_{i}T_i\int_{\Omega^+} B_i(\omega) \mathrm{B}_{i}(\mathbf{\omega})d\omega \\ &=  \rho\sum_{i=1}^{n^2}  l_{i}T_i \end{align}</script><p><strong>这也体现了正交性可以很棒的帮我们简化了公式，这也是利用SH的主要原因。</strong></p>
+<p><strong>我们只需要求出$l$和$T$就可以很好的解决了问题！</strong></p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725110242367.png" srcset="/img/loading.gif" alt="image-20240725110242367"></p>
+<h3 id="Glossy部分"><a href="#Glossy部分" class="headerlink" title="Glossy部分"></a>Glossy部分</h3><p>由于Glossy部分不再是漫反射，镜面反射是有方向的，这就相当于增加了一个维度：</p>
+<p>环境光照部分还是一样：</p>
+<script type="math/tex; mode=display">
+L_e(\mathbf{\omega}) \approx \sum l_{i} B_{i}(\mathbf{\omega})</script><p>对于传输光照部分：</p>
+<p>我们需要考虑brdf的高光项，这会代来一个新的维度即出射方向</p>
+<script type="math/tex; mode=display">
+T(r,\omega)=\rho(r,\mathbf{\omega}) V(\mathbf{\omega}) \max (0, n\cdot \mathbf{\omega})</script><p>如果我们固定r方向，还是可以预计算：</p>
+<script type="math/tex; mode=display">
+T(r,\omega) \approx \sum_{i=1}^{n^2} T_{i}(r)B_i(\omega)\approx</script><p>我们考虑对$T_i(r)$也做一个球谐：</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n^2} \sum_{j=1}^{n^2} T_{ij} B_j(r)B_i(\omega)</script><script type="math/tex; mode=display">
+\begin{align} L(r) & \approx \int_{\Omega^+} \sum_{i=1}^{n^2} l_{i} B_{i}\sum_{j=1}^{n^2}\sum_{k=1}^{n^2} T_{jk} B_j(\omega)B_k(r)\mathrm{d} \mathbf{\omega} \\ &=   \sum_{i=1}^{n^2}\sum_{j=1}^{n^2}\sum_{k=1}^{n^2} l_iT_{jk }B_k(r) \int_{\Omega^+}  B_{i}(\omega)B_j(\omega)\mathrm{d} \mathbf{\omega}  \\ &= \sum_{i=1}^{n^2}\sum_{k=1}^{n^2}l_iT_{ik }B_k(r) \end{align}</script><p>现在除了l预计算，还要预计算$T_{ik}$这个二维信息，不过我们还是可以接受的.</p>
+<p>但是由于 Glossy 物体需要每个顶点存储三个矩阵 T（RGB颜色每个通道对应1个矩阵），这使得空间开销略大，因此不太实用。</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725111358822.png" srcset="/img/loading.gif" alt="image-20240725111358822"></p>
+<h1 id="PRT旋转-SH旋转"><a href="#PRT旋转-SH旋转" class="headerlink" title="PRT旋转/SH旋转"></a>PRT旋转/SH旋转</h1><h2 id="SH旋转的两种情况"><a href="#SH旋转的两种情况" class="headerlink" title="SH旋转的两种情况"></a>SH旋转的两种情况</h2><p>​    SH可以旋转吗？球基函数看起来天生就适合做这个，我们来看看怎么做到。</p>
+<p>​    最简单的就是，环境光旋转和物体旋转在 PRT 渲染中是等价的。我们也可以对输入向量来进行反向旋转，来获得等同于环境光正向旋转的效果；只是如果考虑每次对输入向量进行旋转操作比较费的话，可以考虑一次性旋转完 SH lighting，就避免了输入向量旋转的操作了。</p>
+<p>​    我们总结下：</p>
 <ul>
-<li>查询本身是一种drawcall</li>
-<li>虚拟内存VRAM回读到系统内存System RAM</li>
+<li>如果单个物体旋转，场景其他物体不旋转，我们可以就只对该物体计算SH系数时采样向量做一个旋转即可。</li>
+<li>如果整个天空盒旋转，每个物体旋转会有一些开销，不妨考虑对SH系数求一个旋转矩阵，一次计算后获得新的SH系数，所有物体都用这个新SH系数的即可。</li>
 </ul>
-<h3 id="Hi-Z"><a href="#Hi-Z" class="headerlink" title="Hi-Z"></a>Hi-Z</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719201733599.png" srcset="/img/loading.gif" alt="image-20240719201733599"></p>
-<p>​    做一个z-buffer mipmap，但是不做深度平均而是只存储深度最大的。</p>
-<p>​    常用的方式是：对每个物体的AABB做测试即可，如果构建了OCTree也可以从根向下遍历八叉树，这样可以利用树结构的特性剪枝一部分。</p>
-<p>​    但大多数场景都不会用上面完整版本的Hi-Z算法，hi-z的深度需要提前知道当前帧每处深度才能去生成，然而直接一个大的z-prepass对所有物体做是很耗的</p>
-<h4 id="《刺客信条大革命》的Hi-z方案：部分物体z-prepass-上一帧z-buffer重投影"><a href="#《刺客信条大革命》的Hi-z方案：部分物体z-prepass-上一帧z-buffer重投影" class="headerlink" title="《刺客信条大革命》的Hi-z方案：部分物体z-prepass+上一帧z-buffer重投影"></a>《刺客信条大革命》的Hi-z方案：部分物体z-prepass+上一帧z-buffer重投影</h4><ul>
-<li><p>《刺客信条大革命》中使用了：首先对部分遮挡物做做一次光栅化，将光栅化结果与前一帧深度1/16分辨率的重投影结果结合起来再构建z-buffer金字塔。</p>
-<ul>
-<li>只对最近最大的300个物体做一个z-prepass，这个开销很低</li>
-<li>剩下没深度的地方用上一帧reprojection来的信息</li>
-<li>这个结合的信息肯定是有问题的，因为一些快速移动物体可能会导致错误(很好理解缺失了TAA中的motion buffer)，不过概率低，他们能接受。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240726111055315.png" srcset="/img/loading.gif" alt="image-20240726111055315"></p>
-</li>
-</ul>
-<h4 id="《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图"><a href="#《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图" class="headerlink" title="《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图"></a>《战地3》寒霜引擎Hi-z方案：CPU仅对大物体做一个低分辨率深度图</h4><p>​    <strong>hi-z在cpu上做需要低分辨率渲染一个深度图：</strong>比如寒霜引擎在做战地3时用了这个方法，只对大物体做一个简单深度图渲染。不过那是2011年，现在有ComputeShader可以更好的做这件事。如果项目cpu有多余算力可以考虑，天刀貌似也用上了这个方法。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719210527891.png" srcset="/img/loading.gif" alt="image-20240719210527891"></p>
-<h4 id="GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案"><a href="#GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案" class="headerlink" title="GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案"></a>GDC2023《明日之后》移动平台上的软光栅遮挡剔除方案</h4><h4 id="Hi-z最好不要回读"><a href="#Hi-z最好不要回读" class="headerlink" title="Hi-z最好不要回读"></a>Hi-z最好不要回读</h4><p>注意Hi-z 如果要异步回读不太靠谱，有滞后性，要么cpu上软光栅，要么Compute Shader不要回读，下面是《星球重启》GDC talk中遇到的回读导致的滞后问题</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/v2-116028dd7b41df7d6252a1da7540bc94_b.webp" srcset="/img/loading.gif" alt="动图"></p>
-<h3 id="Two-Phase-occlusion-culling"><a href="#Two-Phase-occlusion-culling" class="headerlink" title="Two-Phase occlusion culling"></a>Two-Phase occlusion culling</h3><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240726111609479.png" srcset="/img/loading.gif" alt="image-20240726111609479"></p>
-<div class="hljs code-wrapper"><pre><code> 所有物体先用上一帧的ZBuffer测试一遍，得到可见的物体拿到这一帧相机画一遍。因为是上帧的z-buffer那么剩下的我们认为被遮挡的有些其实并没被遮挡怎么办呢？在本帧完成后生成了新的DepthBuffer后，然后拿这个DepthBuffer测试一遍刚才认为遮挡不可见的物体，如果发现有新的物体可见，则给他们打上标记，下一帧渲染回来。 （这个技术在sig2015刺客信条大革命那个gpu-driven talk里提出的，这里的是Instance 和 Cluster）
-</code></pre></div><h2 id="GPU-Driven-rendering-pipeline"><a href="#GPU-Driven-rendering-pipeline" class="headerlink" title="GPU-Driven rendering pipeline"></a>GPU-Driven rendering pipeline</h2><p>​    GDC2015刺客信条大革命提出，其实也是遮挡剔除，但是他用了mesh cluster来做表达，还是单独开一个博客讲讲： 链接</p>
-<h2 id="Pre-z-Pass"><a href="#Pre-z-Pass" class="headerlink" title="Pre-z Pass"></a>Pre-z Pass</h2><p>​    提前做一个深度Pass， Pre-Z虽然只写入深度不做shading计算，Pre-Z即提前进行一次代价很小的渲染，这次渲染不做shading只写入深度，有了Pre-Z的深度图就可以用这个深度图去做提前深度测试了，这样虽然会导致DrawCall数量翻倍但是配合Early-Z使用能确保下一个Pass的shading数量和屏幕空间的Pixel数量是一致的，并不会带来多余的shading浪费。Pre-Z主要功耗产生在DrawCall，但却能保证只有1x倍Pixel的shading，<strong>相当于用更多的Draw Call去节省Overdraw的时间</strong></p>
-<p><strong>局限性：</strong></p>
-<p>​    可以缓解大量的SM压力，但在移动端，功耗的瓶颈在于Draw Call数量，这个时候需要综合考虑是否需要使用Pre-Z以及对Pre-Z做一些额外出来等操作来评估<strong>是否值得用double draw call(深度一次pass，绘制一次pass)去减少pixel shading次数。</strong></p>
-<h2 id="硬件单元-Z-cull-硬件"><a href="#硬件单元-Z-cull-硬件" class="headerlink" title="硬件单元 Z-cull(硬件)"></a>硬件单元 Z-cull(硬件)</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195325451.png" srcset="/img/loading.gif" alt="image-20240727195325451"></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727215102686.png" srcset="/img/loading.gif" alt="image-20240727215102686"></p>
-<h2 id="Early-z（硬件）"><a href="#Early-z（硬件）" class="headerlink" title="Early-z（硬件）"></a>Early-z（硬件）</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719193203898.png" srcset="/img/loading.gif" alt="image-20240719193203898"></p>
-<p>最后深度测试会使得很多像素被overdraw，于是我们考虑：Early-z在Pixel shader前做。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719193257174.png" srcset="/img/loading.gif" alt="image-20240719193257174"></p>
-<p><strong>early-z失效：</strong></p>
-<p>​    但这里有个坑点， 一旦进行了<strong>手动写入深度值、开启alpha test或者丢弃像素等操作</strong>，那么<strong>GPU就会关闭early-z</strong>直到下次Clear Z-Buffer后才会重新开启。 原因是：<strong>AlphaTest会导致在前面的透明物体z值被写入但是其本身其实不会渲染，这导致后面的物体本来该被渲染但没被渲染。</strong></p>
-<p><strong>early-z的问题：</strong></p>
-<p>​    <strong>early-z在物体从远到近渲染是没有意义的，这也是主要问题。</strong> 最好<strong>在CPU按照距离做一个排序</strong>决定渲染顺序再提交渲染。</p>
-<h2 id="裁剪Clipping-硬件"><a href="#裁剪Clipping-硬件" class="headerlink" title="裁剪Clipping(硬件)"></a>裁剪Clipping(硬件)</h2><p>硬件上的操作，在Clip Space完成，Sutherland–Hodgman算法：</p>
-<p><a href="https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm</a></p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719211834005.png" srcset="/img/loading.gif" alt="image-20240719211834005"></p>
-<h2 id="背面剔除-硬件"><a href="#背面剔除-硬件" class="headerlink" title="背面剔除(硬件)"></a>背面剔除(硬件)</h2><p>硬件中做，管线中配置下即可。</p>
-<h2 id="小三角形剔除"><a href="#小三角形剔除" class="headerlink" title="小三角形剔除"></a>小三角形剔除</h2><p>这是一个为了速度牺牲质量的剔除方法：</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195325451.png" srcset="/img/loading.gif" alt="image-20240727195325451"></p>
-<p>​    在光栅化后，并不是直接就派发到PS执行，而是有一个Z-Cull单元。在进行逐像素光栅化之前，GPU首先会对块进行粗糙光栅化，一般为<code>4*4</code>。Z-Cull单元负责维护每个块的深度最大值。</p>
-<p>​    Z-Cull后会进行Fine Raster，以<code>2*2</code>个pixel进行光栅化，这对于小三角形有了很多不必要的开销，会多三倍开销。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240727195420394.png" srcset="/img/loading.gif" alt="image-20240727195420394"></p>
-<p>这也就是Visibility Buffer的诞生的主要动机，后来用Compute Shader做软件光栅化。</p>
-<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240719232914953.png" srcset="/img/loading.gif" alt="image-20240719232914953"></p>
-<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
-<li>为什么要剔除小三角形？ - Vinluo46的回答 - 知乎<a href="https://www.zhihu.com/question/656578487/answer/3504812003" target="_blank" rel="noopener">https://www.zhihu.com/question/656578487/answer/3504812003</a></li>
-<li>TODO</li>
-</ul>
+<h2 id="怎么计算SH系数旋转矩阵"><a href="#怎么计算SH系数旋转矩阵" class="headerlink" title="怎么计算SH系数旋转矩阵"></a>怎么计算SH系数旋转矩阵</h2><p>现在来想想如何计算SH系数旋转矩阵：</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725115115456.png" srcset="/img/loading.gif" alt="image-20240725115115456"></p>
+<p>计算示例</p>
+<p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725115228884.png" srcset="/img/loading.gif" alt="image-20240725115228884"></p>
+<p>这样每一阶的SH系数都可以算出一个旋转矩阵，分别计算即可。</p>
+<h2 id="n的选取有说法吗？"><a href="#n的选取有说法吗？" class="headerlink" title="n的选取有说法吗？"></a>n的选取有说法吗？</h2><p><img src="https://raw.githubusercontent.com/Chillstepp/MyPicBed/master/master/image-20240725115752322.png" srcset="/img/loading.gif" alt="image-20240725115752322"></p>
 
             </div>
             <hr>
@@ -324,7 +323,11 @@
                     
                       <a class="hover-with-bg" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF/">剔除技术</a>
+                      <a class="hover-with-bg" href="/tags/%E7%90%83%E8%B0%90%E5%87%BD%E6%95%B0/">球谐函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%8E%AF%E5%A2%83%E5%85%89%E7%85%A7/">环境光照</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PRT/">PRT</a>
                     
                   </div>
                 
@@ -337,18 +340,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/27/PRT&amp;SH/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">球谐函数SH与PRT</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/">
-                        <span class="hidden-mobile">C++中安全又便捷的Swap-and-Copy-Idiom</span>
+                      <a href="/2024/07/27/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/">
+                        <span class="hidden-mobile">游戏中的剔除技术</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -367,8 +364,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_config = function() {
-        this.page.url = 'https://chillstepp.github.io/2024/07/27/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/';
-        this.page.identifier = '/2024/07/27/%E5%89%94%E9%99%A4%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/';
+        this.page.url = 'https://chillstepp.github.io/2024/07/27/PRT&amp;SH/';
+        this.page.identifier = '/2024/07/27/PRT&amp;SH/';
       };
       Fluid.utils.waitElementVisible('disqus_thread', function () {
         var d = document, s = d.createElement('script');

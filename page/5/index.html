@@ -191,6 +191,55 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/11/vector%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E6%8A%80%E5%B7%A7-swap/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="vector容器内存释放技巧:swap()">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/11/vector%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E6%8A%80%E5%B7%A7-swap/">vector容器内存释放技巧:swap()</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/11/vector%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E6%8A%80%E5%B7%A7-swap/">
+          
+          
+            
+          
+          vector容器内存释放技巧:swap()​    .clear()方法并不会释放内存，他只会清空内容，但是容器内存依然占据着，因此我们需要用一种swap trick来解决这个问题：
+​    下面是一个利用swap trick来修整空间的例子：
+12345vector&lt;int&gt;v;v.push_back(1);v.push_back(2);v.push_back(3);vector&
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-11 03:18" pubdate>
+              2022-02-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/02/09/RB-tree/" target="_self">
           <img src="/img/rbtree.jpg" srcset="/img/loading.gif" alt="RB-tree红黑树">
         </a>
@@ -628,55 +677,6 @@ __COMPLEX__被称为预处理器变量一般有两种状态：已定义或未定
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ACM-%E6%9D%BF%E5%AD%90/">ACM-板子</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/11/15/Codeforces-Round-754-Div-2-A-E/" target="_self">
-          <img src="/img/acm.jpg" srcset="/img/loading.gif" alt="Codeforces Round #754 (Div. 2) A-E">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/11/15/Codeforces-Round-754-Div-2-A-E/">Codeforces Round #754 (Div. 2) A-E</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/15/Codeforces-Round-754-Div-2-A-E/">
-          
-          
-            
-          
-          题目地址：链接
-A. A.M. Deviation(贪心)每次操作可以使得a+c-2*b   +3或者-3 。那么答案只需要%3即可，如果%后结果为2，就让他再减去3等到|-1| = 1;
-1234567891011121314151617181920212223242526272829303132333435363738394041424344//#pragma comment(linker, 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-15 14:43" pubdate>
-              2021-11-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ACM-Codeforces/">ACM-Codeforces</a>
             
           </div>
         
