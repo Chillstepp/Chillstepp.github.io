@@ -191,6 +191,63 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/" target="_self">
+          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++中安全又便捷的Swap-and-Copy-Idiom">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/">C++中安全又便捷的Swap-and-Copy-Idiom</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/">
+          
+          
+            
+          
+          Swap-and-copy idiom什么是swap and copy？我们考虑每次实现 拷贝赋值/移动赋值 函数时是很麻烦的，需要考虑很多东西，例如浅拷贝/深拷贝，例如要写big-five等。
+swap-and-copy idiom 优雅地帮助赋值操作符实现两件事: 
+
+避免代码冗余：不再写拷贝赋值/移动赋值 函数， 移动构造函数也可以直接用swap来写
+并提供强大的异常保证。
+
+从概念上讲，它
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-07-27 16:30" pubdate>
+              2024-07-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">C++</a>
+            
+              <a href="/tags/SwapAndCopyIdiom/">SwapAndCopyIdiom</a>
+            
+              <a href="/tags/%E5%BC%BA%E5%BC%82%E5%B8%B8%E5%AE%89%E5%85%A8%E6%80%A7/">强异常安全性</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/" target="_self">
           <img src="/img/UE.jpg" srcset="/img/loading.gif" alt="阴影技术(2)——CSM">
         </a>
@@ -668,58 +725,6 @@ extern关键字帮助我们把definition变为
               <a href="/tags/C-20/">C++20</a>
             
               <a href="/tags/Ranges/">Ranges</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/06/10/C++14%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/" target="_self">
-          <img src="/img/cpp.png" srcset="/img/loading.gif" alt="C++14特性汇总">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/06/10/C++14%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/">C++14特性汇总</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2024/06/10/C++14%E7%89%B9%E6%80%A7%E6%B1%87%E6%80%BB/">
-          
-          
-            
-          
-          有关auto函数值可以返回autoauto关键字可以用于函数返回值推导和lambda表达式参数列表的类型推导
-12template&lt;typename T&gt;auto foo(T t) &#123; return t; &#125;
-甚至这样也可以：有一个退出路径返回了具体类型：
-12345auto fabonaci(int n) &#123;    if (1 == n || 2 == 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-06-10 16:30" pubdate>
-              2024-06-10
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C++</a>
-            
-              <a href="/tags/C-14/">C++14</a>
             
           </div>
         

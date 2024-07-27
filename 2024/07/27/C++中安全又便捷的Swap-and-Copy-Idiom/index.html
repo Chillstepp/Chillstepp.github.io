@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <link rel="icon" type="image/png" href="/img/%E7%8C%AB%E5%A4%B4.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Chillstep">
+  <meta name="keywords" content="">
+  <title>C++中安全又便捷的Swap-and-Copy-Idiom - Chillstep</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/vs2015.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chillstepp.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Chillstep</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/sdqryn.webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="C++中安全又便捷的Swap-and-Copy-Idiom">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-07-27 16:30" pubdate>
+        2024年7月27日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++中安全又便捷的Swap-and-Copy-Idiom</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Swap-and-copy-idiom"><a href="#Swap-and-copy-idiom" class="headerlink" title="Swap-and-copy idiom"></a>Swap-and-copy idiom</h1><h2 id="什么是swap-and-copy？"><a href="#什么是swap-and-copy？" class="headerlink" title="什么是swap and copy？"></a>什么是swap and copy？</h2><p>我们考虑每次实现 拷贝赋值/移动赋值 函数时是很麻烦的，需要考虑很多东西，例如浅拷贝/深拷贝，例如要写big-five等。</p>
+<p>swap-and-copy idiom 优雅地帮助赋值操作符实现两件事: </p>
+<ul>
+<li><strong>避免代码冗余：不再写拷贝赋值/移动赋值 函数， 移动构造函数也可以直接用swap来写</strong></li>
+<li><strong>并提供强大的异常保证。</strong></li>
+</ul>
+<p>从概念上讲，它的工作原理是使用拷贝构造函数的功能创建数据的本地副本，然后使用swap函数获取拷贝的数据，将旧数据与新数据交换。然后临时副本销毁，并带走旧数据。我们得到了新数据的副本。</p>
+<h2 id="从一个例子看起"><a href="#从一个例子看起" class="headerlink" title="从一个例子看起"></a>从一个例子看起</h2><figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt; // std::copy</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt; // std::size_t</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">dumb_array</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// (default) constructor</span><br>    dumb_array(<span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span> = <span class="hljs-number">0</span>)<br>        : mSize(<span class="hljs-built_in">size</span>),<br>          mArray(mSize ? <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[mSize]() : <span class="hljs-literal">nullptr</span>)<br>    &#123;<br>    &#125;<br><br>    <span class="hljs-comment">// copy-constructor</span><br>    dumb_array(<span class="hljs-keyword">const</span> dumb_array&amp; other)<br>        : mSize(other.mSize),<br>          mArray(mSize ? <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[mSize] : <span class="hljs-literal">nullptr</span>)<br>    &#123;<br>        <span class="hljs-comment">// note that this is non-throwing, because of the data</span><br>        <span class="hljs-comment">// types being used; more attention to detail with regards</span><br>        <span class="hljs-comment">// to exceptions must be given in a more general case, however</span><br>        <span class="hljs-built_in">std</span>::copy(other.mArray, other.mArray + mSize, mArray);<br>    &#125;<br><br>    <span class="hljs-comment">// destructor</span><br>    ~dumb_array()<br>    &#123;<br>        <span class="hljs-keyword">delete</span> [] mArray;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> mSize;<br>    <span class="hljs-keyword">int</span>* mArray;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>写出他的拷贝赋值函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">// the hard part</span><br>dumb_array&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> dumb_array&amp; other)<br>&#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> != &amp;other) <span class="hljs-comment">// (1)</span><br>    &#123;<br>        <span class="hljs-comment">// get rid of the old data...</span><br>        <span class="hljs-keyword">delete</span> [] mArray; <span class="hljs-comment">// (2)</span><br>        mArray = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// (2) *(see footnote for rationale)</span><br><br>        <span class="hljs-comment">// ...and put in the new</span><br>        mSize = other.mSize; <span class="hljs-comment">// (3)</span><br>        mArray = mSize ? <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[mSize] : <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// (3)</span><br>        <span class="hljs-built_in">std</span>::copy(other.mArray, other.mArray + mSize, mArray); <span class="hljs-comment">// (3)</span><br>    &#125;<br><br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>出现了几个问题：</p>
+<ul>
+<li>自我赋值检测使得运行速度变差，代码冗余</li>
+<li>如果<code>new int[mSize]</code>失败，此时mArray已经删除掉了，强异常安全没有保证(强异常安全保证：如果抛出了异常，程序的状态没有发生任何改变。就像没调用这个函数一样。)</li>
+</ul>
+<blockquote>
+<p><strong>基本保证（Basic Exception Safety）</strong>: 也叫<strong>无泄漏保证（No-Leak Guarantee）</strong>，即发生异常时不会导致资源泄露（比如内存泄露），程序内的任何事物仍然保持在有效状态下，没有对象或数据结构会因此而破坏，所有对象都处于有效的状态，但是处于哪个状态不可预知。</p>
+<p><strong>强烈保证（Strong Exception Safety）</strong>：如果抛出异常，程序状态不改变。就像数据库中的事务处理一样，要么成功，如果不成功，则程序回到调用之前的状态。</p>
+<p><strong>不抛出异常保证（No-Throw Guarantee）</strong>：承诺绝不抛出异常。如果有异常发生，会在内部处理，保证不让异常逃逸。</p>
+</blockquote>
+<p>因此我们为了保证强异常安全：先new，再删除。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">dumb_array&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> dumb_array&amp; other)<br>&#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> != &amp;other) <span class="hljs-comment">// (1)</span><br>    &#123;<br>        <span class="hljs-comment">// get the new data ready before we replace the old</span><br>        <span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span> newSize = other.mSize;<br>        <span class="hljs-keyword">int</span>* newArray = newSize ? <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[newSize]() : <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// (3)</span><br>        <span class="hljs-built_in">std</span>::copy(other.mArray, other.mArray + newSize, newArray); <span class="hljs-comment">// (3)</span><br><br>        <span class="hljs-comment">// replace the old data (all are non-throwing)</span><br>        <span class="hljs-keyword">delete</span> [] mArray;<br>        mSize = newSize;<br>        mArray = newArray;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>但这无辜多出了新的变量来暂时存下申请空间的指针：newArray。</p>
+<p>看起来怎么都达不到很好的效果。</p>
+<p>我们尝试这样写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">dumb_array</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(dumb_array&amp; first, dumb_array&amp; second)</span> <span class="hljs-comment">// nothrow</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-comment">// enable ADL (not necessary in our case, but good practice)</span><br>        <span class="hljs-keyword">using</span> <span class="hljs-built_in">std</span>::swap;<br><br>        <span class="hljs-comment">// by swapping the members of two objects,</span><br>        <span class="hljs-comment">// the two objects are effectively swapped</span><br>        swap(first.mSize, second.mSize);<br>        swap(first.mArray, second.mArray);<br>    &#125;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;;<br><br><span class="hljs-comment">//新的写法</span><br>dumb_array&amp; <span class="hljs-keyword">operator</span>=(dumb_array other) <span class="hljs-comment">// (1)</span><br>&#123;<br>    swap(*<span class="hljs-keyword">this</span>, other); <span class="hljs-comment">// (2)</span><br><br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>利用了std::swap的不抛出异常，保证了自己swap的不抛出异常</p>
+<h2 id="值传递参数的赋值函数为什么有用？"><a href="#值传递参数的赋值函数为什么有用？" class="headerlink" title="值传递参数的赋值函数为什么有用？"></a>值传递参数的赋值函数为什么有用？</h2><h3 id="Q1：-为什么-赋值操作符-用值传参？"><a href="#Q1：-为什么-赋值操作符-用值传参？" class="headerlink" title="Q1： 为什么 赋值操作符 用值传参？"></a>Q1： 为什么 赋值操作符 用值传参？</h3><p>我们首先注意到一个重要的选择:形参实参是按值获取的，为什么？为什么不用const ref来做，然后再拷贝出一个副本(如下)？</p>
+<p>这主要是为了优化：<a href="https://web.archive.org/web/20140113221447/http://cpp-next.com/archive/2009/08/want-speed-pass-by-value/" target="_blank" rel="noopener">https://web.archive.org/web/20140113221447/http://cpp-next.com/archive/2009/08/want-speed-pass-by-value/</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++">dumb_array&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> dumb_array&amp; other)<br>&#123;<br>    dumb_array temp(other);<br>    swap(*<span class="hljs-keyword">this</span>, temp);<br><br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="Q2：怎么起作用的"><a href="#Q2：怎么起作用的" class="headerlink" title="Q2：怎么起作用的"></a>Q2：怎么起作用的</h3><p>temp是个临时变量，把我们this的旧数据扔给temp后无需记住需要delete等操作，他离开作用域会通过析构函数完成。</p>
+<h3 id="Q3：Why-public-friend-swap？"><a href="#Q3：Why-public-friend-swap？" class="headerlink" title="Q3：Why public friend swap？"></a>Q3：Why public friend swap？</h3><p><a href="https://stackoverflow.com/questions/5695548/public-friend-swap-member-function" target="_blank" rel="noopener">https://stackoverflow.com/questions/5695548/public-friend-swap-member-function</a></p>
+<h2 id="移动构造函数也可以用swap！"><a href="#移动构造函数也可以用swap！" class="headerlink" title="移动构造函数也可以用swap！"></a>移动构造函数也可以用swap！</h2><p>C++11后我们有了移动语义，需要考虑移动构造：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">dumb_array</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-comment">// move constructor</span><br>    dumb_array(dumb_array&amp;&amp; other) <span class="hljs-keyword">noexcept</span><br>        : dumb_array()<br>    &#123;<br>        swap(*<span class="hljs-keyword">this</span>, other);<br>    &#125;<br>	<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>我们直接使用swap即可，进行资源的转换，这正是swap本身的含义。</p>
+<h2 id="移动赋值函数用swap吗？"><a href="#移动赋值函数用swap吗？" class="headerlink" title="移动赋值函数用swap吗？"></a>移动赋值函数用swap吗？</h2><p>我们不用专门写一个移动赋值函数，因为 考虑当一个右值对象 会调用到我们写的赋值操作符</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//新的写法</span><br>dumb_array&amp; <span class="hljs-keyword">operator</span>=(dumb_array other) <span class="hljs-comment">// (1)</span><br>&#123;<br>    swap(*<span class="hljs-keyword">this</span>, other); <span class="hljs-comment">// (2)</span><br><br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>参数捕获右值会调用移动构造，然后this通过swap拿到新数据，把旧数据给到other这个临时变量，超过作用域后，other调用析构函数，把右值对象的资源也释放掉。</p>
+<h2 id="好在哪儿？"><a href="#好在哪儿？" class="headerlink" title="好在哪儿？"></a>好在哪儿？</h2><ul>
+<li>解决代码冗余问题：<ul>
+<li>我们往往需要写big-five： copy-constructor， move-constructor， copy-assignment，move-assignment，destructor。 现在我们仅仅需要实现  copy-constructor，move-constructor，destructor即可，其他利用我们实现的swap和 赋值操作符 即可完成</li>
+<li>同时move-constructor实现也变得非常简单，直接利用swap语义</li>
+</ul>
+</li>
+<li>强异常安全保证</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SwapAndCopyIdiom/">SwapAndCopyIdiom</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%BC%82%E5%B8%B8%E5%AE%89%E5%85%A8%E6%80%A7/">强异常安全性</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/19/%E9%98%B4%E5%BD%B1%E6%8A%80%E6%9C%AF(2)%E2%80%94%E2%80%94CSM/">
+                        <span class="hidden-mobile">阴影技术(2)——CSM</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://chillstepp.github.io/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/';
+        this.page.identifier = '/2024/07/27/C++%E4%B8%AD%E5%AE%89%E5%85%A8%E5%8F%88%E4%BE%BF%E6%8D%B7%E7%9A%84Swap-and-Copy-Idiom/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript" target="_blank" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
